@@ -1,344 +1,204 @@
-import React from "react";
-import styled from "styled-components";
-import logo from "../assets/img/Lifeintelect.png";
-import Email from "../assets/img/email.png";
-import Phone from "../assets/img/telephone-call.png";
-// import Footer from "../assets/img/Footer-1.jpg";
-import Footer from "../assets/img/footer-bg.png";
-import navIcon1 from "../assets/img/nav-icon1.svg";
-import navIcon2 from "../assets/img/nav-icon2.svg";
-import navIcon3 from "../assets/img/nav-icon3.svg";
+import styled from "styled-components"
+import { motion } from "framer-motion"
+import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
+import companyimage from "../assets/img/company_logo.png"
 const FooterContainer = styled.footer`
- background-color: rgb(13, 11, 62); /* Dark background color */
-  /* background-image: url(${Footer}); */
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #ffffff;
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
-  }
-`;
-
-const FooterLeft = styled.div`
-  flex: 1;
-  margin-bottom: 20px;
-
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-  }
-
-  h1 {
-    font-size: 2em;
-    margin-left: 35px;
-    color: #ffffff;
-  }
-`;
-
-const ContactInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  div {
-    margin: 10px 20px;
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    font-size: 1.1em;
-    font-weight: 500;
-    cursor:pointer;
-    display:flex ;
-  }
-img{
-  width: 20px;
-  margin-right: 10px;
-}
-`;
-
-const FooterLinksContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    text-align: left;
-  }
-`;
-
-const FooterLinks = styled.div`
-  margin: 10px 20px;
-
-  h3 {
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    color: #ffffff;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin: 8px 0;
-      font-size: 1em;
-      color: #a7a9ac;
-
-      a {
-        color: #a7a9ac;
-        text-decoration: none;
-
-        &:hover {
-          color: #55e6a5;
-        }
-      }
-    }
-  }
-`;
-
-const FooterBottom = styled.div`
-  /* margin-top: 20px; */
-  font-size: 0.8em;
-  text-align: center;
-  background-color: rgb(13, 11, 62);
-
-  @media (min-width: 768px) {
-    /* margin-top: 20px; */
-    text-align: center;
-  }
-
-  span {
-    color: #55e6a5;
-  }
-`;
-// Main Container
-const NewsletterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgb(13, 11, 62);
-  padding: 20px;
+  background: linear-gradient(135deg, #0a2342 0%, #0047AB 100%);
   color: white;
+  padding: 5rem 5% 2rem;
+`
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-    /* padding: 40px; */
-  }
-`;
+const FooterContent = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  margin-bottom: 3rem;
+`
 
-// Logo Container
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-    display: none;
-  }
-
-  img {
-    /* height: 100px; */
-    margin-right: 15px;
-    width: 150px;
-  }
-`;
-
-// Text Container
-const TextContainer = styled.div`
-  font-size: 1.2em;
-  text-align: center;
-  margin-bottom: 20px;
-
-  @media (min-width: 768px) {
-    text-align: left;
-    margin-bottom: 0;
-    max-width: 209px;
-  }
-`;
-
-// Form Container
-const FormContainer = styled.form`
+const FooterColumn = styled.div`
   display: flex;
   flex-direction: column;
+`
+
+const Logo = styled.div`
+  display: flex;
   align-items: center;
+  margin-bottom: 1.5rem;
+`
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-  }
-`;
+const LogoText = styled.span`
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-left: 0.5rem;
+  background: linear-gradient(90deg, #ffffff 0%, #f0f0f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
 
-// Input Field
-const InputField = styled.input`
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  width: 80%;
-  max-width: 300px;
+const FooterDescription = styled.p`
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+  margin-bottom: 1.5rem;
+`
+
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+`
+
+const SocialLink = styled(motion.a)`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
   
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-    margin-right: 10px;
-    width: 250px;
-  }
-`;
-
-// Submit Button
-const SubmitButton = styled.button`
-  padding: 10px 20px;
-  background-color: #ea5c49;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-  cursor: pointer;
-
   &:hover {
-    background-color: #d04b38;
+    background-color: #FF4500;
   }
-`;
+`
 
-// Disclaimer Text
-const DisclaimerText = styled.p`
-  margin-top: 10px;
-  font-size: 0.8em;
-  color: #ccc;
+const ColumnTitle = styled.h3`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.8rem;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #FF4500;
+  }
+`
+
+const FooterLink = styled.a`
+  color: #e0e0e0;
+  text-decoration: none;
+  margin-bottom: 0.8rem;
+  transition: all 0.3s ease;
+  display: block;
+  
+  &:hover {
+    color: #FF4500;
+    transform: translateX(5px);
+  }
+`
+
+const ContactItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+`
+
+const ContactIcon = styled.div`
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const ContactText = styled.p`
+  font-size: 0.95rem;
+  color: #e0e0e0;
+`
+
+const Divider = styled.div`
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+`
+
+const Copyright = styled.p`
   text-align: center;
-
-  @media (min-width: 768px) {
-    text-align: left;
-    margin-top: 0;
-  }
-
-  a {
-    color: #ccc;
-    text-decoration: underline;
-
-    &:hover {
-      color: white;
-    }
-  }
-`;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+`
 
 export default function Footer2() {
   return (
-    <>
-    
-    <FooterContainer>
-      <FooterLeft>
-      <NewsletterContainer>
-      <LogoContainer>
-        <img src={logo} alt="AtomWalk Logo" />
-      </LogoContainer>
-      
-      <TextContainer>
-        Stay up-to-date with AtomWalk Newsletter!
-      </TextContainer>
-      
-      <FormContainer>
-        <InputField type="email" placeholder="Email*" required />
-        <SubmitButton type="submit">Submit</SubmitButton>
-      </FormContainer>
+    <FooterContainer id="contact">
+      <FooterContent>
+        <FooterColumn>
+          <Logo>
+            {/* <img src={companyimage} alt="LifeIntelect Logo" width={40} height={40} /> */}
+            <LogoText>LifeIntelect</LogoText>
+          </Logo>
+          <FooterDescription>
+            LifeIntelect is a Bangalore based technology and intellectual property consulting firm helping businesses
+            protect their innovations and achieve their strategic goals.
+          </FooterDescription>
+          <SocialLinks>
+            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Facebook size={18} />
+            </SocialLink>
+            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Twitter size={18} />
+            </SocialLink>
+            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Linkedin size={18} />
+            </SocialLink>
+            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Instagram size={18} />
+            </SocialLink>
+          </SocialLinks>
+        </FooterColumn>
 
-    </NewsletterContainer>
-    <ContactInfo>
-        <div> <img src={Email} alt="AtomWalk Logo" />info@atomwalk.com</div>
-        <div><img src={Phone} alt="AtomWalk Logo" />+91-7259555003</div>
-      </ContactInfo>
-    {/* <DisclaimerText>
-        By providing your information, you hereby consent to the AtomWalk <a href="#">Cookie Policy</a> and <a href="#">Privacy Policy</a>.
-      </DisclaimerText> */}
-      </FooterLeft>
+        <FooterColumn>
+          <ColumnTitle>Quick Links</ColumnTitle>
+          <FooterLink href="/">Home</FooterLink>
+          <FooterLink href="/aboutus.html">About Us</FooterLink>
+          <FooterLink href="/services.html">Services</FooterLink>
+          <FooterLink href="#team">Our Team</FooterLink>
+          <FooterLink href="#blog">Blog</FooterLink>
+          <FooterLink href="/contact.html">Contact</FooterLink>
+        </FooterColumn>
 
+        <FooterColumn>
+          <ColumnTitle>Our Services</ColumnTitle>
+          <FooterLink href="#">IP Protection</FooterLink>
+          <FooterLink href="#">Innovation Strategy</FooterLink>
+          <FooterLink href="#">IP Portfolio Management</FooterLink>
+          <FooterLink href="#">Market Analysis</FooterLink>
+          <FooterLink href="#">Patent Drafting</FooterLink>
+          <FooterLink href="#">Global IP Strategy</FooterLink>
+        </FooterColumn>
 
+        <FooterColumn>
+          <ColumnTitle>Contact Us</ColumnTitle>
+          <ContactItem>
+            <ContactIcon>
+              <MapPin size={18} color="#FF4500" />
+            </ContactIcon>
+            <ContactText>123 Innovation Street, Bangalore, Karnataka, India</ContactText>
+          </ContactItem>
+          <ContactItem>
+            <ContactIcon>
+              <Phone size={18} color="#FF4500" />
+            </ContactIcon>
+            <ContactText>+91 1234567890</ContactText>
+          </ContactItem>
+          <ContactItem>
+            <ContactIcon>
+              <Mail size={18} color="#FF4500" />
+            </ContactIcon>
+            <ContactText>info@lifeintelect.com</ContactText>
+          </ContactItem>
+        </FooterColumn>
+      </FooterContent>
 
-      <FooterLinksContainer>
-        <FooterLinks>
-          <h3>Quick Links</h3>
-          <ul>
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li>
-              <a href="/aboutUs.html">About Us</a>
-            </li>
-            <li>
-              <a href="#services">Services</a>
-            </li>
-            <li>
-              <a href="/contactUs.html">Contact Us</a>
-            </li>
-          </ul>
-        </FooterLinks>
-
-        <FooterLinks>
-          <h3>Services</h3>
-          <ul>
-            <li>
-              <a href="#webdev">Manufacturing Business</a>
-            </li>
-            <li>
-              <a href="#appdev">Consultancy Business</a>
-            </li>
-            <li>
-              <a href="#maintenance">Chemical Industry</a>
-            </li>
-            <li>
-              <a href="#marketing">Lab Management</a>
-            </li>
-          </ul>
-        </FooterLinks>
-        <FooterLinks>
-          <h3>Resources</h3>
-          <ul>
-            <li>
-              <a href="/Blog.html">Blog</a>
-            </li>
-            <li>
-              <a href="#appdev">Support</a>
-            </li>
-            <li>
-              <a href="#maintenance">Tutorials</a>
-            </li>
-            <li>
-              <a href="#marketing">FAQs</a>
-            </li>
-          </ul>
-        </FooterLinks>
-      </FooterLinksContainer>
+      <Divider />
+      <Copyright>© {new Date().getFullYear()} LifeIntelect. All rights reserved.</Copyright>
     </FooterContainer>
-    <FooterBottom>
-      <div style={{padding:"25px"}}>
-        <p>© 2024 Atomwalk. All Rights Reserved.</p>
-        <p>
-          Privacy Policy | Terms & Conditions | Made with <span>♥</span> Atomwalk
-        </p>
-        <div className="social-icon">
-              <a href="https://www.linkedin.com/company/atomwalk-technologies/"><img src={navIcon1} alt="Icon" /></a>
-              <a href="#"><img src={navIcon2} alt="Icon" /></a>
-              <a href="#"><img src={navIcon3} alt="Icon" /></a>
-            </div>
-            </div>
-      </FooterBottom>
-      </>
-  );
+  )
 }
+

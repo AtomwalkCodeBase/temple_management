@@ -30,9 +30,22 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   position: relative;
-  background-color:rgb(227 227 227)!important;
-  color: #fff !important;
+  background-color:rgb(255, 255, 255)!important;
+  color: #000000 !important;
   font-family: 'Roboto', sans-serif !important
+  
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(43, 55, 226, 0.7);
+  border-radius: 4px;
 }
 
 h1, h2, h3, h4, h5, h6 {

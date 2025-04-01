@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { FaHeart, FaStar, FaClock, FaFile, FaDesktop, FaBookmark, FaLessThan, FaGreaterThan, FaLightbulb, FaGavel, FaFlask, FaUsers } from 'react-icons/fa';
-
+import { FaGraduationCap } from "react-icons/fa";
+import { FaGlobe,FaGlobeAmericas, FaHandshake } from 'react-icons/fa';
 // Animations
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(20px); }
@@ -444,10 +445,10 @@ const Herosection = () => {
         }, 2000 + (index * 150));
       });
     };
-    
+
     // Execute animations immediately for initial view
     animateElements();
-    
+
     // Add scroll-triggered animations for elements further down the page
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -457,22 +458,22 @@ const Herosection = () => {
         }
       });
     }, observerOptions);
-    
+
     // Observe elements that might be below the fold
     if (featuresSectionRef.current) {
       observer.observe(featuresSectionRef.current);
     }
-    
+
     featureItemRefs.current.forEach(feature => {
       if (feature) observer.observe(feature);
     });
-    
+
     return () => {
       // Clean up observer on component unmount
       if (featuresSectionRef.current) {
         observer.unobserve(featuresSectionRef.current);
       }
-      
+
       featureItemRefs.current.forEach(feature => {
         if (feature) observer.unobserve(feature);
       });
@@ -480,83 +481,84 @@ const Herosection = () => {
   }, []);
 
   return (
-<Container ref={containerRef}>
-  <HeroSection ref={heroSectionRef}>
-    <HeroContent ref={heroContentRef}>
-      <Heading ref={headingRef}>Powering Your Innovations</Heading>
-      <SubText ref={subTextRef}>
-        Lifeintelect is a Bangalore-based technology and intellectual property consulting firm. We help protect your ideas and achieve your business goals by maximizing the synergy among Technology, Law, and Business.
-      </SubText>
-      <GetStartedButton ref={buttonRef}>Learn More</GetStartedButton>
-    </HeroContent>
+    <Container ref={containerRef}>
+      <HeroSection ref={heroSectionRef}>
+        <HeroContent ref={heroContentRef}>
+          <Heading ref={headingRef}>Powering Your Innovations</Heading>
+          <SubText ref={subTextRef}>
+            Lifeintelect is a Bangalore-based technology and intellectual property consulting firm. We help protect your ideas and achieve your business goals by maximizing the synergy among Technology, Law, and Business.
+          </SubText>
+          <GetStartedButton ref={buttonRef}>Learn More</GetStartedButton>
+        </HeroContent>
 
-    <StatsContainer ref={statsContainerRef}>
-      <StatCard ref={el => statCardRefs.current[0] = el} delay="0.2s" className="stat-card">
-        <IconContainer bgColor="#4285F4" bgColorEnd="#5E97F7">
-          <FaLightbulb />
-        </IconContainer>
-        <StatContent>
-          <StatValue accentColor="#4285F4">100+</StatValue>
-          <StatLabel>Innovations Protected</StatLabel>
-        </StatContent>
-      </StatCard>
+        <StatsContainer ref={statsContainerRef}>
+          <StatCard ref={el => statCardRefs.current[0] = el} delay="0.2s" className="stat-card">
+            <IconContainer bgColor="#4285F4" bgColorEnd="#5E97F7">
+              <FaUsers />  {/* Team/group icon */}
+            </IconContainer>
+            <StatContent>
+              <StatValue accentColor="#4285F4">90+</StatValue>
+              <StatLabel>Team Experience</StatLabel>
+            </StatContent>
+          </StatCard>
 
-      <StatCard ref={el => statCardRefs.current[1] = el} delay="0.3s" className="stat-card">
-        <IconContainer bgColor="#F5B7B1" bgColorEnd="#F8CFC9">
-          <FaGavel />
-        </IconContainer>
-        <StatContent>
-          <StatValue accentColor="#F5B7B1">50+</StatValue>
-          <StatLabel>IP Consultations</StatLabel>
-        </StatContent>
-      </StatCard>
+          <StatCard ref={el => statCardRefs.current[1] = el} delay="0.3s" className="stat-card">
+            <IconContainer bgColor="#F5B7B1" bgColorEnd="#F8CFC9">
+              <FaGavel />
+            </IconContainer>
+            <StatContent>
+              <StatValue accentColor="#F5B7B1">2206+</StatValue>
+              <StatLabel>IP Fillings</StatLabel>
+            </StatContent>
+          </StatCard>
 
-      <StatCard ref={el => statCardRefs.current[2] = el} delay="0.4s" className="stat-card">
-        <IconContainer bgColor="#F4D03F" bgColorEnd="#F7DC6F">
-          <FaFlask />
-        </IconContainer>
-        <StatContent>
-          <StatValue accentColor="#F4D03F">75+</StatValue>
-          <StatLabel>Scientific Solutions Delivered</StatLabel>
-        </StatContent>
-      </StatCard>
+          <StatCard ref={el => statCardRefs.current[2] = el} delay="0.4s" className="stat-card">
+            <IconContainer bgColor="#F4D03F" bgColorEnd="#F7DC6F">
+              <FaGraduationCap />  {/* Best for training stats */}
+            </IconContainer>
+            <StatContent>
+              <StatValue accentColor="#F4D03F">6550+</StatValue>
+              <StatLabel>Total People Trained</StatLabel>
+            </StatContent>
+          </StatCard>
 
-      <StatCard ref={el => statCardRefs.current[3] = el} delay="0.5s" className="stat-card">
-        <IconContainer bgColor="#58D68D" bgColorEnd="#82E0AB">
-          <FaUsers />
-        </IconContainer>
-        <StatContent>
-          <StatValue accentColor="#58D68D">200+</StatValue>
-          <StatLabel>Clients Served Globally</StatLabel>
-        </StatContent>
-      </StatCard>
-    </StatsContainer>
-  </HeroSection>
+          <StatCard ref={el => statCardRefs.current[3] = el} delay="0.5s" className="stat-card">
+            <IconContainer bgColor="#58D68D" bgColorEnd="#82E0AB">
+              <FaGlobeAmericas />
+              {/* <FaHandsHelping />  // For service emphasis */}
+            </IconContainer>
+            <StatContent>
+              <StatValue accentColor="#58D68D">310+</StatValue>
+              <StatLabel>Clients Served Globally</StatLabel>
+            </StatContent>
+          </StatCard>
+        </StatsContainer>
+      </HeroSection>
 
-  <FeaturesSection ref={featuresSectionRef}>
-    <FeatureGrid>
-      <FeatureItem ref={el => featureItemRefs.current[0] = el} bgColor="rgba(100, 100, 200, 0.8)" index={0}>
-        <FeatureIcon>🔒</FeatureIcon>
-        <FeatureText>Comprehensive IP Protection Services</FeatureText>
-      </FeatureItem>
+      <FeaturesSection ref={featuresSectionRef}>
+        <FeatureGrid>
+          <FeatureItem ref={el => featureItemRefs.current[0] = el} bgColor="rgba(100, 100, 200, 0.8)" index={0}>
+            <FeatureIcon>🔒</FeatureIcon>
+            <FeatureText>IP protection solution</FeatureText>
+          </FeatureItem>
 
-      <FeatureItem ref={el => featureItemRefs.current[1] = el} bgColor="rgba(20, 40, 100, 0.8)" index={1}>
-        <FeatureIcon>🔬</FeatureIcon>
-        <FeatureText>Expert Scientific & Technological Solutions</FeatureText>
-      </FeatureItem>
+          <FeatureItem ref={el => featureItemRefs.current[1] = el} bgColor="rgba(20, 40, 100, 0.8)" index={1}>
+            <FeatureIcon>🔬</FeatureIcon>
+            <FeatureText>IP Lifecycle management</FeatureText>
+          </FeatureItem>
 
-      <FeatureItem ref={el => featureItemRefs.current[2] = el} bgColor="rgba(248, 137, 137, 0.8)" index={2}>
-        <FeatureIcon>📈</FeatureIcon>
-        <FeatureText>Strategic Market Research & Analysis</FeatureText>
-      </FeatureItem>
+          <FeatureItem ref={el => featureItemRefs.current[2] = el} bgColor="rgba(248, 137, 137, 0.8)" index={2}>
+            <FeatureIcon>💻</FeatureIcon>
+            <FeatureText>Scientific and tech solution</FeatureText>
+          </FeatureItem>
 
-      <FeatureItem ref={el => featureItemRefs.current[3] = el} bgColor="rgba(200, 100, 200, 0.8)" index={3}>
-        <FeatureIcon>📝</FeatureIcon>
-        <FeatureText>Professional Scientific Writing & Editing</FeatureText>
-      </FeatureItem>
-    </FeatureGrid>
-  </FeaturesSection>
-</Container>
+          <FeatureItem ref={el => featureItemRefs.current[3] = el} bgColor="rgba(200, 100, 200, 0.8)" index={3}>
+            <FeatureIcon>💡</FeatureIcon>
+            <FeatureText>Workshops/ IP education and training</FeatureText>
+          </FeatureItem>
+        </FeatureGrid>
+      </FeaturesSection>
+    </Container>
 
   );
 };

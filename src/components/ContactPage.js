@@ -326,7 +326,7 @@ export default function ContactPage() {
     subject: "",
     message: "",
   })
-  
+
   // Refs for scroll animation targets
   const headerRef = useRef(null)
   const formRef = useRef(null)
@@ -354,7 +354,7 @@ export default function ContactPage() {
       message: "",
     })
   }
-  
+
   // Intersection Observer for scroll animations
   useEffect(() => {
     const observerOptions = {
@@ -362,7 +362,7 @@ export default function ContactPage() {
       rootMargin: '0px',
       threshold: 0.1
     }
-    
+
     const handleIntersection = (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -371,23 +371,23 @@ export default function ContactPage() {
         }
       })
     }
-    
+
     const observer = new IntersectionObserver(handleIntersection, observerOptions)
-    
+
     // Observe all elements that need animation
     if (headerRef.current) observer.observe(headerRef.current)
     if (formRef.current) observer.observe(formRef.current)
     if (infoRef.current) observer.observe(infoRef.current)
     if (submitButtonRef.current) observer.observe(submitButtonRef.current)
-    
+
     formGroups.current.forEach(el => {
       if (el) observer.observe(el)
     })
-    
+
     infoCards.current.forEach(el => {
       if (el) observer.observe(el)
     })
-    
+
     return () => {
       observer.disconnect()
     }
@@ -404,8 +404,8 @@ export default function ContactPage() {
 
       <ContactGrid>
         <ContactForm ref={formRef} onSubmit={handleSubmit}>
-          <FormGroup 
-            ref={el => formGroups.current[0] = el} 
+          <FormGroup
+            ref={el => formGroups.current[0] = el}
             $delay="0.1s"
           >
             <Label htmlFor="name">Your Name</Label>
@@ -420,7 +420,7 @@ export default function ContactPage() {
             />
           </FormGroup>
 
-          <FormGroup 
+          <FormGroup
             ref={el => formGroups.current[1] = el}
             $delay="0.2s"
           >
@@ -436,7 +436,7 @@ export default function ContactPage() {
             />
           </FormGroup>
 
-          <FormGroup 
+          <FormGroup
             ref={el => formGroups.current[2] = el}
             $delay="0.3s"
           >
@@ -452,7 +452,7 @@ export default function ContactPage() {
             />
           </FormGroup>
 
-          <FormGroup 
+          <FormGroup
             ref={el => formGroups.current[3] = el}
             $delay="0.4s"
           >
@@ -467,7 +467,7 @@ export default function ContactPage() {
             />
           </FormGroup>
 
-          <SubmitButton 
+          <SubmitButton
             ref={submitButtonRef}
             type="submit"
           >
@@ -477,7 +477,7 @@ export default function ContactPage() {
         </ContactForm>
 
         <ContactInfo ref={infoRef}>
-          <InfoCard 
+          <InfoCard
             ref={el => infoCards.current[0] = el}
             $delay="0.2s"
           >
@@ -487,14 +487,14 @@ export default function ContactPage() {
             <InfoContent>
               <InfoTitle>Email Us</InfoTitle>
               <InfoText>Our friendly team is here to help with any questions.</InfoText>
-              <ContactLink href="mailto:hello@example.com">
-                hello@example.com
+              <ContactLink href="mailto:support@lifeintelect.com">
+                support@lifeintelect.com
                 <ArrowRight size={14} />
               </ContactLink>
             </InfoContent>
           </InfoCard>
 
-          <InfoCard 
+          <InfoCard
             ref={el => infoCards.current[1] = el}
             $delay="0.4s"
           >
@@ -503,15 +503,18 @@ export default function ContactPage() {
             </IconWrapper>
             <InfoContent>
               <InfoTitle>Call Us</InfoTitle>
-              <InfoText>Mon-Fri from 8am to 5pm. We'd love to hear from you!</InfoText>
-              <ContactLink href="tel:+1234567890">
-                +1 (234) 567-890
+              <InfoText>
+                <div>Telephone: +(91)-9591600666</div>
+                <div>Office Landline: 91-080-28476777</div>
+              </InfoText>
+              <ContactLink href="tel:+919591600666">
+                +(91)-9591600666
                 <ArrowRight size={14} />
               </ContactLink>
             </InfoContent>
           </InfoCard>
 
-          <InfoCard 
+          <InfoCard
             ref={el => infoCards.current[2] = el}
             $delay="0.6s"
           >
@@ -520,9 +523,20 @@ export default function ContactPage() {
             </IconWrapper>
             <InfoContent>
               <InfoTitle>Visit Us</InfoTitle>
-              <InfoText>Come say hello at our office headquarters.</InfoText>
+              <InfoText>
+                <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Corporate Address</div>
+                <div>Lifeintelect Consultancy Pvt. Ltd</div>
+                <div>Gopalan Millennium Towers,</div>
+                <div>ITPL Main Road, Brookfield, Whitefield,</div>
+                <div>Bengaluru, Karnataka 560037</div>
+
+                <div style={{ fontWeight: 'bold', marginTop: '16px', marginBottom: '8px' }}>Branch Address</div>
+                <div>Lifeintelect Consultancy Pvt. Ltd</div>
+                <div>2100 East County Line Rd,</div>
+                <div>Ardmore, PA, 19003, USA</div>
+              </InfoText>
               <ContactLink href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
-                123 Innovation Street, Tech City
+                View on Map
                 <ArrowRight size={14} />
               </ContactLink>
             </InfoContent>

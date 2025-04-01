@@ -2,6 +2,8 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Shield, Lightbulb, BookOpen, BarChart3, FileText, Globe } from "lucide-react";
+import { FaFileContract } from 'react-icons/fa';
+import { FlaskConical,PenTool } from 'lucide-react'; 
 
 const ServicesContainer = styled.section`
   padding: 8rem 5%;
@@ -212,26 +214,24 @@ export default function ServicesSection() {
   const services = [
     {
       icon: <Shield size={36} color="#0047AB" />,
-      title: "IP Protection",
+      title: "IP Protection Solutions",
       description:
         "We help you protect your intellectual property through patents, trademarks, copyrights, and trade secrets.",
     },
     {
-      icon: <Lightbulb size={36} color="#0047AB" />,
-      title: "Innovation Strategy",
-      description:
-        "Develop comprehensive innovation strategies aligned with your business goals and market opportunities.",
+      icon: <FaFileContract size={36} color="#0047AB" />,
+      title: "IP Lifecycle Management",
+      description: "Develop comprehensive innovation strategies aligned with your business goals and market opportunities.",
     },
     {
-      icon: <BookOpen size={36} color="#0047AB" />,
-      title: "IP Portfolio Management",
-      description: "Manage and optimize your IP portfolio to maximize value and strategic advantage in the market.",
+      icon: <FlaskConical size={36} color="#0047AB" />, // Science + Tech focus
+      title: "Scientific and Technology Solutions",
+      description: "Leverage cutting-edge research and advanced technologies to drive innovation and solve complex challenges.",
     },
     {
-      icon: <BarChart3 size={36} color="#0047AB" />,
-      title: "Market Analysis",
-      description:
-        "In-depth market analysis to identify opportunities, threats, and competitive positioning for your innovations.",
+      icon: <PenTool size={36} color="#0047AB" />, // Emphasizes writing/editing
+      title: "Workshop/Scientific Writing and Editing",
+      description: "Refine your research outputs with professional scientific writing, editing, and peer-review preparation services.",
     },
     {
       icon: <FileText size={36} color="#0047AB" />,

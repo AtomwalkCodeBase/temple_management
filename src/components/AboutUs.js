@@ -723,32 +723,42 @@ const AboutUs = () => {
   
   const values = [
     { 
-      title: 'Innovation', 
-      description: 'We constantly push boundaries and challenge the status quo, finding creative solutions to complex problems.', 
-      icon: '💡' 
-    },
-    { 
-      title: 'Excellence', 
-      description: 'We strive for perfection in everything we create, with meticulous attention to detail and a passion for quality.', 
+      title: 'Excellence in Service', 
+      description: 'We strive for excellence in everything we do, delivering high-quality services with precision and efficiency to exceed client expectations.', 
       icon: '✨' 
     },
     { 
-      title: 'Collaboration', 
-      description: 'We believe in the power of teamwork, bringing together diverse perspectives to achieve extraordinary results.', 
-      icon: '🤝' 
+      title: 'Confidentiality and Security', 
+      description: 'We understand the importance of protecting sensitive information. We are committed to maintaining the highest levels of confidentiality and security for all client data and intellectual assets.', 
+      icon: '🔒' 
+    },
+    {
+      title: 'Client Centric Approach',
+      description: 'Our clients’ success is our priority. We offer tailored solutions that protect their intellectual property and help them achieve their business objectives.',
+      icon: '🎯' 
     },
     { 
-      title: 'Integrity', 
-      description: 'We uphold the highest standards of honesty and ethics, building relationships based on trust and transparency.', 
+      title: 'Integrity and Transparency', 
+      description: 'We believe in honesty and openness in all our dealings, ensuring that our clients receive reliable, ethical advice and services every time.', 
       icon: '🛡️' 
+    },
+    { 
+      title: 'Adaptibility and Agility', 
+      description: 'We are committed to being flexible and responsive, adapting our strategies and services to meet the dynamic challenges of the ever-changing intellectual property landscape.', 
+      icon: '🔄' 
+    },
+    { 
+      title: 'Collaboration and Partnership', 
+      description: 'We work closely with our clients, fostering long-term relationships built on trust and mutual success. We view our clients as partners and collaborate to achieve the best outcomes for their intellectual property.', 
+      icon: '🤝' 
     },
   ];
   
   const stats = [
-    { number: '250+', label: 'Clients Worldwide', icon: '🌎' },
-    { number: '15+', label: 'Years Experience', icon: '⏳' },
-    { number: '95%', label: 'Client Satisfaction', icon: '⭐' },
-    { number: '48', label: 'Team Members', icon: '👥' },
+    { number: '310+', label: 'Happy Clients', icon: '😊' },
+    { number: '13+', label: 'Years Experience', icon: '⏳' },
+    { number: '99%', label: 'Success Rate', icon: '🏆' },
+    { number: '1251+', label: 'Successful Projects', icon: '✅' }
   ];
   
   const storyParagraphs = [

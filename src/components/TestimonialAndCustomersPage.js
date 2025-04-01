@@ -1,6 +1,90 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ChevronLeft, ChevronRight, Star, Quote, Users, Award, Heart } from 'lucide-react';
+import company   from '../assets/img/LOGO/Agrimaa biosciences.png'
+import company2  from '../assets/img/LOGO/Adityavani.jpg'
+import company3  from '../assets/img/LOGO/AI Robotx.png'
+import company4  from '../assets/img/LOGO/ALL INDIA INSTITUTE OF MEDICAL SCIENCES.jpg'
+import company5  from '../assets/img/LOGO/Althera.jpg'
+import company6  from '../assets/img/LOGO/Anand diagnostic laboratory.png'
+import company7  from '../assets/img/LOGO/Ariel LTD.(ASI).png'
+import company8  from '../assets/img/LOGO/Aristogen biosciences.png'
+import company9  from '../assets/img/LOGO/Atomwalk.png'
+import company10 from '../assets/img/LOGO/Balya group.jpg'
+import company11 from '../assets/img/LOGO/Bio-gen.png'
+import company12 from '../assets/img/LOGO/Bioinnovation center.png'
+import company13 from '../assets/img/LOGO/Birla institute of technology.png'
+import company14 from '../assets/img/LOGO/C-CAMP.png'
+import company15 from '../assets/img/LOGO/CfHE.png'
+import company16 from '../assets/img/LOGO/CII.png'
+import company17 from '../assets/img/LOGO/CMR college of engineering and technology.png'
+import company18 from '../assets/img/LOGO/DQ labs.png'
+import company19 from '../assets/img/LOGO/E-Merg tech.jpg'
+import company20 from '../assets/img/LOGO/FKCCI.jpg'
+import company21 from '../assets/img/LOGO/Fluxgen.png'
+import company22 from '../assets/img/LOGO/FTG bio.png'
+import company23 from '../assets/img/LOGO/gh.png'
+import company24 from '../assets/img/LOGO/I stem.jpg'
+import company25 from '../assets/img/LOGO/Iaomr.png'
+import company26 from '../assets/img/LOGO/IIMB.png'
+import company27 from '../assets/img/LOGO/IIS.png'
+import company28 from '../assets/img/LOGO/ILS.png'
+import company29 from '../assets/img/LOGO/Impactful visionaries.jpg'
+import company30 from '../assets/img/LOGO/India biosciences.png'
+import company31 from '../assets/img/LOGO/Indian academy of sciences.png'
+import company32 from '../assets/img/LOGO/Indian institute of technology bombay.png'
+import company33 from '../assets/img/LOGO/Inofininty.jpg'
+import company34 from '../assets/img/LOGO/institue of life sciences bhubaneswar.jpg'
+import company35 from '../assets/img/LOGO/IQ soft.png'
+import company36 from '../assets/img/LOGO/Jarkhand university of technology.jpg'
+import company37 from '../assets/img/LOGO/Jeltek.png'
+import company38 from '../assets/img/LOGO/jOIS.png'
+import company39 from '../assets/img/LOGO/KMCT dental college.png'
+import company40 from '../assets/img/LOGO/Kristu jayanti college.jpg'
+import company41 from '../assets/img/LOGO/leo packers and movers.png'
+import company42 from '../assets/img/LOGO/Leucinerichbio.png'
+import company43 from '../assets/img/LOGO/Logic clutch.jpg'
+import company44 from '../assets/img/LOGO/Molsys scientific.jpg'
+import company45 from '../assets/img/LOGO/MSMF.jpg'
+import company46 from '../assets/img/LOGO/National university of singapore.png'
+import company47 from '../assets/img/LOGO/NBM.png'
+import company48 from '../assets/img/LOGO/NCBS.jpg'
+import company49 from '../assets/img/LOGO/Neharu group of institution.jpg'
+import company50 from '../assets/img/LOGO/neurovizr.png'
+import company51 from '../assets/img/LOGO/Odisha bigyan Academy.png'
+import company52 from '../assets/img/LOGO/OMMPL.png'
+import company53 from '../assets/img/LOGO/Procto labs.png'
+import company54 from '../assets/img/LOGO/Radome technologies & services private limited.png'
+import company55 from '../assets/img/LOGO/Ramaiah.png'
+import company56 from '../assets/img/LOGO/Red prince.png'
+import company57 from '../assets/img/LOGO/Rephyx.png'
+import company58 from '../assets/img/LOGO/S.png'
+import company59 from '../assets/img/LOGO/saigram.jpg'
+import company60 from '../assets/img/LOGO/Saptha innovations pvt ltd.jpg'
+import company61 from '../assets/img/LOGO/SCS.jpg'
+import company62 from '../assets/img/LOGO/SDUA.jpg'
+import company63 from '../assets/img/LOGO/selectorshub.png'
+import company64 from '../assets/img/LOGO/Spotter mobility.jpg'
+import company65 from '../assets/img/LOGO/Spura technology for growth.png'
+import company66 from '../assets/img/LOGO/Strategi.png'
+import company67 from '../assets/img/LOGO/superbrewed food.jpg'
+import company68 from '../assets/img/LOGO/Svaim.png'
+import company69 from '../assets/img/LOGO/TATA trusts.png'
+import company70 from '../assets/img/LOGO/The live green.png'
+import company71 from '../assets/img/LOGO/Tiami.jpg'
+import company72 from '../assets/img/LOGO/TRIPURA UNIVERSITY.png'
+import company73 from '../assets/img/LOGO/Trumed.png'
+import company74 from '../assets/img/LOGO/University of agricultural sciences.png'
+import company75 from '../assets/img/LOGO/University of Gauhati.png'
+import company76 from '../assets/img/LOGO/venture bean.png'
+import company77 from '../assets/img/LOGO/Vivanta.png'
+import company78 from '../assets/img/LOGO/Wellotree.png'
+import company79 from '../assets/img/LOGO/xavier institue of management, bhubaneshwR.png'
+import company80 from '../assets/img/LOGO/yenepoya technology incubator.png'
+import company81 from '../assets/img/LOGO/Yenepoya.png'
+import company82 from '../assets/img/LOGO/ZOFRA.jpg'
+
+
 
 // Animations
 const fadeIn = keyframes`
@@ -225,7 +309,8 @@ const BrandScrollContainer = styled.div`
 const LogoScroll = styled.div`
   display: flex;
   white-space: nowrap;
-  animation: ${marquee} 25s linear infinite;
+  animation: ${marquee} 240s linear infinite;
+  width: calc(140px * ${190 * 2});
 `;
 
 const BrandLogo = styled.div`
@@ -674,8 +759,89 @@ const TestimonialAndCustomersPage = () => {
   ];
 
   const brands = [
-    "Google", "Microsoft", "Apple", "Amazon", 
-    "Facebook", "Twitter", "LinkedIn", "Airbnb"
+    { name: "Adityavani", logo: company },
+    { name: "Adityavani", logo: company2 },
+    { name: "Adityavani", logo: company3 },
+    { name: "Adityavani", logo: company4 },
+    { name: "Adityavani", logo: company5 },
+    { name: "Adityavani", logo: company6 },
+    { name: "Adityavani", logo: company7 },
+    { name: "Adityavani", logo: company8 },
+    { name: "Adityavani", logo: company9 },
+    { name: "Adityavani", logo: company10 },
+    { name: "Adityavani", logo: company11 },
+    { name: "Adityavani", logo: company12 },
+    { name: "Adityavani", logo: company13 },
+    { name: "Adityavani", logo: company14 },
+    { name: "Adityavani", logo: company15 },
+    { name: "Adityavani", logo: company16 },
+    { name: "Adityavani", logo: company17 },
+    { name: "Adityavani", logo: company18 },
+    { name: "Adityavani", logo: company19 },
+    { name: "Adityavani", logo: company20 },
+    { name: "Adityavani", logo: company21 },
+    { name: "Adityavani", logo: company22 },
+    { name: "Adityavani", logo: company23 },
+    { name: "Adityavani", logo: company24 },
+    { name: "Adityavani", logo: company25 },
+    { name: "Adityavani", logo: company26 },
+    { name: "Adityavani", logo: company27 },
+    { name: "Adityavani", logo: company28 },
+    { name: "Adityavani", logo: company29 },
+    { name: "Adityavani", logo: company30 },
+    { name: "Adityavani", logo: company31 },
+    { name: "Adityavani", logo: company32 },
+    { name: "Adityavani", logo: company33 },
+    { name: "Adityavani", logo: company34 },
+    { name: "Adityavani", logo: company35 },
+    { name: "Adityavani", logo: company36 },
+    { name: "Adityavani", logo: company37 },
+    { name: "Adityavani", logo: company38 },
+    { name: "Adityavani", logo: company39 },
+    { name: "Adityavani", logo: company40 },
+    { name: "Adityavani", logo: company41 },
+    { name: "Adityavani", logo: company42 },
+    { name: "Adityavani", logo: company43 },
+    { name: "Adityavani", logo: company44 },
+    { name: "Adityavani", logo: company45 },
+    { name: "Adityavani", logo: company46 },
+    { name: "Adityavani", logo: company47 },
+    { name: "Adityavani", logo: company48 },
+    { name: "Adityavani", logo: company49 },
+    { name: "Adityavani", logo: company50 },
+    { name: "Adityavani", logo: company51 },
+    { name: "Adityavani", logo: company52 },
+    { name: "Adityavani", logo: company53 },
+    { name: "Adityavani", logo: company54 },
+    { name: "Adityavani", logo: company55 },
+    { name: "Adityavani", logo: company56 },
+    { name: "Adityavani", logo: company57 },
+    { name: "Adityavani", logo: company58 },
+    { name: "Adityavani", logo: company59 },
+    { name: "Adityavani", logo: company60 },
+    { name: "Adityavani", logo: company61 },
+    { name: "Adityavani", logo: company62 },
+    { name: "Adityavani", logo: company63 },
+    { name: "Adityavani", logo: company64 },
+    { name: "Adityavani", logo: company65 },
+    { name: "Adityavani", logo: company66 },
+    { name: "Adityavani", logo: company67 },
+    { name: "Adityavani", logo: company68 },
+    { name: "Adityavani", logo: company69 },
+    { name: "Adityavani", logo: company70 },
+    { name: "Adityavani", logo: company71 },
+    { name: "Adityavani", logo: company72 },
+    { name: "Adityavani", logo: company73 },
+    { name: "Adityavani", logo: company74 },
+    { name: "Adityavani", logo: company75 },
+    { name: "Adityavani", logo: company76 },
+    { name: "Adityavani", logo: company77 },
+    { name: "Adityavani", logo: company78 },
+    { name: "Adityavani", logo: company79 },
+    { name: "Adityavani", logo: company80 },
+    { name: "Adityavani", logo: company81 },
+    { name: "Adityavani", logo: company82 },
+
   ];
 
   useEffect(() => {
@@ -771,7 +937,7 @@ const TestimonialAndCustomersPage = () => {
             <LogoScroll>
               {[...brands, ...brands].map((brand, index) => (
                 <BrandLogo key={index}>
-                  <BrandText>{brand}</BrandText>
+                  <img src={brand.logo} alt={brand.name} style={{ width: '100px', height: 'auto' }} />
                 </BrandLogo>
               ))}
             </LogoScroll>

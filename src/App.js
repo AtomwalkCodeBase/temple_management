@@ -8,6 +8,8 @@ import NavBar from './components/NavBar';
 import FrontPage from './components/FrontPage';
 import Services from './components/Services';
 import ContactUs from './components/ContactUs';
+import BlogListingPage from './components/BlogListingPage';
+import CareersPage from './components/CareersPage';
 // import OurServices from './components/OurServices';
 
 
@@ -21,6 +23,8 @@ function App() {
         <Route path="/aboutus.html" element={<AboutUs/>} />
         <Route path="/services.html" element={<Services/>} />
         <Route path="/contact.html" element={<ContactUs/>} />
+        <Route path="/blog.html" element={<BlogListingPage/>} />
+        <Route path="/careers.html" element={<CareersPage/>} />
         </Routes>
       </Router>
       <Footer2></Footer2>

@@ -155,11 +155,11 @@ export default function Footer2() {
 
         <FooterColumn>
           <ColumnTitle>Quick Links</ColumnTitle>
-          <FooterLink href="/">Home</FooterLink>
+          <FooterLink href="/careers.html">Careers</FooterLink>
           <FooterLink href="/aboutus.html">About Us</FooterLink>
           <FooterLink href="/services.html">Services</FooterLink>
           <FooterLink href="#team">Our Team</FooterLink>
-          <FooterLink href="#blog">Blog</FooterLink>
+          <FooterLink href="/blog.html">Blog</FooterLink>
           <FooterLink href="/contact.html">Contact</FooterLink>
         </FooterColumn>
 

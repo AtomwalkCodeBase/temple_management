@@ -1,7 +1,11 @@
 import { useRef } from "react"
 import styled from "styled-components"
 import { motion, useInView } from "framer-motion"
-// import Image from "next/image"
+import shantha from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/shantha.png"
+import syamanand from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/syamanand.png"
+import img_3 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/img_3.jpg"
+import img_4 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/img_4.jpg"
+import img_5 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/img_5.jpg"
 import { Linkedin, Twitter, Mail } from "lucide-react"
 
 const TeamContainer = styled.section`
@@ -146,26 +150,38 @@ export default function TeamSection() {
     {
       name: "Dr. Lipika Sahoo",
       role: "Founder & CEO",
-      bio: "With over 15 years of experience in IP law and technology consulting, Dr. Kumar leads our strategic vision.",
+      bio: "Dr. Lipika Sahoo, Founder and CEO of Life Intellect, is a registered Indian Patent and Trademarks Agent with 16 years of experience in technology, innovation, and intellectual property.",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Ymw-5cE07bTTFruRyanos0J-R7xziNdB_w&s",
     },
     {
-      name: "Priya Sharma",
-      role: "IP Strategy Director",
-      bio: "Priya specializes in developing comprehensive IP strategies for technology startups and established enterprises.",
-      image: "/placeholder.svg?height=300&width=280",
+      name: "Shantha Shankar",
+      role: "Director and Chief Technology Officer",
+      bio: "Dr. Shantha Shankar, Director and CTO of Life Intellect, is an expert in patent analytics, strategic IP management, and nanotechnology.",
+      image: shantha,
     },
     {
-      name: "Rajesh Mehta",
-      role: "Patent Attorney",
-      bio: "Rajesh has helped clients secure over 200 patents across various technology domains.",
-      image: "/placeholder.svg?height=300&width=280",
+      name: "Syam Anand",
+      role: "Technical Specialist and US Patent Agent",
+      bio: "Dr. Syam Anand, Technical Specialist and US Patent Agent, has over 20 years of expertise in molecular biology, biochemistry, and intellectual property.",
+      image: syamanand,
     },
     {
-      name: "Ananya Patel",
-      role: "Technology Consultant",
-      bio: "Ananya bridges the gap between technical innovation and business strategy for our clients.",
-      image: "/placeholder.svg?height=300&width=280",
+      name: "Samartha Srinivasa",
+      role: "Legal Expert",
+      bio: "Mr. Samartha Srinivasa, Legal Expert, holds an L.L.B from Bangalore University and an L.L.M in International Trade Law from Essex University.",
+      image: img_3,
+    },
+    {
+      name: "K. Prashanthi",
+      role: "Technical Specialist",
+      bio: "Dr. K. Prashanthi, Technical Specialist, has over 16 years of experience in host-pathogen interactions, virology, and computational biology.",
+      image: img_4,
+    },
+    {
+      name: "T. Bhavani",
+      role: "Technical and IP Specialist",
+      bio: "Dr. T. Bhavani, Technical and IP Specialist, is a registered Indian Patent Agent with expertise in chemical, biotech, pharmaceutical, and software-related technologies.",
+      image: img_5,
     },
   ]
 
@@ -189,9 +205,9 @@ export default function TeamSection() {
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        Our team of experts combines deep technical knowledge with business acumen to deliver exceptional value to our
-        clients. With diverse backgrounds in technology, law, and business, we provide holistic solutions to complex IP
-        challenges.
+        LifeIntelect is proficient in knowledge processes and is managed by a seasoned team of PhDs, experts and Patent agents. Our professionals help you in establishing strategic research and business processes.
+        As one of the leading technology and IP service companies in India, we offer services that are cost-effective and of highest quality standards. Our services help you grow and nurture your idea to global standards.
+
       </TeamDescription>
 
       <TeamGrid variants={containerVariants} initial="hidden" animate={isInView ? "visible" : "hidden"} as={motion.div}>

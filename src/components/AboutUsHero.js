@@ -1,26 +1,36 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-
-// Keyframes for animated gradient background
-const gradientAnimation = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
-const floatAnimation = keyframes`
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
-`;
+import SpaceImage_2 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/SpaceImage_2.jpg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeInOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeInOut" } }
 };
+
+// Image and background styles remain the same
+const ImageContainer = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+  background-image: url(${SpaceImage_2});
+  background-size: cover;
+  background-position: center;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+  }
+`;
 
 const HeroSection = styled.div`
   position: relative;
@@ -29,10 +39,6 @@ const HeroSection = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(135deg,rgb(255, 255, 255),rgb(13, 3, 93));
-  /* background: linear-gradient(45deg, #4361EE, #FF3366, #FFCC33, #33CC33); */
-  background-size: 200% 200%;
-  animation: ${gradientAnimation} 10s ease infinite;
   color: white;
   overflow: hidden;
   padding: 20px;
@@ -41,39 +47,63 @@ const HeroSection = styled.div`
 const Content = styled(motion.div)`
   max-width: 800px;
   padding: 40px;
+  z-index: 2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const Title = styled(motion.h1)`
-  font-size: 3rem;
-  font-weight: 700;
+// Updated Title styles with PLANET/EARTH design
+const Title = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
-  background: linear-gradient(90deg,rgb(247, 247, 247),rgb(255, 248, 251));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: ${floatAnimation} 4s ease-in-out infinite;
 `;
 
-const Subtitle = styled(motion.p)`
-  font-size: 1.3rem;
-  opacity: 0.8;
-  margin-bottom: 30px;
+const PlanetText = styled(motion.span)`
+  font-size: 16px;
   font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #FFFFFF;
 `;
 
+const EarthText = styled(motion.span)`
+  font-size: 64px;
+  font-weight: 900;
+  font-family: 'Playfair Display', serif;
+  color: #FFFFFF;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+`;
+
+// Updated Subtitle styles
+const Subtitle = styled(motion.p)`
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #CCCCCC;
+  max-width: 600px;
+  margin-bottom: 30px;
+`;
+
+// Updated Button styles
 const Button = styled(motion.button)`
-  background: linear-gradient(90deg, #ff758c, #ff7eb3);
+  background: #FFFFFF;
+  color: #000000;
   border: none;
-  padding: 12px 25px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  border-radius: 50px;
+  padding: 12px 30px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 24px;
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  margin: 10px;
+  transition: all 0.3s ease;
+  
   &:hover {
-    box-shadow: 0 10px 20px rgba(255, 118, 148, 0.5);
-    transform: scale(1.1) rotate(3deg);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
   }
 `;
 
@@ -84,6 +114,7 @@ const ParticlesContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  z-index: -1;
 `;
 
 const AboutUsHero = () => {
@@ -102,7 +133,7 @@ const AboutUsHero = () => {
       particle.style.left = `${Math.random() * 100}%`;
       particle.style.top = `${Math.random() * 100}%`;
       particle.style.opacity = `${Math.random() * 0.5 + 0.2}`;
-      particle.style.background = "rgba(255, 255, 255, 0.2)";
+      particle.style.background = " #fff";
       particle.style.borderRadius = "50%";
       particle.style.transition = "transform 0.1s ease-out";
       container.appendChild(particle);
@@ -125,13 +156,34 @@ const AboutUsHero = () => {
 
   return (
     <HeroSection>
+        <ImageContainer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        style={{ backgroundImage: `url(${SpaceImage_2})` }}
+      />
+      
       <ParticlesContainer ref={particlesRef} />
-      <Content initial="hidden" animate="visible" variants={fadeInUp}>
-        <Title variants={fadeInUp}>About <span style={{ color: "#00c6ff" }}>Us</span></Title>
+      
+      <Content initial="hidden" animate="visible" variants={{
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeInOut" } }
+      }}>
+        <Title variants={fadeInUp}>
+          {/* <PlanetText>PLANET</PlanetText> */}
+          <EarthText>About <span style={{ color: "#00c6ff" }}>Us</span></EarthText>
+        </Title>
         <Subtitle variants={fadeInUp}>
-        To deliver world-class technological and IP solutions with high confidentiality standards, encompassing ideation, protection, and management, while safeguarding the interests of our clients and employees.
+          To deliver world-class technological and IP solutions with high confidentiality standards, 
+          encompassing ideation, protection, and management, while safeguarding the interests of 
+          our clients and employees.
         </Subtitle>
-        <Button whileHover={{ scale: 1.15, rotate: 5 }}>Learn More</Button>
+        <Button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Learn More
+        </Button>
       </Content>
     </HeroSection>
   );

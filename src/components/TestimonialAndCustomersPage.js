@@ -732,8 +732,8 @@ const TestimonialAndCustomersPage = () => {
   const [isInView, setIsInView] = useState(false);
   const statsRef = useRef(null);
   const [stats, setStats] = useState([
-    { icon: <Users size={28} />, value: 0, target: 500, label: "Happy Clients", index: 0 },
-    { icon: <Award size={28} />, value: 0, target: 150, label: "Projects Completed", index: 1 },
+    { icon: <Users size={28} />, value: 0, target: 1251, label: "Happy Clients", index: 0 },
+    { icon: <Award size={28} />, value: 0, target: 310, label: "Projects Completed", index: 1 },
     { icon: <Heart size={28} />, value: 0, target: 99, label: "Satisfaction Rate %", index: 2 }
   ]);
 

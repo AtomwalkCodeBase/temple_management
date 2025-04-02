@@ -1,11 +1,11 @@
 import { useRef } from "react"
 import styled from "styled-components"
 import { motion, useInView } from "framer-motion"
-import shantha from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/shantha.png"
-import syamanand from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/syamanand.png"
-import img_3 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/img_3.jpg"
-import img_4 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/img_4.jpg"
-import img_5 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/img_5.jpg"
+import shantha from "../assets/img/shantha.png"
+import syamanand from "../assets/img/syamanand.png"
+import img_3 from "../assets/img/img_3.jpg"
+import img_4 from "../assets/img/img_4.jpg"
+import img_5 from "../assets/img/img_5.jpg"
 import { Linkedin, Twitter, Mail } from "lucide-react"
 
 const TeamContainer = styled.section`

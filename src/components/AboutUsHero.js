@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import SpaceImage_2 from "/Users/amankumar/Documents/LifeIntellect/DemoApp/src/assets/img/SpaceImage_2.jpg";
+import SpaceImage_2 from "../assets/img/SpaceImage_2.jpg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },

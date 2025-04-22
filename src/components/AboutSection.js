@@ -187,9 +187,9 @@ export default function AboutSection() {
   
   const statItems = [
     { number: "13+", label: "Years of Experience", icon: "🏆" },
-    { number: "1251+", label: "Successful Projects", icon: "📊" },
-    { number: "99%", label: "Expert Consultants", icon: "👥" },
-    { number: "310+", label: "Happy Clients", icon: "😊" }
+    { number: "2500+", label: "Successful Projects", icon: "📊" },
+    { number: "99.9%", label: "Expert Consultants", icon: "👥" },
+    { number: "500+", label: "Happy Clients", icon: "😊" }
   ]
 
   return (

@@ -214,35 +214,30 @@ export default function ServicesSection() {
   const services = [
     {
       icon: <Shield size={36} color="#0047AB" />,
-      title: "IP Protection Solutions",
-      description:
-        "We help you protect your intellectual property through patents, trademarks, copyrights, and trade secrets.",
+      title: "IP solutions",
+      points: ["Patent", "Industrial design", "Trademark", "Copyright","Geographical indication", "National biodiversity authority approval"]
     },
     {
       icon: <FaFileContract size={36} color="#0047AB" />,
-      title: "IP Lifecycle Management",
-      description: "Develop comprehensive innovation strategies aligned with your business goals and market opportunities.",
+      title: "IP Lifecycle management",
+      points: ["IP Audit of the Company", "IP Policy and Process setup", "IP Portfolio Management", "IP valuation", "Technology Transfer", "Analysis and due diligence "]
     },
     {
       icon: <FlaskConical size={36} color="#0047AB" />, // Science + Tech focus
       title: "Scientific and Technology Solutions",
-      description: "Leverage cutting-edge research and advanced technologies to drive innovation and solve complex challenges.",
-    },
+      points: ["Patent Valuations", "Drug Discovery and Development", "Patent Due Diligence & Variability Analysis", "Assessment Of Clinical & Commercial Potential", "Competitive Landscape & Industry Trends", "Management Consulting", "Market Research", "Scientific Writing and Editing", "Non-Patent Searches and Analysis"]    },
     {
       icon: <PenTool size={36} color="#0047AB" />, // Emphasizes writing/editing
-      title: "Workshop/Scientific Writing and Editing",
-      description: "Refine your research outputs with professional scientific writing, editing, and peer-review preparation services.",
-    },
+      title: "Strategy & Advisory",
+      points: ["IP Strategy Development", "IP Litigation & Enforcement Support", "Licensing & IP Agreements", "Trade Secret Protection & Confidentiality", "IP Exit Strategy & Monetization", "Corporate IP Governance & Risk Mitigation", "Patent & Trademark Portfolio Optimization", "Government and Policy Advocacy"]    },
     {
       icon: <FileText size={36} color="#0047AB" />,
-      title: "Patent Drafting",
-      description: "Expert patent drafting services to ensure comprehensive protection for your inventions.",
-    },
+      title: "IPR Solutions for Startups",
+      points: ["IP Strategy & Roadmap for Startups", "Cost-Effective IP Protection", "IP Due Diligence for Investors", "IP Licensing & Commercialization", "Raising Awareness and Funding with IP", "Startup IP Portfolio Management", "IP Risk Management for Startups"]    },
     {
       icon: <Globe size={36} color="#0047AB" />,
-      title: "Global IP Strategy",
-      description: "Navigate international IP laws and develop global protection strategies for your innovations.",
-    },
+      title: "IP education and training",
+      points: ["Custom IP Workshops for Teams", "IP Fundamentals for Startups and Entrepreneurs", "IP Law & Policy Updates", "IP Management Best Practices", "IP Strategy for Product Development", "IP Commercialization & Licensing Training", "IP Dispute Resolution & Enforcement", "Sector-Specific IP Training"]    },
   ];
 
   return (
@@ -299,7 +294,13 @@ export default function ServicesSection() {
               >
                 <IconWrapper className="icon-wrapper">{service.icon}</IconWrapper>
                 <ServiceTitle>{service.title}</ServiceTitle>
-                <ServiceDescription>{service.description}</ServiceDescription>
+                <ServiceDescription>{service.points.map((point,index) => (
+                  <ul>
+                    <li key={index} style={{ marginBottom: "0.5rem",marginLeft: "1rem", color: "#4A5568" }}>
+                      {point}
+                    </li>
+                  </ul>
+                ))}</ServiceDescription>
               </ServiceCard>
             ))}
           </ServicesGrid>

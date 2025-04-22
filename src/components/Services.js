@@ -560,10 +560,9 @@ const Services = () => {
       <HeroSection>
         <Container>
           <HeroContent>
-            <HeroTitle>Take our Service to Patent your Idea</HeroTitle>
+            <HeroTitle>Protect your intellectual assets with our IPR expertise</HeroTitle>
             <HeroText>
-              Secure your innovation and intellectual property with our comprehensive patent services. 
-              We guide you through every step of the patenting process to protect what matters most: your ideas.
+            Secure your innovation and intellectual property with our comprehensive patent services. We guide you through every step and process to protect what matters most: your ideas.
             </HeroText>
             
             <FormContainer>

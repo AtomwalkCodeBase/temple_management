@@ -526,8 +526,8 @@ export default function ContactPage() {
               <InfoText>
                 <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Corporate Address</div>
                 <div>Lifeintelect Consultancy Pvt. Ltd</div>
-                <div>Gopalan Millennium Towers,</div>
-                <div>ITPL Main Road, Brookfield, Whitefield,</div>
+                <div>Gopalan Millennium Tower, 1st Floor, No 133,</div>
+                <div>ITPL Main Road, Kundalahalli, Brookefield,</div>
                 <div>Bengaluru, Karnataka 560037</div>
 
                 <div style={{ fontWeight: 'bold', marginTop: '16px', marginBottom: '8px' }}>Branch Address</div>

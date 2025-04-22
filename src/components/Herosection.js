@@ -497,8 +497,8 @@ const Herosection = () => {
               <FaUsers />  {/* Team/group icon */}
             </IconContainer>
             <StatContent>
-              <StatValue accentColor="#4285F4">90+</StatValue>
-              <StatLabel>Team Experience</StatLabel>
+              <StatValue accentColor="#4285F4">500+ </StatValue>
+              <StatLabel>clients in patent and design</StatLabel>
             </StatContent>
           </StatCard>
 
@@ -507,7 +507,7 @@ const Herosection = () => {
               <FaGavel />
             </IconContainer>
             <StatContent>
-              <StatValue accentColor="#F5B7B1">2206+</StatValue>
+              <StatValue accentColor="#F5B7B1">4000+</StatValue>
               <StatLabel>IP Fillings</StatLabel>
             </StatContent>
           </StatCard>
@@ -528,8 +528,8 @@ const Herosection = () => {
               {/* <FaHandsHelping />  // For service emphasis */}
             </IconContainer>
             <StatContent>
-              <StatValue accentColor="#58D68D">310+</StatValue>
-              <StatLabel>Clients Served Globally</StatLabel>
+              <StatValue accentColor="#58D68D">2500+</StatValue>
+              <StatLabel>Globally Projects Executed</StatLabel>
             </StatContent>
           </StatCard>
         </StatsContainer>
@@ -539,7 +539,7 @@ const Herosection = () => {
         <FeatureGrid>
           <FeatureItem ref={el => featureItemRefs.current[0] = el} bgColor="rgba(100, 100, 200, 0.8)" index={0}>
             <FeatureIcon>🔒</FeatureIcon>
-            <FeatureText>IP protection solution</FeatureText>
+            <FeatureText>IP solutions</FeatureText>
           </FeatureItem>
 
           <FeatureItem ref={el => featureItemRefs.current[1] = el} bgColor="rgba(20, 40, 100, 0.8)" index={1}>
@@ -549,12 +549,12 @@ const Herosection = () => {
 
           <FeatureItem ref={el => featureItemRefs.current[2] = el} bgColor="rgba(248, 137, 137, 0.8)" index={2}>
             <FeatureIcon>💻</FeatureIcon>
-            <FeatureText>Scientific and tech solution</FeatureText>
+            <FeatureText>Scientific and technology solutions</FeatureText>
           </FeatureItem>
 
           <FeatureItem ref={el => featureItemRefs.current[3] = el} bgColor="rgba(200, 100, 200, 0.8)" index={3}>
             <FeatureIcon>💡</FeatureIcon>
-            <FeatureText>Workshops/ IP education and training</FeatureText>
+            <FeatureText>Strategy & Advisory</FeatureText>
           </FeatureItem>
         </FeatureGrid>
       </FeaturesSection>

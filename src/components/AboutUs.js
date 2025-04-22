@@ -755,15 +755,15 @@ const AboutUs = () => {
   ];
   
   const stats = [
-    { number: '310+', label: 'Happy Clients', icon: '😊' },
+    { number: '500+', label: 'Happy Clients', icon: '😊' },
     { number: '13+', label: 'Years Experience', icon: '⏳' },
-    { number: '99%', label: 'Success Rate', icon: '🏆' },
-    { number: '1251+', label: 'Successful Projects', icon: '✅' }
+    { number: '99.9%', label: 'Success Rate', icon: '🏆' },
+    { number: '2500+', label: 'Successful Projects', icon: '✅' }
   ];
   
   const storyParagraphs = [
-    "Founded in 2008, we began as a small team with a big vision: to create digital experiences that truly matter in people's lives and businesses. What started in a tiny office with just three passionate individuals has evolved into a global creative powerhouse.",
-    "Throughout our journey, we've partnered with businesses of all sizes, from ambitious startups to established industry leaders. Our approach has always been to combine cutting-edge technology with human-centered design, creating solutions that are both innovative and intuitive."
+    "Founded in 2012, LifeIntelect has been at the forefront of helping innovators, startups, and businesses protect and maximize the value of their intellectual property (IP). With a focus on providing tailored IP solutions, we have earned the trust of clients across various industries, guiding them through the complexities of IP protection, management, and commercialization.",
+    "As we continue to evolve, LifeIntelect remains dedicated to empowering our clients with innovative strategies that drive business success. Our journey is marked by a passion for turning ideas into valuable assets, ensuring that intellectual property remains a powerful tool for growth in an increasingly competitive global market. With each milestone, we look forward to the future, excited about the opportunities to help businesses scale and thrive."
   ];
   
   return (

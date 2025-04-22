@@ -57,12 +57,11 @@ const CardsContainer = styled(motion.div)`
 
 const Card = styled(motion.div)`
   background-color: ${props => {
-    switch(props.city.toLowerCase()) {
-      case 'san francisco': return '#fee2e2';
-      case 'paris': return '#fce7f3';
-      case 'egypt': return '#e0f2fe';
-      default: return '#f3f4f6';
-    }
+    const city = props.city.toLowerCase();
+    if (city.includes('ardmore')) return '#fee2e2';
+    if (city.includes('bengaluru')) return '#fce7f3';
+    if (city.includes('bhubaneswar')) return '#e0f2fe';
+    return '#f3f4f6';
   }};
   border-radius: 1rem;
   padding: 1.5rem;
@@ -90,7 +89,7 @@ const BackgroundIcon = styled(motion.div)`
 const CityName = styled.h2`
   font-size: 1.5rem;
   font-weight: 700;
-  color: #111827;
+  color: #666666;
   margin-bottom: 1.5rem;
 `;
 
@@ -137,23 +136,20 @@ const ContactHero = () => {
   const locations = [
     {
       id: 1,
-      city: 'San Francisco',
-      email: 'sanfrancisco@flowbase.co',
-      phone: '(415) 931-1616',
+      city: '2100 East County Line Rd, Ardmore, PA, 19003. USA',
+      email: 'contact@lifeintelect.com',
       icon: 'castle'
     },
     {
       id: 2,
-      city: 'Paris',
-      email: 'paris@flowbase.co',
-      phone: '(415) 931-1616',
+      city: 'ITPL Main Road, Kundalahalli, Brookefield,Bengaluru, Karnataka, India-560037',
+      email: 'support@lifeintelect.com',
       icon: 'eiffel'
     },
     {
       id: 3,
-      city: 'Egypt',
-      email: 'egypt@flowbase.co',
-      phone: '(415) 931-1616',
+      city: 'Chandrasekharpur, Bhubaneswar, Odisha, India-751024',
+      email: 'support@lifeintelect.com',
       icon: 'pyramid'
     }
   ];

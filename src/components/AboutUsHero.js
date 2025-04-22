@@ -174,9 +174,7 @@ const AboutUsHero = () => {
           <EarthText>About <span style={{ color: "#00c6ff" }}>Us</span></EarthText>
         </Title>
         <Subtitle variants={fadeInUp}>
-          To deliver world-class technological and IP solutions with high confidentiality standards, 
-          encompassing ideation, protection, and management, while safeguarding the interests of 
-          our clients and employees.
+        Committed to fostering innovation and safeguarding intellectual property with unmatched confidentiality and client-first standards.
         </Subtitle>
         <Button 
           whileHover={{ scale: 1.05 }}

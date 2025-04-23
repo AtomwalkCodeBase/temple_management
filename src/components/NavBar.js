@@ -641,42 +641,42 @@ const NavBar = () => {
       id: 'Strategic',
       title: 'Strategic & Legal Advisory',
       subServices: [
-        { id: 'IP Strategy Development', name: 'IP Strategy Development' },
-        { id: 'IP Litigation & Enforcement Support', name: 'IP Litigation & Enforcement Support' },
-        { id: 'Licensing & IP Agreements', name: 'Licensing & IP Agreements' },
-        { id: 'Cross-Border IP Strategy & Compliance', name: 'Cross-Border IP Strategy & Compliance' },
-        { id: 'Trade Secret Protection & Confidentiality', name: 'Trade Secret Protection & Confidentiality' },
-        { id: 'IP Exit Strategy & Monetization', name: 'IP Exit Strategy & Monetization' },
-        { id: 'Corporate IP Governance & Risk Mitigation', name: 'Corporate IP Governance & Risk Mitigation' },
-        { id: 'Patent & Trademark Portfolio Optimization', name: 'Patent & Trademark Portfolio Optimization' },
-        { id: 'Government and Policy Advocacy', name: 'Government and Policy Advocacy' },
+        { id: 'IP-Strategy-Development', name: 'IP Strategy Development' },
+        { id: 'IP-Litigation-&-Enforcement-Support', name: 'IP Litigation & Enforcement Support' },
+        { id: 'Licensing-&-IP-Agreements', name: 'Licensing & IP Agreements' },
+        { id: 'Cross-Border-IP-Strategy-&-Compliance', name: 'Cross-Border IP Strategy & Compliance' },
+        { id: 'Trade-Secret-Protection-&-Confidentiality', name: 'Trade Secret Protection & Confidentiality' },
+        { id: 'IP-Exit-Strategy-&-Monetization', name: 'IP Exit Strategy & Monetization' },
+        { id: 'Corporate-IP-Governance-&-Risk-Mitigation', name: 'Corporate IP Governance & Risk Mitigation' },
+        { id: 'Patent-&-Trademark-Portfolio-Optimization', name: 'Patent & Trademark Portfolio Optimization' },
+        { id: 'Government-and-Policy-Advocacy', name: 'Government and Policy Advocacy' },
       ]
     },
     {
       id: 'IPR Solutions',
       title: 'IPR Solutions for Startups',
       subServices: [
-        { id: 'IP Strategy & Roadmap for Startups', name: 'IP Strategy & Roadmap for Startups' },
-        { id: 'Cost-Effective IP Protection', name: 'Cost-Effective IP Protection' },
-        { id: 'IP Due Diligence for Investors', name: 'IP Due Diligence for Investors' },
-        { id: 'IP Licensing & Commercialization', name: 'IP Licensing & Commercialization' },
-        { id: 'Raising Awareness and Funding with IP', name: 'Raising Awareness and Funding with IP' },
-        { id: 'Startup IP Portfolio Management', name: 'Startup IP Portfolio Management' },
-        { id: 'IP Risk Management for Startups', name: 'IP Risk Management for Startups' },
+        { id: 'IP-Strategy-&-Roadmap-for-Startups', name: 'IP Strategy & Roadmap for Startups' },
+        { id: 'Cost-Effective-IP-Protection', name: 'Cost-Effective IP Protection' },
+        { id: 'IP-Due-Diligence-for-Investors', name: 'IP Due Diligence for Investors' },
+        { id: 'IP-Licensing-&-Commercialization', name: 'IP Licensing & Commercialization' },
+        { id: 'Raising-Awareness-and-Funding-with-IP', name: 'Raising Awareness and Funding with IP' },
+        { id: 'Startup-IP-Portfolio-Management', name: 'Startup IP Portfolio Management' },
+        { id: 'IP-Risk-Management-for-Startups', name: 'IP Risk Management for Startups' },
       ]
     },
     {
       id: 'IP education and training',
       title: 'IP education and training',
       subServices: [
-        { id: 'Custom IP Workshops for Teams', name: 'Custom IP Workshops for Teams' },
-        { id: 'IP Fundamentals for Startups and Entrepreneurs', name: 'IP Fundamentals for Startups and Entrepreneurs' },
-        { id: 'IP Law & Policy Updates', name: 'IP Law & Policy Updates' },
-        { id: 'IP Management Best Practices', name: 'IP Management Best Practices' },
-        { id: 'IP Strategy for Product Development', name: 'IP Strategy for Product Development' },
-        { id: 'IP Commercialization & Licensing Training', name: 'IP Commercialization & Licensing Training' },
-        { id: 'IP Dispute Resolution & Enforcement', name: 'IP Dispute Resolution & Enforcement' },
-        { id: 'Sector-Specific IP Training', name: 'Sector-Specific IP Training' },
+        { id: 'Custom-IP-Workshops-for-Teams', name: 'Custom IP Workshops for Teams' },
+        { id: 'IP-Fundamentals-for-Startups-and-Entrepreneurs', name: 'IP Fundamentals for Startups and Entrepreneurs' },
+        { id: 'IP-Law-&-Policy-Updates', name: 'IP Law & Policy Updates' },
+        { id: 'IP-Management-Best-Practices', name: 'IP Management Best Practices' },
+        { id: 'IP-Strategy-for-Product-Development', name: 'IP Strategy for Product Development' },
+        { id: 'IP-Commercialization-&-Licensing-Training', name: 'IP Commercialization & Licensing Training' },
+        { id: 'IP-Dispute-Resolution-&-Enforcement', name: 'IP Dispute Resolution & Enforcement' },
+        { id: 'Sector-Specific-IP-Training', name: 'Sector-Specific IP Training' },
       ]
     }
   ];
@@ -689,7 +689,7 @@ const NavBar = () => {
   ];
 
   const navigateTo = (path) => {
-    window.location.href = `/services/${path}`;
+    window.location.href = `/${path}`;
     setShowServicesDropdown(false);
     closeMenu();
   };

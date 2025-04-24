@@ -1,3 +1,8 @@
+import PatentSearch from "../assets/img/website_03.png"
+import PatentDraft from "../assets/img/website_02.png"
+import DesignPatent from "../assets/img/website_01.png"
+import CopyRightServices from "../assets/img/website_04.png"
+import TrademarkServices from "../assets/img/website_05.png"
 const subServiceContent = {
 	patent: {
 	  service_1: {
@@ -49,7 +54,7 @@ const subServiceContent = {
 				"A state-of-the-art or technology landscape analysis helps clients understand the evolution of a particular technology and the overall technology trends in multiple domains. Our experts conduct a comprehensive search and analysis of patent literature, scientific publications, and other relevant sources to identify technological trends, major players, and competitors' strengths. We analyse patent activities related to the technology of interest. A state-of-the-art or technology landscape analysis provides valuable insights into the technological advancements and competitive landscape, helping clients formulate R&D strategies, plan product launches, and understand competitors' strategies. We provide a detailed analysis report that includes insights into technology trends, major players, and recommendations for strategic decision-making.",
 			},
 		  ],
-		  image: "/images/patent-search-types.jpg",
+		  image: PatentSearch,
 		},
 		closing:
 		  "Lifeintelect's patent search service is designed to give you a clear understanding of where your invention stands in the global intellectual property landscape. With our thorough approach and expert analysis, you can move forward with confidence.",
@@ -58,7 +63,7 @@ const subServiceContent = {
 		title: "Patent Drafting",
 		description:
 		  "Patent drafting is one of the most critical documents in the entire patent registration process and is also considered one of the most complex techno-legal documents. This document contains the features of the invention for which protection is being sought in the form of claims. Our strong team, working in organized and effective internal processes, understands your invention to deliver excellent provisional and complete specification patent drafts. The patent specification we draft and file for you meets the standards and requirements of the US, EP, WO, and Indian jurisdictions.",
-		image: "/images/patent-drafting.jpg",
+		image: PatentDraft,
 		types: [
 		  {
 			title: "Provisional Patent Specification Drafting",
@@ -232,7 +237,7 @@ const subServiceContent = {
 		title: "Industrial Design",
 		description:
 		  "Industrial design/ Design Patent has great relevance in industrial era. It adds value to your IP portfolio. Basically, Design is the “visual aspect’ of the product, that is the shape, pattern, combination of pattern, colour, configuration or ornamentation which are applied to articles but not the utility of the article. Design registration process varies from country to country, we assist with registration of design in India & abroad. We provide search, analysis, registration, office actions, maintenance, portfolio management & risk assessment of the Design Patent.",
-		image: "/images/industrial-design.jpg",
+		image: DesignPatent,
 	  },
 	  service_2: {
 		title: "Design Drafting",
@@ -410,7 +415,7 @@ const subServiceContent = {
 		title: "Copyright",
 		description:
 		  "Copyright is a bundle of exclusive rights vested in the author/owner/creator to do or authorize others to do certain acts in relation to their works. Copyrights cover much broader ground including artistic, literary, musical, dramatic works, cinematographic films, sound recordings, computer software and data bases. We provide copyright analysis reports to clients on various aspects of copyright law that enable them to make decisions on various strategic and business issues.",
-		image: "/images/copyright.jpg",
+		image: CopyRightServices,
 	  },
 	  service_2: {
 		title: "Copyright Filing and Registration",
@@ -467,7 +472,7 @@ const subServiceContent = {
 		title: "Trademark",
 		description:
 		  "At Lifeintelect, we understand the importance of protecting your creative works and intellectual property. Trademark is a mark capable of being represented graphically and which is capable of distinguishing the goods or services of one person from those of others. The function of trademark is identification of source, quality and act as an advertising symbol. We provide trademark search and Trademark analysis services. Our search reports are accompanied by a trademark opinion suggesting the possibility of registering the client’s trademark. We also provide risk analysis reports that enable clients to make decisions with respect to trademark use, opposition and infringement. Our reports enable clients to make decisions on various aspects of their trade mark portfolio. We offer trademark filing and registration services in India and internationally.",
-		image: "/images/trademark.jpg",
+		image: TrademarkServices,
 		closing:
 		  "With our expert guidance and comprehensive services, you can rest assured that your creations are well-protected at every stage. Ready to safeguard your creations with Lifeintelect? Let's get started!",
 	  },

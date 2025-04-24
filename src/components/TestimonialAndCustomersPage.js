@@ -739,23 +739,117 @@ const TestimonialAndCustomersPage = () => {
 
   const testimonials = [
     {
-      text: "This company has completely transformed how we operate. Their innovative approach and dedication to quality are unmatched in the industry. We've seen a 300% increase in customer engagement since implementing their solutions!",
-      name: "Sarah Johnson",
-      position: "CEO, TechSolutions Inc.",
-      stars: 5
+      text: "We recently availed the services of LifeIntelect Consultancy Pvt Ltd for our company trademark registration. Dr. Lipika Sahoo guided us through the process with professionalism and expertise. The service was exceptional, and we received our trademark on time. The team was very responsive and helpful with our queries. We highly recommend LifeIntelect Consultancy to our business associates and clients for their outstanding service. We wish them all success in their business endeavours.",
+      name: "Unknown",
+      position: "Representative, Total Solutions",
+      stars: 5,
     },
     {
-      text: "Working with this team has been one of the best decisions we've made. Their attention to detail and genuine commitment to our success made all the difference. I highly recommend their services to anyone looking to grow.",
-      name: "Michael Chen",
-      position: "Marketing Director, InnovateCorp",
-      stars: 5
+      text: "I recently availed the services of Lifeintelect for getting my Trademark registered. I was very impressed with Dr. Lipika’s professional and positive approach. She ensured that I understood the entire process and categories well and completed the registration in record time and at a reasonable cost. I would definitely recommend her services to my friends and acquaintances.",
+      name: "Rajesh Bansal",
+      position: "Managing Partner, ENVIVA",
+      stars: 5,
     },
     {
-      text: "The level of professionalism and expertise this company brings is extraordinary. They not only delivered beyond our expectations but have been a valuable strategic partner in our growth journey over the past three years.",
-      name: "Jessica Williams",
-      position: "COO, Global Enterprises",
-      stars: 5
-    }
+      text: "We recently worked with LifeIntelect Consultancy Pvt Ltd for a trademark registration for a product branding project. Dr. Lipika Sahoo provided exceptional guidance throughout the entire process. Her wealth of knowledge, experience and expertise ensured that all our queries were addressed promptly and clearly. The service was efficient, cost-effective, and thoroughly professional. We were very impressed with the timely and effective solutions provided. I highly recommend LifeIntelect Consultancy to anyone seeking to secure their intellectual property rights. Thank you, Dr. Lipika, for your excellent work. Wishing you continued success.",
+      name: "Gayatri",
+      position: "Director, Raj Viha Tours and Travels P Ltd",
+      stars: 5,
+    },
+    {
+      text: "We are a twenty-year-old government regulated registered Chit Fund Company that enables monthly savers to borrow multiples of their savings in times of need. Recently, my son Sandeep required trademark services for his e-commerce business. I referred him to Dr. Lipika Sahoo of LifeIntelect Consultancy. Sandeep had this to say after the assignment was completed: 'Dad, thanks for referring Dr. Lipika Sahoo’s services. She displayed in-depth knowledge of the subject and handled the assignment professionally and quickly.' I strongly recommend Dr. Lipika Sahoo’s services for trademark and copyright-related matters.",
+      name: "Sridhar Alampalli",
+      position: "Chairman, Shanthala Chits Pvt Ltd",
+      stars: 5,
+    },
+    {
+      text: "At Olety CARZ PRIVATE LIMITED, a premium one-stop shop for pre-owned cars and two-wheelers in Bangalore with 25 years of experience, we would like to express our gratitude to LifeIntelect Consultancy Pvt Ltd for their outstanding services. We recently sought their assistance in registering our brand, and their support was timely and invaluable. Their expert advice guided us through the entire process seamlessly, providing us with all the necessary information and ensuring a smooth experience. The team's efficiency and responsiveness allowed us to complete the registration in a matter of days. We highly appreciate the excellent work done by LifeIntelect Consultancy and are more than happy to recommend their services to our contacts. We wish them continued success in their future endeavours.",
+      name: "Santosh Olety",
+      position: "Managing Director, Olety CARZ PRIVATE LIMITED",
+      stars: 5,
+    },
+    {
+      text: "Total Solutions, established in 1995, specializes in accounting and indirect taxation, providing comprehensive solutions with flexibility, precision, and quick responses. We have utilized Dr. Lipika Sahoo's expertise for trademark registrations, benefiting from her in-depth knowledge and professional approach. Our clients have consistently expressed satisfaction with her services. We highly recommend Dr. Lipika Sahoo and LifeIntelect Consultancy for their exceptional trademark services.",
+      name: "Unknown",
+      position: "Representative, Total Solutions",
+      stars: 5,
+    },
+    {
+      text: "We, M/S. INNOVA DIESEL GENERATORS PVT. LIMITED, manufacturers and suppliers of Mahindra Powerol Brand Diesel Generating Sets, recently engaged LifeIntelect Consultancy Pvt Ltd for trademark registration, intellectual property rights, and non-disclosure agreement drafting services. Dr. Lipika Sahoo, Founder & CEO, demonstrated extensive knowledge and provided valuable guidance throughout the process. The services rendered were excellent and greatly benefited our organization. We highly recommend LifeIntelect Consultancy to our BNI members and other friends and customers.",
+      name: "Prashanth Shetty",
+      position: "Director, Innova Diesel Generators Pvt. Limited",
+      stars: 5,
+    },
+    {
+      text: "At RAAGA, we focus on providing top-quality construction solutions within committed timelines, driven by customer satisfaction and long-term relationships. We are pleased to certify the excellent service offered by Dr. Lipika Sahoo for our trademark registration. Dr. Lipika is a thorough expert in this field and provides hassle-free solutions. She diligently followed up with the authorities and kept us informed about the various stages of the logo registration process. It was indeed special to have our first trademark done, thanks to Dr. Lipika Sahoo. We have no hesitation in recommending her to our contacts and wish her continued success in her career.",
+      name: "Ranganath Kuntumalla",
+      position: "Representative, RAAGA Constructions",
+      stars: 5,
+    },
+    {
+      text: "We, Universe Power Systems partners with Emerson Network Power (India) Pvt Ltd, offering UPS, batteries, server racks, and data centre solutions. We recently applied for a trademark for our company through LifeIntelect Consultancy. Dr Lipika Sahoo handled the process very professionally, ensuring a smooth and efficient experience. I strongly recommend Ms. Lipika Sahoo to others and wish her all the very best in her future endeavours.",
+      name: "V. Jeyalakshmi",
+      position: "Proprietrix, Universe Power Systems",
+      stars: 5,
+    },
+    {
+      text: "We at Hydrilla® specialize in Aquaponics and Hydroponics farming, consulting, and system manufacturing. For our invention, the 'Modular mineralization biofilter system,' we turned to Dr. Lipika Sahoo of LifeIntelect Consultancy Pvt Ltd to file a patent. Dr. Lipika understood the urgency of our request and efficiently filed the patent in just three weeks, ensuring a smooth and thorough process. We highly recommend the services of LifeIntelect Consultancy Pvt Ltd to our friends and contacts.",
+      name: "Mamatha Kamireddy",
+      position: "Founder & CEO, Hydrilla®",
+      stars: 5,
+      patentRelated: true,
+    },
+    {
+      text: "We've worked with LifeIntelect Consultancy Pvt Ltd for years. Dr. Lipika Sahoo and her team are exceptionally professional, responsive, and efficient in IP matters. Their extensive knowledge and excellent service have always met our expectations. We highly recommend them to anyone in need of expert IP services.",
+      name: "Sridhar Aalampalli",
+      position: "Chairman, Shantala Chits Pvt Ltd",
+      stars: 5,
+    },
+    {
+      text: "Veekay Cooolers, established in 1986, is a leading air conditioning solutions provider in Bangalore. We recommended LifeIntelect Consultancy to a pharmaceutical company for IP protection and technology transfer. Dr. Lipika Sahoo and her team handled the entire process professionally and efficiently, providing regular updates and ensuring a smooth experience. We highly recommend LifeIntelect for their excellent services.",
+      name: "V.K. Shanmuga Vel",
+      position: "CEO, Veekay Cooolers",
+      stars: 5,
+      patentRelated: true,
+    },
+    {
+      text: "Universe Power Systems, with 27 years of experience, offers DG UPS, HVAC, Datacenter, and infrastructure solutions. LifeIntelect Consultancy Pvt Ltd has efficiently handled all our trademark and patent filings, including international patents, under the expert guidance of Dr. Lipika Sahoo. Their thorough and timely service has been invaluable. We highly appreciate their support and wish them success in future projects.",
+      name: "Jayalakshmi Venkatanarayanan",
+      position: "Founder, Universe Power Systems",
+      stars: 5,
+      patentRelated: true,
+    },
+    {
+      text: "At Kanika - The Jewellery Boutique, we believe in creating unique and customized gold and diamond jewels. I had the privilege of working with Dr. Lipika Sahoo for legal drafting work for Meteonic Innovation Pvt Ltd and trademark protection for Kanika. Dr. Lipika’s knowledge and competence are outstanding. She handled our case with remarkable speed and fought diligently to protect our brand name from being claimed by someone in Agra. Dr. Lipika and her team conducted thorough research and analysis, keeping us well-informed throughout the process. Her communication and responsiveness were beyond my expectations. We highly recommend Dr. Lipika Sahoo for all legal and trademark needs.",
+      name: "Ankur",
+      position: "Representative, Kanika - The Jewellery Boutique",
+      stars: 5,
+    },
+    {
+      text: "Kanika - The Jewellery Boutique, where you dream, we design, and I deliver. We believe you are a star and deserve something unique, so we focus on customized jewels in gold and diamond. We wanted to register a trademark for Kanika Jewels. Dr. Lipika Sahoo advised us on the right categories and guided us through each step. We are truly happy with her speed and domain knowledge and are pleased to recommend her to our friends and family.",
+      name: "Ankur",
+      position: "Representative, Kanika - The Jewellery Boutique",
+      stars: 5,
+    },
+    {
+      text: "This is Hitesh from Surgeway Biosciences, a pharmaceutical export house. We contacted LifeIntelect Consultancy Pvt Ltd for trademark registration and were impressed by their professionalism and quick service. We highly recommend their services and wish them all the best.",
+      name: "Hitesh Kumar M",
+      position: "Vice President, Surgeway Biosciences",
+      stars: 5,
+    },
+    {
+      text: "Vidruma, a leading gemstone boutique in Bangalore, recommended Dr. Lipika Sahoo of LifeIntelect Consultancy Pvt Ltd for trademark and patent filings. Dr. Lipika provided thorough solutions with exceptional knowledge and timely service. We and our clients are very satisfied with her expertise. We highly recommend LifeIntelect Consultancy for their dedication and excellent service.",
+      name: "Srilatha V",
+      position: "Founder & Director, Vidruma Gemstones & Laboratory",
+      stars: 5,
+      patentRelated: true,
+    },
+    {
+      text: "Saptha Innovations Pvt Ltd, an authorized distributor for Grundfos pumps and AO Smith heat pumps, availed the services of LifeIntelect Consultancy Pvt Ltd, headed by Dr. Lipika Sahoo, for our trademark registration. We appreciate the valuable advice received from the team during the process. We thank the team for their support and wish them the very best in their business.",
+      name: "Unknown",
+      position: "Representative, Saptha Innovations Pvt Ltd",
+      stars: 5,
+    },
   ];
 
   const brands = [

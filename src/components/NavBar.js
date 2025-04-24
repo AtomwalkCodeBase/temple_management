@@ -625,6 +625,7 @@ const NavBar = () => {
       id: 'scientific-tech',
       title: 'Scientific & Technology Solutions',
       subServices: [
+        { id: 'Scientific-&-Technology-Solutions', name: 'Scientific & Technology Solutions' },
         { id: 'patent-valuations', name: 'Patent Valuations' },
         { id: 'drug-discovery', name: 'Drug Discovery and Development' },
         { id: 'patent-due-diligence', name: 'Patent Due Diligence & Variability Analysis' },

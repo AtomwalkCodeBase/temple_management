@@ -12,10 +12,10 @@ import NavBar from './components/NavBar';
 import Footer2 from './components/Footer2';
 import subServiceContent from './data/PatentsubServiceContent';
 import subServiceContent2 from './data/Ip-life-cycle-subServiceContent';
-import Scientific from './data/Scient';
-import StrategicLegalAdvisory from './data/StrategicLegalAdvisory';
-import IprSolutionsStartups from './data/IprSolutionsStartups';
-import IpEducationTraining from './data/IpEducationTraining';
+import Scientific from './data/ScientificTechnologyContent';
+import StrategicLegalAdvisory from './data/StrategicLegalAdvisoryContent';
+import IprSolutionsStartups from './data/IprSolutionsStartupsContent';
+import IpEducationTraining from './data/IpEducationTrainingContent';
 
 // Theme configuration
 const themes = {
@@ -129,6 +129,7 @@ const ipLifecycleRoutes = [
 ];
 
 const scientificRoutes = [
+  { path: '/Scientific-&-Technology-Solutions', type: 'scientificTechnology', id: 'scientificSolutions', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
   { path: '/patent-valuations', type: 'scientificTechnology', id: 'patentValuations', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
   { path: '/drug-discovery', type: 'scientificTechnology', id: 'drugDiscoveryDevelopment', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
   { path: '/patent-due-diligence', type: 'scientificTechnology', id: 'patentDueDiligence', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },

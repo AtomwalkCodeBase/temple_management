@@ -1,9 +1,37 @@
+import scientificSolutions from "../assets/img/website_06.png";
 const subServiceContent = {
 	scientificTechnology: {
 	  title: "Scientific & Technology Solutions",
 	  description:
 		"At Lifeintelect, we provide cutting-edge Scientific & Technology Solutions to drive innovation in life sciences, healthcare, and intellectual property management. Our comprehensive services, from patent valuations to scientific writing, empower your organization to navigate complex markets, optimize IP strategies, and accelerate R&D. Ready to advance your scientific innovations with Lifeintelect? Let's get started!",
 	  subServices: {
+		scientificSolutions: {
+		  title: "Scientific & Technology Solutions",
+		  description:
+			"At Lifeintelect, we provide scientific, operational, and strategic solutions for various industry functions. Our team has extensive experience in both academia and industry, possessing both functional expertise and industry focus. With our in-depth knowledge, we assist our clients at every stage of the Idea to Innovation process.",
+		  processTitle: "We offer techno-legal consulting across a diverse range of disciplines, including:",
+		  process: [
+			{ title: "Life Sciences", description: "" },
+			{ title: "Healthcare", description: "" },
+			{ title: "Pharmaceuticals", description: "" },
+			{ title: "Medical Technology", description: "" },
+			{ title: "Agriculture", description: "" },
+			{ title: "Natural Medicine", description: "" },
+			{ title: "Fisheries", description: "" },
+			{ title: "Biofuels", tópicos: "" },
+			{ title: "Materials Processing", description: "" },
+			{ title: "Materials Synthesis", description: "" },
+			{ title: "Nanotechnology Research and Applications", description: "" },
+			{ title: "Clinical Research", description: "" },
+			{ title: "Chemistry", description: "" },
+			{ title: "Drug Discovery", description: "" },
+			{ title: "Environmental solutions", description: "" },
+			{ title: "Blockchain technology and AI", description: "" },
+		  ],
+		  image: scientificSolutions,
+		  closing:
+			"Lifeintelect’s patent valuation services provide clear insights to stay ahead of the competition and make informed strategic decisions to enhance your business outcomes. Ready to value your patents with Lifeintelect? Let's get started!"
+		},
 		patentValuations: {
 		  title: "Patent Valuations",
 		  description:

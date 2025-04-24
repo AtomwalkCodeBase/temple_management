@@ -318,8 +318,9 @@ const ServiceImage = styled.img`
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
+  margin: 20px auto;
   object-fit: cover;
+  display: block;
 `;
 
 const ServiceList = styled.ul`

@@ -50,7 +50,7 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
             {/* Render process section */}
             {subService.process && (
               <Section>
-                <SectionHeading theme={theme}>Our Process</SectionHeading>
+                <SectionHeading theme={theme}>{subService.processTitle ? subService.processTitle : "Our process"}</SectionHeading>
                 <ServiceList>
                   {subService.process.map((item, i) => (
                     <ServiceListItem key={i}>
@@ -63,10 +63,16 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
                       <ListItemContent>
                         <ListItemTitle>{item.title}</ListItemTitle>
                         <ListItemDescription>{item.description}</ListItemDescription>
+                            {item.image && (
+                        <ServiceImage
+                          src={item.image}
+                          alt={`${item.title} Illustration`}
+                        />
+                      )}
                       </ListItemContent>
                     </ServiceListItem>
                   ))}
-                </ServiceList>
+                </ServiceList>            
               </Section>
             )}
             
@@ -76,6 +82,12 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
                 <SectionText>{subService.closing}</SectionText>
               </Section>
             )}
+            {subService.image && (
+                        <ServiceImage
+                          src={subService.image}
+                          alt={`${subService.title} Illustration`}
+                        />
+                      )}
           </ServiceContent>
         </ServiceCard>
       </ServicesContainer>
@@ -266,6 +278,17 @@ const ListItemTitle = styled.div`
 const ListItemDescription = styled.div`
   color: #4a5568;
   font-size: 0.95rem;
+`;
+
+const ServiceImage = styled.img`
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  object-fit: cover;
+  display: block;
 `;
 
 const CallToAction = styled.div`

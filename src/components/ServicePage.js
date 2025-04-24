@@ -210,7 +210,6 @@ const PageContainer = styled.div`
   margin: 0 auto;
   padding: 0 24px;
   padding-top: 70px;
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #1a202c;
   line-height: 1.6;
   background-color: #fafafa;

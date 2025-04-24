@@ -334,16 +334,45 @@ const MegaDropdown = styled.div`
   background: ${({ isScrolled }) => isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(248, 249, 250, 0.95)'};
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   border-top: 3px solid #3498db;
-  padding: 30px;
+  padding: 30px 30px 40px; /* Increased bottom padding for scrollable content */
   z-index: 1000;
   display: flex;
   justify-content: center;
   backdrop-filter: blur(10px);
   animation: ${fadeIn} 0.3s ease forwards;
   transform-origin: top center;
+  max-height: calc(100vh - 100px); /* Limit height to viewport minus navbar */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  
+  /* Custom Scrollbar for WebKit browsers */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #FF3CAC, #784BA0, #2B86C5);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #FF3CAC, #784BA0, #2B86C5);
+    opacity: 0.9;
+  }
+  
+  /* Custom Scrollbar for Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #784BA0 rgba(0, 0, 0, 0.05);
 
   @media (max-width: 1199px) {
-    padding: 20px;
+    padding: 20px 20px 30px;
+    max-height: calc(100vh - 80px); /* Adjust for smaller navbar height */
   }
 `;
 

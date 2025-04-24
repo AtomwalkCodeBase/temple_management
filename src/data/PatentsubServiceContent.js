@@ -3,6 +3,7 @@ import PatentDraft from "../assets/img/website_02.png"
 import DesignPatent from "../assets/img/website_01.png"
 import CopyRightServices from "../assets/img/website_04.png"
 import TrademarkServices from "../assets/img/website_05.png"
+import GeographicalIndication from "../assets/img/GI.png"
 const subServiceContent = {
 	patent: {
 	  service_1: {
@@ -28,7 +29,7 @@ const subServiceContent = {
 		  {
 			title: "Detailed Search Report",
 			description:
-			  "Next, we compile a detailed search report summarizing the findings and providing insights into the patent landscape. This report includes an analysis of relevant prior art and recommendations on how to proceed with your patent application.",
+			  "Next, we compile a detailed search report summarizing the findings and providing insights into the patent landscape. This report includes an analysis of relevant prior art and recommendations on how to proceed with your patent application. Lifeintelect's patent search service is designed to give you a clear understanding of where your invention stands in the global intellectual property landscape. With our thorough approach and expert analysis, you can move forward with confidence",
 		  },
 		],
 		typesSection: {
@@ -56,8 +57,6 @@ const subServiceContent = {
 		  ],
 		  image: PatentSearch,
 		},
-		closing:
-		  "Lifeintelect's patent search service is designed to give you a clear understanding of where your invention stands in the global intellectual property landscape. With our thorough approach and expert analysis, you can move forward with confidence.",
 	  },
 	  service_2: {
 		title: "Patent Drafting",
@@ -88,11 +87,9 @@ const subServiceContent = {
 		  {
 			title: "Office Actions",
 			description:
-			  "Our specialized team of patent attorneys, registered patent agents, and technologists has experience in successfully handling patent filing and prosecution in India, timely responding to office actions. We work closely with you to draw up the final and non-final office action responses by meticulously drafting comments, arguments, and amendments that are acceptable under patent law by the examiner.",
+			  "Our specialized team of patent attorneys, registered patent agents, and technologists has experience in successfully handling patent filing and prosecution in India, timely responding to office actions. We work closely with you to draw up the final and non-final office action responses by meticulously drafting comments, arguments, and amendments that are acceptable under patent law by the examiner. To file the right kind of patent draft, our experts meticulously construct and formulate claims, preventing others from finding ways to copy your idea or parts of it. We customize our services to meet your needs at affordable prices, turning ideas into high-quality enforceable patents that encompass every aspect of the invention.",
 		  },
-		],
-		closing:
-		  "To file the right kind of patent draft, our experts meticulously construct and formulate claims, preventing others from finding ways to copy your idea or parts of it. We customize our services to meet your needs at affordable prices, turning ideas into high-quality enforceable patents that encompass every aspect of the invention.",
+		]
 	  },
 	  service_3: {
 		title: "Patent Filing",
@@ -103,36 +100,26 @@ const subServiceContent = {
 			heading: "Our Process",
 			items: [
 			  {
-				title: "Patent Search",
+				title: "Patent Search and Application Drafting",
 				description:
-				  "We begin by conducting a thorough patent search to confirm your invention's novelty.",
+				  "We begin by conducting a thorough patent search to confirm your invention's novelty. Following this, we draft a detailed patent application, including the title, abstract, background, description, and claims. Depending on your needs, we decide whether to file a provisional application to secure an early filing date or proceed directly with a non-provisional application to start the formal examination process.",
 			  },
 			  {
-				title: "Drafting Application",
+				title: "Application Submission and Office Action Response",
 				description:
-				  "Following this, we draft a detailed patent application, including the title, abstract, background, description, and claims. Depending on your needs, we decide whether to file a provisional application to secure an early filing date or proceed directly with a non-provisional application to start the formal examination process.",
+				  "We manage the submission of your application to the relevant patent office, ensuring all documents are correctly filed. We handle all the required fees and keep you informed throughout the process. If the patent office issues any office actions, we address them promptly, making necessary amendments and providing strong arguments to support your application's approval.",
 			  },
 			  {
-				title: "Submission",
-				description:
-				  "We manage the submission of your application to the relevant patent office, ensuring all documents are correctly filed. We handle all the required fees and keep you informed throughout the process.",
-			  },
-			  {
-				title: "Office Actions",
-				description:
-				  "If the patent office issues any office actions, we address them promptly, making necessary amendments and providing strong arguments to support your application's approval.",
-			  },
-			  {
-				title: "Patent Issuance",
+				title: "Patent Issuance and Maintenance",
 				description:
 				  "Once your patent is approved, we guide you through paying the issuance fee and help you obtain your official patent certificate. We also manage the maintenance of your patent, ensuring all necessary fees are paid on time to keep your patent active.",
 			  },
+			  {
+				title: "International Patent Protection via PCT",
+				description:
+				  "In addition to national filings, we assist with the Patent Cooperation Treaty (PCT) process, enabling you to seek patent protection internationally. We prepare and file PCT applications, manage the international phase, and ensure timely entry into national phases in desired countries. Our expertise in navigating the complexities of the PCT process ensures broad and strategic protection for your invention across multiple jurisdictions.",
+			  },
 			],
-		  },
-		  {
-			heading: "International Filing",
-			description:
-			  "In addition to national filings, we assist with the Patent Cooperation Treaty (PCT) process, enabling you to seek patent protection internationally. We prepare and file PCT applications, manage the international phase, and ensure timely entry into national phases in desired countries. Our expertise in navigating the complexities of the PCT process ensures broad and strategic protection for your invention across multiple jurisdictions.",
 		  },
 		],
 	  },
@@ -145,17 +132,12 @@ const subServiceContent = {
 			heading: "Our Process",
 			items: [
 			  {
-				title: "Monitoring Application",
+				title: "Tracking & Office Action Handling",
 				description:
-				  "After filing your patent application, we continuously monitor its progress and respond to any office actions from the patent office. These office actions may include objections or rejections based on prior art or other examination findings.",
+				  "After filing your patent application, we continuously monitor its progress and respond to any office actions from the patent office. These office actions may include objections or rejections based on prior art or other examination findings. Our team of experts carefully reviews these actions and prepares detailed responses to address any issues that arise.",
 			  },
 			  {
-				title: "Responding to Office Actions",
-				description:
-				  "Our team of experts carefully reviews these actions and prepares detailed responses to address any issues that arise.",
-			  },
-			  {
-				title: "Communication with Examiners",
+				title: "Examiner Communication & Amendments",
 				description:
 				  "We engage in strategic communication with patent examiners, making necessary amendments to the application and providing robust arguments to support the patentability of your invention. This process may involve several rounds of correspondence and adjustments to ensure the application meets all legal and technical requirements.",
 			  },
@@ -200,7 +182,7 @@ const subServiceContent = {
 		  {
 			heading: "NBA Filing",
 			description:
-			  "At Lifeintelect we ensure that all necessary steps for NBA (National Biodiversity Authority) compliance are followed meticulously.",
+			  "At Lifeintelect we ensure that all necessary steps for NBA (National Biodiversity Authority) compliance are followed meticulously. Here’s the process we follow:",
 			steps: [
 			  {
 				title: "Assessing Biological Resource Use",
@@ -210,12 +192,22 @@ const subServiceContent = {
 			  {
 				title: "Documenting the Origin of Biological Resources",
 				description:
-				  "We collect and document detailed information about the biological resources used in the invention, including: The exact source of the biological material (e.g., from nature, research institutions, or indigenous communities). The method of collection or acquisition. Any agreements related to the collection (e.g., Memorandum of Understanding (MoU) with local communities).",
+				  "We collect and document detailed information about the biological resources used in the invention.",
+				subPoints: [
+				  "The exact source of the biological material (e.g., from nature, research institutions, or indigenous communities).",
+				  "The method of collection or acquisition.",
+				  "Any agreements related to the collection (e.g., Memorandum of Understanding (MoU) with local communities).",
+				],
 			  },
 			  {
 				title: "Filing the NBA Application",
 				description:
-				  "We prepare and file an application with the NBA. This application includes: Detailed descriptions of the invention and how biological resources are used. Proof of prior approval from the NBA (if required) for accessing biological resources. A declaration of compliance with the Biodiversity Act and relevant regulations.",
+				  "We prepare and file an application with the NBA.",
+				subPoints: [
+				  "Detailed descriptions of the invention and how biological resources are used.",
+				  "Proof of prior approval from the NBA (if required) for accessing biological resources.",
+				  "A declaration of compliance with the Biodiversity Act and relevant regulations.",
+				],
 			  },
 			  {
 				title: "Follow-up with the NBA",
@@ -236,13 +228,15 @@ const subServiceContent = {
 	  service_1: {
 		title: "Industrial Design",
 		description:
-		  "Industrial design/ Design Patent has great relevance in industrial era. It adds value to your IP portfolio. Basically, Design is the “visual aspect’ of the product, that is the shape, pattern, combination of pattern, colour, configuration or ornamentation which are applied to articles but not the utility of the article. Design registration process varies from country to country, we assist with registration of design in India & abroad. We provide search, analysis, registration, office actions, maintenance, portfolio management & risk assessment of the Design Patent.",
+		  "Industrial design/ Design Patent has great relevance in industrial era. It adds value to your IP portfolio. Basically, Design is the “visual aspect’ of the product, that is the shape, pattern, combination of pattern, colour, configuration or ornamentation which are applied to articles but not the utility of the article.",
+		description1:
+		  "Design registration process varies from country to country, we assist with registration of design in India & abroad. We provide search, analysis, registration, office actions, maintenance, portfolio management & risk assessment of the Design Patent. ",
 		image: DesignPatent,
 	  },
 	  service_2: {
 		title: "Design Drafting",
 		description:
-		  "At Lifeintelect, we offer expert design drafting services to ensure your visual creations are meticulously documented and protected.",
+		  "At Lifeintelect, we offer expert design drafting services to ensure your visual creations are meticulously documented and protected. Here's how we handle the process:",
 		process: [
 		  {
 			title: "Understanding Your Design",
@@ -252,7 +246,11 @@ const subServiceContent = {
 		  {
 			title: "Creating Representations",
 			description:
-			  "Our team of skilled designers and patent drafters then create detailed, accurate representations of your design, including: Drawings and Illustrations: Precise drawings and illustrations that clearly depict the ornamental features of your design from various angles. Descriptions: Thorough descriptions that explain the visual elements and highlight the unique aspects of your design.",
+			  "Our team of skilled designers and patent drafters then create detailed, accurate representations of your design.",
+			subPoints: [
+			  "Drawings and Illustrations: Precise drawings and illustrations that clearly depict the ornamental features of your design from various angles.",
+			  "Descriptions: Thorough descriptions that explain the visual elements and highlight the unique aspects of your design.",
+			],
 		  },
 		  {
 			title: "Meeting Patent Office Requirements",
@@ -269,27 +267,17 @@ const subServiceContent = {
 		  "At Lifeintelect, we handle every aspect of design filing to ensure your creations are protected efficiently.",
 		process: [
 		  {
-			title: "Originality Confirmation",
+			title: "Design Search & Application Drafting",
 			description:
-			  "We start by confirming the originality of your design through thorough searches.",
+			  "We start by confirming the originality of your design through thorough searches. Once verified, our experts draft a detailed application, including precise drawings and comprehensive descriptions that highlight the unique features of your design",
 		  },
 		  {
-			title: "Drafting Application",
+			title: "Submission & Office Action Management",
 			description:
-			  "Once verified, our experts draft a detailed application, including precise drawings and comprehensive descriptions that highlight the unique features of your design.",
+			  "Once your design is approved, we guide you through the issuance process and help you obtain the official design certificate. Lifeintelect also offers ongoing support for maintaining your design rights, including managing renewals and monitoring for potential infringements.",
 		  },
 		  {
-			title: "Submission",
-			description:
-			  "We then manage the submission of your design application to the relevant patent office, handling all the required documentation and ensuring compliance with specific filing procedures.",
-		  },
-		  {
-			title: "Handling Office Actions",
-			description:
-			  "Throughout the process, we address any office actions or objections from the patent office, making necessary amendments and providing robust arguments to support your application.",
-		  },
-		  {
-			title: "Issuance and Maintenance",
+			title: "Design Certification & Support",
 			description:
 			  "Once your design is approved, we guide you through the issuance process and help you obtain the official design certificate. Lifeintelect also offers ongoing support for maintaining your design rights, including managing renewals and monitoring for potential infringements.",
 		  },
@@ -369,7 +357,7 @@ const subServiceContent = {
 		  "We offer comprehensive portfolio management services to help you keep track of all your registered designs and their status.",
 		subsections: [
 		  {
-			heading: "Our Services",
+			heading: "Our Process",
 			items: [
 			  {
 				title: "Monitoring and Updates",
@@ -386,6 +374,28 @@ const subServiceContent = {
 		],
 	  },
 	  service_7: {
+		title: "Risk Assessment",
+		description:
+		  "We conduct risk assessments to identify and mitigate potential threats to your industrial designs.",
+		subsections: [
+		  {
+			heading: "Our Process",
+			items: [
+			  {
+				title: "Risk Identification and Analysis",
+				description:
+				  "Our experts analyze the design landscape, identify potential conflicts, and provide recommendations to minimize risks. This proactive approach helps you maintain the uniqueness of your designs and avoid legal complications.",
+			  },
+			  {
+				title: "Strategic Protection Planning",
+				description:
+				  "We work closely with you to develop strategies that protect your designs from potential infringements and ensure their continued success in the market.",
+			  },
+			],
+		  },
+		],
+	  },
+	  service_8: {
 		title: "Design Audit",
 		description:
 		  "Our design audit services help you assess and manage your existing design portfolio.",
@@ -421,117 +431,106 @@ const subServiceContent = {
 		title: "Copyright Filing and Registration",
 		description:
 		  "We handle the entire filing and registration process, ensuring your copyright application is submitted correctly and efficiently to the relevant copyright office. Our team prepares all necessary documentation, including detailed descriptions of your work, and ensures that your application meets all legal and procedural requirements. We take care of all required fees and keep you informed throughout the process, providing updates on the status of your application.",
-		closing:
-		  "With Lifeintelect’s filing and registration services, your creative works are protected efficiently and effectively.",
 	  },
 	  service_3: {
 		title: "Copyright Opinions",
 		description:
 		  "We provide expert opinions on various copyright issues, helping you understand your rights and the scope of protection for your creative works. Whether you need guidance on copyright eligibility, fair use, or potential infringements, our team of legal experts is here to assist you. We offer clear and concise advice tailored to your specific needs and circumstances.",
-		closing:
-		  "Our expert opinions empower you to make informed decisions about your copyrighted works.",
 	  },
 	  service_4: {
 		title: "Copyright Objections",
 		description:
 		  "If there are any issues or objections from the copyright office, our team will address them promptly. We prepare detailed responses to any objections or rejections, providing additional documentation if needed, and engaging in necessary communication to resolve any issues. Our goal is to ensure that your copyright application is approved without unnecessary delays.",
-		closing:
-		  "Lifeintelect’s proactive approach to handling objections ensures a smooth path to copyright approval.",
 	  },
 	  service_5: {
 		title: "Online Risk Management",
 		description:
 		  "We help you protect your copyrighted works online by monitoring for potential infringements and unauthorized use. Our team provides guidance on how to enforce your rights and take action if someone violates your copyright. We offer comprehensive online risk management services, including takedown notices, cease-and-desist letters, and legal action if necessary. Our proactive approach ensures that your creative works remain protected in the digital landscape.",
-		closing:
-		  "With our online risk management services, your copyrights are safeguarded in the digital world.",
 	  },
 	  service_6: {
 		title: "Content Monitoring",
 		description:
 		  "We provide ongoing monitoring services to track the use of your copyrighted content across various platforms. Our team uses advanced tools and techniques to identify unauthorized use of your work, ensuring that your rights are upheld. We provide regular reports and updates on our findings and take necessary actions to address any infringements.",
-		closing:
-		  "Our content monitoring services keep your copyrighted works secure across platforms.",
 	  },
 	  service_7: {
 		title: "Digital Rights Management",
 		description:
 		  "We offer digital rights management (DRM) solutions to protect your digital content from unauthorized access and distribution. Our DRM services include encryption, access control, and digital watermarking to safeguard your intellectual property. We work with you to develop customized DRM strategies that meet your specific needs and ensure that your digital content is secure.",
-		closing:
-		  "Lifeintelect’s DRM solutions provide robust protection for your digital content.",
 	  },
 	  service_8: {
 		title: "Copyright Audit",
 		description:
 		  "Our copyright audit services help you assess and manage your existing copyright portfolio. We conduct thorough audits to identify all your copyrighted works, evaluate their status, and ensure that all necessary registrations and renewals are up to date. Our team provides recommendations for optimizing your copyright strategy and maximizing the value of your intellectual property.",
-		closing:
-		  "With Lifeintelect's copyright audit services, your portfolio is optimized and fully protected. Ready to safeguard your creative works? Let's get started!",
 	  },
 	},
 	trademark: {
-	  service_1: {
-		title: "Trademark",
-		description:
-		  "At Lifeintelect, we understand the importance of protecting your creative works and intellectual property. Trademark is a mark capable of being represented graphically and which is capable of distinguishing the goods or services of one person from those of others. The function of trademark is identification of source, quality and act as an advertising symbol. We provide trademark search and Trademark analysis services. Our search reports are accompanied by a trademark opinion suggesting the possibility of registering the client’s trademark. We also provide risk analysis reports that enable clients to make decisions with respect to trademark use, opposition and infringement. Our reports enable clients to make decisions on various aspects of their trade mark portfolio. We offer trademark filing and registration services in India and internationally.",
-		image: TrademarkServices,
-		closing:
-		  "With our expert guidance and comprehensive services, you can rest assured that your creations are well-protected at every stage. Ready to safeguard your creations with Lifeintelect? Let's get started!",
+		service_1: {
+		  title: "Trademark",
+		  description:
+			"At Lifeintelect, we understand the importance of protecting your creative works and intellectual property. With our expert guidance and comprehensive services, you can rest assured that your creations are well-protected at every stage. Ready to safeguard your creations with Lifeintelect? Let's get started!",
+		  description1:
+			"Trademark is a mark capable of being represented graphically and which is capable of distinguishing the goods or services of one person from those of others. The function of trademark is identification of source, quality and act as an advertising symbol.",
+		  description2:
+			"We provide trademark search and Trademark analysis services. Our search reports are accompanied by a trademark opinion suggesting the possibility of registering the client’s trademark.",
+		  description3:
+			"We also provide risk analysis reports that enable clients to make decisions with respect to trademark use, opposition and infringement. Our reports enable clients to make decisions on various aspects of their trade mark portfolio",
+		  description4:
+			"We offer trademark filing and registration services in India and internationally.",
+		  image: TrademarkServices,
+		},
+		service_2: {
+		  title: "Trademark Search and Analysis",
+		  description:
+			"We begin by conducting a thorough search to identify any existing trademarks that may be similar to your proposed mark. This search includes checking various trademark databases and other relevant sources to confirm the uniqueness of your brand. Our experts analyse the results and provide a detailed report on the availability and registrability of your trademark, helping you make informed decisions.",
+		},
+		service_3: {
+		  title: "Trademark Filing and Registration",
+		  description:
+			"We handle the entire filing and registration process, ensuring your trademark application is submitted correctly and efficiently to the relevant trademark office. Our team prepares all necessary documentation, including detailed descriptions of your mark and its usage, and ensures that your application meets all legal and procedural requirements. We take care of all required fees and keep you informed throughout the process, providing updates on the status of your application.",
+		},
+		service_4: {
+		  title: "Trademark Prosecution and Renewal",
+		  description:
+			"If there are any issues or queries from the trademark office, our team will address them promptly. We prepare detailed responses to any objections or rejections, providing additional documentation if needed, and engaging in necessary communication to resolve any issues. Our goal is to ensure that your trademark application is approved without unnecessary delays. Additionally, we handle the renewal process to keep your trademark in force, managing all required documentation and fees.",
+		},
+		service_5: {
+		  title: "Opposition and Rectification",
+		  description:
+			"If your trademark faces opposition or if you need to challenge the registration of a conflicting mark, our team provides robust support. We prepare and file opposition or rectification petitions, represent you in hearings, and provide strategic advice to strengthen your case. Our experts work diligently to protect your brand from potential conflicts and ensure that your trademark rights are upheld.",
+		},
+		service_6: {
+		  title: "Portfolio Management",
+		  description:
+			"We offer comprehensive portfolio management services to help you keep track of all your trademarks and their status. This includes monitoring for potential conflicts, managing renewals, and ensuring that your trademarks remain protected and in good standing. Our team provides regular updates and strategic advice to optimize your trademark portfolio.",
+		},
+		service_7: {
+		  title: "Risk Assessment",
+		  description:
+			"We conduct risk assessments to identify and mitigate potential threats to your trademark. Our experts analyze the trademark landscape, identify potential conflicts, and provide recommendations to minimize risks. This proactive approach helps you maintain the integrity of your brand and avoid legal complications.",
+		},
+		service_8: {
+		  title: "Trademark Watch",
+		  description:
+			"We offer trademark watch services to monitor the use of your trademark and identify any unauthorized usage or potential infringements. Our team uses advanced tools and techniques to track trademark applications and registrations that may conflict with your mark. We provide regular reports and take necessary actions to protect your trademark rights.",
+		  closing:
+			"At Lifeintelect, we understand the importance of protecting your brand identity and intellectual property. With our expert guidance and comprehensive services, you can rest assured that your trademarks are well-protected at every stage. Ready to safeguard your brand with Lifeintelect? Let's get started!",
+		},
 	  },
-	  service_2: {
-		title: "Trademark Search and Analysis",
-		description:
-		  "We begin by conducting a thorough search to identify any existing trademarks that may be similar to your proposed mark. This search includes checking various trademark databases and other relevant sources to confirm the uniqueness of your brand. Our experts analyse the results and provide a detailed report on the availability and registrability of your trademark, helping you make informed decisions.",
-		closing:
-		  "Our comprehensive search and analysis services ensure your trademark is unique and registrable.",
-	  },
-	  service_3: {
-		title: "Trademark Filing and Registration",
-		description:
-		  "We handle the entire filing and registration process, ensuring your trademark application is submitted correctly and efficiently to the relevant trademark office. Our team prepares all necessary documentation, including detailed descriptions of your mark and its usage, and ensures that your application meets all legal and procedural requirements. We take care of all required fees and keep you informed throughout the process, providing updates on the status of your application.",
-		closing:
-		  "With Lifeintelect’s filing and registration services, your trademark is protected efficiently and effectively.",
-	  },
-	  service_4: {
-		title: "Trademark Prosecution and Renewal",
-		description:
-		  "If there are any issues or queries from the trademark office, our team will address them promptly. We prepare detailed responses to any objections or rejections, providing additional documentation if needed, and engaging in necessary communication to resolve any issues. Our goal is to ensure that your trademark application is approved without unnecessary delays. Additionally, we handle the renewal process to keep your trademark in force, managing all required documentation and fees.",
-		closing:
-		  "Our prosecution and renewal services ensure your trademark remains protected and active.",
-	  },
-	  service_5: {
-		title: "Opposition and Rectification",
-		description:
-		  "If your trademark faces opposition or if you need to challenge the registration of a conflicting mark, our team provides robust support. We prepare and file opposition or rectification petitions, represent you in hearings, and provide strategic advice to strengthen your case. Our experts work diligently to protect your brand from potential conflicts and ensure that your trademark rights are upheld.",
-		closing:
-		  "Lifeintelect’s opposition and rectification services safeguard your trademark from conflicts.",
-	  },
-	  service_6: {
-		title: "Portfolio Management",
-		description:
-		  "We offer comprehensive portfolio management services to help you keep track of all your trademarks and their status. This includes monitoring for potential conflicts, managing renewals, and ensuring that your trademarks remain protected and in good standing. Our team provides regular updates and strategic advice to optimize your trademark portfolio.",
-		closing:
-		  "Our portfolio management services keep your trademarks organized and protected.",
-	  },
-	  service_7: {
-		title: "Risk Assessment",
-		description:
-		  "We conduct risk assessments to identify and mitigate potential threats to your trademark. Our experts analyze the trademark landscape, identify potential conflicts, and provide recommendations to minimize risks. This proactive approach helps you maintain the integrity of your brand and avoid legal complications.",
-		closing:
-		  "Our risk assessment services help you protect your brand from potential threats.",
-	  },
-	  service_8: {
-		title: "Trademark Watch",
-		description:
-		  "We offer trademark watch services to monitor the use of your trademark and identify any unauthorized usage or potential infringements. Our team uses advanced tools and techniques to track trademark applications and registrations that may conflict with your mark. We provide regular reports and take necessary actions to protect your trademark rights.",
-		closing:
-		  "With Lifeintelect’s trademark watch services, your brand is safeguarded against unauthorized use. Ready to protect your brand with Lifeintelect? Let's get started!",
-	  },
-	},
+	  
 	geographicalIndications: {
 		service_1: {
 		  title: "Geographical Indications",
 		  description:
-			"At LifeIntelect, we recognize the importance of protecting Geographical Indications (GI) as a valuable form of intellectual property. A Geographical Indication (GI) is a sign used on products that have a specific geographical origin and possess qualities, reputation, or characteristics inherent to that location. The function of GI is to certify the origin, quality, and reputation of products, acting as a mark of authenticity and distinction in the market. We provide GI search and GI analysis services. Our search reports are accompanied by an expert opinion suggesting the possibility of registering the client's GI. We also provide risk analysis reports that enable clients to make informed decisions regarding GI use, opposition, and infringement. Our reports help clients manage various aspects of their GI portfolio effectively. We offer GI filing and registration services in India and internationally, ensuring that your products receive the protection they deserve in domestic and global markets.",
-		//   image: "/images/gi.jpg",
+			"At LifeIntelect, we recognize the importance of protecting Geographical Indications (GI) as a valuable form of intellectual property. Our expert guidance and comprehensive services ensure that your GI-protected products are well-protected at every stage. Ready to safeguard your GI with LifeIntelect? Let's get started!",
+		  description1:
+			"A Geographical Indication (GI) is a sign used on products that have a specific geographical origin and possess qualities, reputation, or characteristics inherent to that location. The function of GI is to certify the origin, quality, and reputation of products, acting as a mark of authenticity and distinction in the market.",
+		  description2:
+			"We provide GI search and GI analysis services. Our search reports are accompanied by an expert opinion suggesting the possibility of registering the client's GI.",
+		  description3:
+			"We also provide risk analysis reports that enable clients to make informed decisions regarding GI use, opposition, and infringement. Our reports help clients manage various aspects of their GI portfolio effectively.",
+		  description4:
+			"We offer GI filing and registration services in India and internationally, ensuring that your products receive the protection they deserve in domestic and global markets.",
+			image:GeographicalIndication,
 		  closing:
 			"Ready to safeguard your GI with LifeIntelect? Let's get started!",
 		},
@@ -539,43 +538,43 @@ const subServiceContent = {
 		  title: "GI Search and Analysis",
 		  description:
 			"We conduct thorough searches to analyse and identify potential Geographical Indications (GI) for your products. Our comprehensive analysis ensures that your product meets the criteria for GI registration and helps you understand the market potential and legal implications.",
-		  closing:
-			"Our GI search and analysis services provide the foundation for successful registration.",
+		//   closing:
+		// 	"Our GI search and analysis services provide the foundation for successful registration.",
 		},
 		service_3: {
 		  title: "GI Filing and Registration",
 		  description:
 			"Our team assists you in the preparation and filing of GI applications. We ensure that all necessary documents and evidence are meticulously prepared to meet the requirements of the relevant authorities, facilitating a smooth and efficient registration process.",
-		  closing:
-			"With LifeIntelect’s filing and registration services, your GI is protected efficiently.",
+		//   closing:
+		// 	"With LifeIntelect’s filing and registration services, your GI is protected efficiently.",
 		},
 		service_4: {
 		  title: "GI Prosecution and Renewal",
 		  description:
 			"We manage the prosecution of GI applications, responding to any objections or queries from the authorities. Additionally, we handle the renewal of GIs to maintain their protection and ensure that your rights remain intact.",
-		  closing:
-			"Our prosecution and renewal services keep your GI protection active and secure.",
+		//   closing:
+		// 	"Our prosecution and renewal services keep your GI protection active and secure.",
 		},
 		service_5: {
 		  title: "Opposition and Rectification",
 		  description:
 			"We represent clients in opposition proceedings to challenge the registration of conflicting GIs. Our team also handles rectification cases to correct any errors or inaccuracies in registered GIs, safeguarding your interests.",
-		  closing:
-			"LifeIntelect’s opposition and rectification services protect your GI from conflicts.",
+		//   closing:
+		// 	"LifeIntelect’s opposition and rectification services protect your GI from conflicts.",
 		},
 		service_6: {
 		  title: "Portfolio Management",
 		  description:
 			"Our portfolio management services include the strategic planning and maintenance of your GI portfolio. We help you track and manage your GIs, ensuring they are effectively leveraged to enhance your brand and market presence.",
-		  closing:
-			"Our portfolio management services optimize your GI assets for maximum value.",
+		//   closing:
+		// 	"Our portfolio management services optimize your GI assets for maximum value.",
 		},
 		service_7: {
 		  title: "Risk Assessment",
 		  description:
 			"We conduct risk assessments to identify potential threats to your GI protection. Our proactive approach helps you mitigate risks and take necessary actions to safeguard your valuable GIs from infringement and misuse.",
-		  closing:
-			"With LifeIntelect’s risk assessment services, your GIs are protected from potential threats. Ready to enhance your GI protection? Let's get started!",
+		//   closing:
+		// 	"With LifeIntelect’s risk assessment services, your GIs are protected from potential threats. Ready to enhance your GI protection? Let's get started!",
 		},
 	  },
   };

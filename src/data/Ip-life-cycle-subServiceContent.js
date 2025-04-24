@@ -7,14 +7,33 @@ const subServiceContent = {
 		ipAudit: {
 		  title: "IP Audit of the Company",
 		  description:
-			"At Lifeintelect, we conduct comprehensive IP audits to help you manage and optimize your intellectual property assets. We begin by understanding your business, its products, and its intellectual property portfolio. Our experts then conduct a thorough audit, reviewing all your IP assets, including patents, trademarks, copyrights, trade secrets, and design rights. We assess the strength, scope, and enforceability of each asset. Next, we identify any gaps or risks in your IP portfolio, such as expired patents, unused trademarks, or unprotected innovations. We also evaluate the alignment of your IP strategy with your business goals, ensuring that your IP assets are being effectively utilized and protected. We compile a detailed audit report, summarizing our findings and providing actionable recommendations to enhance your IP portfolio.",
+			"At Lifeintelect, we conduct comprehensive IP audits to help you manage and optimize your intellectual property assets.",
+			process: [
+				{
+				  title: "Understanding Your Business and IP Portfolio",
+				  description:
+					"We begin by understanding your business, its products, and its intellectual property portfolio. Our experts then conduct a thorough audit, reviewing all your IP assets, including patents, trademarks, copyrights, trade secrets, and design rights. We assess the strength, scope, and enforceability of each asset.",
+				},
+				{
+				  title: "Comprehensive IP Audit Process",
+				  description:
+					"Next, we identify any gaps or risks in your IP portfolio, such as expired patents, unused trademarks, or unprotected innovations. We also evaluate the alignment of your IP strategy with your business goals, ensuring that your IP assets are being effectively utilized and protected.",
+				},
+				{
+				  title: "Identifying Gaps and Aligning IP Strategy",
+				  description:
+					"We compile a detailed audit report, summarizing our findings and providing actionable recommendations to enhance your IP portfolio. This report includes strategies for optimizing IP management, improving IP protection, and leveraging IP assets for business growth.",
+				},
+			  ],
 		  closing:
 			"Lifeintelect’s IP audit service is designed to give you a clear understanding of your intellectual property landscape, allowing you to make informed decisions and maximize the value of your IP assets. Ready to audit your IP with Lifeintelect? Let's get started!",
 		},
 		ipPolicy: {
 		  title: "IP Policy and Process Setup",
 		  description:
-			"At Lifeintelect, we help you establish robust IP policies and processes to safeguard and manage your intellectual property effectively. We start by understanding your business, its operations, and existing IP assets. Our experts then work with you to develop a customized IP policy that aligns with your business goals and industry standards. This policy outlines the procedures for identifying, protecting, and managing your IP assets, ensuring consistency and compliance across your organization.",
+			"At Lifeintelect, we help you establish robust IP policies and processes to safeguard and manage your intellectual property effectively.",
+		  description1:
+			"We start by understanding your business, its operations, and existing IP assets. Our experts then work with you to develop a customized IP policy that aligns with your business goals and industry standards. This policy outlines the procedures for identifying, protecting, and managing your IP assets, ensuring consistency and compliance across your organization.",
 		  process: [
 			{
 			  title: "IP Identification",
@@ -48,8 +67,10 @@ const subServiceContent = {
 		ipPortfolio: {
 		  title: "IP Portfolio Management",
 		  description:
-			"At Lifeintelect, we offer comprehensive IP portfolio management services to ensure your intellectual property assets are effectively utilized and protected. We begin by conducting a thorough review of your existing IP portfolio, which includes patents, trademarks, copyrights, and trade secrets. Our experts assess the strength, scope, and strategic value of each asset, identifying opportunities for optimization and growth.",
-		  process: [
+			"At Lifeintelect, we offer comprehensive IP portfolio management services to ensure your intellectual property assets are effectively utilized and protected.",
+		  description1:
+			"We begin by conducting a thorough review of your existing IP portfolio, which includes patents, trademarks, copyrights, and trade secrets. Our experts assess the strength, scope, and strategic value of each asset, identifying opportunities for optimization and growth. ",
+			  process: [
 			{
 			  title: "Asset Valuation",
 			  description: "Evaluating the commercial value of your IP assets.",
@@ -86,8 +107,11 @@ const subServiceContent = {
 		ipValuation: {
 		  title: "IP Valuation",
 		  description:
-			"At Lifeintelect, we offer thorough IP valuation services to help you understand the true worth of your intellectual property. We start by collecting detailed information about your IP assets, including patents, trademarks, copyrights, and trade secrets. Our experts then evaluate the legal, technical, and market aspects of each asset to determine its value.",
-		  process: [
+			"At Lifeintelect, we offer thorough IP valuation services to help you understand the true worth of your intellectual property.",
+		  description1:
+			"We start by collecting detailed information about your IP assets, including patents, trademarks, copyrights, and trade secrets. Our experts then evaluate the legal, technical, and market aspects of each asset to determine its value.",
+			valuationMethods: true,
+			process: [
 			{
 			  title: "Cost-Based Valuation",
 			  description:
@@ -110,8 +134,13 @@ const subServiceContent = {
 		technologyTransfer: {
 		  title: "Technology Transfer",
 		  description:
-			"At Lifeintelect, we facilitate seamless technology transfer to help you maximize the commercial potential of your innovations. We begin by identifying and evaluating the technology you wish to transfer. Our experts conduct a thorough assessment of its technical feasibility, market potential, and commercial viability. We then develop a strategic plan tailored to your business needs, outlining the best approach for transferring the technology. Next, we assist you in identifying potential partners, licensees, or buyers who can benefit from the technology. We manage negotiations and help draft licensing agreements or sale contracts to ensure your interests are protected and the terms are favorable.",
-		  process: [
+			"At Lifeintelect, we facilitate seamless technology transfer to help you maximize the commercial potential of your innovations.",
+		  description1:
+			"We begin by identifying and evaluating the technology you wish to transfer. Our experts conduct a thorough assessment of its technical feasibility, market potential, and commercial viability. We then develop a strategic plan tailored to your business needs, outlining the best approach for transferring the technology.",
+		  description2:
+			"Next, we assist you in identifying potential partners, licensees, or buyers who can benefit from the technology. We manage negotiations and help draft licensing agreements or sale contracts to ensure your interests are protected and the terms are favorable.",
+		  TransferTechnology:true,
+			process: [
 			{
 			  title: "IP Protection",
 			  description:
@@ -136,35 +165,66 @@ const subServiceContent = {
 		  closing:
 			"Lifeintelect’s technology transfer service is designed to help you unlock the full potential of your innovations, facilitating their adoption and use in the market. Ready to transfer your technology with Lifeintelect? Let's get started!",
 		},
-		ipEducation: {
-		  title: "IP Education",
+		ipAnalysis: {
+		  title: "Analysis and due diligence",
 		  description:
-			"At Lifeintelect, we provide comprehensive IP education services to empower your team with the knowledge and skills needed to protect and manage intellectual property effectively. We offer tailored training programs that cover the fundamentals of IP, including patents, trademarks, copyrights, trade secrets, and more. Our experts work with you to understand your organization’s needs and develop customized workshops, seminars, or online courses that align with your business goals.",
-		  process: [
+			"At Lifeintelect, we provide thorough analysis and due diligence services to ensure informed decision-making and strategic planning for your intellectual property.",
+		  description1:
+			"We start by gathering comprehensive information about your IP assets, including patents, trademarks, copyrights, and trade secrets. Our experts then conduct a detailed analysis to assess the strength, scope, and potential risks associated with each asset.",
+		  description2:
+			"Next, we perform due diligence to verify the ownership, validity, and enforceability of your IP.",
+		  Provide:true,
+			process: [
 			{
-			  title: "IP Awareness",
+			  title: "Legal Analysis",
 			  description:
-				"Educating employees on the importance of intellectual property and its role in business success.",
+				"Reviewing the legal status of your IP to ensure there are no disputes or encumbrances.",
 			},
 			{
-			  title: "IP Identification",
+			  title: "Technical Analysis",
 			  description:
-				"Training teams to recognize potential IP assets within their work, such as inventions, designs, or creative content.",
+				"Evaluating the technical aspects of your IP to determine its novelty, usability, and potential for improvement.",
 			},
 			{
-			  title: "IP Protection Strategies",
+			  title: "Market Analysis",
 			  description:
-				"Providing guidance on best practices for securing IP rights, including patent filings, trademark registrations, and confidentiality agreements.",
-			},
-			{
-			  title: "IP Compliance",
-			  description:
-				"Ensuring employees understand legal and regulatory requirements to avoid IP infringements.",
+				"Assessing the market potential and competitive landscape to understand the commercial value of your IP.",
 			},
 		  ],
 		  closing:
+		  	"We compile a comprehensive due diligence report that includes our findings, an assessment of potential risks, and actionable recommendations. This report helps you make informed decisions regarding mergers, acquisitions, licensing, or investments, ensuring your IP strategy aligns with your business goals.",
+		  closing2:
 			"Lifeintelect’s IP education service equips your team with the tools to safeguard your intellectual property and fosters a culture of innovation and compliance. Ready to educate your team with Lifeintelect? Let's get started!",
 		},
+		// ipEducation: {
+		//   title: "IP Education",
+		//   description:
+		// 	"At Lifeintelect, we provide comprehensive IP education services to empower your team with the knowledge and skills needed to protect and manage intellectual property effectively. We offer tailored training programs that cover the fundamentals of IP, including patents, trademarks, copyrights, trade secrets, and more. Our experts work with you to understand your organization’s needs and develop customized workshops, seminars, or online courses that align with your business goals.",
+		//   process: [
+		// 	{
+		// 	  title: "IP Awareness",
+		// 	  description:
+		// 		"Educating employees on the importance of intellectual property and its role in business success.",
+		// 	},
+		// 	{
+		// 	  title: "IP Identification",
+		// 	  description:
+		// 		"Training teams to recognize potential IP assets within their work, such as inventions, designs, or creative content.",
+		// 	},
+		// 	{
+		// 	  title: "IP Protection Strategies",
+		// 	  description:
+		// 		"Providing guidance on best practices for securing IP rights, including patent filings, trademark registrations, and confidentiality agreements.",
+		// 	},
+		// 	{
+		// 	  title: "IP Compliance",
+		// 	  description:
+		// 		"Ensuring employees understand legal and regulatory requirements to avoid IP infringements.",
+		// 	},
+		//   ],
+		//   closing:
+		// 	"Lifeintelect’s IP education service equips your team with the tools to safeguard your intellectual property and fosters a culture of innovation and compliance. Ready to educate your team with Lifeintelect? Let's get started!",
+		// },
 	  },
 	},
   };

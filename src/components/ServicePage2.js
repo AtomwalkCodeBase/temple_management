@@ -44,13 +44,15 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
             {subService.description && (
               <Section>
                 <SectionText>{subService.description}</SectionText>
+                <SectionText>{subService.description1}</SectionText>
+                <SectionText>{subService.description2}</SectionText>
               </Section>
             )}
             
             {/* Render process section */}
             {subService.process && (
               <Section>
-                <SectionHeading theme={theme}>{subService.processTitle ? subService.processTitle : "Our process"}</SectionHeading>
+                <SectionHeading theme={theme}>{subService.Provide ? "We provide" : subService.TransferTechnology ? "We Support": subService.valuationMethods ? "Valuation Methods" : subService.processTitle ? subService.processTitle : "Our process"}</SectionHeading>
                 <ServiceList>
                   {subService.process.map((item, i) => (
                     <ServiceListItem key={i}>
@@ -80,6 +82,7 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
             {subService.closing && (
               <Section>
                 <SectionText>{subService.closing}</SectionText>
+                <SectionText>{subService.closing2}</SectionText>
               </Section>
             )}
             {subService.image && (

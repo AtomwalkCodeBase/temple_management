@@ -616,9 +616,10 @@ const NavBar = () => {
         { id: 'ip-audit', name: 'IP Audit of the Company' },
         { id: 'ip-policy', name: 'IP Policy and Process Setup' },
         { id: 'ip-portfolio', name: 'IP Portfolio Management' },
-        { id: 'ip-valuation', name: 'IP Valuation, Analysis and Due Diligence' },
+        { id: 'ip-valuation', name: 'IP Valuation' },
         { id: 'technology-transfer', name: 'Technology Transfer' },
-        { id: 'ip-education', name: 'IP Education and Training' }
+        { id: 'analysis-diligence', name: 'Analysis and Due Diligence' },
+        // { id: 'ip-education', name: 'IP Education and Training' }
       ]
     },
     {

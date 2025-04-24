@@ -126,6 +126,7 @@ const ipLifecycleRoutes = [
   { path: '/ip-valuation', type: 'ipLifeCycleManagement', id: 'ipValuation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
   { path: '/technology-transfer', type: 'ipLifeCycleManagement', id: 'technologyTransfer', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
   { path: '/ip-education', type: 'ipLifeCycleManagement', id: 'ipEducation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
+  { path: '/analysis-diligence', type: 'ipLifeCycleManagement', id: 'ipAnalysis', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
 ];
 
 const scientificRoutes = [

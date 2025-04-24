@@ -71,6 +71,13 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
                           alt={`${item.title} Illustration`}
                         />
                       )}
+                       {item.subPoints && (
+                            <SubPointsList>
+                              {item.subPoints.map((subPoint, j) => (
+                                <SubPointItem key={j}>{subPoint}</SubPointItem>
+                              ))}
+                            </SubPointsList>
+                          )}
                       </ListItemContent>
                     </ServiceListItem>
                   ))}
@@ -95,13 +102,13 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
         </ServiceCard>
       </ServicesContainer>
       
-      <CallToAction theme={theme}>
+      {/* <CallToAction theme={theme}>
         <CTAContent>
           <CTAHeading>{ctaHeading}</CTAHeading>
           <CTASubheading>{ctaSubheading}</CTASubheading>
           <CTAButton theme={theme}>Get Started</CTAButton>
         </CTAContent>
-      </CallToAction>
+      </CallToAction> */}
     </PageContainer>
   );
 };
@@ -281,6 +288,7 @@ const ListItemTitle = styled.div`
 const ListItemDescription = styled.div`
   color: #4a5568;
   font-size: 0.95rem;
+  line-height: 1.8;
 `;
 
 const ServiceImage = styled.img`
@@ -290,8 +298,22 @@ const ServiceImage = styled.img`
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  object-fit: cover;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
   display: block;
+`;
+
+const SubPointsList = styled.ul`
+  margin: 12px 0 0 20px;
+  padding: 0;
+  list-style-type: disc;
+  color: #4a5568;
+`;
+
+const SubPointItem = styled.li`
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 8px;
 `;
 
 const CallToAction = styled.div`

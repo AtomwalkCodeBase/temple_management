@@ -143,36 +143,36 @@ const scientificRoutes = [
 ];
 
 const strategicRoutes = [
-  { path: '/ip-strategy-development', type: 'strategicLegalAdvisory', id: 'ipStrategyDevelopment', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/IP-Litigation-&-Enforcement-Support', type: 'strategicLegalAdvisory', id: 'ipLitigationSupport', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/Licensing-&-IP-Agreements', type: 'strategicLegalAdvisory', id: 'licensingIpAgreements', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/Cross-Border-IP-Strategy-&-Compliance', type: 'strategicLegalAdvisory', id: 'crossBorderIpStrategy', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/Trade-Secret-Protection-&-Confidentiality', type: 'strategicLegalAdvisory', id: 'tradeSecretProtection', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/IP-Exit-Strategy-&-Monetization', type: 'strategicLegalAdvisory', id: 'ipExitStrategy', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/Corporate-IP-Governance-&-Risk-Mitigation', type: 'strategicLegalAdvisory', id: 'corporateIpGovernance', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/Patent-&-Trademark-Portfolio-Optimization', type: 'strategicLegalAdvisory', id: 'patentTrademarkPortfolio', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
-  { path: '/Government-and-Policy-Advocacy', type: 'strategicLegalAdvisory', id: 'governmentPolicyAdvocacy', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage2 },
+  { path: '/ip-strategy-development', type: 'strategicLegalAdvisory', id: 'ipStrategyDevelopment', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/IP-Litigation-&-Enforcement-Support', type: 'strategicLegalAdvisory', id: 'ipLitigationSupport', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/Licensing-&-IP-Agreements', type: 'strategicLegalAdvisory', id: 'licensingIpAgreements', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/Cross-Border-IP-Strategy-&-Compliance', type: 'strategicLegalAdvisory', id: 'crossBorderIpStrategy', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/Trade-Secret-Protection-&-Confidentiality', type: 'strategicLegalAdvisory', id: 'tradeSecretProtection', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/IP-Exit-Strategy-&-Monetization', type: 'strategicLegalAdvisory', id: 'ipExitStrategy', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/Corporate-IP-Governance-&-Risk-Mitigation', type: 'strategicLegalAdvisory', id: 'corporateIpGovernance', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/Patent-&-Trademark-Portfolio-Optimization', type: 'strategicLegalAdvisory', id: 'patentTrademarkPortfolio', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
+  { path: '/Government-and-Policy-Advocacy', type: 'strategicLegalAdvisory', id: 'governmentPolicyAdvocacy', content: StrategicLegalAdvisory, theme: themes.strategicLegalAdvisory, component: ServicePage },
 ];
 
 const startupRoutes = [
-  { path: '/IP-Strategy-&-Roadmap-for-Startups', type: 'iprSolutionsStartups', id: 'ipStrategyRoadmap', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
-  { path: '/Cost-Effective-IP-Protection', type: 'iprSolutionsStartups', id: 'costEffectiveProtection', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
-  { path: '/IP-Due-Diligence-for-Investors', type: 'iprSolutionsStartups', id: 'ipDueDiligenceInvestors', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
-  { path: '/IP-Licensing-&-Commercialization', type: 'iprSolutionsStartups', id: 'ipLicensingCommercialization', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
-  { path: '/Raising-Awareness-and-Funding-with-IP', type: 'iprSolutionsStartups', id: 'raisingAwarenessFunding', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
-  { path: '/Startup-IP-Portfolio-Management', type: 'iprSolutionsStartups', id: 'startupIpPortfolio', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
-  { path: '/IP-Risk-Management-for-Startups', type: 'iprSolutionsStartups', id: 'ipRiskManagement', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/IP-Strategy-&-Roadmap-for-Startups', type: 'iprSolutionsStartups', id: 'ipStrategyRoadmap', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
+  { path: '/Cost-Effective-IP-Protection', type: 'iprSolutionsStartups', id: 'costEffectiveProtection', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
+  { path: '/IP-Due-Diligence-for-Investors', type: 'iprSolutionsStartups', id: 'ipDueDiligenceInvestors', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
+  { path: '/IP-Licensing-&-Commercialization', type: 'iprSolutionsStartups', id: 'ipLicensingCommercialization', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
+  { path: '/Raising-Awareness-and-Funding-with-IP', type: 'iprSolutionsStartups', id: 'raisingAwarenessFunding', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
+  { path: '/Startup-IP-Portfolio-Management', type: 'iprSolutionsStartups', id: 'startupIpPortfolio', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
+  { path: '/IP-Risk-Management-for-Startups', type: 'iprSolutionsStartups', id: 'ipRiskManagement', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
 ];
 
 const educationRoutes = [
-  { path: '/Custom-IP-Workshops-for-Teams', type: 'ipEducationTraining', id: 'customIpWorkshops', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
-  { path: '/IP-Fundamentals-for-Startups-and-Entrepreneurs', type: 'ipEducationTraining', id: 'ipFundamentalsStartups', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
-  { path: '/IP-Law-&-Policy-Updates', type: 'ipEducationTraining', id: 'ipLawPolicyUpdates', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
-  { path: '/IP-Management-Best-Practices', type: 'ipEducationTraining', id: 'ipManagementPractices', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
-  { path: '/IP-Strategy-for-Product-Development', type: 'ipEducationTraining', id: 'ipStrategyProductDevelopment', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
-  { path: '/IP-Commercialization-&-Licensing-Training', type: 'ipEducationTraining', id: 'ipCommercializationLicensing', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
-  { path: '/IP-Dispute-Resolution-&-Enforcement', type: 'ipEducationTraining', id: 'ipDisputeResolution', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
-  { path: '/Sector-Specific-IP-Training', type: 'ipEducationTraining', id: 'sectorSpecificIpTraining', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage2 },
+  { path: '/Custom-IP-Workshops-for-Teams', type: 'ipEducationTraining', id: 'customIpWorkshops', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  { path: '/IP-Fundamentals-for-Startups-and-Entrepreneurs', type: 'ipEducationTraining', id: 'ipFundamentalsStartups', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  { path: '/IP-Law-&-Policy-Updates', type: 'ipEducationTraining', id: 'ipLawPolicyUpdates', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  { path: '/IP-Management-Best-Practices', type: 'ipEducationTraining', id: 'ipManagementPractices', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  { path: '/IP-Strategy-for-Product-Development', type: 'ipEducationTraining', id: 'ipStrategyProductDevelopment', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  { path: '/IP-Commercialization-&-Licensing-Training', type: 'ipEducationTraining', id: 'ipCommercializationLicensing', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  { path: '/IP-Dispute-Resolution-&-Enforcement', type: 'ipEducationTraining', id: 'ipDisputeResolution', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  { path: '/Sector-Specific-IP-Training', type: 'ipEducationTraining', id: 'sectorSpecificIpTraining', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
 ];
 
 function App() {

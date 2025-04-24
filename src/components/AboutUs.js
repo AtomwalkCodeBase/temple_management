@@ -3,6 +3,7 @@ import styled, { keyframes, createGlobalStyle } from 'styled-components';
 import TeamSection from './TeamSection';
 import { ArrowRight } from 'lucide-react';
 import AboutUsHero from './AboutUsHero';
+import { useLocation } from 'react-router-dom';
 
 
 // Enhanced Animations
@@ -646,6 +647,7 @@ const AboutUs = () => {
   const valueRefs = useRef([]);
   const teamRefs = useRef([]);
   const statRefs = useRef([]);
+  const { hash } = useLocation();
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -693,6 +695,15 @@ const AboutUs = () => {
       });
     };
   }, []);
+
+  useEffect(() => {
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
   
   const teamMembers = [
     { 
@@ -848,7 +859,7 @@ const AboutUs = () => {
       <Section>
         <Container>
           {/* <SectionTitle>The Dream Team</SectionTitle> */}
-          <TeamSection></TeamSection>
+          <TeamSection id="team"></TeamSection>
           {/* <TeamContainer>
             {teamMembers.map((member, index) => (
               <TeamMember 

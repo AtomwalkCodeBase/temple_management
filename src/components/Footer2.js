@@ -138,13 +138,13 @@ export default function Footer2() {
             protect their innovations and achieve their strategic goals.
           </FooterDescription>
           <SocialLinks>
-            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <SocialLink href="https://www.facebook.com/Lifeintelect" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Facebook size={18} />
             </SocialLink>
-            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <SocialLink href="https://x.com/Lifeintelect" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Twitter size={18} />
             </SocialLink>
-            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <SocialLink href="http://www.linkedin.com/company/lifeintelect-consultancy-pvt-ltd-?trk=top_nav_home" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Linkedin size={18} />
             </SocialLink>
             <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
@@ -155,22 +155,22 @@ export default function Footer2() {
 
         <FooterColumn>
           <ColumnTitle>Quick Links</ColumnTitle>
-          <FooterLink href="/careers.html">Careers</FooterLink>
-          <FooterLink href="/aboutus.html">About Us</FooterLink>
-          <FooterLink href="/services.html">Services</FooterLink>
-          <FooterLink href="#team">Our Team</FooterLink>
-          <FooterLink href="/blog.html">Blog</FooterLink>
-          <FooterLink href="/contact.html">Contact</FooterLink>
+          {/* <FooterLink href="/careers">Careers</FooterLink> */}
+          <FooterLink href="/about">About Us</FooterLink>
+          {/* <FooterLink href="/services.html">Services</FooterLink> */}
+          <FooterLink href="/about#team">Our Team</FooterLink>
+          <FooterLink href="/blog">Blog</FooterLink>
+          <FooterLink href="/contact">Contact</FooterLink>
         </FooterColumn>
 
         <FooterColumn>
           <ColumnTitle>Our Services</ColumnTitle>
-          <FooterLink href="#">IP Protection</FooterLink>
-          <FooterLink href="#">Innovation Strategy</FooterLink>
-          <FooterLink href="#">IP Portfolio Management</FooterLink>
-          <FooterLink href="#">Market Analysis</FooterLink>
-          <FooterLink href="#">Patent Drafting</FooterLink>
-          <FooterLink href="#">Global IP Strategy</FooterLink>
+          <FooterLink href="/patent">IP Solutions</FooterLink>
+          <FooterLink href="/ip-audit">IP Lifecycle Management</FooterLink>
+          <FooterLink href="/Scientific-&-Technology-Solutions">Scientific & Technology Solutions</FooterLink>
+          <FooterLink href="/ip-strategy-development">Strategic & Legal Advisory</FooterLink>
+          <FooterLink href="/IP-Strategy-&-Roadmap-for-Startups">IPR Solutions for Startups</FooterLink>
+          <FooterLink href="/Custom-IP-Workshops-for-Teams">IP education and training</FooterLink>
         </FooterColumn>
 
         <FooterColumn>
@@ -185,7 +185,7 @@ export default function Footer2() {
             <ContactIcon>
               <Phone size={18} color="#FF4500" />
             </ContactIcon>
-            <ContactText>+91 1234567890</ContactText>
+            <ContactText>++(91)-9591600666</ContactText>
           </ContactItem>
           <ContactItem>
             <ContactIcon>

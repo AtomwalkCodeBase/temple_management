@@ -1,18 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+
 const ServicePage = ({ serviceType, theme, subServiceContent }) => {
   const services = subServiceContent[serviceType] || {};
   const pageTitle = `${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} Services`;
-  const pageSubtitle = `Protecting Your ${serviceType === "patent" ? "Inventions" :
+  const pageSubtitle = `Protecting Your ${
+    serviceType === "patent" ? "Inventions" :
     serviceType === "design" ? "Visual Creations" :
-      serviceType === "copyright" ? "Creative Works" :
-        "Brand Identity"
-    } with Expert IP Solutions`;
-  const ctaHeading = `Ready to Protect Your ${serviceType === "patent" ? "Inventions" :
+    serviceType === "copyright" ? "Creative Works" :
+    "Brand Identity"
+  } with Expert IP Solutions`;
+  const ctaHeading = `Ready to Protect Your ${
+    serviceType === "patent" ? "Inventions" :
     serviceType === "design" ? "Designs" :
-      serviceType === "copyright" ? "Creative Works" :
-        "Brand"
-    }?`;
+    serviceType === "copyright" ? "Creative Works" :
+    "Brand"
+  }?`;
   const ctaSubheading = `Contact our ${serviceType} experts today for a free consultation`;
 
   return (
@@ -24,13 +27,29 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
         </HeroContent>
       </Hero>
 
-      <ServicesContainer>
-        {Object.entries(services).map(([serviceId, service]) => (
-          <ServiceCard key={serviceId} id={serviceId}>
+      {services.title || services.description ? (
+        <Section>
+          {services.title && (
             <ServiceHeader theme={theme}>
-              <ServiceNumber theme={theme}>{serviceId.split("_")[1]}</ServiceNumber>
-              <ServiceName>{service.title}</ServiceName>
+              <ServiceName>{services.title}</ServiceName>
             </ServiceHeader>
+          )}
+          {services.description && (
+            <SectionText>{services.description}</SectionText>
+          )}
+        </Section>
+      ) : null}
+
+      <ServicesContainer>
+        {Object.entries(services)
+          .filter(([key]) => key.startsWith("service_"))
+          .map(([serviceId, service]) => (
+            <ServiceCard key={serviceId} id={serviceId}>
+              <ServiceHeader theme={theme}>
+                <ServiceNumber theme={theme}>{serviceId.split("_")[1]}</ServiceNumber>
+                <ServiceName>{service.title}</ServiceName>
+              </ServiceHeader>
+
 
             <ServiceContent>
               {/* Render main description and image if exists */}
@@ -84,6 +103,12 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
               {service.typesSection && (
                 <Section>
                   <SectionHeading theme={theme}>Types of {service.title} Services</SectionHeading>
+                  {service.typesSection.image && (
+                    <ServiceImage
+                      src={service.typesSection.image}
+                      alt={`Types of ${service.title} Illustration`}
+                    />
+                  )}
                   <ServiceList>
                     {service.typesSection.types.map((type, i) => (
                       <ServiceListItem key={i}>
@@ -100,12 +125,12 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
                       </ServiceListItem>
                     ))}
                   </ServiceList>
-                  {service.typesSection.image && (
+                  {/* {service.typesSection.image && (
                     <ServiceImage
                       src={service.typesSection.image}
                       alt={`Types of ${service.title} Illustration`}
                     />
-                  )}
+                  )} */}
                 </Section>
               )}
 
@@ -168,13 +193,13 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
         ))}
       </ServicesContainer>
 
-      <CallToAction theme={theme}>
+      {/* <CallToAction theme={theme}>
         <CTAContent>
           <CTAHeading>{ctaHeading}</CTAHeading>
           <CTASubheading>{ctaSubheading}</CTASubheading>
           <CTAButton theme={theme}>Get Started</CTAButton>
         </CTAContent>
-      </CallToAction>
+      </CallToAction> */}
     </PageContainer>
   );
 };
@@ -324,16 +349,19 @@ const SectionText = styled.p`
   color: #4a5568;
   font-size: 1rem;
   line-height: 1.7;
+  margin-Top: 12px;
+  padding: 0 10px;
 `;
 
 const ServiceImage = styled.img`
   width: 100%;
   max-width: 600px;
+  aspect-ratio: 3 / 2;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 `;
 
@@ -379,6 +407,7 @@ const ListItemTitle = styled.div`
 const ListItemDescription = styled.div`
   color: #4a5568;
   font-size: 0.95rem;
+  line-height: 1.7;
 `;
 
 const StepsList = styled.ol`
@@ -424,6 +453,7 @@ const StepTitle = styled.div`
 
 const StepDescription = styled.div`
   color: #4a5568;
+  line-height: 1.7;
 `;
 
 const CallToAction = styled.div`

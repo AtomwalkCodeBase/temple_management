@@ -381,7 +381,7 @@ const ContactUsForm = () => {
                   value="Website design"
                   onChange={handleChange}
                 />
-                <CheckboxLabel htmlFor="website">Website design</CheckboxLabel>
+                <CheckboxLabel htmlFor="website">IP Solutions</CheckboxLabel>
               </CheckboxGroup>
               
               <CheckboxGroup>
@@ -392,7 +392,7 @@ const ContactUsForm = () => {
                   value="Content creation"
                   onChange={handleChange}
                 />
-                <CheckboxLabel htmlFor="content">Content creation</CheckboxLabel>
+                <CheckboxLabel htmlFor="content">IP Lifecycle Management</CheckboxLabel>
               </CheckboxGroup>
               
               <CheckboxGroup>
@@ -403,7 +403,7 @@ const ContactUsForm = () => {
                   value="UX design"
                   onChange={handleChange}
                 />
-                <CheckboxLabel htmlFor="ux">UX design</CheckboxLabel>
+                <CheckboxLabel htmlFor="ux">Scientific & Technology Solutions</CheckboxLabel>
               </CheckboxGroup>
               
               <CheckboxGroup>
@@ -414,7 +414,7 @@ const ContactUsForm = () => {
                   value="Strategy & consulting"
                   onChange={handleChange}
                 />
-                <CheckboxLabel htmlFor="strategy">Strategy & consulting</CheckboxLabel>
+                <CheckboxLabel htmlFor="strategy">Strategic & Legal Advisory</CheckboxLabel>
               </CheckboxGroup>
               
               <CheckboxGroup>
@@ -425,7 +425,7 @@ const ContactUsForm = () => {
                   value="User research"
                   onChange={handleChange}
                 />
-                <CheckboxLabel htmlFor="research">User research</CheckboxLabel>
+                <CheckboxLabel htmlFor="research">IPR Solutions for Startups</CheckboxLabel>
               </CheckboxGroup>
               
               <CheckboxGroup>
@@ -436,7 +436,7 @@ const ContactUsForm = () => {
                   value="Other"
                   onChange={handleChange}
                 />
-                <CheckboxLabel htmlFor="other">Other</CheckboxLabel>
+                <CheckboxLabel htmlFor="other">IP education and training</CheckboxLabel>
               </CheckboxGroup>
             </CheckboxGrid>
           </FormGroup>
@@ -459,7 +459,7 @@ const ContactUsForm = () => {
             Start a live chat
           </ContactLink>
           
-          <ContactLink href="mailto:support@company.com" title="Send us an email">
+          <ContactLink href="mailto:support@lifeintelect.com" title="Send us an email">
             <IconWrapper>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -468,7 +468,7 @@ const ContactUsForm = () => {
             Shoot us an email
           </ContactLink>
           
-          <ContactLink href="https://twitter.com/company" target="_blank" rel="noopener noreferrer" title="Message us on X">
+          <ContactLink href="https://x.com/Lifeintelect" target="_blank" rel="noopener noreferrer" title="Message us on X">
             <IconWrapper>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/>
@@ -482,13 +482,21 @@ const ContactUsForm = () => {
           <ContactMethodTitle>Call us</ContactMethodTitle>
           <ContactMethodText>Call our team Mon-Fri from 8am to 5pm.</ContactMethodText>
           
-          <ContactLink href="tel:+15550000000" title="Call our team">
+          <ContactLink href="tel:+(91)-9591600666" title="Call our team">
             <IconWrapper>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </IconWrapper>
-            +1 (555) 000-0000
+            +(91)-9591600666, 
+          </ContactLink>
+          <ContactLink href="tel:91-080-28476777" title="Call our team">
+            <IconWrapper>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </IconWrapper>
+            91-080-28476777 
           </ContactLink>
         </ContactMethod>
         
@@ -503,7 +511,7 @@ const ContactUsForm = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </IconWrapper>
-            100 Smith Street, Collingwood VIC 3066
+            2100 East County Line Rd, Ardmore, PA, 19003. USA
           </ContactLink>
         </ContactMethod>
       </ContactInfoSection>

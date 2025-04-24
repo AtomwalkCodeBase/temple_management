@@ -33,6 +33,7 @@ const subServiceContent = {
 		  },
 		],
 		typesSection: {
+			image: PatentSearch,
 		  types: [
 			{
 			  title: "Patentability Search",
@@ -55,7 +56,7 @@ const subServiceContent = {
 				"A state-of-the-art or technology landscape analysis helps clients understand the evolution of a particular technology and the overall technology trends in multiple domains. Our experts conduct a comprehensive search and analysis of patent literature, scientific publications, and other relevant sources to identify technological trends, major players, and competitors' strengths. We analyse patent activities related to the technology of interest. A state-of-the-art or technology landscape analysis provides valuable insights into the technological advancements and competitive landscape, helping clients formulate R&D strategies, plan product launches, and understand competitors' strategies. We provide a detailed analysis report that includes insights into technology trends, major players, and recommendations for strategic decision-making.",
 			},
 		  ],
-		  image: PatentSearch,
+		  
 		},
 	  },
 	  service_2: {

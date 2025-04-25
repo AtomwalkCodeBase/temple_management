@@ -10,7 +10,8 @@ const subServiceContent = {
 		title: "Patent Search",
 		description:
 		  "At Lifeintelect, we provide comprehensive patent search services to ensure your invention is novel and patentable.",
-		process: [
+		  processTitle: "Our process includes:",
+		  process: [
 		  {
 			title: "Understanding Your Invention",
 			description:
@@ -64,6 +65,7 @@ const subServiceContent = {
 		description:
 		  "Patent drafting is one of the most critical documents in the entire patent registration process and is also considered one of the most complex techno-legal documents. This document contains the features of the invention for which protection is being sought in the form of claims. Our strong team, working in organized and effective internal processes, understands your invention to deliver excellent provisional and complete specification patent drafts. The patent specification we draft and file for you meets the standards and requirements of the US, EP, WO, and Indian jurisdictions.",
 		image: PatentDraft,
+		typesSection: {
 		types: [
 		  {
 			title: "Provisional Patent Specification Drafting",
@@ -91,6 +93,7 @@ const subServiceContent = {
 			  "Our specialized team of patent attorneys, registered patent agents, and technologists has experience in successfully handling patent filing and prosecution in India, timely responding to office actions. We work closely with you to draw up the final and non-final office action responses by meticulously drafting comments, arguments, and amendments that are acceptable under patent law by the examiner. To file the right kind of patent draft, our experts meticulously construct and formulate claims, preventing others from finding ways to copy your idea or parts of it. We customize our services to meet your needs at affordable prices, turning ideas into high-quality enforceable patents that encompass every aspect of the invention.",
 		  },
 		]
+	}
 	  },
 	  service_3: {
 		title: "Patent Filing",

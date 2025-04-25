@@ -72,8 +72,8 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
               {/* Render process sections */}
               {service.process && (
                 <Section>
-                  <SectionHeading theme={theme}>Our Process</SectionHeading>
-                  <ServiceList>
+                <SectionHeading theme={theme}>{service.processTitle ? service.processTitle : "Our process"}</SectionHeading>
+                <ServiceList>
                     {service.process.map((item, i) => (
                       <ServiceListItem key={i}>
                         <ListItemIcon theme={theme}>

@@ -147,7 +147,7 @@ export default function Footer2() {
             <SocialLink href="http://www.linkedin.com/company/lifeintelect-consultancy-pvt-ltd-?trk=top_nav_home" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Linkedin size={18} />
             </SocialLink>
-            <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <SocialLink href="http://instagram.com/lifeintelect_consultancy/" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Instagram size={18} />
             </SocialLink>
           </SocialLinks>
@@ -179,13 +179,15 @@ export default function Footer2() {
             <ContactIcon>
               <MapPin size={18} color="#FF4500" />
             </ContactIcon>
-            <ContactText>123 Innovation Street, Bangalore, Karnataka, India</ContactText>
+            <ContactText>Gopalan Millennium Tower, 1st Floor, No 133,
+ITPL Main Road, Kundalahalli, Brookefield,
+Bengaluru, Karnataka 560037</ContactText>
           </ContactItem>
           <ContactItem>
             <ContactIcon>
               <Phone size={18} color="#FF4500" />
             </ContactIcon>
-            <ContactText>++(91)-9591600666</ContactText>
+            <ContactText>+(91)-9591600666</ContactText>
           </ContactItem>
           <ContactItem>
             <ContactIcon>

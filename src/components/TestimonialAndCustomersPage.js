@@ -397,7 +397,7 @@ const TestimonialArrow = styled.div`
 
 const TestimonialSlider = styled.div`
   position: relative;
-  height: 400px;
+  height: 450px;
   max-width: 900px;
   margin: 0 auto;
   
@@ -740,7 +740,7 @@ const TestimonialAndCustomersPage = () => {
   const testimonials = [
     {
       text: "We recently availed the services of LifeIntelect Consultancy Pvt Ltd for our company trademark registration. Dr. Lipika Sahoo guided us through the process with professionalism and expertise. The service was exceptional, and we received our trademark on time. The team was very responsive and helpful with our queries. We highly recommend LifeIntelect Consultancy to our business associates and clients for their outstanding service. We wish them all success in their business endeavours.",
-      name: "Unknown",
+      name: "Total Solutions",
       position: "Representative, Total Solutions",
       stars: 5,
     },
@@ -770,7 +770,7 @@ const TestimonialAndCustomersPage = () => {
     },
     {
       text: "Total Solutions, established in 1995, specializes in accounting and indirect taxation, providing comprehensive solutions with flexibility, precision, and quick responses. We have utilized Dr. Lipika Sahoo's expertise for trademark registrations, benefiting from her in-depth knowledge and professional approach. Our clients have consistently expressed satisfaction with her services. We highly recommend Dr. Lipika Sahoo and LifeIntelect Consultancy for their exceptional trademark services.",
-      name: "Unknown",
+      name: "Total Solutions",
       position: "Representative, Total Solutions",
       stars: 5,
     },
@@ -1060,9 +1060,9 @@ const TestimonialAndCustomersPage = () => {
                   </QuoteIconWrapper>
                   
                   <TestimonialProfile>
-                    <ProfileImageWrapper>
+                    {/* <ProfileImageWrapper>
                       <ProfileImage />
-                    </ProfileImageWrapper>
+                    </ProfileImageWrapper> */}
                     
                     <ProfileInfo>
                       <ProfileName>{testimonial.name}</ProfileName>

@@ -277,7 +277,7 @@ const ContactHero = () => {
               <ContactText>{location.email}</ContactText>
               <ContactText>{location.phone}</ContactText>
               
-              <LocationButton
+              {/* <LocationButton
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
@@ -294,7 +294,7 @@ const ContactHero = () => {
                   <path d="M8 1L15 8L8 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M1 8H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </ArrowIcon>
-              </LocationButton>
+              </LocationButton> */}
             </ContactInfo>
           </Card>
         ))}

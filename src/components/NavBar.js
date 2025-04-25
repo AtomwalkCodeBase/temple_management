@@ -728,7 +728,9 @@ const NavBar = () => {
   const toggleServicesDropdown = () => {
     setShowServicesDropdown(!showServicesDropdown);
   };
-
+const navigatetocontact=() => {
+    window.location.href = '/contact';
+  }
   return (
     <>
       <ProgressBar scrollProgress={scrollProgress} />
@@ -789,7 +791,7 @@ const NavBar = () => {
               )}
             </MenuItemWrapper>
           ))}
-          <ActionButton isScrolled={isScrolled}>Get Started</ActionButton>
+          <ActionButton onClick={navigatetocontact}>Get Started</ActionButton>
         </Menu>
 
         {/* Desktop Mega Dropdown Menu */}

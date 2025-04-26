@@ -1,5 +1,6 @@
 {
-  "name": "atomwalhome",
+  "name": "lifeintelect",
+  "homepage": "https://lifeintelect.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

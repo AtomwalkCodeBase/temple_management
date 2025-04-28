@@ -130,32 +130,20 @@ const Tooltip = styled.span`
 `;
 
 const Section = styled.section`
-  width: 100vw;
-  min-height: 100vh;
-  background-color: ${props => props.bgColor};
+  width: 100%;
+  height: 100vh;
+  background-color: ${props => props.bgColor || '#fff'};
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
-  opacity: 0;
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  transform: translateY(20px);
-  flex-direction: ${props => props.reverse ? 'row-reverse' : 'row'};
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
 
   @media (max-width: 768px) {
-    flex-direction: row;
-    padding: 20px 10px;
+  flex-direction: column;
+    padding: 20px 0;
     min-height: auto;
-    align-items: flex-start;
-  }
-
-  @media (max-width: 480px) {
-    padding: 15px 5px;
   }
 `;
 

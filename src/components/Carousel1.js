@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import Ptent from './../assets/img/Ptent.png'
-import Ptent2 from './../assets/img/HomePage_Banner_1.1.png'
-import Ptent3 from './../assets/img/Group 1.png'
+import Ptent from './../assets/img/1.4_image.jpeg'
+import Ptent2 from './../assets/img/2_image.jpeg'
+import Ptent3 from './../assets/img/3_image.jpeg'
+import Ptent4 from './../assets/img/4_image.jpeg'
 
 // Animation keyframes
 const fadeIn = keyframes`
@@ -234,34 +235,34 @@ export default function FullscreenCarousel() {
 	  {
 		src: Ptent,
 		author: 'LIFEINTELECT',
-		title: 'Patent Services',
-		topic: 'Through Our Competitive Solutions',
-		description:
-		  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		// title: 'Zoom out and focus deep. That’s how we view your project ',
+		topic: 'Zoom out and focus deep. That’s how we view your project',
+		// description:
+		//   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 	  },
 	  {
 		src: Ptent2,
 		author: 'LIFEINTELECT',
-		title: 'Copyright Services',
-		topic: 'Through Our Expert Counselling',
-		description:
-		  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+		// title: 'Copyright Services',
+		topic: 'From thought to thrive—we nurture your idea.',
+		// description:
+		//   'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 	  },
 	  {
 		src: Ptent3,
 		author: 'LIFEINTELECT',
-		title: 'Trademark Service',
-		topic: 'Through Our Legal Protection',
-		description:
-		  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+		// title: 'Trademark Service',
+		topic: 'Design with innovation, strengthen with protection ',
+		// description:
+		//   'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 	  },
 	  {
-		src: Ptent3,
+		src: Ptent4,
 		author: 'LIFEINTELECT',
-		title: 'IP Lifecycle Management',
-		topic: 'ANIMAL',
-		description:
-		  'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+		// title: 'IP Lifecycle Management',
+		topic: 'Plan, protect, and prosper—excellence at every stage.',
+		// description:
+		//   'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 	  },
 	];
   

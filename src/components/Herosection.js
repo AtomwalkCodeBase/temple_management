@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import { FaLock, FaFlask, FaLaptop, FaLightbulb, FaUsers, FaGavel, FaGraduationCap, FaGlobeAmericas, FaHome } from 'react-icons/fa';
+import { FaLock, FaFlask, FaLaptop, FaLightbulb, FaUsers, FaGavel, FaGraduationCap, FaGlobeAmericas, FaHome, FaTimes, FaChevronRight } from 'react-icons/fa';
 import Carousel1 from './Carousel1';
 import Section1Image from "../assets/img/Picture4-removebg-preview.png"
 import Section2Image from "../assets/img/Picture5.jpg"
 import Section3Image from "../assets/img/Picture7-removebg-preview.png"
 import Section4Image from "../assets/img/Picture9-removebg-preview.png"
+import { useNavigate } from 'react-router-dom';
 
 // Animations
 const fadeIn = keyframes`
@@ -131,152 +132,158 @@ const Tooltip = styled.span`
 
 const Section = styled.section`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: ${props => props.bgColor || '#fff'};
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 0;
+  padding: 80px 20px;
   position: relative;
   overflow: hidden;
 
-  @media (max-width: 768px) {
-  flex-direction: column;
-    padding: 20px 0;
+  @media (max-width: 1024px) {
     min-height: auto;
+    padding: 60px 20px;
   }
-`;
-
-const SectionLeft = styled.div`
-  flex: 1;
-  max-width: 600px;
-  padding: 20px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
   @media (max-width: 768px) {
-    flex: 1;
-    max-width: 50%;
-    padding: 15px;
-    text-align: left;
-  }
-
-  @media (max-width: 480px) {
-    max-width: 45%;
-    padding: 10px;
+    padding: 40px 20px;
   }
 `;
 
-const SectionRight = styled.div`
+const SectionContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: ${props => props.reverse ? 'row-reverse' : 'row'};
+  align-items: center;
+  gap: 60px;
+
+  @media (max-width: 1024px) {
+    gap: 40px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 30px;
+  }
+`;
+
+const SectionContent = styled.div`
   flex: 1;
-  max-width: 600px;
-  padding: 20px;
+  padding: 40px;
+  color: ${props => props.textColor || '#fff'};
+
+  @media (max-width: 1024px) {
+    padding: 20px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+`;
+
+const SectionMedia = styled.div`
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 
   @media (max-width: 768px) {
-    flex: 1;
-    max-width: 50%;
-    padding: 15px;
-  }
-
-  @media (max-width: 480px) {
-    max-width: 55%;
-    padding: 10px;
+    width: 100%;
+    padding: 0;
+    margin-top: 30px;
   }
 `;
 
-const Head = styled.h1`
-  font-size: clamp(2.5rem, 5vw, 4rem);
+const Head = styled.h2`
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #fff;
   line-height: 1.2;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 15px;
 
-  @media (max-width: 768px) {
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    margin-bottom: 15px;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: ${props => props.center ? '50%' : '0'};
+    transform: ${props => props.center ? 'translateX(-50%)' : 'none'};
+    width: 80px;
+    height: 4px;
+    background: ${props => props.accentColor || '#0368ff'};
   }
 
-  @media (max-width: 480px) {
-    font-size: clamp(1.5rem, 3.5vw, 2rem);
+  @media (max-width: 1024px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+    text-align: center;
   }
 `;
 
 const SubHead = styled.p`
-  font-size: clamp(1.1rem, 3vw, 1.3rem);
-  color: #fff;
+  font-size: 1.1rem;
   line-height: 1.6;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
+  max-width: 600px;
 
-  @media (max-width: 768px) {
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    margin-bottom: 20px;
+  @media (max-width: 1024px) {
+    font-size: 1rem;
   }
 
-  @media (max-width: 480px) {
-    font-size: clamp(0.8rem, 2vw, 1rem);
+  @media (max-width: 768px) {
+    margin: 0 auto 2rem;
+    text-align: center;
   }
 `;
 
 const Button = styled.button`
-  background: linear-gradient(135deg, #333, #555);
+  background: ${props => props.bgColor || '#0368ff'};
   color: white;
   border: none;
   padding: 12px 30px;
-  border-radius: 50px;
+  border-radius: 4px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: fit-content;
-  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 
-  &:hover, &:focus {
-    background: linear-gradient(135deg, #444, #666);
+  &:hover {
+    background: ${props => props.hoverColor || '#0254cc'};
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    animation: ${pulse} 0.8s infinite;
-  }
-
-  &:focus {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   }
 
   @media (max-width: 768px) {
-    padding: 10px 25px;
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
-    align-self: flex-start;
-  }
-
-  @media (max-width: 480px) {
-    padding: 8px 20px;
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
   }
 `;
 
 const Image = styled.img`
   max-width: 100%;
   height: auto;
-  border-radius: 15px;
+  border-radius: 8px;
   
   transition: transform 0.3s ease;
 
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 
   @media (max-width: 768px) {
-    max-width: 100%;
-    border-radius: 10px;
-  }
-
-  @media (max-width: 480px) {
-    border-radius: 8px;
+    max-width: 90%;
   }
 `;
 
@@ -557,7 +564,7 @@ const FeaturesSection = styled.section`
 const FeatureGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -623,6 +630,128 @@ const FeatureText = styled.p`
   }
 `;
 
+const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  backdrop-filter: blur(5px);
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+`;
+
+const PopupContent = styled.div`
+  background: #fff;
+  border-radius: 16px;
+  max-width: 650px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 40px;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(20, 40, 100, 0.3);
+  transform: translateY(30px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-top: 5px solid rgba(100, 100, 200, 0.8);
+
+  ${PopupOverlay}.open & {
+    transform: translateY(0) scale(1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 25px;
+    max-width: 95%;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(248, 137, 137, 0.15);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: rgba(248, 137, 137, 1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover, &:focus {
+    background: rgba(248, 137, 137, 0.25);
+    transform: rotate(90deg);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(248, 137, 137, 0.4);
+  }
+`;
+
+const PopupTitle = styled.h2`
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  color: rgba(20, 40, 100, 0.9);
+  margin: 0 0 15px 0;
+  text-align: center;
+  font-weight: 700;
+`;
+
+const PopupPunchline = styled.p`
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: rgba(20, 40, 100, 0.7);
+  text-align: center;
+  margin: 0 0 30px 0;
+  line-height: 1.6;
+`;
+
+const ServiceList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 25px;
+`;
+
+const ServiceItem = styled.div`
+  background: rgba(100, 100, 200, 0.1);
+  border: 2px solid rgba(100, 100, 200, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  font-weight: 600;
+  color: rgba(20, 40, 100, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover, &:focus {
+    background: rgba(200, 100, 200, 0.1);
+    border-color: rgba(200, 100, 200, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(200, 100, 200, 0.2);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(100, 100, 200, 0.3);
+  }
+`;
+
+
+
 // Main Component
 const Herosection = () => {
   const containerRef = useRef(null);
@@ -639,6 +768,8 @@ const Herosection = () => {
   const carouselRef = useRef(null);
   const [activeSection, setActiveSection] = useState('carousel');
   const [isOpen, setIsOpen] = useState(false);
+  const [popupData, setPopupData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observerOptions = {
@@ -746,39 +877,85 @@ const Herosection = () => {
     }
   };
 
+  const openPopup = (data) => {
+    setPopupData(data);
+  };
+
+  const closePopup = () => {
+    setPopupData(null);
+  };
+
+  const handleServiceClick = (service) => {
+    const serviceToPathMap = {
+      // IP Solutions
+      'Industrial Design': '/design',
+      'Copyright': '/copyright',
+      'Geographical Indication': '/geographical-indication',
+      'National Biodiversity Authority Approval': null, // No route provided; handle as needed
+      // IP Lifecycle Management
+      'IP Audit of the Company': '/ip-audit',
+      'IP Policy and Process Setup': '/ip-policy',
+      'IP Portfolio Management': '/ip-portfolio',
+      'IP Valuation': '/ip-valuation',
+      // Scientific and Technology Solutions
+      'Technology Transfer': '/technology-transfer',
+      'Patent Valuation': '/patent-valuations',
+      'Patent Due Diligence & Variability Analysis': '/patent-due-diligence',
+      'Competitive Landscape & Industry Trends': '/competitive-landscape',
+      // Strategy & Advisory (Startups)
+      'IP Strategy & Roadmap for Startups': '/IP-Strategy-&-Roadmap-for-Startups',
+      'Cost-Effective IP Protection': '/Cost-Effective-IP-Protection',
+      'IP Due Diligence for Investors': '/IP-Due-Diligence-for-Investors',
+      'IP Licensing & Commercialization': '/IP-Licensing-&-Commercialization',
+      'Raising Awareness and Funding with IP': '/Raising-Awareness-and-Funding-with-IP',
+      'Startup IP Portfolio Management': '/Startup-IP-Portfolio-Management',
+      'IP Risk Management for Startups': '/IP-Risk-Management-for-Startups',
+    };
+
+    const path = serviceToPathMap[service];
+    if (path) {
+      navigate(path);
+    } else {
+      console.warn(`No route defined for service: ${service}`);
+      // Optionally, navigate to a default services page or show an alert
+    }
+    closePopup();
+  };
+
   const sections = [
     {
       bgColor: '#AB6604',
-      head: 'Intellectual Property Right Solutions',
-      subHead: 'Protecting ideas, preserving value, powering progress.',
+      head: 'STRATEGY AND ADVISORY',
+      subHead: 'Strategic protection for patents, trademarks, and beyond',
       image: Section1Image,
       alt: 'IP Solutions Hero Image',
       reverse: false
+      // bgColor: '#AB6604',
     },
     {
       bgColor: '#0271B1',
-      head: 'IP Lifecycle Management',
-      subHead: 'Streamline your IP strategy from creation to monetization.',
+      head: 'SCIENTIFIC & TECHNOLOGY SOLUTIONS ',
+      subHead: 'Unlocking potential through research, analysis, and precision.',
       image: Section2Image,
       alt: 'IP Lifecycle Hero Image',
       reverse: true
     },
     {
       bgColor: '#8E2D8D',
-      head: 'Scientific & Technology Solutions',
-      subHead: 'Innovate with cutting-edge research and IP protection.',
+      head: 'Intellectual Property Rights Education & Training ',
+      subHead: 'Building IP Expertise: Training for Protection & Growth',
       image: Section3Image,
       alt: 'Tech Solutions Hero Image',
       reverse: false
     },
-    {
-      bgColor: '#5050A0',
-      head: 'Strategic & Legal Advisory',
-      subHead: 'Navigate complex IP landscapes with expert guidance.',
-      image: Section4Image,
-      alt: 'Advisory Hero Image',
-      reverse: true
-    }
+    // {
+    //   bgColor: '#5050A0',
+    //   head: 'Strategic & Legal Advisory',
+    //   subHead: 'Navigate complex IP landscapes with expert guidance.',
+    //   image: Section4Image,
+    //   alt: 'Advisory Hero Image',
+    //   reverse: true
+    // }
   ];
 
   const navItems = [
@@ -802,6 +979,60 @@ const Herosection = () => {
     { bgColor: 'rgba(20, 40, 100, 0.8)' },
     { bgColor: 'rgba(248, 137, 137, 0.8)' },
     { bgColor: 'rgba(200, 100, 200, 0.8)' }
+  ];
+
+  const featureData = [
+    {
+      text: 'IP Solutions',
+      icon: "🔒",
+      punchline: 'Protecting ideas, preserving value, powering progress.',
+      services: [
+        'Industrial Design',
+        'Copyright',
+        'Geographical Indication',
+        'National Biodiversity Authority Approval',
+      ],
+      imageIdea: 'Icons or images representing patents, copyrights, or trademarks.',
+    },
+    {
+      text: 'IP Lifecycle Management',
+      icon: "🔬",
+      punchline: 'Manage your IP from inception to monetization.',
+      services: [
+        'IP Audit of the Company',
+        'IP Policy and Process Setup',
+        'IP Portfolio Management',
+        'IP Valuation',
+      ],
+      imageIdea: 'Flowchart or lifecycle diagram of IP management.',
+    },
+    {
+      text: 'Technology Transfer Solutions',
+      icon: "💻",
+      punchline: 'Seamlessly transfer technology with IP protection.',
+      services: [
+        'Technology Transfer',
+        'Patent Valuation',
+        'Patent Due Diligence & Variability Analysis',
+        'Competitive Landscape & Industry Trends',
+      ],
+      imageIdea: 'A bird mid-flight carrying a twig between two different trees.',
+    },
+    {
+      text: 'Intellectual Property Rights Solutions for Startups',
+      icon: "💡",
+      punchline: 'Navigate complex IP landscapes with expert guidance.',
+      services: [
+        'IP Strategy & Roadmap for Startups',
+        'Cost-Effective IP Protection',
+        'IP Due Diligence for Investors',
+        'IP Licensing & Commercialization',
+        'Raising Awareness and Funding with IP',
+        'Startup IP Portfolio Management',
+        'IP Risk Management for Startups',
+      ],
+      imageIdea: 'Lightbulb with gears or a roadmap illustration.',
+    },
   ];
 
   return (
@@ -828,30 +1059,13 @@ const Herosection = () => {
           </NavItem>
         ))}
       </NavBar>
-      {sections.map((section, index) => (
-        <Section
-          key={index}
-          bgColor={section.bgColor}
-          reverse={section.reverse}
-          ref={el => sectionRefs.current[index] = el}
-        >
-          <SectionLeft>
-            <Head>{section.head}</Head>
-            <SubHead>{section.subHead}</SubHead>
-            <Button aria-label={`Read more about ${section.head}`}>Read More</Button>
-          </SectionLeft>
-          <SectionRight>
-            <Image src={section.image} alt={section.alt} />
-          </SectionRight>
-        </Section>
-      ))}
       <Container ref={containerRef}>
         <HeroSection ref={heroSectionRef}>
           <HeroContent ref={heroContentRef}>
-            <Heading ref={headingRef}>Powering Your Innovations</Heading>
-            <SubText ref={subTextRef}>
+            <Heading ref={headingRef}>Intellectual Property (IP) Solutions</Heading>
+            {/* <SubText ref={subTextRef}>
               Lifeintelect is a Bangalore-based technology and intellectual property consulting firm. We help protect your ideas and achieve your business goals by maximizing the synergy among Technology, Law, and Business.
-            </SubText>
+            </SubText> */}
             <GetStartedButton ref={buttonRef} aria-label="Learn more about Lifeintelect services">Learn More</GetStartedButton>
           </HeroContent>
 
@@ -898,30 +1112,104 @@ const Herosection = () => {
           </StatsContainer>
         </HeroSection>
 
-        <FeaturesSection ref={featuresSectionRef}>
+        {/* <FeaturesSection ref={featuresSectionRef}>
           <FeatureGrid>
             <FeatureItem ref={el => featureItemRefs.current[0] = el} bgColor={featureColors[0].bgColor} index={0}>
-              <FeatureIcon><FaLock /></FeatureIcon>
+            <FeatureIcon>🔒</FeatureIcon>
               <FeatureText>IP Solutions</FeatureText>
             </FeatureItem>
 
             <FeatureItem ref={el => featureItemRefs.current[1] = el} bgColor={featureColors[1].bgColor} index={1}>
-              <FeatureIcon><FaFlask /></FeatureIcon>
+            <FeatureIcon>🔬</FeatureIcon>
               <FeatureText>IP Lifecycle Management</FeatureText>
             </FeatureItem>
 
             <FeatureItem ref={el => featureItemRefs.current[2] = el} bgColor={featureColors[2].bgColor} index={2}>
-              <FeatureIcon><FaLaptop /></FeatureIcon>
+            <FeatureIcon>💻</FeatureIcon>
               <FeatureText>Scientific and Technology Solutions</FeatureText>
             </FeatureItem>
 
             <FeatureItem ref={el => featureItemRefs.current[3] = el} bgColor={featureColors[3].bgColor} index={3}>
-              <FeatureIcon><FaLightbulb /></FeatureIcon>
+            <FeatureIcon>💡</FeatureIcon>
               <FeatureText>Strategy & Advisory</FeatureText>
             </FeatureItem>
           </FeatureGrid>
+        </FeaturesSection> */}
+
+        <FeaturesSection ref={featuresSectionRef}>
+          <FeatureGrid>
+            {featureData.map((feature, index) => (
+              <FeatureItem
+                key={index}
+                ref={el => featureItemRefs.current[index] = el}
+                bgColor={featureColors[index].bgColor}
+                index={index}
+                onClick={() => openPopup(feature)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openPopup(feature)}
+                aria-label={`Open services for ${feature.text}`}
+              >
+                <FeatureIcon>{feature.icon}</FeatureIcon>
+                <FeatureText>{feature.text}</FeatureText>
+              </FeatureItem>
+            ))}
+          </FeatureGrid>
         </FeaturesSection>
       </Container>
+
+      {sections.map((section, index) => (
+  <Section key={index} bgColor={section.bgColor} ref={el => sectionRefs.current[index] = el}>
+    <SectionContainer reverse={section.reverse}>
+      <SectionContent textColor={section.textColor}>
+        <Head 
+          accentColor={section.accentColor}
+          center={window.innerWidth <= 768} // Center on mobile
+        >
+          {section.head}
+        </Head>
+        <SubHead>{section.subHead}</SubHead>
+        <Button 
+          bgColor={section.bgColor}
+          hoverColor={section.buttonHover}
+          aria-label={`Read more about ${section.head}`}
+        >
+          Read More <FaChevronRight />
+        </Button>
+      </SectionContent>
+      <SectionMedia>
+        <Image src={section.image} alt={section.alt} />
+      </SectionMedia>
+    </SectionContainer>
+  </Section>
+))}
+
+        {popupData && (
+        <PopupOverlay className={popupData ? 'open' : ''}>
+          <PopupContent>
+            <CloseButton onClick={closePopup} aria-label="Close popup">
+              <FaTimes />
+            </CloseButton>
+            <PopupTitle>{popupData.text}</PopupTitle>
+            <PopupPunchline>{popupData.punchline}</PopupPunchline>
+            <ServiceList>
+              {popupData.services.map((service, index) => (
+                <ServiceItem
+                  key={index}
+                  onClick={() => handleServiceClick(service)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleServiceClick(service)}
+                  aria-label={`Go to ${service} page`}
+                >
+                  {service}
+                </ServiceItem>
+              ))}
+            </ServiceList>
+          </PopupContent>
+        </PopupOverlay>
+      )}
+      
     </>
   );
 };

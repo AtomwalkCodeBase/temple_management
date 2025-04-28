@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import Ptent from './../assets/img/1.4_image.jpeg'
+import Ptent from './../assets/img/pariesh.jpeg'
 import Ptent2 from './../assets/img/2_image.jpeg'
-import Ptent3 from './../assets/img/3_image.jpeg'
+import Ptent3 from './../assets/img/honnybee.jpg'
 import Ptent4 from './../assets/img/4_image.jpeg'
 
 // Animation keyframes
@@ -295,7 +295,12 @@ export default function FullscreenCarousel() {
 	useEffect(() => {
 	  resetTimer();
 	}, [currentIndex]);
-  
+  const navigatetos=()=>{
+     window.location.href="/services"
+  }
+  const contact=()=>{
+    window.location.href="/contact"
+ }
 	return (
 	  <CarouselContainer>
 		<SlideContainer translateValue={-currentIndex * 100}>
@@ -309,8 +314,8 @@ export default function FullscreenCarousel() {
 				  <div className="topic">{item.topic}</div>
 				  <div className="description">{item.description}</div>
 				  <div className="buttons">
-					<button>Learn More</button>
-					<button>Contact Us</button>
+					<button onClick={()=>navigatetos()}>Learn More</button>
+					<button onClick={()=>contact()}>Contact Us</button>
 				  </div>
 				</div>
 			  </TextOverlay>

@@ -16,7 +16,7 @@ import {
 import Carousel1 from "./Carousel1";
 import Section1Image from "../assets/img/section1.png";
 import Section2Image from "../assets/img/section2.png";
-import Section3Image from "../assets/img/Picture7-removebg-preview.png";
+import Section3Image from "../assets/img/KYB_Brain_Basics_Brain040522.png";
 import Section4Image from "../assets/img/Picture9-removebg-preview.png";
 import { useNavigate } from "react-router-dom";
 

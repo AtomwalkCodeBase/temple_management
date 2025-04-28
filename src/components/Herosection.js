@@ -298,7 +298,6 @@ const Container = styled.div`
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-
   &.visible {
     opacity: 1;
     transform: translateY(0);
@@ -352,20 +351,20 @@ const HeroContent = styled.div`
 const Heading = styled.h1`
   font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 700;
-  color: #333;
+  /* color: #333; */
   line-height: 1.2;
   margin-bottom: 20px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
   transition-delay: 0.2s;
-
+  color: #ffffff;
   &.visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  background: linear-gradient(45deg, #333, #666, #333);
+  background: linear-gradient(45deg, #ffffff, #ffffff, #ffffff);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1036,7 +1035,7 @@ const Herosection = () => {
   ];
 
   return (
-    <>
+    <div style={{backgroundColor:"#131a4e"}}>
       <CarouselWrapper ref={carouselRef}>
         <Carousel1 />
       </CarouselWrapper>
@@ -1069,7 +1068,7 @@ const Herosection = () => {
             <GetStartedButton ref={buttonRef} aria-label="Learn more about Lifeintelect services">Learn More</GetStartedButton>
           </HeroContent>
 
-          <StatsContainer ref={statsContainerRef}>
+          {/* <StatsContainer ref={statsContainerRef}>
             <StatCard ref={el => statCardRefs.current[0] = el} delay="0.1s">
               <IconContainer bgColor={statColors[0].bgColor} bgColorEnd={statColors[0].bgColorEnd} aria-hidden="true">
                 <FaUsers />
@@ -1109,7 +1108,7 @@ const Herosection = () => {
                 <StatLabel>Global Projects Executed</StatLabel>
               </StatContent>
             </StatCard>
-          </StatsContainer>
+          </StatsContainer> */}
         </HeroSection>
 
         {/* <FeaturesSection ref={featuresSectionRef}>
@@ -1210,7 +1209,7 @@ const Herosection = () => {
         </PopupOverlay>
       )}
       
-    </>
+    </div>
   );
 };
 

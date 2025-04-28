@@ -767,7 +767,7 @@ const AboutUs = () => {
   
   const stats = [
     { number: '500+', label: 'Happy Clients', icon: '😊' },
-    { number: '13+', label: 'Years Experience', icon: '⏳' },
+    { number: '12+', label: 'Years Experience', icon: '⏳' },
     { number: '99.9%', label: 'Success Rate', icon: '🏆' },
     { number: '2500+', label: 'Successful Projects', icon: '✅' }
   ];

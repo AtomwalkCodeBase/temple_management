@@ -733,7 +733,7 @@ const TestimonialAndCustomersPage = () => {
   const statsRef = useRef(null);
   const [stats, setStats] = useState([
     // { icon: <Users size={28} />, value: 0, target: 506, label: "Happy Clients", index: 0 },
-    { icon: <Heart size={28} />, value: 0, target: 99, label: "Satisfaction Rate %", index: 0 },
+    { icon: <Heart size={28} />, value: 0, target: 99, label: "Patent Grant Success %", index: 0 },
     { icon: <Users size={28} />, value: 0, target: 2050, label: "IP Filings", index: 1 },
     { icon: <Award size={28} />, value: 0, target: 6750, label: "Total people trained", index: 2 },
   ]);

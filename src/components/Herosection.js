@@ -1096,7 +1096,7 @@ const Herosection = () => {
   ];
 
   return (
-    <div style={{backgroundColor:"#131a4e"}}>
+    <div style={{backgroundColor:"#077A7D"}}>
       <CarouselWrapper ref={carouselRef}>
         <Carousel1 />
       </CarouselWrapper>

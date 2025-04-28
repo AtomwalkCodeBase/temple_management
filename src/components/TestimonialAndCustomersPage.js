@@ -10,7 +10,7 @@ import company6  from '../assets/img/LOGO/Anand diagnostic laboratory.png'
 import company7  from '../assets/img/LOGO/Ariel LTD.(ASI).png'
 import company8  from '../assets/img/LOGO/Aristogen biosciences.png'
 import company9  from '../assets/img/LOGO/Atomwalk.png'
-import company10 from '../assets/img/LOGO/Balya group.jpg'
+// import company10 from '../assets/img/LOGO/Balya group.jpg'
 import company11 from '../assets/img/LOGO/Bio-gen.png'
 import company12 from '../assets/img/LOGO/Bioinnovation center.png'
 import company13 from '../assets/img/LOGO/Birla institute of technology.png'
@@ -19,11 +19,11 @@ import company15 from '../assets/img/LOGO/CfHE.png'
 import company16 from '../assets/img/LOGO/CII.png'
 import company17 from '../assets/img/LOGO/CMR college of engineering and technology.png'
 import company18 from '../assets/img/LOGO/DQ labs.png'
-import company19 from '../assets/img/LOGO/E-Merg tech.jpg'
+// import company19 from '../assets/img/LOGO/E-Merg tech.jpg'
 import company20 from '../assets/img/LOGO/FKCCI.jpg'
 import company21 from '../assets/img/LOGO/Fluxgen.png'
 import company22 from '../assets/img/LOGO/FTG bio.png'
-import company23 from '../assets/img/LOGO/gh.png'
+// import company23 from '../assets/img/LOGO/gh.png'
 import company24 from '../assets/img/LOGO/I stem.jpg'
 import company25 from '../assets/img/LOGO/Iaomr.png'
 import company26 from '../assets/img/LOGO/IIMB.png'
@@ -33,7 +33,7 @@ import company29 from '../assets/img/LOGO/Impactful visionaries.jpg'
 import company30 from '../assets/img/LOGO/India biosciences.png'
 import company31 from '../assets/img/LOGO/Indian academy of sciences.png'
 import company32 from '../assets/img/LOGO/Indian institute of technology bombay.png'
-import company33 from '../assets/img/LOGO/Inofininty.jpg'
+// import company33 from '../assets/img/LOGO/Inofininty.jpg'
 import company34 from '../assets/img/LOGO/institue of life sciences bhubaneswar.jpg'
 import company35 from '../assets/img/LOGO/IQ soft.png'
 import company36 from '../assets/img/LOGO/Jarkhand university of technology.jpg'
@@ -52,7 +52,7 @@ import company48 from '../assets/img/LOGO/NCBS.jpg'
 import company49 from '../assets/img/LOGO/Neharu group of institution.jpg'
 import company50 from '../assets/img/LOGO/neurovizr.png'
 import company51 from '../assets/img/LOGO/Odisha bigyan Academy.png'
-import company52 from '../assets/img/LOGO/OMMPL.png'
+// import company52 from '../assets/img/LOGO/OMMPL.png'
 import company53 from '../assets/img/LOGO/Procto labs.png'
 import company54 from '../assets/img/LOGO/Radome technologies & services private limited.png'
 import company55 from '../assets/img/LOGO/Ramaiah.png'
@@ -70,8 +70,8 @@ import company66 from '../assets/img/LOGO/Strategi.png'
 import company67 from '../assets/img/LOGO/superbrewed food.jpg'
 import company68 from '../assets/img/LOGO/Svaim.png'
 import company69 from '../assets/img/LOGO/TATA trusts.png'
-import company70 from '../assets/img/LOGO/The live green.png'
-import company71 from '../assets/img/LOGO/Tiami.jpg'
+// import company70 from '../assets/img/LOGO/The live green.png'
+// import company71 from '../assets/img/LOGO/Tiami.jpg'
 import company72 from '../assets/img/LOGO/TRIPURA UNIVERSITY.png'
 import company73 from '../assets/img/LOGO/Trumed.png'
 import company74 from '../assets/img/LOGO/University of agricultural sciences.png'
@@ -863,7 +863,7 @@ const TestimonialAndCustomersPage = () => {
     { name: "Adityavani", logo: company7 },
     { name: "Adityavani", logo: company8 },
     { name: "Adityavani", logo: company9 },
-    { name: "Adityavani", logo: company10 },
+    // { name: "Adityavani", logo: company10 },
     { name: "Adityavani", logo: company11 },
     { name: "Adityavani", logo: company12 },
     { name: "Adityavani", logo: company13 },
@@ -872,11 +872,11 @@ const TestimonialAndCustomersPage = () => {
     { name: "Adityavani", logo: company16 },
     { name: "Adityavani", logo: company17 },
     { name: "Adityavani", logo: company18 },
-    { name: "Adityavani", logo: company19 },
+    // { name: "Adityavani", logo: company19 },
     { name: "Adityavani", logo: company20 },
     { name: "Adityavani", logo: company21 },
     { name: "Adityavani", logo: company22 },
-    { name: "Adityavani", logo: company23 },
+    // { name: "Adityavani", logo: company23 },
     { name: "Adityavani", logo: company24 },
     { name: "Adityavani", logo: company25 },
     { name: "Adityavani", logo: company26 },
@@ -886,7 +886,7 @@ const TestimonialAndCustomersPage = () => {
     { name: "Adityavani", logo: company30 },
     { name: "Adityavani", logo: company31 },
     { name: "Adityavani", logo: company32 },
-    { name: "Adityavani", logo: company33 },
+    // { name: "Adityavani", logo: company33 },
     { name: "Adityavani", logo: company34 },
     { name: "Adityavani", logo: company35 },
     { name: "Adityavani", logo: company36 },
@@ -905,7 +905,7 @@ const TestimonialAndCustomersPage = () => {
     { name: "Adityavani", logo: company49 },
     { name: "Adityavani", logo: company50 },
     { name: "Adityavani", logo: company51 },
-    { name: "Adityavani", logo: company52 },
+    // { name: "Adityavani", logo: company52 },
     { name: "Adityavani", logo: company53 },
     { name: "Adityavani", logo: company54 },
     { name: "Adityavani", logo: company55 },
@@ -923,8 +923,8 @@ const TestimonialAndCustomersPage = () => {
     { name: "Adityavani", logo: company67 },
     { name: "Adityavani", logo: company68 },
     { name: "Adityavani", logo: company69 },
-    { name: "Adityavani", logo: company70 },
-    { name: "Adityavani", logo: company71 },
+    // { name: "Adityavani", logo: company70 },
+    // { name: "Adityavani", logo: company71 },
     { name: "Adityavani", logo: company72 },
     { name: "Adityavani", logo: company73 },
     { name: "Adityavani", logo: company74 },

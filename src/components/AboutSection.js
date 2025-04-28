@@ -186,10 +186,10 @@ export default function AboutSection() {
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
   
   const statItems = [
-    { number: "12+", label: "Years of Experience", icon: "🏆" },
-    { number: "2500+", label: "Successful Projects", icon: "📊" },
-    { number: "99.9%", label: "success rate", icon: "🎯" },
-    { number: "500+", label: "Happy Clients", icon: "😊" }
+    { number: "506+", label: "Happy Clients", icon: "😊" },
+    { number: "2050+", label: "IP Filings", icon: "🏆" },
+    { number: "6750+", label: "Total people trained ", icon: "📊" },
+    { number: "2900+", label: "Total projects executed", icon: "🎯" },
   ]
 
   return (

@@ -310,7 +310,6 @@ const Container = styled.div`
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
-
   &.visible {
     opacity: 1;
     transform: translateY(0);
@@ -364,20 +363,20 @@ const HeroContent = styled.div`
 const Heading = styled.h1`
   font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 700;
-  color: #333;
+  /* color: #333; */
   line-height: 1.2;
   margin-bottom: 20px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
   transition-delay: 0.2s;
-
+  color: #ffffff;
   &.visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  background: linear-gradient(45deg, #333, #666, #333);
+  background: linear-gradient(45deg, #ffffff, #ffffff, #ffffff);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1026,12 +1025,12 @@ const Herosection = () => {
     // { id: 'more', icon: <FaHome />, label: 'More Info', ref: heroSectionRef },
   ];
 
-  const statColors = [
-    { bgColor: "#4285F4", bgColorEnd: "#5E97F7", accentColor: "#4285F4" },
-    { bgColor: "#F5B7B1", bgColorEnd: "#F8CFC9", accentColor: "#F5B7B1" },
-    { bgColor: "#F4D03F", bgColorEnd: "#F7DC6F", accentColor: "#F4D03F" },
-    { bgColor: "#58D68D", bgColorEnd: "#82E0AB", accentColor: "#58D68D" },
-  ];
+  // const statColors = [
+  //   { bgColor: "#4285F4", bgColorEnd: "#5E97F7", accentColor: "#4285F4" },
+  //   { bgColor: "#F5B7B1", bgColorEnd: "#F8CFC9", accentColor: "#F5B7B1" },
+  //   { bgColor: "#F4D03F", bgColorEnd: "#F7DC6F", accentColor: "#F4D03F" },
+  //   { bgColor: "#58D68D", bgColorEnd: "#82E0AB", accentColor: "#58D68D" },
+  // ];
 
   const featureColors = [
     { bgColor: "rgba(100, 100, 200, 0.8)" },
@@ -1097,7 +1096,7 @@ const Herosection = () => {
   ];
 
   return (
-    <>
+    <div style={{backgroundColor:"#131a4e"}}>
       <CarouselWrapper ref={carouselRef}>
         <Carousel1 />
       </CarouselWrapper>
@@ -1136,72 +1135,6 @@ const Herosection = () => {
               Learn More
             </GetStartedButton>
           </HeroContent>
-
-          <StatsContainer ref={statsContainerRef}>
-            <StatCard ref={(el) => (statCardRefs.current[0] = el)} delay="0.1s">
-              <IconContainer
-                bgColor={statColors[0].bgColor}
-                bgColorEnd={statColors[0].bgColorEnd}
-                aria-hidden="true"
-              >
-                <FaUsers />
-              </IconContainer>
-              <StatContent>
-                <StatValue accentColor={statColors[0].accentColor}>
-                  506+
-                </StatValue>
-                <StatLabel>Clients</StatLabel>
-              </StatContent>
-            </StatCard>
-
-            <StatCard ref={(el) => (statCardRefs.current[1] = el)} delay="0.2s">
-              <IconContainer
-                bgColor={statColors[1].bgColor}
-                bgColorEnd={statColors[1].bgColorEnd}
-                aria-hidden="true"
-              >
-                <FaGavel />
-              </IconContainer>
-              <StatContent>
-                <StatValue accentColor={statColors[1].accentColor}>
-                2050+
-                </StatValue>
-                <StatLabel>IP Filings</StatLabel>
-              </StatContent>
-            </StatCard>
-
-            <StatCard ref={(el) => (statCardRefs.current[2] = el)} delay="0.3s">
-              <IconContainer
-                bgColor={statColors[2].bgColor}
-                bgColorEnd={statColors[2].bgColorEnd}
-                aria-hidden="true"
-              >
-                <FaGraduationCap />
-              </IconContainer>
-              <StatContent>
-                <StatValue accentColor={statColors[2].accentColor}>
-                6750+
-                </StatValue>
-                <StatLabel>Total People Trained</StatLabel>
-              </StatContent>
-            </StatCard>
-
-            <StatCard ref={(el) => (statCardRefs.current[3] = el)} delay="0.4s">
-              <IconContainer
-                bgColor={statColors[3].bgColor}
-                bgColorEnd={statColors[3].bgColorEnd}
-                aria-hidden="true"
-              >
-                <FaGlobeAmericas />
-              </IconContainer>
-              <StatContent>
-                <StatValue accentColor={statColors[3].accentColor}>
-                2900+
-                </StatValue>
-                <StatLabel>Projects Executed Globally</StatLabel>
-              </StatContent>
-            </StatCard>
-          </StatsContainer>
         </HeroSection>
 
         <FeaturesSection ref={featuresSectionRef}>
@@ -1287,7 +1220,7 @@ const Herosection = () => {
           </PopupContent>
         </PopupOverlay>
       )}
-    </>
+    </div>
   );
 };
 

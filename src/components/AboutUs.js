@@ -766,10 +766,10 @@ const AboutUs = () => {
   ];
   
   const stats = [
-    { number: '500+', label: 'Happy Clients', icon: '😊' },
-    { number: '13+', label: 'Years Experience', icon: '⏳' },
-    { number: '99.9%', label: 'Success Rate', icon: '🏆' },
-    { number: '2500+', label: 'Successful Projects', icon: '✅' }
+    { number: '506+', label: 'Happy Clients', icon: '😊' },
+    { number: ' 2050+', label: 'IP Filings', icon: '⏳' },
+    { number: '6750+', label: 'Total people trained ', icon: '🏆' },
+    { number: '2900+', label: 'Total projects executed', icon: '✅' }
   ];
   
   const storyParagraphs = [

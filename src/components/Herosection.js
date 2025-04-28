@@ -1,12 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-import { FaLock, FaFlask, FaLaptop, FaLightbulb, FaUsers, FaGavel, FaGraduationCap, FaGlobeAmericas, FaHome, FaTimes, FaChevronRight } from 'react-icons/fa';
-import Carousel1 from './Carousel1';
-import Section1Image from "../assets/img/Picture4-removebg-preview.png"
-import Section2Image from "../assets/img/Picture5.jpg"
-import Section3Image from "../assets/img/Picture7-removebg-preview.png"
-import Section4Image from "../assets/img/Picture9-removebg-preview.png"
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import styled, { keyframes, css } from "styled-components";
+import {
+  FaLock,
+  FaFlask,
+  FaLaptop,
+  FaLightbulb,
+  FaUsers,
+  FaGavel,
+  FaGraduationCap,
+  FaGlobeAmericas,
+  FaHome,
+  FaTimes,
+  FaChevronRight,
+} from "react-icons/fa";
+import Carousel1 from "./Carousel1";
+import Section1Image from "../assets/img/section1.png";
+import Section2Image from "../assets/img/section2.png";
+import Section3Image from "../assets/img/Picture7-removebg-preview.png";
+import Section4Image from "../assets/img/Picture9-removebg-preview.png";
+import { useNavigate } from "react-router-dom";
 
 // Animations
 const fadeIn = keyframes`
@@ -53,7 +65,7 @@ const NavBar = styled.nav`
   backdrop-filter: blur(10px);
 
   @media (max-width: 768px) {
-    display: ${props => (props.isOpen ? 'flex' : 'none')};
+    display: ${(props) => (props.isOpen ? "flex" : "none")};
     top: 0;
     left: 0;
     width: 100%;
@@ -81,7 +93,9 @@ const NavItem = styled.a`
     background: linear-gradient(135deg, #333, #555);
   }
 
-  ${props => props.active && `
+  ${(props) =>
+    props.active &&
+    `
     background: linear-gradient(135deg, #333, #555);
     &::before {
       content: '';
@@ -133,7 +147,7 @@ const Tooltip = styled.span`
 const Section = styled.section`
   width: 100%;
   min-height: 100vh;
-  background-color: ${props => props.bgColor || '#fff'};
+  background-color: ${(props) => props.bgColor || "#fff"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,7 +169,7 @@ const SectionContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   display: flex;
-  flex-direction: ${props => props.reverse ? 'row-reverse' : 'row'};
+  flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
   align-items: center;
   gap: 60px;
 
@@ -172,7 +186,7 @@ const SectionContainer = styled.div`
 const SectionContent = styled.div`
   flex: 1;
   padding: 40px;
-  color: ${props => props.textColor || '#fff'};
+  color: ${(props) => props.textColor || "#fff"};
 
   @media (max-width: 1024px) {
     padding: 20px;
@@ -208,14 +222,14 @@ const Head = styled.h2`
   padding-bottom: 15px;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
-    left: ${props => props.center ? '50%' : '0'};
-    transform: ${props => props.center ? 'translateX(-50%)' : 'none'};
+    left: ${(props) => (props.center ? "50%" : "0")};
+    transform: ${(props) => (props.center ? "translateX(-50%)" : "none")};
     width: 80px;
     height: 4px;
-    background: ${props => props.accentColor || '#0368ff'};
+    background: ${(props) => props.accentColor || "#0368ff"};
   }
 
   @media (max-width: 1024px) {
@@ -245,7 +259,7 @@ const SubHead = styled.p`
 `;
 
 const Button = styled.button`
-  background: ${props => props.bgColor || '#0368ff'};
+  background: ${(props) => props.bgColor || "#0368ff"};
   color: white;
   border: none;
   padding: 12px 30px;
@@ -259,9 +273,9 @@ const Button = styled.button`
   gap: 8px;
 
   &:hover {
-    background: ${props => props.hoverColor || '#0254cc'};
+    background: ${(props) => props.hoverColor || "#0254cc"};
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
 
   @media (max-width: 768px) {
@@ -275,7 +289,7 @@ const Image = styled.img`
   max-width: 100%;
   height: auto;
   border-radius: 8px;
-  
+
   transition: transform 0.3s ease;
 
   &:hover {
@@ -287,9 +301,7 @@ const Image = styled.img`
   }
 `;
 
-const CarouselWrapper = styled.div`
- 
-`;
+const CarouselWrapper = styled.div``;
 
 const Container = styled.div`
   max-width: 1200px;
@@ -406,20 +418,26 @@ const GetStartedButton = styled.button`
   transition-delay: 0.4s;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(210, 192, 192, 0.2), transparent);
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(210, 192, 192, 0.2),
+      transparent
+    );
     transform: rotate(45deg);
     transition: 0.6s;
     animation: ${shimmer} 3s infinite linear;
     background-size: 200% 100%;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: linear-gradient(135deg, #444, #666);
     transform: translateY(-2px);
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.2);
@@ -468,7 +486,7 @@ const StatCard = styled.div`
   transition: all 0.3s ease;
   opacity: 0;
   transform: scale(0.95);
-  transition-delay: ${props => props.delay || '0s'};
+  transition-delay: ${(props) => props.delay || "0s"};
   backdrop-filter: blur(5px);
 
   &.visible {
@@ -491,7 +509,11 @@ const IconContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 12px;
-  background: linear-gradient(135deg, ${props => props.bgColor}, ${props => props.bgColorEnd || props.bgColor});
+  background: linear-gradient(
+    135deg,
+    ${(props) => props.bgColor},
+    ${(props) => props.bgColorEnd || props.bgColor}
+  );
   color: white;
   font-size: 1.8rem;
   animation: ${float} 2s ease-in-out infinite;
@@ -516,13 +538,17 @@ const StatValue = styled.span`
   transition: transform 0.3s ease;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -4px;
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(to right, ${props => props.accentColor || '#4285F4'}, transparent);
+    background: linear-gradient(
+      to right,
+      ${(props) => props.accentColor || "#4285F4"},
+      transparent
+    );
     transition: width 0.4s ease;
   }
 
@@ -565,7 +591,6 @@ const FeatureGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
@@ -584,13 +609,13 @@ const FeatureItem = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   padding: 20px 20px 25px;
-  background-color: ${props => props.bgColor};
+  background-color: ${(props) => props.bgColor};
   color: white;
   overflow: hidden;
   transition: all 0.4s ease;
   opacity: 0;
   transform: translateY(20px);
-  transition-delay: ${props => 0.7 + (props.index * 0.1)}s;
+  transition-delay: ${(props) => 0.7 + props.index * 0.1}s;
 
   &.visible {
     opacity: 1;
@@ -692,7 +717,8 @@ const CloseButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: rgba(248, 137, 137, 0.25);
     transform: rotate(90deg);
   }
@@ -736,21 +762,20 @@ const ServiceItem = styled.div`
   color: rgba(20, 40, 100, 0.8);
   cursor: pointer;
   transition: all 0.3s ease;
-  
-  &:hover, &:focus {
+
+  &:hover,
+  &:focus {
     background: rgba(200, 100, 200, 0.1);
     border-color: rgba(200, 100, 200, 0.3);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(200, 100, 200, 0.2);
   }
-  
+
   &:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(100, 100, 200, 0.3);
   }
 `;
-
-
 
 // Main Component
 const Herosection = () => {
@@ -766,7 +791,7 @@ const Herosection = () => {
   const featureItemRefs = useRef([]);
   const sectionRefs = useRef([]);
   const carouselRef = useRef(null);
-  const [activeSection, setActiveSection] = useState('carousel');
+  const [activeSection, setActiveSection] = useState("carousel");
   const [isOpen, setIsOpen] = useState(false);
   const [popupData, setPopupData] = useState(null);
   const navigate = useNavigate();
@@ -774,59 +799,63 @@ const Herosection = () => {
   useEffect(() => {
     const observerOptions = {
       threshold: 0.3,
-      rootMargin: '0px 0px -20% 0px'
+      rootMargin: "0px 0px -20% 0px",
     };
 
     const animateElements = () => {
-      if (containerRef.current) containerRef.current.classList.add('visible');
+      if (containerRef.current) containerRef.current.classList.add("visible");
       setTimeout(() => {
-        if (heroSectionRef.current) heroSectionRef.current.classList.add('visible');
+        if (heroSectionRef.current)
+          heroSectionRef.current.classList.add("visible");
       }, 100);
       setTimeout(() => {
-        if (heroContentRef.current) heroContentRef.current.classList.add('visible');
+        if (heroContentRef.current)
+          heroContentRef.current.classList.add("visible");
       }, 200);
       setTimeout(() => {
-        if (headingRef.current) headingRef.current.classList.add('visible');
+        if (headingRef.current) headingRef.current.classList.add("visible");
       }, 300);
       setTimeout(() => {
-        if (subTextRef.current) subTextRef.current.classList.add('visible');
+        if (subTextRef.current) subTextRef.current.classList.add("visible");
       }, 400);
       setTimeout(() => {
-        if (buttonRef.current) buttonRef.current.classList.add('visible');
+        if (buttonRef.current) buttonRef.current.classList.add("visible");
       }, 500);
       setTimeout(() => {
-        if (statsContainerRef.current) statsContainerRef.current.classList.add('visible');
+        if (statsContainerRef.current)
+          statsContainerRef.current.classList.add("visible");
       }, 600);
       statCardRefs.current.forEach((card, index) => {
         setTimeout(() => {
-          if (card) card.classList.add('visible');
-        }, 700 + (index * 100));
+          if (card) card.classList.add("visible");
+        }, 700 + index * 100);
       });
       setTimeout(() => {
-        if (featuresSectionRef.current) featuresSectionRef.current.classList.add('visible');
+        if (featuresSectionRef.current)
+          featuresSectionRef.current.classList.add("visible");
       }, 900);
       featureItemRefs.current.forEach((feature, index) => {
         setTimeout(() => {
-          if (feature) feature.classList.add('visible');
-        }, 1000 + (index * 100));
+          if (feature) feature.classList.add("visible");
+        }, 1000 + index * 100);
       });
       sectionRefs.current.forEach((section, index) => {
         setTimeout(() => {
-          if (section) section.classList.add('visible');
-        }, 200 + (index * 200));
+          if (section) section.classList.add("visible");
+        }, 200 + index * 200);
       });
     };
 
     animateElements();
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add("visible");
           if (entry.target === carouselRef.current) {
-            setActiveSection('carousel');
+            setActiveSection("carousel");
           } else if (entry.target === heroSectionRef.current) {
-            setActiveSection('more');
+            setActiveSection("more");
           } else {
             const index = sectionRefs.current.indexOf(entry.target);
             if (index !== -1) {
@@ -840,13 +869,13 @@ const Herosection = () => {
     if (carouselRef.current) {
       observer.observe(carouselRef.current);
     }
-    sectionRefs.current.forEach(section => {
+    sectionRefs.current.forEach((section) => {
       if (section) observer.observe(section);
     });
     if (heroSectionRef.current) {
       observer.observe(heroSectionRef.current);
     }
-    featureItemRefs.current.forEach(feature => {
+    featureItemRefs.current.forEach((feature) => {
       if (feature) observer.observe(feature);
     });
 
@@ -854,26 +883,26 @@ const Herosection = () => {
       if (carouselRef.current) {
         observer.unobserve(carouselRef.current);
       }
-      sectionRefs.current.forEach(section => {
+      sectionRefs.current.forEach((section) => {
         if (section) observer.unobserve(section);
       });
       if (heroSectionRef.current) {
         observer.unobserve(heroSectionRef.current);
       }
-      featureItemRefs.current.forEach(feature => {
+      featureItemRefs.current.forEach((feature) => {
         if (feature) observer.unobserve(feature);
       });
     };
   }, []);
 
   const scrollToSection = (target) => {
-    if (target === 'carousel') {
-      carouselRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } else if (target === 'more') {
-      heroSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (target === "carousel") {
+      carouselRef.current?.scrollIntoView({ behavior: "smooth" });
+    } else if (target === "more") {
+      heroSectionRef.current?.scrollIntoView({ behavior: "smooth" });
     } else {
-      const index = parseInt(target.replace('section', '')) - 1;
-      sectionRefs.current[index]?.scrollIntoView({ behavior: 'smooth' });
+      const index = parseInt(target.replace("section", "")) - 1;
+      sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -888,28 +917,30 @@ const Herosection = () => {
   const handleServiceClick = (service) => {
     const serviceToPathMap = {
       // IP Solutions
-      'Industrial Design': '/design',
-      'Copyright': '/copyright',
-      'Geographical Indication': '/geographical-indication',
-      'National Biodiversity Authority Approval': null, // No route provided; handle as needed
+      "Industrial Design": "/design",
+      Copyright: "/copyright",
+      "Geographical Indication": "/geographical-indication",
+      "National Biodiversity Authority Approval": null, // No route provided; handle as needed
       // IP Lifecycle Management
-      'IP Audit of the Company': '/ip-audit',
-      'IP Policy and Process Setup': '/ip-policy',
-      'IP Portfolio Management': '/ip-portfolio',
-      'IP Valuation': '/ip-valuation',
+      "IP Audit of the Company": "/ip-audit",
+      "IP Policy and Process Setup": "/ip-policy",
+      "IP Portfolio Management": "/ip-portfolio",
+      "IP Valuation": "/ip-valuation",
       // Scientific and Technology Solutions
-      'Technology Transfer': '/technology-transfer',
-      'Patent Valuation': '/patent-valuations',
-      'Patent Due Diligence & Variability Analysis': '/patent-due-diligence',
-      'Competitive Landscape & Industry Trends': '/competitive-landscape',
+      "Technology Transfer": "/technology-transfer",
+      "Patent Valuation": "/patent-valuations",
+      "Patent Due Diligence & Variability Analysis": "/patent-due-diligence",
+      "Competitive Landscape & Industry Trends": "/competitive-landscape",
       // Strategy & Advisory (Startups)
-      'IP Strategy & Roadmap for Startups': '/IP-Strategy-&-Roadmap-for-Startups',
-      'Cost-Effective IP Protection': '/Cost-Effective-IP-Protection',
-      'IP Due Diligence for Investors': '/IP-Due-Diligence-for-Investors',
-      'IP Licensing & Commercialization': '/IP-Licensing-&-Commercialization',
-      'Raising Awareness and Funding with IP': '/Raising-Awareness-and-Funding-with-IP',
-      'Startup IP Portfolio Management': '/Startup-IP-Portfolio-Management',
-      'IP Risk Management for Startups': '/IP-Risk-Management-for-Startups',
+      "IP Strategy & Roadmap for Startups":
+        "/IP-Strategy-&-Roadmap-for-Startups",
+      "Cost-Effective IP Protection": "/Cost-Effective-IP-Protection",
+      "IP Due Diligence for Investors": "/IP-Due-Diligence-for-Investors",
+      "IP Licensing & Commercialization": "/IP-Licensing-&-Commercialization",
+      "Raising Awareness and Funding with IP":
+        "/Raising-Awareness-and-Funding-with-IP",
+      "Startup IP Portfolio Management": "/Startup-IP-Portfolio-Management",
+      "IP Risk Management for Startups": "/IP-Risk-Management-for-Startups",
     };
 
     const path = serviceToPathMap[service];
@@ -924,29 +955,32 @@ const Herosection = () => {
 
   const sections = [
     {
-      bgColor: '#AB6604',
-      head: 'STRATEGY AND ADVISORY',
-      subHead: 'Strategic protection for patents, trademarks, and beyond',
+      bgColor: "#AB6604",
+      head: "STRATEGY AND ADVISORY",
+      subHead: "Strategic protection for patents, trademarks, and beyond",
       image: Section1Image,
-      alt: 'IP Solutions Hero Image',
-      reverse: false
+      alt: "IP Solutions Hero Image",
+      reverse: false,
+      link: "/IP-Strategy-Development",
       // bgColor: '#AB6604',
     },
     {
-      bgColor: '#0271B1',
-      head: 'SCIENTIFIC & TECHNOLOGY SOLUTIONS ',
-      subHead: 'Unlocking potential through research, analysis, and precision.',
+      bgColor: "#0271B1",
+      head: "SCIENTIFIC & TECHNOLOGY SOLUTIONS ",
+      subHead: "Unlocking potential through research, analysis, and precision.",
       image: Section2Image,
-      alt: 'IP Lifecycle Hero Image',
-      reverse: true
+      alt: "IP Lifecycle Hero Image",
+      reverse: true,
+      link: "/Scientific-&-Technology-Solutions",
     },
     {
-      bgColor: '#8E2D8D',
-      head: 'Intellectual Property Rights Education & Training ',
-      subHead: 'Building IP Expertise: Training for Protection & Growth',
+      bgColor: "#8E2D8D",
+      head: "Intellectual Property Rights Education & Training ",
+      subHead: "Building IP Expertise: Training for Protection & Growth",
       image: Section3Image,
-      alt: 'Tech Solutions Hero Image',
-      reverse: false
+      alt: "Tech Solutions Hero Image",
+      reverse: false,
+      link: "/Custom-IP-Workshops-for-Teams",
     },
     // {
     //   bgColor: '#5050A0',
@@ -959,79 +993,106 @@ const Herosection = () => {
   ];
 
   const navItems = [
-    { id: 'carousel', icon: <FaHome />, label: 'Go to Next Section', ref: carouselRef },
-    { id: 'section1', icon: <FaLightbulb />, label: 'Section 1', ref: sectionRefs.current[0] },
-    { id: 'section2', icon: <FaFlask />, label: 'Section 2', ref: sectionRefs.current[1] },
-    { id: 'section3', icon: <FaLaptop />, label: 'Section 3', ref: sectionRefs.current[2] },
-    { id: 'section4', icon: <FaGavel />, label: 'Section 4', ref: sectionRefs.current[3] },
+    {
+      id: "carousel",
+      icon: <FaHome />,
+      label: "Go to Next Section",
+      ref: carouselRef,
+    },
+    {
+      id: "section1",
+      icon: <FaLightbulb />,
+      label: "Section 1",
+      ref: sectionRefs.current[0],
+    },
+    {
+      id: "section2",
+      icon: <FaFlask />,
+      label: "Section 2",
+      ref: sectionRefs.current[1],
+    },
+    {
+      id: "section3",
+      icon: <FaLaptop />,
+      label: "Section 3",
+      ref: sectionRefs.current[2],
+    },
+    {
+      id: "section4",
+      icon: <FaGavel />,
+      label: "Section 4",
+      ref: sectionRefs.current[3],
+    },
     // { id: 'more', icon: <FaHome />, label: 'More Info', ref: heroSectionRef },
   ];
 
   const statColors = [
-    { bgColor: '#4285F4', bgColorEnd: '#5E97F7', accentColor: '#4285F4' },
-    { bgColor: '#F5B7B1', bgColorEnd: '#F8CFC9', accentColor: '#F5B7B1' },
-    { bgColor: '#F4D03F', bgColorEnd: '#F7DC6F', accentColor: '#F4D03F' },
-    { bgColor: '#58D68D', bgColorEnd: '#82E0AB', accentColor: '#58D68D' }
+    { bgColor: "#4285F4", bgColorEnd: "#5E97F7", accentColor: "#4285F4" },
+    { bgColor: "#F5B7B1", bgColorEnd: "#F8CFC9", accentColor: "#F5B7B1" },
+    { bgColor: "#F4D03F", bgColorEnd: "#F7DC6F", accentColor: "#F4D03F" },
+    { bgColor: "#58D68D", bgColorEnd: "#82E0AB", accentColor: "#58D68D" },
   ];
 
   const featureColors = [
-    { bgColor: 'rgba(100, 100, 200, 0.8)' },
-    { bgColor: 'rgba(20, 40, 100, 0.8)' },
-    { bgColor: 'rgba(248, 137, 137, 0.8)' },
-    { bgColor: 'rgba(200, 100, 200, 0.8)' }
+    { bgColor: "rgba(100, 100, 200, 0.8)" },
+    { bgColor: "rgba(20, 40, 100, 0.8)" },
+    { bgColor: "rgba(248, 137, 137, 0.8)" },
+    { bgColor: "rgba(200, 100, 200, 0.8)" },
   ];
 
   const featureData = [
     {
-      text: 'IP Solutions',
+      text: "IP Solutions",
       icon: "🔒",
-      punchline: 'Protecting ideas, preserving value, powering progress.',
+      punchline: "Protecting ideas, preserving value, powering progress.",
       services: [
-        'Industrial Design',
-        'Copyright',
-        'Geographical Indication',
-        'National Biodiversity Authority Approval',
+        "Industrial Design",
+        "Copyright",
+        "Geographical Indication",
+        "National Biodiversity Authority Approval",
       ],
-      imageIdea: 'Icons or images representing patents, copyrights, or trademarks.',
+      imageIdea:
+        "Icons or images representing patents, copyrights, or trademarks.",
     },
     {
-      text: 'IP Lifecycle Management',
+      text: "IP Lifecycle Management",
       icon: "🔬",
-      punchline: 'Manage your IP from inception to monetization.',
+      punchline: "Manage your IP from inception to monetization.",
       services: [
-        'IP Audit of the Company',
-        'IP Policy and Process Setup',
-        'IP Portfolio Management',
-        'IP Valuation',
+        "IP Audit of the Company",
+        "IP Policy and Process Setup",
+        "IP Portfolio Management",
+        "IP Valuation",
       ],
-      imageIdea: 'Flowchart or lifecycle diagram of IP management.',
+      imageIdea: "Flowchart or lifecycle diagram of IP management.",
     },
     {
-      text: 'Technology Transfer Solutions',
+      text: "Technology Transfer Solutions",
       icon: "💻",
-      punchline: 'Seamlessly transfer technology with IP protection.',
+      punchline: "Seamlessly transfer technology with IP protection.",
       services: [
-        'Technology Transfer',
-        'Patent Valuation',
-        'Patent Due Diligence & Variability Analysis',
-        'Competitive Landscape & Industry Trends',
+        "Technology Transfer",
+        "Patent Valuation",
+        "Patent Due Diligence & Variability Analysis",
+        "Competitive Landscape & Industry Trends",
       ],
-      imageIdea: 'A bird mid-flight carrying a twig between two different trees.',
+      imageIdea:
+        "A bird mid-flight carrying a twig between two different trees.",
     },
     {
-      text: 'Intellectual Property Rights Solutions for Startups',
+      text: "Intellectual Property Rights Solutions for Startups",
       icon: "💡",
-      punchline: 'Navigate complex IP landscapes with expert guidance.',
+      punchline: "Navigate complex IP landscapes with expert guidance.",
       services: [
-        'IP Strategy & Roadmap for Startups',
-        'Cost-Effective IP Protection',
-        'IP Due Diligence for Investors',
-        'IP Licensing & Commercialization',
-        'Raising Awareness and Funding with IP',
-        'Startup IP Portfolio Management',
-        'IP Risk Management for Startups',
+        "IP Strategy & Roadmap for Startups",
+        "Cost-Effective IP Protection",
+        "IP Due Diligence for Investors",
+        "IP Licensing & Commercialization",
+        "Raising Awareness and Funding with IP",
+        "Startup IP Portfolio Management",
+        "IP Risk Management for Startups",
       ],
-      imageIdea: 'Lightbulb with gears or a roadmap illustration.',
+      imageIdea: "Lightbulb with gears or a roadmap illustration.",
     },
   ];
 
@@ -1041,7 +1102,7 @@ const Herosection = () => {
         <Carousel1 />
       </CarouselWrapper>
       <NavBar isOpen={isOpen}>
-        {navItems.map(item => (
+        {navItems.map((item) => (
           <NavItem
             key={item.id}
             active={activeSection === item.id}
@@ -1052,7 +1113,7 @@ const Herosection = () => {
             aria-label={`Navigate to ${item.label}`}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && scrollToSection(item.id)}
+            onKeyDown={(e) => e.key === "Enter" && scrollToSection(item.id)}
           >
             {item.icon}
             <Tooltip>{item.label}</Tooltip>
@@ -1062,92 +1123,101 @@ const Herosection = () => {
       <Container ref={containerRef}>
         <HeroSection ref={heroSectionRef}>
           <HeroContent ref={heroContentRef}>
-            <Heading ref={headingRef}>Intellectual Property (IP) Solutions</Heading>
+            <Heading ref={headingRef}>
+              Intellectual Property (IP) Solutions
+            </Heading>
             {/* <SubText ref={subTextRef}>
               Lifeintelect is a Bangalore-based technology and intellectual property consulting firm. We help protect your ideas and achieve your business goals by maximizing the synergy among Technology, Law, and Business.
             </SubText> */}
-            <GetStartedButton ref={buttonRef} aria-label="Learn more about Lifeintelect services">Learn More</GetStartedButton>
+            <GetStartedButton
+              ref={buttonRef}
+              aria-label="Learn more about Lifeintelect services"
+            >
+              Learn More
+            </GetStartedButton>
           </HeroContent>
 
           <StatsContainer ref={statsContainerRef}>
-            <StatCard ref={el => statCardRefs.current[0] = el} delay="0.1s">
-              <IconContainer bgColor={statColors[0].bgColor} bgColorEnd={statColors[0].bgColorEnd} aria-hidden="true">
+            <StatCard ref={(el) => (statCardRefs.current[0] = el)} delay="0.1s">
+              <IconContainer
+                bgColor={statColors[0].bgColor}
+                bgColorEnd={statColors[0].bgColorEnd}
+                aria-hidden="true"
+              >
                 <FaUsers />
               </IconContainer>
               <StatContent>
-                <StatValue accentColor={statColors[0].accentColor}>500+</StatValue>
-                <StatLabel>Clients in Patent and Design</StatLabel>
+                <StatValue accentColor={statColors[0].accentColor}>
+                  506+
+                </StatValue>
+                <StatLabel>Clients</StatLabel>
               </StatContent>
             </StatCard>
 
-            <StatCard ref={el => statCardRefs.current[1] = el} delay="0.2s">
-              <IconContainer bgColor={statColors[1].bgColor} bgColorEnd={statColors[1].bgColorEnd} aria-hidden="true">
+            <StatCard ref={(el) => (statCardRefs.current[1] = el)} delay="0.2s">
+              <IconContainer
+                bgColor={statColors[1].bgColor}
+                bgColorEnd={statColors[1].bgColorEnd}
+                aria-hidden="true"
+              >
                 <FaGavel />
               </IconContainer>
               <StatContent>
-                <StatValue accentColor={statColors[1].accentColor}>4000+</StatValue>
+                <StatValue accentColor={statColors[1].accentColor}>
+                2050+
+                </StatValue>
                 <StatLabel>IP Filings</StatLabel>
               </StatContent>
             </StatCard>
 
-            <StatCard ref={el => statCardRefs.current[2] = el} delay="0.3s">
-              <IconContainer bgColor={statColors[2].bgColor} bgColorEnd={statColors[2].bgColorEnd} aria-hidden="true">
+            <StatCard ref={(el) => (statCardRefs.current[2] = el)} delay="0.3s">
+              <IconContainer
+                bgColor={statColors[2].bgColor}
+                bgColorEnd={statColors[2].bgColorEnd}
+                aria-hidden="true"
+              >
                 <FaGraduationCap />
               </IconContainer>
               <StatContent>
-                <StatValue accentColor={statColors[2].accentColor}>6550+</StatValue>
+                <StatValue accentColor={statColors[2].accentColor}>
+                6750+
+                </StatValue>
                 <StatLabel>Total People Trained</StatLabel>
               </StatContent>
             </StatCard>
 
-            <StatCard ref={el => statCardRefs.current[3] = el} delay="0.4s">
-              <IconContainer bgColor={statColors[3].bgColor} bgColorEnd={statColors[3].bgColorEnd} aria-hidden="true">
+            <StatCard ref={(el) => (statCardRefs.current[3] = el)} delay="0.4s">
+              <IconContainer
+                bgColor={statColors[3].bgColor}
+                bgColorEnd={statColors[3].bgColorEnd}
+                aria-hidden="true"
+              >
                 <FaGlobeAmericas />
               </IconContainer>
               <StatContent>
-                <StatValue accentColor={statColors[3].accentColor}>2500+</StatValue>
-                <StatLabel>Global Projects Executed</StatLabel>
+                <StatValue accentColor={statColors[3].accentColor}>
+                2900+
+                </StatValue>
+                <StatLabel>Projects Executed Globally</StatLabel>
               </StatContent>
             </StatCard>
           </StatsContainer>
         </HeroSection>
-
-        {/* <FeaturesSection ref={featuresSectionRef}>
-          <FeatureGrid>
-            <FeatureItem ref={el => featureItemRefs.current[0] = el} bgColor={featureColors[0].bgColor} index={0}>
-            <FeatureIcon>🔒</FeatureIcon>
-              <FeatureText>IP Solutions</FeatureText>
-            </FeatureItem>
-
-            <FeatureItem ref={el => featureItemRefs.current[1] = el} bgColor={featureColors[1].bgColor} index={1}>
-            <FeatureIcon>🔬</FeatureIcon>
-              <FeatureText>IP Lifecycle Management</FeatureText>
-            </FeatureItem>
-
-            <FeatureItem ref={el => featureItemRefs.current[2] = el} bgColor={featureColors[2].bgColor} index={2}>
-            <FeatureIcon>💻</FeatureIcon>
-              <FeatureText>Scientific and Technology Solutions</FeatureText>
-            </FeatureItem>
-
-            <FeatureItem ref={el => featureItemRefs.current[3] = el} bgColor={featureColors[3].bgColor} index={3}>
-            <FeatureIcon>💡</FeatureIcon>
-              <FeatureText>Strategy & Advisory</FeatureText>
-            </FeatureItem>
-          </FeatureGrid>
-        </FeaturesSection> */}
 
         <FeaturesSection ref={featuresSectionRef}>
           <FeatureGrid>
             {featureData.map((feature, index) => (
               <FeatureItem
                 key={index}
-                ref={el => featureItemRefs.current[index] = el}
+                ref={(el) => (featureItemRefs.current[index] = el)}
                 bgColor={featureColors[index].bgColor}
                 index={index}
                 onClick={() => openPopup(feature)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openPopup(feature)}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") && openPopup(feature)
+                }
                 aria-label={`Open services for ${feature.text}`}
               >
                 <FeatureIcon>{feature.icon}</FeatureIcon>
@@ -1159,33 +1229,38 @@ const Herosection = () => {
       </Container>
 
       {sections.map((section, index) => (
-  <Section key={index} bgColor={section.bgColor} ref={el => sectionRefs.current[index] = el}>
-    <SectionContainer reverse={section.reverse}>
-      <SectionContent textColor={section.textColor}>
-        <Head 
-          accentColor={section.accentColor}
-          center={window.innerWidth <= 768} // Center on mobile
-        >
-          {section.head}
-        </Head>
-        <SubHead>{section.subHead}</SubHead>
-        <Button 
+        <Section
+          key={index}
           bgColor={section.bgColor}
-          hoverColor={section.buttonHover}
-          aria-label={`Read more about ${section.head}`}
+          ref={(el) => (sectionRefs.current[index] = el)}
         >
-          Read More <FaChevronRight />
-        </Button>
-      </SectionContent>
-      <SectionMedia>
-        <Image src={section.image} alt={section.alt} />
-      </SectionMedia>
-    </SectionContainer>
-  </Section>
-))}
+          <SectionContainer reverse={section.reverse}>
+            <SectionContent textColor={section.textColor}>
+              <Head
+                accentColor={section.accentColor}
+                center={window.innerWidth <= 768} // Center on mobile
+              >
+                {section.head}
+              </Head>
+              <SubHead>{section.subHead}</SubHead>
+              <Button
+                bgColor={section.bgColor}
+                hoverColor={section.buttonHover}
+                aria-label={`Read more about ${section.head}`}
+                onClick={() => navigate(section.link)}
+              >
+                Read More <FaChevronRight />
+              </Button>
+            </SectionContent>
+            <SectionMedia>
+              <Image src={section.image} alt={section.alt} />
+            </SectionMedia>
+          </SectionContainer>
+        </Section>
+      ))}
 
-        {popupData && (
-        <PopupOverlay className={popupData ? 'open' : ''}>
+      {popupData && (
+        <PopupOverlay className={popupData ? "open" : ""}>
           <PopupContent>
             <CloseButton onClick={closePopup} aria-label="Close popup">
               <FaTimes />
@@ -1199,7 +1274,10 @@ const Herosection = () => {
                   onClick={() => handleServiceClick(service)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleServiceClick(service)}
+                  onKeyDown={(e) =>
+                    (e.key === "Enter" || e.key === " ") &&
+                    handleServiceClick(service)
+                  }
                   aria-label={`Go to ${service} page`}
                 >
                   {service}
@@ -1209,7 +1287,6 @@ const Herosection = () => {
           </PopupContent>
         </PopupOverlay>
       )}
-      
     </>
   );
 };

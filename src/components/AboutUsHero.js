@@ -117,6 +117,32 @@ const ParticlesContainer = styled.div`
   z-index: -1;
 `;
 
+const Tagline = styled(motion.div)`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 40px;
+`;
+
+const TaglineItem = styled.span`
+  background-color: #f1f5f9;
+  color: #334155;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(15, 23, 42, 0.08);
+    background-color: #e0e7ff;
+    color: #4f46e5;
+  }
+`;
+
 const AboutUsHero = () => {
   const particlesRef = useRef(null);
 
@@ -174,14 +200,24 @@ const AboutUsHero = () => {
           <EarthText>About <span style={{ color: "#00c6ff" }}>Us</span></EarthText>
         </Title>
         <Subtitle variants={fadeInUp}>
-        Committed to fostering innovation and safeguarding intellectual property with unmatched confidentiality and client-first standards.
+        LifeIntelect is a distinguished technology and IP consulting firm founded by IIScians, having a track record of 99.9% patent grant success for our clients.
         </Subtitle>
-        <Button 
+        {/* <Button 
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           Learn More
-        </Button>
+        </Button> */}
+
+<Tagline
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <TaglineItem>Empowering Ideas</TaglineItem>
+            <TaglineItem>Protecting Innovation</TaglineItem>
+            <TaglineItem>Transforming Futures</TaglineItem>
+          </Tagline>
       </Content>
     </HeroSection>
   );

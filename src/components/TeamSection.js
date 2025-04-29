@@ -182,7 +182,7 @@ export default function TeamSection() {
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6 }}
       >
-        Meet Our Team
+        OUR TEAM
       </SectionTitle>
       
       <Divider

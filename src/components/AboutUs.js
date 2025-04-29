@@ -1,701 +1,831 @@
 import React, { useEffect, useRef } from 'react';
-import styled, { keyframes, createGlobalStyle } from 'styled-components';
-import TeamSection from './TeamSection';
-import { ArrowRight } from 'lucide-react';
+import styled, { keyframes } from 'styled-components';
+import { useAnimation } from 'framer-motion';
+import { ArrowRight, Award, Eye, Glasses, Globe, Leaf, Lightbulb, RefreshCw, Rocket, ShieldCheck, Target, TrendingUp, User, Users } from 'lucide-react';
 import AboutUsHero from './AboutUsHero';
+import TeamSection from './TeamSection';
 import { useLocation } from 'react-router-dom';
+import { motion, useInView } from 'framer-motion';
 
-
-// Enhanced Animations
-const floatAnimation = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
+// Animations
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
-const glowAnimation = keyframes`
-  0% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.8); }
-  100% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); }
+const slideInRight = keyframes`
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 `;
 
-const shimmerAnimation = keyframes`
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+const slideInLeft = keyframes`
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 `;
 
-const rotateAnimation = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
-const fadeInUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const fadeInLeft = keyframes`
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-`;
-
-const fadeInRight = keyframes`
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-`;
-
-const typewriter = keyframes`
-  from { width: 0; }
-  to { width: 100%; }
-`;
-
-const blinkCursor = keyframes`
-  from, to { border-color: transparent; }
-  50% { border-color: #8a2be2; }
-`;
-
-// Styled Components
+// Base Components
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
-`;
-
-const Hero = styled.section`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  padding: 80px 0;
-`;
-
-const BackgroundGradient = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, rgba(138, 43, 226, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
-  z-index: -1;
-`;
-
-const OrbDecoration = styled.div`
-  position: absolute;
-  width: ${props => props.size || '100px'};
-  height: ${props => props.size || '100px'};
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(138, 43, 226, 0.4), rgba(70, 130, 180, 0.4));
-  filter: blur(20px);
-  top: ${props => props.top || '10%'};
-  left: ${props => props.left || '10%'};
-  animation: ${floatAnimation} ${props => props.duration || '6s'} ease-in-out infinite;
-  z-index: -1;
-`;
-
-const HeroContent = styled.div`
-  text-align: center;
-  max-width: 900px;
-  z-index: 2;
-`;
-
-const TypewriterContainer = styled.div`
-  display: inline-block;
-  margin-bottom: 30px;
-`;
-
-const TypewriterText = styled.h1`
-  font-size: 62px;
-  font-weight: 800;
-  /* color: transparent; */
-  background: linear-gradient(45deg, #8a2be2, #4682b0, #ff1493);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: ${shimmerAnimation} 5s linear infinite;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 4px solid #8a2be2;
-  animation: 
-    ${typewriter} 3.5s steps(30) 1s 1 normal both,
-    ${blinkCursor} 0.7s steps(30) infinite;
-  
-  @media (max-width: 768px) {
-    font-size: 42px;
-  }
-`;
-
-const HeroSubtitle = styled.p`
-  font-size: 24px;
-  line-height: 1.6;
-  margin-bottom: 40px;
-  /* color: rgba(255, 255, 255, 0.8); */
-  animation: ${fadeInUp} 1s ease forwards 1.5s;
-  opacity: 0;
-  
-  @media (max-width: 768px) {
-    font-size: 18px;
-  }
-`;
-
-const GradientButton = styled.button`
-  padding: 16px 32px;
-  background: linear-gradient(45deg, #8a2be2, #4682b0);
-  background-size: 200% auto;
-  /* color: white; */
-  border: none;
-  border-radius: 50px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
-  position: relative;
-  overflow: hidden;
-  animation: ${fadeInUp} 1s ease forwards 2s;
-  opacity: 0;
-  
-  &:hover {
-    background-position: right center;
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(138, 43, 226, 0.5);
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-    transform: rotate(30deg);
-    transition: all 0.3s ease;
-    opacity: 0;
-  }
-  
-  &:hover::after {
-    opacity: 1;
-    transform: rotate(30deg) translate(10%, 10%);
-  }
+  padding: 0 32px;
 `;
 
 const Section = styled.section`
-  padding: 120px 0;
+  padding: 100px 0;
+  position: relative;
+`;
+
+// Mission & Vision Section
+const MissionVisionSection = styled(Section)`
+  background: linear-gradient(to bottom, #f8faff, #ffffff);
   position: relative;
   overflow: hidden;
 `;
 
-const SectionTitle = styled.h2`
-  font-size: 42px;
-  text-align: center;
-  margin-bottom: 60px;
-  position: relative;
-  color:#4169E1;
-  font-weight: 700;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: linear-gradient(to right, #8a2be2, #4682b0);
-    border-radius: 2px;
-  }
-`;
-
-const StoryContainer = styled.div`
+const MissionVisionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
   position: relative;
   z-index: 2;
 `;
 
-const StoryContent = styled.div`
-  max-width: 800px;
-  text-align: center;
-  margin-bottom: 60px;
-`;
-
-const StoryText = styled.p`
-  font-size: 20px;
-  line-height: 1.8;
-  color:#454545;
-  margin-bottom: 30px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-  font-weight: 400;
-  
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const StatsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
-  margin-top: 60px;
-  width: 100%;
-`;
-
-const StatCard = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 40px 30px;
-  text-align: center;
-  width: 220px;
+const MissionVisionCard = styled.div`
+  background: white;
+  border-radius: 16px;
+  padding: 50px 40px;
+  box-shadow: 0 15px 40px rgba(65, 105, 225, 0.08);
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(30px);
-  
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 2px;
-    background: linear-gradient(45deg, #8a2be2, #4682b0, #ff1493);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-  }
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
   
   &:hover {
     transform: translateY(-10px);
-    animation: ${glowAnimation} 2s infinite;
+    box-shadow: 0 20px 50px rgba(65, 105, 225, 0.12);
   }
 `;
 
-const StatIcon = styled.div`
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(45deg, #8a2be2, #4682b0);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  font-size: 24px;
-  animation: ${floatAnimation} 3s ease-in-out infinite;
+const MissionVisionHeader = styled.div`
+  position: relative;
+
 `;
 
-const StatNumber = styled.div`
-  font-size: 44px;
-  font-weight: 700;
-  background: linear-gradient(45deg, #8a2be2, #4682b0, #ff1493);
-  background-size: 200% auto;
-  background-clip: text;
+const MissionVisionTitle = styled.h2`
+   font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(90deg, #0047AB 0%, #4169E1 100%);
   -webkit-background-clip: text;
-  /* color: transparent; */
-  margin-bottom: 10px;
-  animation: ${shimmerAnimation} 3s linear infinite;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
-const StatLabel = styled.div`
-  font-size: 18px;
-  color:#454545;
-  font-weight: 500;
+const MissionVisionContent = styled.div`
+  p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 25px;
+    
+    &::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #8a2be2;
+      font-weight: bold;
+    }
+  }
 `;
 
-const ValuesContainer = styled.div`
+const DecorativeCircle = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  z-index: 1;
+  
+  &:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    background: #4169E1;
+    top: -150px;
+    right: -150px;
+  }
+  
+  &:nth-child(2) {
+    width: 200px;
+    height: 200px;
+    background: #8a2be2;
+    bottom: -100px;
+    left: -100px;
+  }
+`;
+
+// Core Values Section
+const CoreValuesSection = styled(Section)`
+  background: linear-gradient(to bottom, #ffffff, #f9f9ff);
+`;
+
+const ElegantSectionTitle = styled.h2`
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(90deg, #0047AB 0%, #4169E1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+const Divider = styled(motion.div)`
+  height: 4px;
+  width: 80px;
+  background: linear-gradient(90deg, #0047AB 0%, #FF4500 100%);
+  margin: 1rem auto 3rem;
+  border-radius: 2px;
+`
+
+const ValuesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin-top: 60px;
 `;
 
 const ValueCard = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
+  background: white;
+  border-radius: 16px;
   padding: 40px 30px;
-  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(65, 105, 225, 0.05);
+  border-top: 4px solid transparent;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
   position: relative;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(30px);
-  
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(65, 105, 225, 0.1);
+    border-top-color: #4169E1;
+    
+    .value-icon {
+      transform: scale(1.1);
+      opacity: 1;
+    }
   }
-  
+
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 2px;
-    background: linear-gradient(45deg, #8a2be2, #4682b0, #ff1493);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4169E1, #8a2be2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
   }
-  
-  &:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+
+  &:hover::before {
+    transform: scaleX(1);
   }
-  
-  &:hover ${StatIcon} {
-    transform: rotate(360deg);
-  }
-`;
-
-const ValueIconContainer = styled.div`
-  position: relative;
-  width: 80px;
-  height: 80px;
-  margin-bottom: 30px;
-`;
-
-
-const ValueIconRing = styled.div`
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2px solid #8a2be2;
-  animation: ${rotateAnimation} 8s linear infinite;
 `;
 
 const ValueIcon = styled.div`
-  position: absolute;
   width: 60px;
   height: 60px;
-  top: 10px;
-  left: 10px;
-  background: linear-gradient(45deg, #8a2be2, #4682b0);
-  border-radius: 50%;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(65, 105, 225, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  animation: ${floatAnimation} 3s ease-in-out infinite;
+  margin-bottom: 25px;
+  transition: all 0.4s ease;
+  opacity: 0.9;
+
+  svg {
+    color: #4169E1;
+    width: 28px;
+    height: 28px;
+  }
 `;
 
 const ValueTitle = styled.h3`
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
   margin-bottom: 15px;
-  /* color: white; */
-  font-weight: 600;
   position: relative;
   display: inline-block;
-  
+
   &::after {
     content: '';
     position: absolute;
     bottom: -5px;
     left: 0;
+    width: 30px;
+    height: 2px;
+    background: #8a2be2;
+    transition: width 0.3s ease;
+  }
+
+  ${ValueCard}:hover &::after {
     width: 50px;
-    height: 3px;
-    background: linear-gradient(to right, #8a2be2, #4682b0);
-    border-radius: 1.5px;
   }
 `;
 
 const ValueDescription = styled.p`
   font-size: 16px;
-  color:#454545;
-  font-weight: 500;
-  line-height: 1.6;
+  line-height: 1.7;
+  color: #555;
 `;
 
-const TeamContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 40px;
-`;
-
-const TeamMember = styled.div`
-  width: 250px;
-  text-align: center;
+// Stats Section
+const StatsSection = styled(Section)`
+  background: linear-gradient(120deg, #2a3b8f 0%, #5b4e9a 50%, #8a2be2 100%);
   position: relative;
-  opacity: 0;
-  transform: translateY(30px);
+  overflow: hidden;
+`;
+
+const StatsContainer = styled.div`
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const StatsTitle = styled.h2`
+  font-size: 42px;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+  margin-bottom: 70px;
+  position: relative;
   
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  &:hover img {
-    transform: scale(1.05);
-    border-color: #8a2be2;
-  }
-  
-  &:hover h3 {
-    color: #8a2be2;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 2px;
   }
 `;
 
-const TeamMemberImageContainer = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StatCard = styled.div`
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 40px 20px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
   overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-15px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 250%;
+    height: 250%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    transform: rotate(45deg);
+    transition: all 0.8s ease;
+    opacity: 0;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+    animation: shine 2s infinite;
+  }
+  
+  @keyframes shine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+  }
+`;
+
+const StatIconWrapper = styled.div`
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto 25px;
+  position: relative;
+  transition: all 0.4s ease;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    top: 0;
+    left: 0;
+    animation: pulse 2s infinite;
+  }
+  
+  ${StatCard}:hover & {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+`;
+
+const StatIcon = styled.div`
+  font-size: 36px;
+  color: white;
+  display: inline-block;
+`;
+
+const StatNumber = styled.div`
+  font-size: 52px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  background: linear-gradient(to right, #ffffff, #e0e0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  
+  ${StatCard}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const StatLabel = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+`;
+
+const BackgroundElements = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+`;
+
+const Circle = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  
+  &:nth-child(1) {
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    right: -100px;
+  }
+  
+  &:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    bottom: -50px;
+    left: 10%;
+  }
+  
+  &:nth-child(3) {
+    width: 200px;
+    height: 200px;
+    top: 30%;
+    left: -100px;
+  }
+`;
+
+// Why Choose Us Section
+const WhyChooseUsSection = styled(Section)`
+  background: linear-gradient(to bottom, #f8faff, #ffffff);
+  position: relative;
+  overflow: hidden;
+`;
+
+const WhyChooseUsContainer = styled.div`
+  position: relative;
+  z-index: 2;
+`;
+
+const SectionIntro = styled.div`
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 50px;
+`;
+
+const SectionTitle = styled.h2`
+   font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(90deg, #0047AB 0%, #4169E1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+const SectionSubtitle = styled.p`
+  font-size: 18px;
+  color: #555;
+  line-height: 1.8;
+`;
+
+const FeatureGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 60px;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const FeatureCard = styled.div`
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(65, 105, 225, 0.07);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  &:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(65, 105, 225, 0.12);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #4169E1, #8a2be2);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+  }
+  
+  &:hover::after {
+    opacity: 0.03;
+  }
+`;
+
+const FeatureIconWrapper = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(65, 105, 225, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
   position: relative;
   
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    padding: 3px;
-    background: linear-gradient(45deg, #8a2be2, #4682b0, #ff1493);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, #4169E1, #8a2be2) border-box;
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) padding-box, 
+      linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    opacity: 0.3;
+  }
+  
+  svg {
+    color: #4169E1;
+    font-size: 32px;
+    transition: all 0.3s ease;
+  }
+  
+  ${FeatureCard}:hover & {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(65, 105, 225, 0.15) 0%, rgba(138, 43, 226, 0.15) 100%);
+    
+    svg {
+      color: #8a2be2;
+    }
   }
 `;
 
-const TeamMemberImage = styled.img`
+const FeatureTitle = styled.h3`
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  position: relative;
+  padding-bottom: 15px;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #4169E1, #8a2be2);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  
+  ${FeatureCard}:hover &::after {
+    width: 60px;
+  }
+`;
+
+const FeatureDescription = styled.p`
+  color: #555;
+  line-height: 1.8;
+  font-size: 17px;
+  margin: 0;
+  flex-grow: 1;
+`;
+
+const ShapeDivider = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  
+  svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 60px;
+  }
+  
+  .shape-fill {
+    fill: #FFFFFF;
+  }
+`;
+
+const BackgroundGraphic = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  transition: all 0.4s ease;
-  filter: grayscale(20%);
-  border: 5px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
   
-  &:hover {
-    filter: grayscale(0%);
-  }
-`;
-
-const TeamMemberName = styled.h3`
-  font-size: 22px;
-  margin-bottom: 5px;
-  /* color: white; */
-  font-weight: 600;
-  transition: all 0.3s ease;
-`;
-
-const TeamMemberRole = styled.p`
-  font-size: 16px;
-  color: #8a2be2;
-  margin-bottom: 10px;
-  font-weight: 500;
-`;
-
-const TeamMemberBio = styled.p`
-  font-size: 14px;
-  /* color: rgba(255, 255, 255, 0.7); */
-  line-height: 1.6;
-`;
-
-const SocialLinks = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-`;
-const TeamCTA = styled.div`
-    margin: 41px;
-  background: linear-gradient(135deg, #0047AB 0%, #4169E1 100%);
-  padding: 4rem;
-  border-radius: 24px;
-  text-align: center;
-  margin-top: 6rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0, 71, 171, 0.2);
-  
-  &::before, &::after {
-    content: "";
+  .circle1 {
     position: absolute;
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    z-index: 0;
+    background: linear-gradient(135deg, rgba(65, 105, 225, 0.03) 0%, rgba(138, 43, 226, 0.03) 100%);
+    top: -100px;
+    right: -100px;
   }
   
-  &::before {
-    top: -150px;
-    right: -50px;
+  .circle2 {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 2px dashed rgba(65, 105, 225, 0.1);
+    bottom: -200px;
+    left: -200px;
   }
   
-  &::after {
-    bottom: -150px;
-    left: -50px;
+  .dots {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-image: radial-gradient(rgba(65, 105, 225, 0.2) 2px, transparent 2px);
+    background-size: 20px 20px;
+    top: 20%;
+    right: 10%;
   }
+`;
+
+// Clients Section
+const ModernSection = styled(Section)`
+  padding: 80px 0;
+`;
+
+const ClientsContainer = styled.div`
+  margin-top: 60px;
+`;
+
+const ClientsList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+`;
+
+const MinimalClientTag = styled.div`
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #4169E1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(65, 105, 225, 0.15);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: linear-gradient(135deg, #4169E1 0%, #8a2be2 100%);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+// USP Section
+const USPContainer = styled.div`
+  margin-top: 60px;
+`;
+
+const CleanUSPCard = styled.div`
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.03);
+  padding: 30px;
+  margin-bottom: 30px;
+  border-left: 4px solid #4169E1;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateX(3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  }
+`;
+
+const USPHeading = styled.h4`
+  font-size: 22px;
+  font-weight: 600;
+  color: #4169E1;
+  margin-bottom: 15px;
+`;
+
+const USPPoints = styled.ul`
+  padding-left: 20px;
+  margin: 0;
+`;
+
+const USPPoint = styled.li`
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 8px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+// CTA Section
+const MinimalTeamCTA = styled.div`
+  margin: 80px auto;
+  background: linear-gradient(135deg, #0047AB 0%, #4169E1 100%);
+  border-radius: 12px;
+  padding: 50px 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 71, 171, 0.1);
+  position: relative;
+  overflow: hidden;
 `;
 
 const CTAContent = styled.div`
   position: relative;
   z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
 `;
 
 const CTATitle = styled.h3`
-  font-size: 2.2rem;
+  font-size: 36px;
   font-weight: 700;
   color: white;
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 `;
 
 const CTADescription = styled.p`
-  font-size: 1.2rem;
+  font-size: 18px;
   color: rgba(255, 255, 255, 0.9);
-  max-width: 700px;
-  margin: 0 auto 2rem;
+  margin: 0 auto 32px;
   line-height: 1.7;
 `;
 
 const CTAButton = styled.a`
   display: inline-flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 14px 32px;
   background: white;
   color: #0047AB;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 18px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   
   svg {
-    margin-left: 0.5rem;
+    margin-left: 10px;
     transition: transform 0.3s ease;
   }
   
   &:hover {
-    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
     
     svg {
       transform: translateX(5px);
     }
   }
 `;
-const SocialLink = styled.a`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* color: white; */
-  font-size: 16px;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: linear-gradient(45deg, #8a2be2, #4682b0);
-    transform: translateY(-3px);
-  }
-`;
 
-// Pulse animation specifically for backgrounds
-const pulseAnimation = keyframes`
-  0% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.2); opacity: 0.3; }
-  100% { transform: scale(1); opacity: 0.5; }
-`;
-
-const ValueIconBg = styled.div`
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #8a2be2, #4682b0);
-  opacity: 0.2;
-  animation: ${pulseAnimation} 2s infinite;
-`;
 // Main Component
 const AboutUs = () => {
-  const storyRefs = useRef([]);
-  const valueRefs = useRef([]);
-  const teamRefs = useRef([]);
-  const statRefs = useRef([]);
   const { hash } = useLocation();
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    
-    storyRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-    
-    valueRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-    
-    teamRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-    
-    statRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-    
-    return () => {
-      storyRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-      
-      valueRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-      
-      teamRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-      
-      statRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-    };
-  }, []);
+  const missionVisionRef = useRef(null);
+  const coreValuesRef = useRef(null);
+  const whyChooseUsRef = useRef(null);
+  const clientsRef = useRef(null);
+  const uspRef = useRef(null);
 
+  const missionVisionInView = useInView(missionVisionRef, { once: true, amount: 0.1 });
+  const coreValuesInView = useInView(coreValuesRef, { once: true, amount: 0.1 });
+  const whyChooseUsInView = useInView(whyChooseUsRef, { once: true, amount: 0.1 });
+  const clientsInView = useInView(clientsRef, { once: true, amount: 0.1 });
+  const uspInView = useInView(uspRef, { once: true, amount: 0.1 });
+  
   useEffect(() => {
     if (hash) {
       const element = document.querySelector(hash);
@@ -705,205 +835,359 @@ const AboutUs = () => {
     }
   }, [hash]);
   
-  const teamMembers = [
-    { 
-      name: 'Lipika Sahoo', 
-      role: 'CEO & Founder', 
-      image: 'https://www.lifeintelect.com/uploads/lifeintelect/lipikasahoo%20Founder%20%26%20CEO.jpg', 
-      bio: 'Visionary leader with 15+ years of experience in tech innovation.'
-    },
-    { 
-      name: 'Sophia Chen', 
-      role: 'Creative Director', 
-      image: 'https://via.placeholder.com/200', 
-      bio: 'Award-winning designer bringing brands to life with stunning visuals.'
-    },
-    { 
-      name: 'Marcus Williams', 
-      role: 'Lead Developer', 
-      image: 'https://via.placeholder.com/200', 
-      bio: 'Code wizard who transforms complex ideas into elegant solutions.'
-    },
-    { 
-      name: 'Ava Rodriguez', 
-      role: 'Strategy Lead', 
-      image: 'https://via.placeholder.com/200', 
-      bio: 'Marketing genius with a knack for spotting trends before they happen.'
-    },
-  ];
-  
-  const values = [
-    { 
-      title: 'Excellence in Service', 
-      description: 'We strive for excellence in everything we do, delivering high-quality services with precision and efficiency to exceed client expectations.', 
-      icon: '✨' 
-    },
-    { 
-      title: 'Confidentiality and Security', 
-      description: 'We understand the importance of protecting sensitive information. We are committed to maintaining the highest levels of confidentiality and security for all client data and intellectual assets.', 
-      icon: '🔒' 
-    },
-    {
-      title: 'Client Centric Approach',
-      description: 'Our clients’ success is our priority. We offer tailored solutions that protect their intellectual property and help them achieve their business objectives.',
-      icon: '🎯' 
-    },
-    { 
-      title: 'Integrity and Transparency', 
-      description: 'We believe in honesty and openness in all our dealings, ensuring that our clients receive reliable, ethical advice and services every time.', 
-      icon: '🛡️' 
-    },
-    { 
-      title: 'Adaptibility and Agility', 
-      description: 'We are committed to being flexible and responsive, adapting our strategies and services to meet the dynamic challenges of the ever-changing intellectual property landscape.', 
-      icon: '🔄' 
-    },
-    { 
-      title: 'Collaboration and Partnership', 
-      description: 'We work closely with our clients, fostering long-term relationships built on trust and mutual success. We view our clients as partners and collaborate to achieve the best outcomes for their intellectual property.', 
-      icon: '🤝' 
-    },
-  ];
-  
   const stats = [
     { number: '506+', label: 'Happy Clients', icon: '😊' },
-    { number: ' 2050+', label: 'IP Filings', icon: '⏳' },
-    { number: '6750+', label: 'Total people trained ', icon: '🏆' },
-    { number: '2900+', label: 'Total projects executed', icon: '✅' }
+    { number: '2050+', label: 'IP Filings', icon: '📑' },
+    { number: '6750+', label: 'People Trained', icon: '🎓' },
+    { number: '2900+', label: 'Projects Executed', icon: '✅' }
   ];
   
-  const storyParagraphs = [
-    "Founded in 2012, LifeIntelect has been at the forefront of helping innovators, startups, and businesses protect and maximize the value of their intellectual property (IP). With a focus on providing tailored IP solutions, we have earned the trust of clients across various industries, guiding them through the complexities of IP protection, management, and commercialization.",
-    "As we continue to evolve, LifeIntelect remains dedicated to empowering our clients with innovative strategies that drive business success. Our journey is marked by a passion for turning ideas into valuable assets, ensuring that intellectual property remains a powerful tool for growth in an increasingly competitive global market. With each milestone, we look forward to the future, excited about the opportunities to help businesses scale and thrive."
+  const missionContent = [
+    "To deliver insightful, creative, and actionable technological, IP & business solutions tailored to each client's unique challenges.",
+    "To foster innovation by integrating deep industry knowledge, human-centric approach, and sustainable practices.",
+    "Committed to protect IP rights of our clients and build IP portfolios that drive investment and growth"
+  ];
+
+  const valuesContent = [
+    { 
+      title: "HONESTY & INTEGRITY", 
+      description: "Strong work ethics guiding all our actions.", 
+      icon: <ShieldCheck size={28} /> 
+    },
+    { 
+      title: "INNOVATION & EXCELLENCE", 
+      description: "Continuously improving our services.", 
+      icon: <Rocket size={28} /> 
+    },
+    { 
+      title: "ADAPTABILITY", 
+      description: "Positive attitude to constantly improve ourselves and strive to be the best.", 
+      icon: <RefreshCw size={28} /> 
+    },
+    { 
+      title: "TRUSTWORTHY", 
+      description: "Trustworthy and Transparency in all our transactions.", 
+      icon: <Glasses size={28} /> 
+    },
+    { 
+      title: "SUSTAINABILITY", 
+      description: "Engage, analyse and creatively protect sustainable technologies.", 
+      icon: <Leaf size={28} /> 
+    },
+    { 
+      title: "FUTURE-FOCUSED", 
+      description: "Bringing insight and impact on future technologies.", 
+      icon: <TrendingUp size={28} /> 
+    }
+  ];
+
+  const whyChooseUs = [
+    { 
+      title: 'Client-Centric Approach', 
+      description: 'We listen, understand, and tailor solutions to fit your unique needs.', 
+      icon: <User size={24} />  
+    },
+    { 
+      title: 'Expert Team', 
+      description: 'Experienced professionals from diverse technical, legal, and business backgrounds.', 
+      icon: <Users size={24} />
+    },
+    {
+      title: 'Strategic Insights',
+      description: "We don't just protect your ideas—we help you monetize and scale them.",
+      icon: <Lightbulb size={24} /> 
+    },
+    { 
+      title: 'Global Outlook', 
+      description: 'Extensive experience handling domestic and international IP matters.', 
+      icon: <Globe size={24} />
+    },
+    { 
+      title: 'Commitment to Excellence', 
+      description: 'Your success is our measure of achievement.', 
+      icon: <Award size={24} /> 
+    }
+  ];
+  
+  const clients = [
+    'Startups and Entrepreneurs',
+    'Universities and Research Institutions',
+    'Small and Medium Enterprises (SMEs)',
+    'Corporates and Multinationals',
+    'Incubators and Innovation Hubs'
+  ];
+  
+  const usps = [
+    {
+      title: 'Specialized Focus on Life Sciences and Technology Innovation', 
+      points: [
+        'Unlike general IP and business consultancies, LifeIntelect has specialized expertise in life sciences, biotechnology, healthcare, and tech-driven industries.',
+        'This sharp focus allows for tailored, technically sound solutions that generalist firms often miss.'
+      ]
+    },
+    {
+      title: 'End-to-End Innovation Support', 
+      points: [
+        'LifeIntelect doesn\'t stop at IP registration. We support the full innovation lifecycle — from idea validation and protection to commercialization, funding readiness, and market strategy.',
+        'Most competitors either specialize only in IP or business growth, but rarely both.'
+      ]
+    },
+    {
+      title: 'Scientific and Legal Synergy', 
+      points: [
+        'Our team blends scientific research backgrounds with legal and business acumen — ensuring technical precision while protecting and growing your business value.',
+        'Competitors often lack this cross-functional expertise, leading to gaps in strategy.'
+      ]
+    },
+    {
+      title: 'Client-First, Custom Approach', 
+      points: [
+        'Every client engagement at LifeIntelect is highly personalized. We co-create strategies aligned to your vision rather than offering cookie-cutter solutions.',
+        'Many large firms take a templated, one-size-fits-all approach — but we believe your innovation deserves a unique strategy.'
+      ]
+    },
+    {
+      title: 'Trusted Partner for Startups and Institutions', 
+      points: [
+        'LifeIntelect has a proven record with startups, incubators, research centers, and SMEs, understanding their constraints and ambitions.',
+        'We offer scalable, cost-effective models that big consulting houses often cannot match.'
+      ]
+    },
+    {
+      title: 'Training the Innovators of Tomorrow', 
+      points: [
+        'Beyond consulting, LifeIntelect invests in building future innovation leaders through workshops, IP awareness programs, and entrepreneurship mentoring — something few competitors actively provide.'
+      ]
+    },
+    {
+      title: 'Global Outlook with Local Expertise', 
+      points: [
+        'We operate with an international perspective on IP and business landscapes, while staying deeply rooted in local regulatory and business environments.'
+      ]
+    }
   ];
   
   return (
     <>
-      {/* <Hero>
-        <BackgroundGradient />
-        <OrbDecoration size="200px" top="10%" left="10%" duration="8s" />
-        <OrbDecoration size="150px" top="70%" left="80%" duration="6s" />
-        <OrbDecoration size="100px" top="40%" left="70%" duration="10s" />
-        <OrbDecoration size="120px" top="80%" left="20%" duration="7s" />
-        
-        <Container>
-          <HeroContent>
-            <TypewriterContainer>
-              <TypewriterText>Empowering Innovation</TypewriterText>
-            </TypewriterContainer>
-            <HeroSubtitle>
-            To deliver world-class technological and IP solutions with high confidentiality standards, encompassing ideation, protection, and management, while safeguarding the interests of our clients and employees.
-            </HeroSubtitle>
-            <GradientButton>Discover Our Story</GradientButton>
-          </HeroContent>
-        </Container>
-      </Hero> */}
-      <AboutUsHero></AboutUsHero>
-      <Section>
-        <Container>
-          <SectionTitle>Our Journey</SectionTitle>
-          <StoryContainer>
-            {storyParagraphs.map((paragraph, index) => (
-              <StoryText 
-                key={index} 
-                ref={el => storyRefs.current[index] = el}
-              >
-                {paragraph}
-              </StoryText>
-            ))}
-            
-            <StatsContainer>
-              {stats.map((stat, index) => (
-                <StatCard 
-                  key={index} 
-                  ref={el => statRefs.current[index] = el}
-                  style={{
-                    transitionDelay: `${0.2 * index}s`
-                  }}
-                >
-                  <StatIcon>{stat.icon}</StatIcon>
-                  <StatNumber>{stat.number}</StatNumber>
-                  <StatLabel>{stat.label}</StatLabel>
-                </StatCard>
-              ))}
-            </StatsContainer>
-          </StoryContainer>
-        </Container>
-      </Section>
-      
-      <Section>
-        <Container>
-          <SectionTitle>Our Core Values</SectionTitle>
-          <ValuesContainer>
-            {values.map((value, index) => (
-              <ValueCard 
-                key={index} 
-                ref={el => valueRefs.current[index] = el}
-                style={{
-                  transitionDelay: `${0.2 * index}s`
-                }}
-              >
-                <ValueIconContainer>
-                  <ValueIconBg />
-                  <ValueIconRing />
-                  <ValueIcon>{value.icon}</ValueIcon>
-                </ValueIconContainer>
-                <ValueTitle>{value.title}</ValueTitle>
-                <ValueDescription>{value.description}</ValueDescription>
-              </ValueCard>
-            ))}
-          </ValuesContainer>
-        </Container>
-      </Section>
-      
-      <Section>
-        <Container>
-          {/* <SectionTitle>The Dream Team</SectionTitle> */}
-          <TeamSection id="team"></TeamSection>
-          {/* <TeamContainer>
-            {teamMembers.map((member, index) => (
-              <TeamMember 
-                key={index} 
-                ref={el => teamRefs.current[index] = el}
-                style={{
-                  transitionDelay: `${0.2 * index}s`
-                }}
-              >
-                <TeamMemberImageContainer>
-                  <TeamMemberImage src={member.image} alt={member.name} />
-                </TeamMemberImageContainer>
-                <TeamMemberName>{member.name}</TeamMemberName>
-                <TeamMemberRole>{member.role}</TeamMemberRole>
-                <TeamMemberBio>{member.bio}</TeamMemberBio>
-                <SocialLinks>
-                  <SocialLink href="#">in</SocialLink>
-                  <SocialLink href="#">tw</SocialLink>
-                  <SocialLink href="#">ig</SocialLink>
-                </SocialLinks>
-              </TeamMember>
-            ))}
-          </TeamContainer> */}
-        </Container>
-      </Section>
-      <TeamCTA 
-            initial={{ opacity: 0, y: 50 }}
-            // animate={isCTAInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            transition={{ duration: 0.8 }}
+    <AboutUsHero />
+
+    
+
+    <MissionVisionSection>
+    <SectionTitle
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <CTAContent>
-              <CTATitle>Meet Our Team of Experts</CTATitle>
-              <CTADescription>
-                Our diverse team of patent attorneys, innovation strategists, and IP specialists brings decades of combined experience to your challenges. Get to know the people who will help protect and leverage your innovations.
-              </CTADescription>
-              <CTAButton 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Meet The Team <ArrowRight size={18} />
-              </CTAButton>
-            </CTAContent>
-          </TeamCTA>
-    </>
+            Who We Are
+          </SectionTitle>
+          <motion.p
+            style={{ 
+              fontSize: '18px', 
+              lineHeight: '1.8', 
+              textAlign: 'center', 
+              maxWidth: '800px', 
+              margin: '0 auto 50px',
+              color: '#64748b'
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            LifeIntelect Consultancy Pvt. Ltd. is a leading advisory firm focused on Intellectual Property rights, 
+            technology commercialization, business consulting, and regulatory support. With a team of seasoned IP attorneys, 
+            business strategists, scientists, and legal experts, we bring a multidisciplinary approach to protecting and growing your ideas.
+          </motion.p>
+      <DecorativeCircle />
+      <DecorativeCircle />
+      <MissionVisionContainer>
+        {/* Vision Card */}
+        <MissionVisionCard ref={missionVisionRef}>
+          <MissionVisionHeader>
+            <MissionVisionTitle>Our Vision</MissionVisionTitle>
+            <Divider
+              initial={{ width: 0 }}
+              animate={missionVisionInView ? { width: 80 } : { width: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            />
+          </MissionVisionHeader>
+          <MissionVisionContent>
+            <p>
+              To be the most trusted partner for innovation-driven businesses, providing world-class IP and business consulting solutions that foster growth and sustainability.
+            </p>
+          </MissionVisionContent>
+        </MissionVisionCard>
+
+
+        {/* Mission Card */}
+        <MissionVisionCard>
+          <MissionVisionHeader>
+            <MissionVisionTitle>Our Mission</MissionVisionTitle>
+            <Divider
+              initial={{ width: 0 }}
+              animate={missionVisionInView ? { width: 80 } : { width: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            />
+          </MissionVisionHeader>
+          <MissionVisionContent>
+            {missionContent.map((text, index) => (
+              <p key={index}>{text}</p>
+            ))}
+          </MissionVisionContent>
+        </MissionVisionCard>
+      </MissionVisionContainer>
+    </MissionVisionSection>
+
+    <CoreValuesSection ref={coreValuesRef}>
+      <Container>
+        <ElegantSectionTitle>Our Core Values</ElegantSectionTitle>
+        <Divider
+          initial={{ width: 0 }}
+          animate={coreValuesInView ? { width: 80 } : { width: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        />
+        <ValuesGrid>
+          {valuesContent.map((value, index) => (
+            <ValueCard key={index} data-aos="fade-up" data-aos-delay={index * 100}>
+              <ValueIcon className="value-icon">{value.icon}</ValueIcon>
+              <ValueTitle>{value.title}</ValueTitle>
+              <ValueDescription>{value.description}</ValueDescription>
+            </ValueCard>
+          ))}
+        </ValuesGrid>
+      </Container>
+    </CoreValuesSection>
+
+    <StatsSection>
+      <BackgroundElements>
+        <Circle />
+        <Circle />
+        <Circle />
+      </BackgroundElements>
+      <Container>
+        <StatsContainer>
+          <StatsGrid>
+            {stats.map((stat, index) => (
+              <StatCard key={index} data-aos="zoom-in" data-aos-delay={index * 150}>
+                <StatIconWrapper>
+                  <StatIcon>{stat.icon}</StatIcon>
+                </StatIconWrapper>
+                <StatNumber>{stat.number}</StatNumber>
+                <StatLabel>{stat.label}</StatLabel>
+              </StatCard>
+            ))}
+          </StatsGrid>
+        </StatsContainer>
+      </Container>
+    </StatsSection>
+
+    <WhyChooseUsSection>
+      <BackgroundGraphic>
+        <div className="circle1"></div>
+        <div className="circle2"></div>
+        <div className="dots"></div>
+      </BackgroundGraphic>
+      <Container>
+        <WhyChooseUsContainer>
+          <SectionIntro ref={whyChooseUsRef}>
+            <SectionTitle>Why Choose LifeIntelect?</SectionTitle>
+            <Divider
+              initial={{ width: 0 }}
+              animate={whyChooseUsInView ? { width: 80 } : { width: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            />
+            <SectionSubtitle>
+              Partner with us to experience a unique blend of expertise, innovation, and personalized service
+              that puts your business goals at the center of everything we do.
+            </SectionSubtitle>
+          </SectionIntro>
+          <FeatureGrid>
+            {whyChooseUs.map((feature, index) => (
+              <FeatureCard key={index} data-aos="fade-up" data-aos-delay={index * 100}>
+                <FeatureIconWrapper>{feature.icon}</FeatureIconWrapper>
+                <FeatureTitle>{feature.title}</FeatureTitle>
+                <FeatureDescription>{feature.description}</FeatureDescription>
+              </FeatureCard>
+            ))}
+          </FeatureGrid>
+        </WhyChooseUsContainer>
+      </Container>
+      <ShapeDivider>
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path
+            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+            className="shape-fill"
+          ></path>
+        </svg>
+      </ShapeDivider>
+    </WhyChooseUsSection>
+
+    <ModernSection style={{ background: '#f8fafc' }} ref={clientsRef}>
+      <Container>
+        <ElegantSectionTitle>Clients & Partners</ElegantSectionTitle>
+        <Divider
+          initial={{ width: 0 }}
+          animate={clientsInView ? { width: 80 } : { width: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        />
+        <ClientsContainer>
+          <ClientsList>
+            {clients.map((client, index) => (
+              <MinimalClientTag key={index} data-aos="fade-up" data-aos-delay={index * 100}>
+                {client}
+              </MinimalClientTag>
+            ))}
+          </ClientsList>
+        </ClientsContainer>
+      </Container>
+    </ModernSection>
+
+    <ModernSection ref={uspRef}>
+      <Container>
+        <ElegantSectionTitle>What Sets Us Apart</ElegantSectionTitle>
+        <Divider
+          initial={{ width: 0 }}
+          animate={uspInView ? { width: 80 } : { width: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        />
+        <SectionSubtitle>
+        In a crowded market of consulting firms, LifeIntelect Consultancy Pvt. Ltd. stands
+out through a powerful combination of deep expertise, customized strategies,
+and a future-forward approach. Here&#39;s how our USP compares to others:
+            </SectionSubtitle>
+        <USPContainer>
+          {usps.map((usp, index) => (
+            <CleanUSPCard key={index} data-aos="fade-up" data-aos-delay={index * 50}>
+              <USPHeading>{index + 1 + '. ' + usp.title}</USPHeading>
+              <USPPoints>
+                {usp.points.map((point, pointIndex) => (
+                  <USPPoint key={pointIndex}>{point}</USPPoint>
+                ))}
+              </USPPoints>
+            </CleanUSPCard>
+          ))}
+        </USPContainer>
+      </Container>
+    </ModernSection>
+
+    <TeamSection id="team" />
+
+    <ModernSection>
+      <Container>
+        <MinimalTeamCTA>
+          <CTAContent data-aos="zoom-in">
+            <CTATitle>Meet Our Team of Experts</CTATitle>
+            <CTADescription>
+              Our diverse team of patent attorneys, innovation strategists, and IP specialists brings decades of combined experience to your challenges. Get to know the people who will help protect and leverage your innovations.
+            </CTADescription>
+            <CTAButton href="/team">
+              Meet The Team <ArrowRight size={20} />
+            </CTAButton>
+          </CTAContent>
+        </MinimalTeamCTA>
+      </Container>
+    </ModernSection>
+  </>
   );
 };
 

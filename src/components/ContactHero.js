@@ -149,7 +149,7 @@ const ContactHero = () => {
     {
       id: 3,
       city: 'Chandrasekharpur, Bhubaneswar, Odisha, India-751024',
-      email: 'support@lifeintelect.com',
+      email: 'info@lifeintelect.com',
       icon: 'pyramid'
     }
   ];

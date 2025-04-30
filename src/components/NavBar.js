@@ -79,7 +79,7 @@ const LogoWrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 100px;
+  width: 120px;
   position: relative;
   transition: all 0.3s ease;
   &::after {

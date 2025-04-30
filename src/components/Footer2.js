@@ -200,6 +200,7 @@ Bengaluru, Karnataka 560037</ContactText>
 
       <Divider />
       <Copyright>© {new Date().getFullYear()} LifeIntelect. All rights reserved.</Copyright>
+      <Copyright style={{marginTop:"10px", cursor:"pointer"}} onClick={()=>window.location.href="/terms"}>Privacy Policy | Terms & Conditions | Disclaimer | Made with ♥ LifeIntelect</Copyright>
     </FooterContainer>
   )
 }

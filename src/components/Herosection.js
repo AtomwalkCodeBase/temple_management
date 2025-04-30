@@ -58,7 +58,7 @@ const NavBar = styled.nav`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  z-index: 1001;
+  z-index: 1;
   background: rgba(255, 255, 255, 0.1);
   padding: 15px 10px;
   border-radius: 10px;
@@ -243,7 +243,7 @@ const Head = styled.h2`
 `;
 
 const SubHead = styled.p`
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 2rem;
   max-width: 600px;
@@ -602,6 +602,9 @@ const FeatureGrid = styled.div`
 
 const FeatureItem = styled.div`
   position: relative;
+  background-image: ${props => props.bgImage};
+  background-size: cover;
+  background-position: center;
   min-height: 170px;
   height: auto;
   display: flex;
@@ -615,6 +618,9 @@ const FeatureItem = styled.div`
   opacity: 0;
   transform: translateY(20px);
   transition-delay: ${(props) => 0.7 + props.index * 0.1}s;
+  cursor: pointer;
+  box-shadow: 50px 5px 15px 30px rgba(0, 0, 0, 0.1);
+  
 
   &.visible {
     opacity: 1;
@@ -646,8 +652,9 @@ const FeatureText = styled.p`
   font-size: clamp(0.95rem, 2.5vw, 1rem);
   line-height: 1.5;
   margin: 0;
-  font-weight: 500;
+  font-weight: 800;
   transition: transform 0.3s ease;
+  color: #fff;
 
   ${FeatureItem}:hover & {
     transform: translateY(-2px);
@@ -897,8 +904,8 @@ const Herosection = () => {
   const scrollToSection = (target) => {
     if (target === "carousel") {
       carouselRef.current?.scrollIntoView({ behavior: "smooth" });
-    } else if (target === "more") {
-      heroSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    } else if (target === "section4") {
+      containerRef.current?.scrollIntoView({ behavior: "smooth" });
     } else {
       const index = parseInt(target.replace("section", "")) - 1;
       sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
@@ -999,29 +1006,31 @@ const Herosection = () => {
       ref: carouselRef,
     },
     {
+      id: "section4",
+      icon: <FaGavel />,
+      label: "Intellectual Property ",
+      ref: containerRef,
+    },
+    {
       id: "section1",
       icon: <FaLightbulb />,
-      label: "Section 1",
-      ref: sectionRefs.current[0],
+      label: "STRATEGY",
+      ref: sectionRefs.current[1],
     },
+
     {
       id: "section2",
       icon: <FaFlask />,
-      label: "Section 2",
-      ref: sectionRefs.current[1],
+      label: "SCIENTIFIC",
+      ref: sectionRefs.current[2],
     },
     {
       id: "section3",
       icon: <FaLaptop />,
-      label: "Section 3",
-      ref: sectionRefs.current[2],
-    },
-    {
-      id: "section4",
-      icon: <FaGavel />,
-      label: "Section 4",
+      label: "Intellectual",
       ref: sectionRefs.current[3],
     },
+
     // { id: 'more', icon: <FaHome />, label: 'More Info', ref: heroSectionRef },
   ];
 
@@ -1032,12 +1041,13 @@ const Herosection = () => {
   //   { bgColor: "#58D68D", bgColorEnd: "#82E0AB", accentColor: "#58D68D" },
   // ];
 
-  const featureColors = [
-    { bgColor: "rgba(100, 100, 200, 0.8)" },
-    { bgColor: "rgba(20, 40, 100, 0.8)" },
-    { bgColor: "rgba(248, 137, 137, 0.8)" },
-    { bgColor: "rgba(200, 100, 200, 0.8)" },
-  ];
+  const backgroundPatterns = {
+    "IP Solutions": "url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1920&auto=format&fit=crop')", // Document/legal pattern
+    "IP Lifecycle Management": "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop')", // Business cycle/management
+    "Technology Transfer Solutions": "url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop')", // Technology transfer
+    "Intellectual Property Rights Solutions for Startups": "url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1920&auto=format&fit=crop')", // Startup/innovation
+  };
+  
 
   const featureData = [
     {
@@ -1096,7 +1106,7 @@ const Herosection = () => {
   ];
 
   return (
-    <div style={{backgroundColor:"#077A7D"}}>
+    <div style={{backgroundColor:"#8E2D8D"}}>
       <CarouselWrapper ref={carouselRef}>
         <Carousel1 />
       </CarouselWrapper>
@@ -1118,8 +1128,8 @@ const Herosection = () => {
             <Tooltip>{item.label}</Tooltip>
           </NavItem>
         ))}
-      </NavBar>
-      <Container ref={containerRef}>
+      </NavBar> 
+      <Container ref={ containerRef} id="section4">
         <HeroSection ref={heroSectionRef}>
           <HeroContent ref={heroContentRef}>
             <Heading ref={headingRef}>
@@ -1141,9 +1151,10 @@ const Herosection = () => {
           <FeatureGrid>
             {featureData.map((feature, index) => (
               <FeatureItem
+               bgImage={backgroundPatterns[feature.text]}
                 key={index}
                 ref={(el) => (featureItemRefs.current[index] = el)}
-                bgColor={featureColors[index].bgColor}
+                // bgColor={featureColors[index].bgColor}
                 index={index}
                 onClick={() => openPopup(feature)}
                 role="button"
@@ -1153,7 +1164,7 @@ const Herosection = () => {
                 }
                 aria-label={`Open services for ${feature.text}`}
               >
-                <FeatureIcon>{feature.icon}</FeatureIcon>
+                {/* <FeatureIcon>{feature.icon}</FeatureIcon> */}
                 <FeatureText>{feature.text}</FeatureText>
               </FeatureItem>
             ))}

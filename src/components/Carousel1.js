@@ -74,7 +74,7 @@ const TextOverlay = styled.div`
     }
 
     .topic {
-      font-size: 1.8rem;
+      font-size: 2.5rem;
       font-weight: bold;
       color: #f1683a;
       margin-bottom: 15px;
@@ -236,7 +236,7 @@ export default function FullscreenCarousel() {
 		src: Ptent,
 		author: 'LIFEINTELECT',
 		// title: 'Zoom out and focus deep. That’s how we view your project ',
-		topic: 'Zoom out and focus deep. That’s how we view your project',
+		topic: 'Zoom out and Focus deep. That’s how we view your Project.',
 		// description:
 		//   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 	  },
@@ -244,7 +244,7 @@ export default function FullscreenCarousel() {
 		src: Ptent2,
 		author: 'LIFEINTELECT',
 		// title: 'Copyright Services',
-		topic: 'From thought to thrive—we nurture your idea.',
+		topic: 'For Thoughts to Thrive let us help Nurture your Idea.',
 		// description:
 		//   'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 	  },
@@ -252,7 +252,7 @@ export default function FullscreenCarousel() {
 		src: Ptent3,
 		author: 'LIFEINTELECT',
 		// title: 'Trademark Service',
-		topic: 'Design with innovation, strengthen with protection ',
+		topic: 'Design with Inovation, Strengthen with Protection.',
 		// description:
 		//   'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 	  },
@@ -260,7 +260,7 @@ export default function FullscreenCarousel() {
 		src: Ptent4,
 		author: 'LIFEINTELECT',
 		// title: 'IP Lifecycle Management',
-		topic: 'Plan, protect, and prosper—excellence at every stage.',
+		topic: 'Plan, Protect, Strategize and Excel with us.',
 		// description:
 		//   'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 	  },

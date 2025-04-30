@@ -16,6 +16,7 @@ import Scientific from './data/ScientificTechnologyContent';
 import StrategicLegalAdvisory from './data/StrategicLegalAdvisoryContent';
 import IprSolutionsStartups from './data/IprSolutionsStartupsContent';
 import IpEducationTraining from './data/IpEducationTrainingContent';
+import TermsOfUse from './components/TermsOfUse';
 
 // Theme configuration
 const themes = {
@@ -109,6 +110,7 @@ const mainRoutes = [
   { path: '/contact', component: ContactUs, title: 'Contact Us' },
   { path: '/blog', component: BlogListingPage, title: 'Blog' },
   { path: '/careers', component: CareersPage, title: 'Careers' },
+  { path: '/terms', component: TermsOfUse, title: 'Careers' },
 ];
 
 const patentRoutes = [

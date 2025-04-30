@@ -294,8 +294,7 @@ const ContactUsForm = () => {
       <Header>
         <Title>Contact our team</Title>
         <Subtitle>
-          Got any questions about the product or scaling on our platform? We're here to help.
-          Chat to our friendly team 24/7 and get onboard in less than 5 minutes.
+        Got any questions about our services? We're here to help! Our friendly team is available from 10:00 to 17:30—reach out by appointment only and let’s get started!
         </Subtitle>
       </Header>
       
@@ -488,7 +487,7 @@ const ContactUsForm = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </IconWrapper>
-            +(91)-9591600666, 
+            +(91)-9591600666
           </ContactLink>
           <ContactLink href="tel:91-080-28476777" title="Call our team">
             <IconWrapper>
@@ -500,7 +499,7 @@ const ContactUsForm = () => {
           </ContactLink>
         </ContactMethod>
         
-        <ContactMethod>
+        {/* <ContactMethod>
           <ContactMethodTitle>Visit us</ContactMethodTitle>
           <ContactMethodText>Chat to us in person at our Melbourne HQ.</ContactMethodText>
           
@@ -513,7 +512,7 @@ const ContactUsForm = () => {
             </IconWrapper>
             2100 East County Line Rd, Ardmore, PA, 19003. USA
           </ContactLink>
-        </ContactMethod>
+        </ContactMethod> */}
       </ContactInfoSection>
     </Container>
   );

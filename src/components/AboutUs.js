@@ -95,6 +95,24 @@ const MissionVisionContent = styled.div`
     margin-bottom: 20px;
     position: relative;
     padding-left: 25px;
+    text-align: center;
+    
+    &::before {
+      position: absolute;
+      left: 0;
+      color: #8a2be2;
+      font-weight: bold;
+    }
+  }
+`;
+const MissionVisionContents = styled.div`
+  p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 25px;
     
     &::before {
       content: '•';
@@ -839,7 +857,7 @@ const AboutUs = () => {
     { number: '506+', label: 'Happy Clients', icon: '😊' },
     { number: '2050+', label: 'IP Filings', icon: '📑' },
     { number: '6750+', label: 'People Trained', icon: '🎓' },
-    { number: '2900+', label: 'Projects Executed', icon: '✅' }
+    { number: '3001+', label: 'Projects Executed', icon: '✅' }
   ];
   
   const missionContent = [
@@ -1029,11 +1047,11 @@ const AboutUs = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             />
           </MissionVisionHeader>
-          <MissionVisionContent>
+          <MissionVisionContents>
             {missionContent.map((text, index) => (
               <p key={index}>{text}</p>
             ))}
-          </MissionVisionContent>
+          </MissionVisionContents>
         </MissionVisionCard>
       </MissionVisionContainer>
     </MissionVisionSection>

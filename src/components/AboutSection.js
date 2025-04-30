@@ -189,7 +189,7 @@ export default function AboutSection() {
     { number: "506+", label: "Happy Clients", icon: "😊" },
     { number: "2050+", label: "IP Filings", icon: "🏆" },
     { number: "6750+", label: "Total people trained ", icon: "📊" },
-    { number: "2900+", label: "Total projects executed", icon: "🎯" },
+    { number: "3001+", label: "Total projects executed", icon: "🎯" },
   ]
 
   return (

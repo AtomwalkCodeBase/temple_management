@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import {
   FaLock,
-  FaFlask,
-  FaLaptop,
+  FaSyncAlt,
+  FaLaptopCode,
   FaLightbulb,
   FaUsers,
   FaGavel,
@@ -12,6 +12,8 @@ import {
   FaHome,
   FaTimes,
   FaChevronRight,
+  FaFlask,
+  FaLaptop
 } from "react-icons/fa";
 import Carousel1 from "./Carousel1";
 import Section1Image from "../assets/img/section1.png";
@@ -289,7 +291,6 @@ const Image = styled.img`
   max-width: 100%;
   height: auto;
   border-radius: 8px;
-
   transition: transform 0.3s ease;
 
   &:hover {
@@ -303,91 +304,57 @@ const Image = styled.img`
 
 const CarouselWrapper = styled.div``;
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 100px auto 40px;
-  padding: 20px 15px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
+// New Split Section Styles
+const SplitSection = styled.section`
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  background: linear-gradient(90deg, #98D8EF 55%, #98D8EF 45%);
+  @media (max-width: 900px) {
+    flex-direction: column;
+    background: linear-gradient(180deg, #8E2D8D 55%, #FFB200 45%);
   }
-
-  @media (max-width: 768px) {
-    margin-top: 80px;
-    padding: 15px 10px;
-  }
+  padding:50px;
 `;
 
-const HeroSection = styled.section`
+const LeftPanel = styled.div`
+  margin-top: 12px;
+  flex: 1;
+  padding: 64px 6vw 64px 8vw;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 40px 0;
-  opacity: 0;
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  transform: translateY(20px);
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
+  justify-content: center;
+  background: transparent;
+  @media (max-width: 900px) {
+    padding: 48px 6vw 24px 6vw;
     align-items: center;
-    gap: 40px;
+    text-align: center;
   }
 `;
 
-const HeroContent = styled.div`
-  flex: 1;
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  transition-delay: 0.1s;
-
-  &.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  @media (min-width: 768px) {
-    margin-right: 40px;
-  }
-`;
-
-const Heading = styled.h1`
-  font-size: clamp(2.5rem, 5vw, 3rem);
-  font-weight: 700;
-  /* color: #333; */
-  line-height: 1.2;
-  margin-bottom: 20px;
+const IPHeading = styled.h1`
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #222831;
+  margin-bottom: 18px;
+  letter-spacing: -1px;
+  line-height: 1.08;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
   transition-delay: 0.2s;
-  color: #ffffff;
+
   &.visible {
     opacity: 1;
     transform: translateY(0);
   }
-
-  background: linear-gradient(45deg, #ffffff, #ffffff, #ffffff);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: ${gradientAnimation} 6s ease infinite;
 `;
 
-const SubText = styled.p`
-  font-size: clamp(1.1rem, 3vw, 1.2rem);
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 30px;
+const IPSubText = styled.p`
+  font-size: 1.18rem;
+  color: #222831;
+  margin-bottom: 32px;
+  max-width: 420px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
@@ -397,96 +364,91 @@ const SubText = styled.p`
     opacity: 1;
     transform: translateY(0);
   }
+
+  @media (max-width: 900px) {
+    margin: 0 auto 32px auto;
+  }
 `;
 
-const GetStartedButton = styled.button`
-  background: linear-gradient(135deg, #333, #555);
-  color: white;
+const IPCTAButton = styled.button`
+  background: #fff;
+  color: #222831;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 14px 38px;
   border: none;
-  padding: 12px 35px;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 40px;
+  margin-top: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.15);
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: background 0.2s, color 0.2s;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease, background 0.3s ease;
   transition-delay: 0.4s;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(210, 192, 192, 0.2),
-      transparent
-    );
-    transform: rotate(45deg);
-    transition: 0.6s;
-    animation: ${shimmer} 3s infinite linear;
-    background-size: 200% 100%;
-  }
-
-  &:hover,
-  &:focus {
-    background: linear-gradient(135deg, #444, #666);
-    transform: translateY(-2px);
-    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.2);
-    animation: ${pulse} 0.8s infinite;
+  &:hover {
+    background: #3674B5;
+    color: #fff;
   }
 
   &.visible {
     opacity: 1;
     transform: translateY(0);
   }
+`;
 
-  &:focus {
-    outline: 2px solid #666;
-    outline-offset: 2px;
+const RightPanel = styled.div`
+  flex: 1.1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 48px 4vw 48px 0;
+  @media (max-width: 900px) {
+    padding: 0 0 48px 0;
+    width: 100%;
   }
 `;
 
-const StatsContainer = styled.div`
-  flex: 1;
+const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  width: 100%;
+  max-width: 480px;
   opacity: 0;
-  transform: translateX(20px);
+  transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
   transition-delay: 0.5s;
 
   &.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 18px;
+    max-width: 95vw;
   }
 `;
 
-const StatCard = styled.div`
+const Card = styled.div`
+  background: rgba(255,255,255,0.82);
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+  padding: 0px;
   display: flex;
-  align-items: center;
-  padding: 15px;
-  border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+  flex-direction: column;
+  min-height: 220px;
+  cursor: pointer;
+  border: 2px solid #fffbe0;
+  transition: box-shadow 0.2s, transform 0.2s, border 0.2s;
+  overflow: hidden;
   opacity: 0;
   transform: scale(0.95);
   transition-delay: ${(props) => props.delay || "0s"};
-  backdrop-filter: blur(5px);
 
   &.visible {
     opacity: 1;
@@ -494,172 +456,62 @@ const StatCard = styled.div`
   }
 
   &:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-`;
-
-const IconContainer = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-  background: linear-gradient(
-    135deg,
-    ${(props) => props.bgColor},
-    ${(props) => props.bgColorEnd || props.bgColor}
-  );
-  color: white;
-  font-size: 1.8rem;
-  animation: ${float} 2s ease-in-out infinite;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: rotate(8deg);
-  }
-`;
-
-const StatContent = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StatValue = styled.span`
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #333;
-  position: relative;
-  transition: transform 0.3s ease;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(
-      to right,
-      ${(props) => props.accentColor || "#4285F4"},
-      transparent
-    );
-    transition: width 0.4s ease;
-  }
-
-  ${StatCard}:hover & {
-    transform: translateY(-2px);
-
-    &::after {
-      width: 100%;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+    transform: translateY(-4px) scale(1.03);
+    border: 2px solid #ffe066;
+    
+    .card-image {
+      transform: scale(1.05);
     }
   }
 `;
-
-const StatLabel = styled.span`
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-  color: #777;
-  transition: color 0.3s ease;
-
-  ${StatCard}:hover & {
-    color: #555;
-  }
-`;
-
-const FeaturesSection = styled.section`
-  margin-top: 40px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  transition-delay: 0.6s;
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const FeatureGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const FeatureItem = styled.div`
-  position: relative;
-  background-image: ${props => props.bgImage};
+const CardImage = styled.div`
+  height: 120px;
+  background-image: url(${props => props.image});
   background-size: cover;
   background-position: center;
-  min-height: 170px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px 20px 25px;
-  background-color: ${(props) => props.bgColor};
-  color: white;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  transition-delay: ${(props) => 0.7 + props.index * 0.1}s;
-  cursor: pointer;
-  box-shadow: 50px 5px 15px 30px rgba(0, 0, 0, 0.1);
-  
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  &:hover {
-    transform: scale(1.02) translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
-`;
-
-const FeatureIcon = styled.div`
-  position: relative;
-  z-index: 1;
-  font-size: 2.2rem;
-  margin-bottom: 12px;
-  opacity: 0.9;
-  transition: transform 0.4s ease;
-
-  ${FeatureItem}:hover & {
-    transform: translateY(-4px) scale(1.1);
-  }
-`;
-
-const FeatureText = styled.p`
-  position: relative;
-  z-index: 1;
-  font-size: clamp(0.95rem, 2.5vw, 1rem);
-  line-height: 1.5;
-  margin: 0;
-  font-weight: 800;
   transition: transform 0.3s ease;
-  color: #fff;
-
-  ${FeatureItem}:hover & {
-    transform: translateY(-2px);
-  }
 `;
+
+const CardContent = styled.div`
+  padding: 16px 22px 20px;
+`;
+const CardIcon = styled.div`
+  font-size: 2.2rem;
+  color: #3674B5;
+  margin-bottom: 12px;
+`;
+
+const CardTitle = styled.div`
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 2px;
+`;
+
+// Card data
+const cards = [
+  {
+    image: "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1920&auto=format&fit=crop",
+    title: "IP Solutions",
+    icon: <FaLock />
+  },
+  {
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop",
+    title: "IP Lifecycle Management",
+    icon: <FaSyncAlt />
+  },
+  {
+    image: "https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop",
+    title: "Technology Transfer Solutions",
+    icon: <FaLaptopCode />
+  },
+  {
+    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1920&auto=format&fit=crop",
+    title: "IP Rights Solutions for Startups",
+    icon: <FaLightbulb />
+  }
+];
 
 const PopupOverlay = styled.div`
   position: fixed;
@@ -731,7 +583,7 @@ const CloseButton = styled.button`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(248, 137, 137, 0.4);
+    box-shadow: 0 0 0 3px rgba(100, 100, 200, 0.3);
   }
 `;
 
@@ -797,6 +649,12 @@ const Herosection = () => {
   const featureItemRefs = useRef([]);
   const sectionRefs = useRef([]);
   const carouselRef = useRef(null);
+  const splitSectionRef = useRef(null);
+  const leftPanelRef = useRef(null);
+  const rightPanelRef = useRef(null);
+  const cardGridRef = useRef(null);
+  const cardRefs = useRef([]);
+  
   const [activeSection, setActiveSection] = useState("carousel");
   const [isOpen, setIsOpen] = useState(false);
   const [popupData, setPopupData] = useState(null);
@@ -811,12 +669,10 @@ const Herosection = () => {
     const animateElements = () => {
       if (containerRef.current) containerRef.current.classList.add("visible");
       setTimeout(() => {
-        if (heroSectionRef.current)
-          heroSectionRef.current.classList.add("visible");
+        if (heroSectionRef.current) heroSectionRef.current.classList.add("visible");
       }, 100);
       setTimeout(() => {
-        if (heroContentRef.current)
-          heroContentRef.current.classList.add("visible");
+        if (heroContentRef.current) heroContentRef.current.classList.add("visible");
       }, 200);
       setTimeout(() => {
         if (headingRef.current) headingRef.current.classList.add("visible");
@@ -828,8 +684,7 @@ const Herosection = () => {
         if (buttonRef.current) buttonRef.current.classList.add("visible");
       }, 500);
       setTimeout(() => {
-        if (statsContainerRef.current)
-          statsContainerRef.current.classList.add("visible");
+        if (statsContainerRef.current) statsContainerRef.current.classList.add("visible");
       }, 600);
       statCardRefs.current.forEach((card, index) => {
         setTimeout(() => {
@@ -837,8 +692,7 @@ const Herosection = () => {
         }, 700 + index * 100);
       });
       setTimeout(() => {
-        if (featuresSectionRef.current)
-          featuresSectionRef.current.classList.add("visible");
+        if (featuresSectionRef.current) featuresSectionRef.current.classList.add("visible");
       }, 900);
       featureItemRefs.current.forEach((feature, index) => {
         setTimeout(() => {
@@ -849,6 +703,24 @@ const Herosection = () => {
         setTimeout(() => {
           if (section) section.classList.add("visible");
         }, 200 + index * 200);
+      });
+      // New split section animations
+      setTimeout(() => {
+        if (splitSectionRef.current) splitSectionRef.current.classList.add("visible");
+      }, 100);
+      setTimeout(() => {
+        if (leftPanelRef.current) leftPanelRef.current.classList.add("visible");
+      }, 200);
+      setTimeout(() => {
+        if (rightPanelRef.current) rightPanelRef.current.classList.add("visible");
+      }, 300);
+      setTimeout(() => {
+        if (cardGridRef.current) cardGridRef.current.classList.add("visible");
+      }, 400);
+      cardRefs.current.forEach((card, index) => {
+        setTimeout(() => {
+          if (card) card.classList.add("visible");
+        }, 500 + index * 100);
       });
     };
 
@@ -862,6 +734,8 @@ const Herosection = () => {
             setActiveSection("carousel");
           } else if (entry.target === heroSectionRef.current) {
             setActiveSection("more");
+          } else if (entry.target === splitSectionRef.current) {
+            setActiveSection("ip-solutions");
           } else {
             const index = sectionRefs.current.indexOf(entry.target);
             if (index !== -1) {
@@ -884,6 +758,9 @@ const Herosection = () => {
     featureItemRefs.current.forEach((feature) => {
       if (feature) observer.observe(feature);
     });
+    if (splitSectionRef.current) {
+      observer.observe(splitSectionRef.current);
+    }
 
     return () => {
       if (carouselRef.current) {
@@ -898,6 +775,9 @@ const Herosection = () => {
       featureItemRefs.current.forEach((feature) => {
         if (feature) observer.unobserve(feature);
       });
+      if (splitSectionRef.current) {
+        observer.unobserve(splitSectionRef.current);
+      }
     };
   }, []);
 
@@ -906,6 +786,8 @@ const Herosection = () => {
       carouselRef.current?.scrollIntoView({ behavior: "smooth" });
     } else if (target === "section4") {
       containerRef.current?.scrollIntoView({ behavior: "smooth" });
+    } else if (target === "ip-solutions") {
+      splitSectionRef.current?.scrollIntoView({ behavior: "smooth" });
     } else {
       const index = parseInt(target.replace("section", "")) - 1;
       sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
@@ -926,7 +808,7 @@ const Herosection = () => {
       "Industrial Design": "/design",
       Copyright: "/copyright",
       "Geographical Indication": "/geographical-indication",
-      "National Biodiversity Authority Approval": null, // No route provided; handle as needed
+      "National Biodiversity Authority Approval": null,
       // IP Lifecycle Management
       "IP Audit of the Company": "/ip-audit",
       "IP Policy and Process Setup": "/ip-policy",
@@ -938,13 +820,11 @@ const Herosection = () => {
       "Patent Due Diligence & Variability Analysis": "/patent-due-diligence",
       "Competitive Landscape & Industry Trends": "/competitive-landscape",
       // Strategy & Advisory (Startups)
-      "IP Strategy & Roadmap for Startups":
-        "/IP-Strategy-&-Roadmap-for-Startups",
+      "IP Strategy & Roadmap for Startups": "/IP-Strategy-&-Roadmap-for-Startups",
       "Cost-Effective IP Protection": "/Cost-Effective-IP-Protection",
       "IP Due Diligence for Investors": "/IP-Due-Diligence-for-Investors",
       "IP Licensing & Commercialization": "/IP-Licensing-&-Commercialization",
-      "Raising Awareness and Funding with IP":
-        "/Raising-Awareness-and-Funding-with-IP",
+      "Raising Awareness and Funding with IP": "/Raising-Awareness-and-Funding-with-IP",
       "Startup IP Portfolio Management": "/Startup-IP-Portfolio-Management",
       "IP Risk Management for Startups": "/IP-Risk-Management-for-Startups",
     };
@@ -954,7 +834,6 @@ const Herosection = () => {
       navigate(path);
     } else {
       console.warn(`No route defined for service: ${service}`);
-      // Optionally, navigate to a default services page or show an alert
     }
     closePopup();
   };
@@ -968,7 +847,6 @@ const Herosection = () => {
       alt: "IP Solutions Hero Image",
       reverse: false,
       link: "/IP-Strategy-Development",
-      // bgColor: '#AB6604',
     },
     {
       bgColor: "#0271B1",
@@ -988,14 +866,6 @@ const Herosection = () => {
       reverse: false,
       link: "/Custom-IP-Workshops-for-Teams",
     },
-    // {
-    //   bgColor: '#5050A0',
-    //   head: 'Strategic & Legal Advisory',
-    //   subHead: 'Navigate complex IP landscapes with expert guidance.',
-    //   image: Section4Image,
-    //   alt: 'Advisory Hero Image',
-    //   reverse: true
-    // }
   ];
 
   const navItems = [
@@ -1006,48 +876,37 @@ const Herosection = () => {
       ref: carouselRef,
     },
     {
-      id: "section4",
+      id: "ip-solutions",
       icon: <FaGavel />,
-      label: "Intellectual Property ",
-      ref: containerRef,
+      label: "Intellectual Property",
+      ref: splitSectionRef,
     },
     {
       id: "section1",
       icon: <FaLightbulb />,
       label: "STRATEGY",
-      ref: sectionRefs.current[1],
+      ref: sectionRefs.current[0],
     },
-
     {
       id: "section2",
       icon: <FaFlask />,
       label: "SCIENTIFIC",
-      ref: sectionRefs.current[2],
+      ref: sectionRefs.current[1],
     },
     {
       id: "section3",
       icon: <FaLaptop />,
       label: "Intellectual",
-      ref: sectionRefs.current[3],
+      ref: sectionRefs.current[2],
     },
-
-    // { id: 'more', icon: <FaHome />, label: 'More Info', ref: heroSectionRef },
   ];
 
-  // const statColors = [
-  //   { bgColor: "#4285F4", bgColorEnd: "#5E97F7", accentColor: "#4285F4" },
-  //   { bgColor: "#F5B7B1", bgColorEnd: "#F8CFC9", accentColor: "#F5B7B1" },
-  //   { bgColor: "#F4D03F", bgColorEnd: "#F7DC6F", accentColor: "#F4D03F" },
-  //   { bgColor: "#58D68D", bgColorEnd: "#82E0AB", accentColor: "#58D68D" },
-  // ];
-
   const backgroundPatterns = {
-    "IP Solutions": "url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1920&auto=format&fit=crop')", // Document/legal pattern
-    "IP Lifecycle Management": "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop')", // Business cycle/management
-    "Technology Transfer Solutions": "url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop')", // Technology transfer
-    "Intellectual Property Rights Solutions for Startups": "url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1920&auto=format&fit=crop')", // Startup/innovation
+    "IP Solutions": "url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1920&auto=format&fit=crop')",
+    "IP Lifecycle Management": "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop')",
+    "Technology Transfer Solutions": "url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop')",
+    "Intellectual Property Rights Solutions for Startups": "url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1920&auto=format&fit=crop')",
   };
-  
 
   const featureData = [
     {
@@ -1060,8 +919,7 @@ const Herosection = () => {
         "Geographical Indication",
         "National Biodiversity Authority Approval",
       ],
-      imageIdea:
-        "Icons or images representing patents, copyrights, or trademarks.",
+      imageIdea: "Icons or images representing patents, copyrights, or trademarks.",
     },
     {
       text: "IP Lifecycle Management",
@@ -1085,8 +943,7 @@ const Herosection = () => {
         "Patent Due Diligence & Variability Analysis",
         "Competitive Landscape & Industry Trends",
       ],
-      imageIdea:
-        "A bird mid-flight carrying a twig between two different trees.",
+      imageIdea: "A bird mid-flight carrying a twig between two different trees.",
     },
     {
       text: "Intellectual Property Rights Solutions for Startups",
@@ -1128,49 +985,44 @@ const Herosection = () => {
             <Tooltip>{item.label}</Tooltip>
           </NavItem>
         ))}
-      </NavBar> 
-      <Container ref={ containerRef} id="section4">
-        <HeroSection ref={heroSectionRef}>
-          <HeroContent ref={heroContentRef}>
-            <Heading ref={headingRef}>
-              Intellectual Property (IP) Solutions
-            </Heading>
-            {/* <SubText ref={subTextRef}>
-              Lifeintelect is a Bangalore-based technology and intellectual property consulting firm. We help protect your ideas and achieve your business goals by maximizing the synergy among Technology, Law, and Business.
-            </SubText> */}
-            <GetStartedButton
-              ref={buttonRef}
-              aria-label="Learn more about Lifeintelect services"
-            >
-              Learn More
-            </GetStartedButton>
-          </HeroContent>
-        </HeroSection>
+      </NavBar>
 
-        <FeaturesSection ref={featuresSectionRef}>
-          <FeatureGrid>
-            {featureData.map((feature, index) => (
-              <FeatureItem
-               bgImage={backgroundPatterns[feature.text]}
-                key={index}
-                ref={(el) => (featureItemRefs.current[index] = el)}
-                // bgColor={featureColors[index].bgColor}
-                index={index}
-                onClick={() => openPopup(feature)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) =>
-                  (e.key === "Enter" || e.key === " ") && openPopup(feature)
-                }
-                aria-label={`Open services for ${feature.text}`}
-              >
-                {/* <FeatureIcon>{feature.icon}</FeatureIcon> */}
-                <FeatureText>{feature.text}</FeatureText>
-              </FeatureItem>
-            ))}
-          </FeatureGrid>
-        </FeaturesSection>
-      </Container>
+      {/* New Split Section Implementation */}
+      <SplitSection ref={splitSectionRef} id="ip-solutions">
+        <LeftPanel ref={leftPanelRef}>
+          <IPHeading ref={headingRef} className="visible">
+            Intellectual Property (IP) Solutions
+          </IPHeading>
+          <IPSubText ref={subTextRef} className="visible">
+            Protect, manage, and maximize your intellectual assets with our expert solutions for innovators, businesses, and startups.
+          </IPSubText>
+          <IPCTAButton
+            ref={buttonRef}
+            className="visible"
+            onClick={() => navigate("/ip-solutions")}
+          >
+            Learn More
+          </IPCTAButton>
+        </LeftPanel>
+        <RightPanel ref={rightPanelRef}>
+  <CardGrid ref={cardGridRef} className="visible">
+    {cards.map((card, i) => (
+      <Card 
+        key={i}
+        ref={el => cardRefs.current[i] = el}
+        className="visible"
+        onClick={() => openPopup(featureData[i])}
+      >
+        <CardImage className="card-image" image={card.image} />
+        <CardContent>
+          <CardIcon>{card.icon}</CardIcon>
+          <CardTitle>{card.title}</CardTitle>
+        </CardContent>
+      </Card>
+    ))}
+  </CardGrid>
+</RightPanel>
+      </SplitSection>
 
       {sections.map((section, index) => (
         <Section
@@ -1182,7 +1034,7 @@ const Herosection = () => {
             <SectionContent textColor={section.textColor}>
               <Head
                 accentColor={section.accentColor}
-                center={window.innerWidth <= 768} // Center on mobile
+                center={window.innerWidth <= 768}
               >
                 {section.head}
               </Head>

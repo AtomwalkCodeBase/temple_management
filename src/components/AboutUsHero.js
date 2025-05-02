@@ -28,7 +28,7 @@ const ImageContainer = styled(motion.div)`
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background: #7673ec;
   }
 `;
 
@@ -84,7 +84,7 @@ const Subtitle = styled(motion.p)`
   font-size: 18px;
   font-weight: 400;
   line-height: 1.5;
-  color: #CCCCCC;
+  color: #ffffff;
   max-width: 600px;
   margin-bottom: 30px;
 `;

@@ -1,311 +1,266 @@
-import { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { Shield, Lightbulb, BookOpen, BarChart3, FileText, Globe } from "lucide-react";
-import { FaFileContract } from 'react-icons/fa';
-import { FlaskConical,PenTool } from 'lucide-react'; 
+import { motion } from "framer-motion";
+import Img1 from "../assets/img/s1.jpg";
+import Img2 from "../assets/img/s2.jpg";
+import Img3 from "../assets/img/s3.jpg";
+import Img4 from "../assets/img/Service4.jpg";
+import Img5 from "../assets/img/Service5.jpg";
+import Img6 from "../assets/img/Service6.png";
 
-const ServicesContainer = styled.section`
-  padding: 8rem 5%;
-  background: linear-gradient(135deg, #fcfcfd 0%, #f8f9fb 100%);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: radial-gradient(circle at 10% 20%, rgba(0, 71, 171, 0.03) 0%, transparent 40%),
-                      radial-gradient(circle at 90% 80%, rgba(3, 6, 17, 0.03) 0%, transparent 40%);
-    z-index: 0;
+const cards = [
+  {
+    image: Img6,
+    title: "Strategy & Advisory",
+    points: [
+      "IP Strategy Development",
+      "IP Litigation & Enforcement Support",
+      "Licensing & IP Agreements",
+      "Trade Secret Protection & Confidentiality",
+      "IP Exit Strategy & Monetization",
+      "Corporate IP Governance & Risk Mitigation",
+      "Patent & Trademark Portfolio Optimization",
+      "Government and Policy Advocacy"
+    ],
+  },
+  {
+    image: Img1,
+    title: "IP Lifecycle management",
+    points: [
+      "IP Audit of the Company",
+      "IP Policy and Process setup",
+      "IP Portfolio Management",
+      "IP valuation",
+      "Technology Transfer",
+      "Analysis and due diligence"
+    ],
+  },
+  {
+    image: Img3,
+    title: "IP education and training",
+    points: [
+      "Custom IP Workshops",
+      "IP Law & Policy Updates",
+      "IP Commercialization & Licensing Training",
+      "IP Dispute Resolution & Enforcement",
+      "Sector-Specific IP Training"
+    ],
+  },
+  {
+    image: Img5,
+    title: "IP solutions",
+    points: [
+      "Patent",
+      "Industrial design",
+      "Trademark",
+      "Copyright",
+      "Geographical indication",
+      "National biodiversity authority approval"
+    ],
+  },
+  {
+    image: Img4,
+    title: "IPR Solutions for Startups",
+    points: [
+      "IP Strategy & Roadmap",
+      "Cost-Effective IP Protection",
+      "IP Due Diligence for Investors",
+      "IP Licensing & Commercialization",
+      "Raising Awareness and Funding with IP",
+    ],
+  },
+  {
+    image: Img2,
+    title: "Scientific and Technology Solutions",
+    points: [
+      "Patent Valuations",
+      "Drug Discovery and Development",
+      "Patent Due Diligence & Variability Analysis",
+      "Assessment Of Clinical & Commercial Potential",
+      "Competitive Landscape & Industry Trends",
+      "Management Consulting",
+      "Market Research",
+      "Scientific Writing and Editing",
+      "Non-Patent Searches and Analysis"
+    ],
+  }
+];
+
+const overlayVariants = {
+  initial: { opacity: 0, y: 40 },
+  hover: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] } },
+};
+const titleVariants = {
+  initial: { y: 0 },
+  hover: { y: -20, transition: { duration: 0.4, ease: [0.23, 1, 0.32, 1] } },
+};
+const pointsVariants = {
+  initial: { opacity: 0, y: 20 },
+  hover: { opacity: 1, y: 0, transition: { staggerChildren: 0.06, delayChildren: 0.18 } },
+};
+const pointItemVariants = {
+  initial: { opacity: 0, y: 20 },
+  hover: { opacity: 1, y: 0, transition: { duration: 0.27 } },
+};
+
+const GridContainer = styled.section`
+  width: 100%;
+  max-width: 1250px;         
+  margin: 3rem auto;
+  margin-left: 200px;        
+  padding: 0 1rem;
+  @media (max-width: 1200px) {
+    margin-left: 0;
+    max-width: 100%;
   }
 `;
 
-const ContentWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-  max-width: 1400px;
-  margin: 0 auto;
-`;
-
-const SectionTitle = styled(motion.h2)`
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
+const Title = styled.h2`
   text-align: center;
-  background: linear-gradient(90deg, #0047AB 0%, #4169E1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.5px;
-  
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
+  font-size: 2.3rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: #0047ab;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
 `;
 
-const SectionSubtitle = styled(motion.p)`
-  font-size: 1.25rem;
-  font-weight: 400;
-  text-align: center;
-  color: #667085;
-  max-width: 700px;
-  margin: 0 auto 2rem;
-  
-  @media (max-width: 768px) {
-    font-size: 1.1rem;
-  }
-`;
-
-const Divider = styled(motion.div)`
-  height: 5px;
-  width: 100px;
-  background: linear-gradient(90deg, #0047AB 0%, #4169E1 60%, #FF4500 100%);
-  margin: 0 auto 2rem;
-  border-radius: 20px;
-`;
-
-const ServicesGrid = styled.div`
+const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
-  
-  @media (max-width: 576px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ServiceCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 2.5rem 2rem;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(234, 236, 240, 0.8);
-  position: relative;
+  width: 100%;
+  height: 600px;
+  min-height: 400px;
+  grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  border-radius: 0;
   overflow: hidden;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background:  linear-gradient(90deg, #0047AB 0%, #4169E1 60%, #FF4500 100%);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(6, 180px);
+    height: auto;
   }
-  
-  &:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 25px 50px rgba(0, 71, 171, 0.1);
-    
-    &::before {
-      transform: scaleX(1);
-    }
-    
-    ${props => props.$hoverAnimation && `
-      .icon-wrapper {
-        transform: translateY(-10px) scale(1.1);
-        background: linear-gradient(135deg, #cce5ff 0%, #e6f0ff 100%);
-      }
-    `}
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, 150px);
+    height: auto;
   }
 `;
 
-const IconWrapper = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #e6f0ff 0%, #f0f7ff 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.8rem;
-  transition: all 0.4s ease;
-  box-shadow: 0 10px 20px rgba(0, 71, 171, 0.05);
+const Card = styled(motion.div)`
   position: relative;
-  
-  &::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: rgba(0, 71, 171, 0.08);
-    bottom: -5px;
-    right: -5px;
-  }
+  background: ${({ $bgcolor }) => $bgcolor || "#0047ab"};
+  overflow: hidden;
+  cursor: pointer;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 0;
 `;
 
-const ServiceTitle = styled.h3`
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #0047AB;
-  position: relative;
-  display: inline-block;
-`;
-
-const ServiceDescription = styled.p`
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #4A5568;
-`;
-
-const FloatingShape = styled(motion.div)`
+const CardBg = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${({ src }) =>
+    src
+      ? `url(${src}) center/cover no-repeat`
+      : "linear-gradient(135deg,#0047ab 0%,#4169e1 100%)"};
   position: absolute;
-  background: linear-gradient(135deg, rgba(65, 105, 225, 0.1) 0%, rgba(0, 71, 171, 0.05) 100%);
-  border-radius: 50%;
-  z-index: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
 `;
 
-export default function ServicesSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+const CardOverlay = styled(motion.div)`
+  position: absolute;
+  left: 0; right: 0; bottom: 0; top: 0;
+  background: linear-gradient(0deg, rgba(13, 13, 14, 0.92) 60%, rgba(0,71,171,0.15) 100%);
+  color: #fff;
+  padding: 2rem 1.2rem 1.2rem 1.2rem;
+  z-index: 3;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+`;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.3,
-      },
-    },
-  };
+const CardTitle = styled(motion.h3)`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.04em;
+  color: #fff;
+  z-index: 3;
+  position: absolute;
+  left: 1.2rem;
+  bottom: 1.2rem;
+  pointer-events: none;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+`;
 
-  const titleVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 0.8,
-        ease: [0.25, 0.1, 0.25, 1]
-      },
-    },
-  };
+const CardTitleHover = styled(motion.h3)`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.7rem 0;
+  letter-spacing: 0.04em;
+  color: #fff;
+  z-index: 4;
+  position: relative;
+  pointer-events: none;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+`;
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 60 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 1,
-        ease: [0.25, 0.1, 0.25, 1] 
-      },
-    },
-  };
+const PointsList = styled(motion.ul)`
+  list-style: disc inside;
+  margin: 0;
+  padding-left: 1rem;
+  color: #f3f3f3;
+  font-size: 1.01rem;
+  font-weight: 400;
+`;
 
-  const services = [
-    {
-      icon: <Shield size={36} color="#0047AB" />,
-      title: "IP solutions",
-      points: ["Patent", "Industrial design", "Trademark", "Copyright","Geographical indication", "National biodiversity authority approval"]
-    },
-    {
-      icon: <FaFileContract size={36} color="#0047AB" />,
-      title: "IP Lifecycle management",
-      points: ["IP Audit of the Company", "IP Policy and Process setup", "IP Portfolio Management", "IP valuation", "Technology Transfer", "Analysis and due diligence "]
-    },
-    {
-      icon: <FlaskConical size={36} color="#0047AB" />, // Science + Tech focus
-      title: "Scientific and Technology Solutions",
-      points: ["Patent Valuations", "Drug Discovery and Development", "Patent Due Diligence & Variability Analysis", "Assessment Of Clinical & Commercial Potential", "Competitive Landscape & Industry Trends", "Management Consulting", "Market Research", "Scientific Writing and Editing", "Non-Patent Searches and Analysis"]    },
-    {
-      icon: <PenTool size={36} color="#0047AB" />, // Emphasizes writing/editing
-      title: "Strategy & Advisory",
-      points: ["IP Strategy Development", "IP Litigation & Enforcement Support", "Licensing & IP Agreements", "Trade Secret Protection & Confidentiality", "IP Exit Strategy & Monetization", "Corporate IP Governance & Risk Mitigation", "Patent & Trademark Portfolio Optimization", "Government and Policy Advocacy"]    },
-    {
-      icon: <FileText size={36} color="#0047AB" />,
-      title: "IPR Solutions for Startups",
-      points: ["IP Strategy & Roadmap for Startups", "Cost-Effective IP Protection", "IP Due Diligence for Investors", "IP Licensing & Commercialization", "Raising Awareness and Funding with IP", "Startup IP Portfolio Management", "IP Risk Management for Startups"]    },
-    {
-      icon: <Globe size={36} color="#0047AB" />,
-      title: "IP education and training",
-      points: ["Custom IP Workshops for Teams", "IP Fundamentals for Startups and Entrepreneurs", "IP Law & Policy Updates", "IP Management Best Practices", "IP Strategy for Product Development", "IP Commercialization & Licensing Training", "IP Dispute Resolution & Enforcement", "Sector-Specific IP Training"]    },
-  ];
+const getGridPosition = idx => {
+  switch (idx) {
+    case 0: return { gridColumn: "1 / 2", gridRow: "1 / 3" }; // left big
+    case 1: return { gridColumn: "2 / 3", gridRow: "1 / 2" }; // center top left
+    case 2: return { gridColumn: "3 / 4", gridRow: "1 / 2" }; // center top right
+    case 3: return { gridColumn: "2 / 3", gridRow: "2 / 3" }; // center bottom left
+    case 4: return { gridColumn: "3 / 4", gridRow: "2 / 3" }; // center bottom right
+    case 5: return { gridColumn: "4 / 5", gridRow: "1 / 3" }; // right big
+    default: return {};
+  }
+};
 
+export default function InfosysLikeServicesGrid() {
   return (
-    <ServicesContainer id="services" ref={ref}>
-      <FloatingShape 
-        style={{
-          width: 200,
-          height: 200,
-          top: "10%",
-          right: "5%",
-          opacity: 0.5,
-          y,
-        }}
-      />
-      <FloatingShape 
-        style={{
-          width: 300,
-          height: 300,
-          bottom: "15%",
-          left: "2%",
-          opacity: 0.3,
-          y: useTransform(scrollYProgress, [0, 1], [-30, 30]),
-        }}
-      />
-      
-      <ContentWrapper>
-        <motion.div 
-          style={{ opacity }}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={containerVariants}
-        >
-          <SectionTitle variants={titleVariants}>
-            Our Services
-          </SectionTitle>
-          <Divider
-            initial={{ width: 0 }}
-            animate={isInView ? { width: 100 } : { width: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          />
-          <SectionSubtitle variants={titleVariants}>
-            Comprehensive solutions to protect and maximize the value of your intellectual property
-          </SectionSubtitle>
-          <ServicesGrid
-            as={motion.div}
-            variants={containerVariants}
+    <GridContainer>
+      <Title>Our Services</Title>
+      <CardGrid>
+        {cards.map((card, idx) => (
+          <Card
+            key={idx}
+            style={getGridPosition(idx)}
+            initial="initial"
+            whileHover="hover"
           >
-            {services.map((service, index) => (
-              <ServiceCard 
-                key={index} 
-                variants={itemVariants} 
-                whileHover={{ scale: 1.03 }}
-                $hoverAnimation={true}
-              >
-                <IconWrapper className="icon-wrapper">{service.icon}</IconWrapper>
-                <ServiceTitle>{service.title}</ServiceTitle>
-                <ServiceDescription>{service.points.map((point,index) => (
-                  <ul>
-                    <li key={index} style={{ marginBottom: "0.5rem",marginLeft: "1rem", color: "#4A5568" }}>
-                      {point}
-                    </li>
-                  </ul>
-                ))}</ServiceDescription>
-              </ServiceCard>
-            ))}
-          </ServicesGrid>
-        </motion.div>
-      </ContentWrapper>
-    </ServicesContainer>
+            <CardBg src={card.image} />
+            <CardTitle variants={titleVariants}>{card.title}</CardTitle>
+            <CardOverlay variants={overlayVariants}>
+              <CardTitleHover variants={titleVariants}>{card.title}</CardTitleHover>
+              <PointsList variants={pointsVariants}>
+                {card.points.map((point, i) => (
+                  <motion.li
+                    key={i}
+                    variants={pointItemVariants}
+                    style={{ marginBottom: "0.3rem" }}
+                  >
+                    {point}
+                  </motion.li>
+                ))}
+              </PointsList>
+            </CardOverlay>
+          </Card>
+        ))}
+      </CardGrid>
+    </GridContainer>
   );
 }

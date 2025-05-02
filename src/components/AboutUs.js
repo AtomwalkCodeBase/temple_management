@@ -861,7 +861,7 @@ const AboutUs = () => {
   ];
   
   const missionContent = [
-    "To deliver insightful, creative, and actionable technological, IP & business solutions tailored to each client's unique challenges.",
+    "To deliver insightful, creative, and actionable technological,” IP & business solutions” tailored to each client’s unique challenges.",
     "To foster innovation by integrating deep industry knowledge, human-centric approach, and sustainable practices.",
     "Committed to protect IP rights of our clients and build IP portfolios that drive investment and growth"
   ];
@@ -869,32 +869,32 @@ const AboutUs = () => {
   const valuesContent = [
     { 
       title: "HONESTY & INTEGRITY", 
-      description: "Strong work ethics guiding all our actions.", 
+      description: "with strong work ethics.", 
       icon: <ShieldCheck size={28} /> 
     },
     { 
       title: "INNOVATION & EXCELLENCE", 
-      description: "Continuously improving our services.", 
+      description: "in our services.", 
       icon: <Rocket size={28} /> 
     },
     { 
-      title: "ADAPTABILITY", 
-      description: "Positive attitude to constantly improve ourselves and strive to be the best.", 
+      title: "ADAPTABILITY and POSITIVE ATTITUDE", 
+      description: " to constantly improve ourselves and strive to be the best.", 
       icon: <RefreshCw size={28} /> 
     },
     { 
-      title: "TRUSTWORTHY", 
-      description: "Trustworthy and Transparency in all our transactions.", 
+      title: "TRUSTWORTHY and TRANSPARENCY", 
+      description: " in all our transactions.", 
       icon: <Glasses size={28} /> 
     },
     { 
       title: "SUSTAINABILITY", 
-      description: "Engage, analyse and creatively protect sustainable technologies.", 
+      description: "Engage, analyse and creatively protect sustainable technologies and valuable IP", 
       icon: <Leaf size={28} /> 
     },
     { 
       title: "FUTURE-FOCUSED", 
-      description: "Bringing insight and impact on future technologies.", 
+      description: "Bring insight and impact on future of technologies", 
       icon: <TrendingUp size={28} /> 
     }
   ];
@@ -902,7 +902,7 @@ const AboutUs = () => {
   const whyChooseUs = [
     { 
       title: 'Client-Centric Approach', 
-      description: 'We listen, understand, and tailor solutions to fit your unique needs.', 
+      description: ' We listen, understand, and tailor solutions to fit your unique needs.', 
       icon: <User size={24} />  
     },
     { 
@@ -939,14 +939,14 @@ const AboutUs = () => {
     {
       title: 'Specialized Focus on Life Sciences and Technology Innovation', 
       points: [
-        'Unlike general IP and business consultancies, LifeIntelect has specialized expertise in life sciences, biotechnology, healthcare, and tech-driven industries.',
+        'Unlike general IP and business consultancies, LifeIntelect has a specialized expertise in life sciences, biotechnology, healthcare, and tech-driven industries.',
         'This sharp focus allows for tailored, technically sound solutions that generalist firms often miss.'
       ]
     },
     {
       title: 'End-to-End Innovation Support', 
       points: [
-        'LifeIntelect doesn\'t stop at IP registration. We support the full innovation lifecycle — from idea validation and protection to commercialization, funding readiness, and market strategy.',
+        'LifeIntelect doesn’t stop at IP registration. We support the full innovation lifecycle — from idea validation and protection to commercialization, funding readiness, and market strategy.',
         'Most competitors either specialize only in IP or business growth, but rarely both.'
       ]
     },
@@ -983,7 +983,7 @@ const AboutUs = () => {
         'We operate with an international perspective on IP and business landscapes, while staying deeply rooted in local regulatory and business environments.'
       ]
     }
-  ];
+];
   
   return (
     <>
@@ -1016,6 +1016,24 @@ const AboutUs = () => {
             technology commercialization, business consulting, and regulatory support. With a team of seasoned IP attorneys, 
             business strategists, scientists, and legal experts, we bring a multidisciplinary approach to protecting and growing your ideas.
           </motion.p>
+          <motion.p
+            style={{ 
+              fontSize: '18px', 
+              lineHeight: '1.8', 
+              textAlign: 'center', 
+              maxWidth: '800px', 
+              margin: '0 auto 50px',
+              color: '#64748b'
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            At LifeIntelect Consultancy, we believe in turning ideas into powerful assets. 
+            Specializing in Intellectual Property (IP) consulting, business strategy, and innovation management, 
+            we partner with businesses, startups, research institutions, and individuals to protect and maximize the value of their intellectual assets.
+            Our mission is simple: To empower innovation and secure your competitive advantage in an ever-evolving world.
+          </motion.p>
       <DecorativeCircle />
       <DecorativeCircle />
       <MissionVisionContainer>
@@ -1031,7 +1049,7 @@ const AboutUs = () => {
           </MissionVisionHeader>
           <MissionVisionContent>
             <p>
-              To be the most trusted partner for innovation-driven businesses, providing world-class IP and business consulting solutions that foster growth and sustainability.
+            To be the most trusted partner for innovation-driven businesses, providing world-class IP and business consulting solutions that foster growth and sustainability.
             </p>
           </MissionVisionContent>
         </MissionVisionCard>
@@ -1108,7 +1126,7 @@ const AboutUs = () => {
       <Container>
         <WhyChooseUsContainer>
           <SectionIntro ref={whyChooseUsRef}>
-            <SectionTitle>Why Choose LifeIntelect?</SectionTitle>
+            <SectionTitle>Why Choose Us?</SectionTitle>
             <Divider
               initial={{ width: 0 }}
               animate={whyChooseUsInView ? { width: 80 } : { width: 0 }}
@@ -1162,16 +1180,16 @@ const AboutUs = () => {
 
     <ModernSection ref={uspRef}>
       <Container>
-        <ElegantSectionTitle>What Sets Us Apart</ElegantSectionTitle>
+        <ElegantSectionTitle>LifeIntelect Consultancy Pvt. Ltd. — What Sets Us Apart</ElegantSectionTitle>
         <Divider
           initial={{ width: 0 }}
           animate={uspInView ? { width: 80 } : { width: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         />
         <SectionSubtitle>
-        In a crowded market of consulting firms, LifeIntelect Consultancy Pvt. Ltd. stands
-out through a powerful combination of deep expertise, customized strategies,
-and a future-forward approach. Here&#39;s how our USP compares to others:
+        In a crowded market of consulting firms, LifeIntelect Consultancy Pvt. Ltd. stands out through 
+        a powerful combination of deep expertise, customized strategies, and a future-forward approach. 
+        Here's how our USP compares to others:
             </SectionSubtitle>
         <USPContainer>
           {usps.map((usp, index) => (

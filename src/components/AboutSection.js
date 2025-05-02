@@ -233,19 +233,25 @@ export default function AboutSection() {
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              LifeIntelect is a Bangalore based technology and intellectual property consulting firm. We help you protect
-              your ideas and achieve your business goals with our in-depth understanding of the industry, relevant market,
-              technological requirements and business implications of your innovation.
+            LifeIntelect Consultancy Pvt. Ltd. is a trusted technolegal firm at the forefront of Intellectual Property (IP) rights, 
+            technology commercialization, strategic business consulting, and regulatory compliance.
             </AboutText>
             <AboutText
               initial={{ opacity: 0, x: -40 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              We provide services maximizing the synergy among Technology, IP Law and Business which gives us the
-              advantage to add value to every customer we work with. By systematically analyzing problems and providing
-              solutions we enable generation of valuable intellectual property, be it an invention, a design, an
-              algorithm, a brand or a creative work.
+            At LifeIntelect, we don’t just protect ideas — we turn them into powerful business assets. 
+            Our multidisciplinary team  works closely with startups, enterprises, research institutions, and individual 
+            innovators to unlock the full potential of their intellectual capital.
+            </AboutText>
+            <AboutText
+              initial={{ opacity: 0, x: -40 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+            With deep domain expertise and a client-first approach, we guide you through every stage of the innovation
+            lifecycle — from idea to market — ensuring your competitive edge is protected in a fast-paced, ever-evolving landscape.
             </AboutText>
           </TextContent>
           

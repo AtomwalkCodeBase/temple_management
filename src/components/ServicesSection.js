@@ -107,7 +107,6 @@ const GridContainer = styled.section`
   width: 100%;
   max-width: 1250px;         
   margin: 3rem auto;
-  margin-left: 200px;        
   padding: 0 1rem;
   @media (max-width: 1200px) {
     margin-left: 0;

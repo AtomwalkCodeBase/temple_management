@@ -108,10 +108,6 @@ const GridContainer = styled.section`
   max-width: 1250px;         
   margin: 3rem auto;
   padding: 0 1rem;
-  @media (max-width: 1200px) {
-    margin-left: 0;
-    max-width: 100%;
-  }
 `;
 
 const Title = styled.h2`
@@ -134,14 +130,24 @@ const CardGrid = styled.div`
   gap: 0;
   border-radius: 0;
   overflow: hidden;
-  @media (max-width: 1000px) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(6, 180px);
-    height: auto;
+
+  @media (max-width: 1100px) {
+    height: 450px;
+    min-height: 350px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
+
+  @media (max-width: 900px) {
+    height: auto;
+    min-height: 0;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 220px);
+  }
+
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, 150px);
+    grid-template-rows: repeat(6, 180px);
     height: auto;
   }
 `;
@@ -154,6 +160,15 @@ const Card = styled(motion.div)`
   min-width: 0;
   min-height: 0;
   border-radius: 0;
+  transition: box-shadow 0.3s;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+  @media (max-width: 900px) {
+    min-height: 0;
+  }
+  @media (max-width: 600px) {
+    min-height: 0;
+  }
 `;
 
 const CardBg = styled.div`
@@ -180,10 +195,14 @@ const CardOverlay = styled(motion.div)`
   flex-direction: column;
   justify-content: flex-end;
   pointer-events: none;
+
+  @media (max-width: 600px) {
+    padding: 1.2rem 0.7rem 0.7rem 0.7rem;
+  }
 `;
 
 const CardTitle = styled(motion.h3)`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   margin: 0;
   letter-spacing: 0.04em;
@@ -194,10 +213,16 @@ const CardTitle = styled(motion.h3)`
   bottom: 1.2rem;
   pointer-events: none;
   text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    left: 0.7rem;
+    bottom: 0.7rem;
+  }
 `;
 
 const CardTitleHover = styled(motion.h3)`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   margin: 0 0 0.7rem 0;
   letter-spacing: 0.04em;
@@ -206,6 +231,11 @@ const CardTitleHover = styled(motion.h3)`
   position: relative;
   pointer-events: none;
   text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const PointsList = styled(motion.ul)`
@@ -213,23 +243,52 @@ const PointsList = styled(motion.ul)`
   margin: 0;
   padding-left: 1rem;
   color: #f3f3f3;
-  font-size: 1.01rem;
+  font-size: 0.98rem;
   font-weight: 400;
+  @media (max-width: 600px) {
+    font-size: 0.92rem;
+    padding-left: 0.7rem;
+  }
 `;
 
 const getGridPosition = idx => {
-  switch (idx) {
-    case 0: return { gridColumn: "1 / 2", gridRow: "1 / 3" }; // left big
-    case 1: return { gridColumn: "2 / 3", gridRow: "1 / 2" }; // center top left
-    case 2: return { gridColumn: "3 / 4", gridRow: "1 / 2" }; // center top right
-    case 3: return { gridColumn: "2 / 3", gridRow: "2 / 3" }; // center bottom left
-    case 4: return { gridColumn: "3 / 4", gridRow: "2 / 3" }; // center bottom right
-    case 5: return { gridColumn: "4 / 5", gridRow: "1 / 3" }; // right big
-    default: return {};
+  // Desktop layout
+  if (window.innerWidth > 900) {
+    switch (idx) {
+      case 0: return { gridColumn: "1 / 2", gridRow: "1 / 3" }; // left big
+      case 1: return { gridColumn: "2 / 3", gridRow: "1 / 2" }; // center top left
+      case 2: return { gridColumn: "3 / 4", gridRow: "1 / 2" }; // center top right
+      case 3: return { gridColumn: "2 / 3", gridRow: "2 / 3" }; // center bottom left
+      case 4: return { gridColumn: "3 / 4", gridRow: "2 / 3" }; // center bottom right
+      case 5: return { gridColumn: "4 / 5", gridRow: "1 / 3" }; // right big
+      default: return {};
+    }
   }
+  // Tablet: 2 columns, 3 rows
+  if (window.innerWidth > 600) {
+    switch (idx) {
+      case 0: return { gridColumn: "1 / 2", gridRow: "1 / 2" };
+      case 1: return { gridColumn: "2 / 3", gridRow: "1 / 2" };
+      case 2: return { gridColumn: "1 / 2", gridRow: "2 / 3" };
+      case 3: return { gridColumn: "2 / 3", gridRow: "2 / 3" };
+      case 4: return { gridColumn: "1 / 2", gridRow: "3 / 4" };
+      case 5: return { gridColumn: "2 / 3", gridRow: "3 / 4" };
+      default: return {};
+    }
+  }
+  // Mobile: 1 column, 6 rows
+  return { gridColumn: "1 / 2", gridRow: `${idx + 1} / ${idx + 2}` };
 };
 
 export default function InfosysLikeServicesGrid() {
+  // To force re-render on resize for grid placement
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <GridContainer>
       <Title>Our Services</Title>

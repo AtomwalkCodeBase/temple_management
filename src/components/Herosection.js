@@ -309,12 +309,14 @@ const SplitSection = styled.section`
   width: 100%;
   min-height: 480px;
   display: flex;
-  background: linear-gradient(90deg, #98D8EF 55%, #98D8EF 45%);
+  background: #98D8EF; /* Single skyblue color */
+  padding: 50px;
+
   @media (max-width: 900px) {
     flex-direction: column;
-    background: linear-gradient(180deg, #8E2D8D 55%, #FFB200 45%);
+    background: #98D8EF; /* Maintain same color on mobile */
+    padding: 30px 20px;
   }
-  padding:50px;
 `;
 
 const LeftPanel = styled.div`
@@ -325,6 +327,7 @@ const LeftPanel = styled.div`
   flex-direction: column;
   justify-content: center;
   background: transparent;
+
   @media (max-width: 900px) {
     padding: 48px 6vw 24px 6vw;
     align-items: center;
@@ -405,6 +408,7 @@ const RightPanel = styled.div`
   justify-content: center;
   background: transparent;
   padding: 48px 4vw 48px 0;
+
   @media (max-width: 900px) {
     padding: 0 0 48px 0;
     width: 100%;
@@ -989,40 +993,40 @@ const Herosection = () => {
 
       {/* New Split Section Implementation */}
       <SplitSection ref={splitSectionRef} id="ip-solutions">
-        <LeftPanel ref={leftPanelRef}>
-          <IPHeading ref={headingRef} className="visible">
-            Intellectual Property (IP) Solutions
-          </IPHeading>
-          <IPSubText ref={subTextRef} className="visible">
-            Protect, manage, and maximize your intellectual assets with our expert solutions for innovators, businesses, and startups.
-          </IPSubText>
-          <IPCTAButton
-            ref={buttonRef}
-            className="visible"
-            onClick={() => navigate("/ip-solutions")}
-          >
-            Learn More
-          </IPCTAButton>
-        </LeftPanel>
-        <RightPanel ref={rightPanelRef}>
-  <CardGrid ref={cardGridRef} className="visible">
-    {cards.map((card, i) => (
-      <Card 
-        key={i}
-        ref={el => cardRefs.current[i] = el}
-        className="visible"
-        onClick={() => openPopup(featureData[i])}
-      >
-        <CardImage className="card-image" image={card.image} />
-        <CardContent>
-          <CardIcon>{card.icon}</CardIcon>
-          <CardTitle>{card.title}</CardTitle>
-        </CardContent>
-      </Card>
-    ))}
-  </CardGrid>
-</RightPanel>
-      </SplitSection>
+  <LeftPanel ref={leftPanelRef}>
+    <IPHeading ref={headingRef} className="visible">
+      Intellectual Property (IP) Solutions
+    </IPHeading>
+    <IPSubText ref={subTextRef} className="visible">
+      Protect, manage, and maximize your intellectual assets with our expert solutions for innovators, businesses, and startups.
+    </IPSubText>
+    <IPCTAButton
+      ref={buttonRef}
+      className="visible"
+      onClick={() => navigate("/ip-solutions")}
+    >
+      Learn More
+    </IPCTAButton>
+  </LeftPanel>
+  <RightPanel ref={rightPanelRef}>
+    <CardGrid ref={cardGridRef} className="visible">
+      {cards.map((card, i) => (
+        <Card 
+          key={i}
+          ref={el => cardRefs.current[i] = el}
+          className="visible"
+          onClick={() => openPopup(featureData[i])}
+        >
+          <CardImage className="card-image" image={card.image} />
+          <CardContent>
+            <CardIcon>{card.icon}</CardIcon>
+            <CardTitle>{card.title}</CardTitle>
+          </CardContent>
+        </Card>
+      ))}
+    </CardGrid>
+  </RightPanel>
+</SplitSection>
 
       {sections.map((section, index) => (
         <Section

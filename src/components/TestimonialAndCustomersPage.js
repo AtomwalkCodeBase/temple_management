@@ -402,7 +402,7 @@ const TestimonialSlider = styled.div`
   margin: 0 auto;
   
   @media (max-width: 768px) {
-    height: 450px;
+    height: 500px;
   }
 `;
 
@@ -530,6 +530,13 @@ const TestimonialContent = styled.p`
   position: relative;
   font-style: italic;
   margin: 0;
+  overflow-y: auto; // Added scroll for overflow
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Edge */
+  @media (max-width: 768px) {
+    font-size: 1rem; // Slightly smaller text on mobile
+  }
   
   &:before, &:after {
     font-size: 1.5rem;

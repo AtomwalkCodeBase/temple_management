@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { motion } from "framer-motion"
-import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
+import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react"
 import companyimage from "../assets/img/company_logo.png"
 const FooterContainer = styled.footer`
   background: linear-gradient(135deg, #0a2342 0%, #0047AB 100%);
@@ -134,8 +134,7 @@ export default function Footer2() {
             <LogoText>LifeIntelect</LogoText>
           </Logo>
           <FooterDescription>
-            LifeIntelect is a Bangalore based technology and intellectual property consulting firm helping businesses
-            protect their innovations and achieve their strategic goals.
+            LifeIntelect Consultancy Pvt. Ltd. is a trusted technolegal firm at the forefront of Intellectual Property (IP) rights, technology commercialization, strategic business consulting, and regulatory compliance.
           </FooterDescription>
           <SocialLinks>
             <SocialLink href="https://www.facebook.com/Lifeintelect" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
@@ -150,6 +149,9 @@ export default function Footer2() {
             <SocialLink href="http://instagram.com/lifeintelect_consultancy/" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Instagram size={18} />
             </SocialLink>
+            <SocialLink href="https://youtube.com/@lifeintelect_13?feature=shared" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Youtube size={18} />
+            </SocialLink>
           </SocialLinks>
         </FooterColumn>
 
@@ -161,6 +163,7 @@ export default function Footer2() {
           <FooterLink href="/about#team">Our Team</FooterLink>
           <FooterLink href="/blog">Blog</FooterLink>
           <FooterLink href="/contact">Contact</FooterLink>
+          <FooterLink href="/faq">FAQ</FooterLink>
         </FooterColumn>
 
         <FooterColumn>
@@ -180,8 +183,8 @@ export default function Footer2() {
               <MapPin size={18} color="#FF4500" />
             </ContactIcon>
             <ContactText>Gopalan Millennium Tower, 1st Floor, No 133,
-ITPL Main Road, Kundalahalli, Brookefield,
-Bengaluru, Karnataka 560037</ContactText>
+              ITPL Main Road, Kundalahalli, Brookefield,
+              Bengaluru, Karnataka 560037</ContactText>
           </ContactItem>
           <ContactItem>
             <ContactIcon>
@@ -200,7 +203,7 @@ Bengaluru, Karnataka 560037</ContactText>
 
       <Divider />
       <Copyright>© {new Date().getFullYear()} LifeIntelect. All rights reserved.</Copyright>
-      <Copyright style={{marginTop:"10px", cursor:"pointer"}} onClick={()=>window.location.href="/terms"}>Privacy Policy | Terms & Conditions | Disclaimer | Made with ♥ LifeIntelect</Copyright>
+      <Copyright style={{ marginTop: "10px", cursor: "pointer" }} onClick={() => window.location.href = "/terms"}>Privacy Policy | Terms & Conditions | Disclaimer | Made with ♥ LifeIntelect</Copyright>
     </FooterContainer>
   )
 }

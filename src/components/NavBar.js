@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import companylogo from '../assets/img/company_logo.png';
+import { link } from 'framer-motion/client';
 
 // Animations
 const fadeIn = keyframes`
@@ -325,8 +326,8 @@ const ActionButton = styled.button`
   }
 `;
 
-// New improved mega menu styles
-const MegaDropdown = styled.div`
+// Services Mega Dropdown (full width)
+const ServicesMegaDropdown = styled.div`
   position: absolute;
   top: 100%;
   left: 0;
@@ -334,18 +335,17 @@ const MegaDropdown = styled.div`
   background: ${({ isScrolled }) => isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(248, 249, 250, 0.95)'};
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   border-top: 3px solid #3498db;
-  padding: 30px 30px 40px; /* Increased bottom padding for scrollable content */
+  padding: 30px 30px 40px;
   z-index: 1000;
   display: flex;
   justify-content: center;
   backdrop-filter: blur(10px);
   animation: ${fadeIn} 0.3s ease forwards;
   transform-origin: top center;
-  max-height: calc(100vh - 100px); /* Limit height to viewport minus navbar */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
   
-  /* Custom Scrollbar for WebKit browsers */
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -366,13 +366,66 @@ const MegaDropdown = styled.div`
     opacity: 0.9;
   }
   
-  /* Custom Scrollbar for Firefox */
   scrollbar-width: thin;
   scrollbar-color: #784BA0 rgba(0, 0, 0, 0.05);
 
   @media (max-width: 1199px) {
     padding: 20px 20px 30px;
-    max-height: calc(100vh - 80px); /* Adjust for smaller navbar height */
+    max-height: calc(100vh - 80px);
+  }
+`;
+
+// Resources Mega Dropdown (auto width)
+const ResourcesMegaDropdown = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: ${({ isScrolled }) => isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(248, 249, 250, 0.95)'};
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-top: 3px solid #3498db;
+  padding: 30px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  animation: ${fadeIn} 0.3s ease forwards;
+  transform-origin: top center;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 12px;
+  width: auto;
+  min-width: 400px;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #FF3CAC, #784BA0, #2B86C5);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #FF3CAC, #784BA0, #2B86C5);
+    opacity: 0.9;
+  }
+  
+  scrollbar-width: thin;
+  scrollbar-color: #784BA0 rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 1199px) {
+    padding: 20px;
+    max-height: calc(100vh - 80px);
+  }
+
+  @media (max-width: 767px) {
+    min-width: 300px;
   }
 `;
 
@@ -555,20 +608,71 @@ const DropdownIcon = styled.span`
   transform: ${props => props.isOpen ? 'rotate(180deg)' : 'rotate(0)'};
 `;
 
+const ResourcesHeader = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+`;
+
+const ResourcesList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+const ResourceItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+  }
+`;
+
+const ResourceIcon = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: ${props => props.color || '#e1e1e1'};
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+const ResourceName = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+  color: #34495e;
+`;
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeItem, setActiveItem] = useState('home');
   const [showServicesDropdown, setShowServicesDropdown] = useState(false);
+  const [showResourcesDropdown, setShowResourcesDropdown] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const dropdownRef = useRef(null);
+  const resourcesDropdownRef = useRef(null);
   const navRef = useRef(null);
 
   // Check if mobile on mount and resize
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 992); // Adjust breakpoint as needed
+      setIsMobile(window.innerWidth < 992);
     };
     
     checkIfMobile();
@@ -580,7 +684,8 @@ const NavBar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     if (!isOpen) {
-      setShowServicesDropdown(false); // Close dropdown when opening menu
+      setShowServicesDropdown(false);
+      setShowResourcesDropdown(false);
     }
     document.body.style.overflow = !isOpen ? 'hidden' : 'auto';
   };
@@ -592,6 +697,7 @@ const NavBar = () => {
       document.body.style.overflow = 'auto';
     }
     setShowServicesDropdown(false);
+    setShowResourcesDropdown(false);
   };
 
   // Handle scroll effects
@@ -615,8 +721,13 @@ const NavBar = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && 
+          !event.target.closest('[data-menu-item="services"]')) {
         setShowServicesDropdown(false);
+      }
+      if (resourcesDropdownRef.current && !resourcesDropdownRef.current.contains(event.target) && 
+          !event.target.closest('[data-menu-item="resources"]')) {
+        setShowResourcesDropdown(false);
       }
     };
 
@@ -648,7 +759,6 @@ const NavBar = () => {
         { id: 'ip-valuation', name: 'IP Valuation' },
         { id: 'technology-transfer', name: 'Technology Transfer' },
         { id: 'analysis-diligence', name: 'Analysis and Due Diligence' },
-        // { id: 'ip-education', name: 'IP Education and Training' }
       ]
     },
     {
@@ -667,7 +777,6 @@ const NavBar = () => {
         { id: 'non-patent-searches', name: 'Non-Patent Searches and Analysis' }
       ]
     },
-    // Additional services can be added here
     {
       id: 'Strategic',
       title: 'Strategic & Legal Advisory',
@@ -712,25 +821,60 @@ const NavBar = () => {
     }
   ];
 
+  const resourcesData = [
+    { 
+      id: 'blog', 
+      name: 'BLOGS', 
+      icon: '✍️', // Pencil writing (better for blogs)
+      color: '#4e73df'
+    },
+    { 
+      id: 'presentations', 
+      name: 'PRESENTATIONS', 
+      icon: '📊', // Chart increasing (represents slides/presentations)
+      color: '#1cc88a'
+    },
+    { 
+      id: 'faq', 
+      name: 'FREQUENTLY ASKED QUESTIONS (FAQs)', 
+      icon: '❓', // Question mark (most appropriate for FAQs)
+      color: '#36b9cc',
+    },
+    { 
+      id: 'links', 
+      name: 'LINKS TO ASSOCIATED WEBSITES', 
+      icon: '🔗', // Link symbol (perfect for website links)
+      color: '#f6c23e'
+    }
+];
   const menuItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'services', label: 'Services' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'resources', label: 'Resources' }
   ];
 
   const navigateTo = (path) => {
     window.location.href = `/${path}`;
     setShowServicesDropdown(false);
+    setShowResourcesDropdown(false);
     closeMenu();
   };
 
   const toggleServicesDropdown = () => {
     setShowServicesDropdown(!showServicesDropdown);
+    setShowResourcesDropdown(false);
   };
-const navigatetocontact=() => {
+
+  const toggleResourcesDropdown = () => {
+    setShowResourcesDropdown(!showResourcesDropdown);
+    setShowServicesDropdown(false);
+  };
+
+  const navigatetocontact = () => {
     window.location.href = '/contact';
-  }
+  };
+
   return (
     <>
       <ProgressBar scrollProgress={scrollProgress} />
@@ -753,19 +897,35 @@ const navigatetocontact=() => {
               <MenuItem 
                 isScrolled={isScrolled}
                 index={index}
+                data-menu-item={item.id}
                 onClick={() => {
-                  if (item.id !== 'services') {
+                  if (item.id === 'services') {
+                    toggleServicesDropdown();
+                  } else if (item.id === 'resources') {
+                    toggleResourcesDropdown();
+                  } else {
                     window.location.href = `/${item.id === 'home' ? '' : item.id}`;
                     closeMenu();
-                  } else {
-                    toggleServicesDropdown();
                   }
                 }}
-                onMouseEnter={() => !isMobile && item.id === 'services' && setShowServicesDropdown(true)}
+                onMouseEnter={() => {
+                  if (!isMobile) {
+                    if (item.id === 'services') {
+                      setShowServicesDropdown(true);
+                      setShowResourcesDropdown(false);
+                    } else if (item.id === 'resources') {
+                      setShowResourcesDropdown(true);
+                      setShowServicesDropdown(false);
+                    }
+                  }
+                }}
               >
                 {item.label}
-                {item.id === 'services' && (
-                  <DropdownIcon isOpen={showServicesDropdown}>▼</DropdownIcon>
+                {(item.id === 'services' || item.id === 'resources') && (
+                  <DropdownIcon isOpen={
+                    (item.id === 'services' && showServicesDropdown) || 
+                    (item.id === 'resources' && showResourcesDropdown)
+                  }>▼</DropdownIcon>
                 )}
               </MenuItem>
 
@@ -789,14 +949,33 @@ const navigatetocontact=() => {
                   ))}
                 </MobileDropdown>
               )}
+
+              {/* Mobile Resources Dropdown */}
+              {isMobile && item.id === 'resources' && (
+                <MobileDropdown isOpen={showResourcesDropdown}>
+                  <MobileServiceCategoryContainer>
+                    <MobileServiceTitle>Explore Our Products</MobileServiceTitle>
+                    <MobileServiceList>
+                      {resourcesData.map((resource) => (
+                        <MobileServiceItem 
+                          key={resource.id}
+                          onClick={() => navigateTo(resource.id)}
+                        >
+                          {resource.name}
+                        </MobileServiceItem>
+                      ))}
+                    </MobileServiceList>
+                  </MobileServiceCategoryContainer>
+                </MobileDropdown>
+              )}
             </MenuItemWrapper>
           ))}
           <ActionButton onClick={navigatetocontact}>Get Started</ActionButton>
         </Menu>
 
-        {/* Desktop Mega Dropdown Menu */}
+        {/* Desktop Mega Dropdown Menu for Services (full width) */}
         {!isMobile && showServicesDropdown && (
-          <MegaDropdown 
+          <ServicesMegaDropdown 
             ref={dropdownRef}
             isScrolled={isScrolled}
             onMouseLeave={() => setShowServicesDropdown(false)}
@@ -819,7 +998,31 @@ const navigatetocontact=() => {
                 ))}
               </DropdownGrid>
             </DropdownContainer>
-          </MegaDropdown>
+          </ServicesMegaDropdown>
+        )}
+
+        {/* Desktop Mega Dropdown Menu for Resources (auto width) */}
+        {!isMobile && showResourcesDropdown && (
+          <ResourcesMegaDropdown 
+            ref={resourcesDropdownRef}
+            isScrolled={isScrolled}
+            onMouseLeave={() => setShowResourcesDropdown(false)}
+          >
+              <ResourcesHeader>Explore Our Products</ResourcesHeader>
+              <ResourcesList>
+                {resourcesData.map((resource) => (
+                  <ResourceItem 
+                    key={resource.id} 
+                    onClick={() => navigateTo(resource.id)}
+                  >
+                    <ResourceIcon color={resource.color}>
+                      {resource.icon}
+                    </ResourceIcon>
+                    <ResourceName>{resource.name}</ResourceName>
+                  </ResourceItem>
+                ))}
+              </ResourcesList>
+          </ResourcesMegaDropdown>
         )}
       </Nav>
     </>

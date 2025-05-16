@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import SpaceImage_2 from "../assets/img/aboutPage.jpg";
+import SpaceImage_2 from "../assets/img/aboutus_image.png";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
@@ -15,7 +15,7 @@ const ImageContainer = styled(motion.div)`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -2;
+  z-index: 0;
   overflow: hidden;
   background-image: url(${SpaceImage_2});
   background-size: cover;
@@ -28,7 +28,8 @@ const ImageContainer = styled(motion.div)`
     left: 0;
     width: 100%;
     height: 100%;
-    background: #7673ec;
+    background: rgba(0, 0, 0, 0.6); /* <-- Add this line for blackish transparent overlay */
+    /* You can adjust the 0.8 value for more/less darkness */
   }
 `;
 
@@ -114,7 +115,7 @@ const ParticlesContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: -1;
+  z-index: 0;
 `;
 
 const Tagline = styled(motion.div)`
@@ -182,25 +183,25 @@ const AboutUsHero = () => {
 
   return (
     <HeroSection>
-        <ImageContainer
+      <ImageContainer
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}
-        style={{ backgroundImage: `url(${SpaceImage_2})` }}
+        style={{ backgroundImage: <img src={SpaceImage_2} alt="Test" style={{ width: "100px" }} /> }}
       />
-      
-      <ParticlesContainer ref={particlesRef} />
-      
+
+      {/* <ParticlesContainer ref={particlesRef} /> */}
+
       <Content initial="hidden" animate="visible" variants={{
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeInOut" } }
       }}>
         <Title variants={fadeInUp}>
-          {/* <PlanetText>PLANET</PlanetText> */}
+          <PlanetText>PLANET</PlanetText>
           <EarthText>About <span style={{ color: "#00c6ff" }}>Us</span></EarthText>
         </Title>
         <Subtitle variants={fadeInUp}>
-        LifeIntelect is a distinguished technology and IP consulting firm founded by IIScians, having a track record of 99.9% patent grant success for our clients.
+          LifeIntelect is a distinguished technology and IP consulting firm founded by IIScians, having a track record of 99.9% patent grant success for our clients.
         </Subtitle>
         {/* <Button 
           whileHover={{ scale: 1.05 }}
@@ -209,15 +210,15 @@ const AboutUsHero = () => {
           Learn More
         </Button> */}
 
-<Tagline
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <TaglineItem>Empowering Ideas</TaglineItem>
-            <TaglineItem>Protecting Innovation</TaglineItem>
-            <TaglineItem>Transforming Futures</TaglineItem>
-          </Tagline>
+        <Tagline
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <TaglineItem>Empowering Ideas</TaglineItem>
+          <TaglineItem>Protecting Innovation</TaglineItem>
+          <TaglineItem>Transforming Futures</TaglineItem>
+        </Tagline>
       </Content>
     </HeroSection>
   );

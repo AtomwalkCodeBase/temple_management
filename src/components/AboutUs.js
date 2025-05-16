@@ -1208,7 +1208,7 @@ const AboutUs = () => {
 
     <TeamSection id="team" />
 
-    <ModernSection>
+    {/* <ModernSection>
       <Container>
         <MinimalTeamCTA>
           <CTAContent data-aos="zoom-in">
@@ -1222,7 +1222,7 @@ const AboutUs = () => {
           </CTAContent>
         </MinimalTeamCTA>
       </Container>
-    </ModernSection>
+    </ModernSection> */}
   </>
   );
 };

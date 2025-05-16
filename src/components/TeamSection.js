@@ -2,7 +2,7 @@ import { useRef, useState } from "react"
 import styled from "styled-components"
 import { motion, useInView } from "framer-motion"
 import shantha from "../assets/img/shantha.png"
-import Lipika from "../assets/img/Lipika.jpg"
+import Lipika from "../assets/img/ lipika2.png"
 import syamanand from "../assets/img/syamanand.png"
 import Jagannath from "../assets/img/mr.png"
 import img_3 from "../assets/img/img_3.jpg"
@@ -55,7 +55,7 @@ const MemberImage = styled.div`
 
   img {
     width: 100%;
-    height: 100%;
+    // height: 90%;
     object-fit: cover;
     transition: transform 0.5s ease;
   }
@@ -138,7 +138,7 @@ export default function TeamSection() {
       image: Bharat,
     },
     {
-      name: "T. Bhavani",
+      name: "Dr. T. Bhavani",
       role: "Technical and IP Specialist",
       bio: "Dr. T. Bhavani is a Technical and IP Specialist at LifeIntelect Consultancy Pvt. Ltd., with extensive expertise in chemistry and intellectual property. She holds a Ph.D. in Chemistry from IICT-Hyderabad, a PGDIPRL from NLSIU-Bangalore, and an M.Sc. in Analytical Chemistry. A qualified Indian Patent Agent (IN/PA-1295), Dr. Bhavani has over 5 research publications in leading journals. Since becoming part of LifeIntelect in 2017, she has been instrumental in assisting clients with navigating the complexities of intellectual property management.",
       image: img_5,
@@ -196,7 +196,7 @@ export default function TeamSection() {
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
-        LifeIntelect is proficient in knowledge processes and is managed by a seasoned team of PhDs, experts and Patent agents. Our professionals help you in establishing strategic research and business processes.
+        LifeIntelect excels in knowledge processes, guided by a skilled team of PhDs, experts, and patent agents. Our diverse professionals—patent attorneys, innovation strategists, and IP specialists—bring decades of expertise to your challenges. Meet the team dedicated to protecting and maximizing your innovations.
       </TeamDescription>
 
       <div>

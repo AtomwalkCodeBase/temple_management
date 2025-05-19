@@ -810,6 +810,8 @@ const Herosection = () => {
   const handleServiceClick = (service) => {
     const serviceToPathMap = {
       // IP Solutions
+      "Patent":"/Patent",
+      "Trademark":"/Trademark",
       "Industrial Design": "/design",
       Copyright: "/copyright",
       "Geographical Indication": "/geographical-indication",
@@ -818,7 +820,8 @@ const Herosection = () => {
       "IP Audit of the Company": "/ip-audit",
       "IP Policy and Process Setup": "/ip-policy",
       "IP Portfolio Management": "/ip-portfolio",
-      "IP Valuation": "/ip-valuation",
+      "IP Landscape": "/ip-landscape",
+      "IP Research and Strategy Development":"",
       // Scientific and Technology Solutions
       "Technology Transfer": "/technology-transfer",
       "Patent Valuation": "/patent-valuations",
@@ -919,8 +922,10 @@ const Herosection = () => {
       icon: "🔒",
       punchline: "Protecting ideas, preserving value, powering progress.",
       services: [
+        "Patent",
         "Industrial Design",
         "Copyright",
+        "Trademark",
         "Geographical Indication",
         "National Biodiversity Authority Approval",
       ],
@@ -934,7 +939,8 @@ const Herosection = () => {
         "IP Audit of the Company",
         "IP Policy and Process Setup",
         "IP Portfolio Management",
-        "IP Valuation",
+        "IP Landscape",
+        "IP Research and Strategy Development"
       ],
       imageIdea: "Flowchart or lifecycle diagram of IP management.",
     },
@@ -946,7 +952,8 @@ const Herosection = () => {
         "Technology Transfer",
         "Patent Valuation",
         "Patent Due Diligence & Variability Analysis",
-        "Competitive Landscape & Industry Trends",
+        "Post-Transfer Support",
+        "Patent Landscaping Report"
       ],
       imageIdea: "A bird mid-flight carrying a twig between two different trees.",
     },
@@ -956,7 +963,6 @@ const Herosection = () => {
       punchline: "Navigate complex IP landscapes with expert guidance.",
       services: [
         "IP Strategy & Roadmap for Startups",
-        "Cost-Effective IP Protection",
         "IP Due Diligence for Investors",
         "IP Licensing & Commercialization",
         "Raising Awareness and Funding with IP",

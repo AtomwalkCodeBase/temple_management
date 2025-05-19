@@ -342,6 +342,7 @@ const ContactUsForm = () => {
             <Label htmlFor="phone">Phone number</Label>
             <PhoneInputWrapper>
               <CountrySelect id="country" name="country">
+              <option value="IN">IN</option>
                 <option value="US">US</option>
                 <option value="UK">UK</option>
                 <option value="AU">AU</option>
@@ -351,7 +352,7 @@ const ContactUsForm = () => {
                 type="tel" 
                 id="phone" 
                 name="phone" 
-                placeholder="+1 (555) 000-0000" 
+                placeholder="+91 5550000-000" 
                 value={formData.phone}
                 onChange={handleChange}
               />

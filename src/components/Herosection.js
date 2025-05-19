@@ -317,6 +317,7 @@ const SplitSection = styled.section`
     background: #98D8EF; /* Maintain same color on mobile */
     padding: 30px 20px;
   }
+  padding:50px;
 `;
 
 const LeftPanel = styled.div`
@@ -507,12 +508,12 @@ const cards = [
   },
   {
     image: "https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop",
-    title: "Technology Transfer Solutions",
+    title: "Tech Transfer and IP Commercialization",
     icon: <FaLaptopCode />
   },
   {
     image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1920&auto=format&fit=crop",
-    title: "IP Rights Solutions for Startups",
+    title: "IP Solutions for Startups",
     icon: <FaLightbulb />
   }
 ];
@@ -863,7 +864,7 @@ const Herosection = () => {
     },
     {
       bgColor: "#8E2D8D",
-      head: "Intellectual Property Rights Education & Training ",
+      head: "IP EDUCATION & TRAINING",
       subHead: "Building IP Expertise: Training for Protection & Growth",
       image: Section3Image,
       alt: "Tech Solutions Hero Image",
@@ -993,40 +994,40 @@ const Herosection = () => {
 
       {/* New Split Section Implementation */}
       <SplitSection ref={splitSectionRef} id="ip-solutions">
-  <LeftPanel ref={leftPanelRef}>
-    <IPHeading ref={headingRef} className="visible">
-      Intellectual Property (IP) Solutions
-    </IPHeading>
-    <IPSubText ref={subTextRef} className="visible">
-      Protect, manage, and maximize your intellectual assets with our expert solutions for innovators, businesses, and startups.
-    </IPSubText>
-    <IPCTAButton
-      ref={buttonRef}
-      className="visible"
-      onClick={() => navigate("/ip-solutions")}
-    >
-      Learn More
-    </IPCTAButton>
-  </LeftPanel>
-  <RightPanel ref={rightPanelRef}>
-    <CardGrid ref={cardGridRef} className="visible">
-      {cards.map((card, i) => (
-        <Card 
-          key={i}
-          ref={el => cardRefs.current[i] = el}
-          className="visible"
-          onClick={() => openPopup(featureData[i])}
-        >
-          <CardImage className="card-image" image={card.image} />
-          <CardContent>
-            <CardIcon>{card.icon}</CardIcon>
-            <CardTitle>{card.title}</CardTitle>
-          </CardContent>
-        </Card>
-      ))}
-    </CardGrid>
-  </RightPanel>
-</SplitSection>
+        <LeftPanel ref={leftPanelRef}>
+          <IPHeading ref={headingRef} className="visible">
+            INTELLECTUAL PROPERTY (IP) SOLUTIONS
+          </IPHeading>
+          <IPSubText ref={subTextRef} className="visible">
+            Protect, manage, and maximize your intellectual assets with our expert solutions for innovators, businesses, and startups.
+          </IPSubText>
+          <IPCTAButton
+            ref={buttonRef}
+            className="visible"
+            onClick={() => navigate("/patent")}
+          >
+            Learn More
+          </IPCTAButton>
+        </LeftPanel>
+        <RightPanel ref={rightPanelRef}>
+  <CardGrid ref={cardGridRef} className="visible">
+    {cards.map((card, i) => (
+      <Card 
+        key={i}
+        ref={el => cardRefs.current[i] = el}
+        className="visible"
+        onClick={() => openPopup(featureData[i])}
+      >
+        <CardImage className="card-image" image={card.image} />
+        <CardContent>
+          <CardIcon>{card.icon}</CardIcon>
+          <CardTitle>{card.title}</CardTitle>
+        </CardContent>
+      </Card>
+    ))}
+  </CardGrid>
+</RightPanel>
+      </SplitSection>
 
       {sections.map((section, index) => (
         <Section

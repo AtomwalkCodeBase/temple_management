@@ -164,7 +164,7 @@ export default function TeamSection() {
     {
       name: "Dr. Syam Anand",
       role: "Technical Specialist and US Patent Agent",
-      bio: "is a Technical Specialist and US Patent Agent with over 20 years of expertise in molecular biology, biochemistry, and intellectual property. He specializes in patent drafting, prosecution, and strategy, focusing on life sciences and biotechnology innovations. Dr. Anand provides strategic guidance on patent portfolio development, helping clients secure and protect their intellectual property. His deep scientific knowledge and understanding of IP law enable him to effectively navigate complex patent issues.",
+      bio: "Dr. Syam Anand is a Technical Specialist and US Patent Agent with over 20 years of expertise in molecular biology, biochemistry, and intellectual property. He specializes in patent drafting, prosecution, and strategy, focusing on life sciences and biotechnology innovations. Dr. Anand provides strategic guidance on patent portfolio development, helping clients secure and protect their intellectual property. His deep scientific knowledge and understanding of IP law enable him to effectively navigate complex patent issues.",
       image: syamanand,
     },
     {

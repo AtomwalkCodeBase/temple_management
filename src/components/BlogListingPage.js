@@ -1,6 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from './Blogs/firebase';
+
+// Sample useBlogs hook with real-time listener
+const useBlogs = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+
+    // Set up real-time listener for blogs collection
+    const unsubscribe = onSnapshot(
+      collection(db, 'life_blogs'),
+      (snapshot) => {
+        const blogData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          // Ensure publishedAt is handled if not a Firestore Timestamp
+          publishedAt: doc.data().publishedAt
+            ? { seconds: doc.data().publishedAt.seconds || Math.floor(new Date(doc.data().publishedAt).getTime() / 1000) }
+            : null,
+          // Provide defaults for missing fields
+          title: doc.data().title || 'Untitled',
+          category: doc.data().category || 'Uncategorized',
+          coverImage: doc.data().coverImage || doc.data().image || 'https://via.placeholder.com/350x200', // Fallback image
+          excerpt: doc.data().excerpt || ''
+        }));
+        console.log('Fetched blogs:', blogData); // Debug fetched data
+        setBlogs(blogData);
+        setLoading(false);
+      },
+      (err) => {
+        console.error('Error fetching blogs:', err);
+        setError(err.message || 'Failed to fetch blogs');
+        setLoading(false);
+      }
+    );
+
+    // Cleanup listener on unmount
+    return () => unsubscribe();
+  }, []);
+
+  return { blogs, loading, error };
+};
 
 // Animations
 const fadeIn = keyframes`
@@ -19,7 +65,7 @@ const PageContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-margin-top: 150px;
+  margin-top: 150px;
 `;
 
 const Header = styled.header`
@@ -106,6 +152,7 @@ const BlogCard = styled.div`
   animation-fill-mode: both;
   animation-delay: ${props => props.index * 0.1 + 0.5}s;
   opacity: 0;
+  cursor: pointer;
   
   &:hover {
     transform: translateY(-5px);
@@ -132,7 +179,6 @@ const BlogImage = styled.img`
 const BlogContent = styled.div`
   padding: 1.5rem;
 `;
-
 const BlogCategory = styled.span`
   display: inline-block;
   background: #e6f0ff;
@@ -143,8 +189,7 @@ const BlogCategory = styled.span`
   font-weight: 500;
   margin-bottom: 1rem;
 `;
-
-const BlogTitle = styled.h2`
+const PostTitle = styled.h2`
   font-size: 1.4rem;
   color: #1a365d;
   margin-bottom: 0.8rem;
@@ -157,7 +202,7 @@ const BlogExcerpt = styled.p`
   margin-bottom: 1rem;
 `;
 
-const BlogMeta = styled.div`
+const PostFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,27 +210,12 @@ const BlogMeta = styled.div`
   font-size: 0.9rem;
 `;
 
-const ReadMoreButton = styled(Link)`
-  display: inline-block;
-  color: #1a365d;
-  font-weight: 600;
-  text-decoration: none;
-  position: relative;
-  
-  &:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -2px;
-    left: 0;
-    background-color: #1a365d;
-    transition: width 0.3s ease;
-  }
-  
-  &:hover:after {
-    width: 100%;
-  }
+const Author = styled.span`
+  color: #718096;
+`;
+
+const StyledDate = styled.span`
+  color: #718096;
 `;
 
 const EmptyState = styled.div`
@@ -219,112 +249,94 @@ const ResetButton = styled.button`
   }
 `;
 
-// Mock blog data (replace with actual API calls in production)
-const sampleBlogs = [
-  {
-    id: 1,
-    title: "Artificial Intelligence in Education: Transforming Learning Experiences",
-    excerpt: "Explore how AI is revolutionizing educational methods and creating personalized learning journeys for students of all ages.",
-    category: "Education",
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    date: "Mar 10, 2025",
-    readTime: "5 min read"
-  },
-  {
-    id: 2,
-    title: "The Future of Digital Healthcare Solutions",
-    excerpt: "How technology is improving healthcare accessibility, diagnosis accuracy, and treatment options worldwide.",
-    category: "Healthcare",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    date: "Mar 8, 2025",
-    readTime: "8 min read"
-  },
-  {
-    id: 3,
-    title: "Smart Cities: Building Sustainable Urban Environments",
-    excerpt: "Discover how IoT and data analytics are helping create more efficient, sustainable, and livable cities.",
-    category: "Technology",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    date: "Mar 5, 2025",
-    readTime: "6 min read"
-  },
-  {
-    id: 4,
-    title: "Cybersecurity Best Practices for Remote Work",
-    excerpt: "Essential security measures to protect your data and systems in the era of distributed workforces.",
-    category: "Security",
-    image: "https://images.unsplash.com/photo-1563163528458-35a13fd1f05b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    date: "Mar 1, 2025",
-    readTime: "4 min read"
-  },
-  {
-    id: 5,
-    title: "Blockchain Applications Beyond Cryptocurrency",
-    excerpt: "Exploring innovative uses of blockchain technology in supply chain, healthcare, and government services.",
-    category: "Technology",
-    image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    date: "Feb 25, 2025",
-    readTime: "7 min read"
-  },
-  {
-    id: 6,
-    title: "Mental Health in the Digital Age",
-    excerpt: "How technology can both impact and improve mental wellbeing in our increasingly connected world.",
-    category: "Healthcare",
-    image: "https://images.unsplash.com/photo-1508766206392-8bd5cf550d1c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    date: "Feb 20, 2025",
-    readTime: "6 min read"
-  }
-];
+const LoadingText = styled.div`
+  text-align: center;
+  font-size: 1.2rem;
+  color: #1a365d;
+  padding: 3rem;
+`;
+
+const ErrorText = styled.div`
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ff4d4d;
+  padding: 3rem;
+`;
 
 const BlogListingPage = () => {
-  const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const { blogs, loading, error } = useBlogs();
+
+  // Log blogs for debugging
+  console.log('Blogs:', blogs);
+
   // Categories derived from blog data
-  const categories = ['All', ...new Set(sampleBlogs.map(blog => blog.category))];
-  
-  // Initialize blogs from sample data (replace with API call)
-  useEffect(() => {
-    setBlogs(sampleBlogs);
-    setFilteredBlogs(sampleBlogs);
-  }, []);
-  
+  const categories = ['All', ...new Set(blogs.map(blog => blog.category || 'Uncategorized'))];
+
   // Filter blogs based on category and search term
   useEffect(() => {
     let results = blogs;
-    
+
     if (activeCategory !== 'All') {
-      results = results.filter(blog => blog.category === activeCategory);
+      results = results.filter(blog => (blog.category || 'Uncategorized') === activeCategory);
     }
-    
+
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       results = results.filter(blog => 
-        blog.title.toLowerCase().includes(term) || 
-        blog.excerpt.toLowerCase().includes(term) ||
-        blog.category.toLowerCase().includes(term)
+        (blog.title && typeof blog.title === 'string' && blog.title.toLowerCase().includes(term)) || 
+        (blog.excerpt && typeof blog.excerpt === 'string' && blog.excerpt.toLowerCase().includes(term)) ||
+        (blog.category && typeof blog.category === 'string' && blog.category.toLowerCase().includes(term))
       );
     }
-    
+
     setFilteredBlogs(results);
+    console.log('Filtered Blogs:', results); // Debug filtered results
   }, [activeCategory, searchTerm, blogs]);
-  
+
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
   };
-  
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-  
+
   const resetFilters = () => {
     setActiveCategory('All');
     setSearchTerm('');
   };
-  
+
+  if (loading) {
+    return (
+      <PageContainer>
+        <Header>
+          <Title>LifeIntelect Blog</Title>
+          <Subtitle>
+            Discover insights, innovations, and inspiration in technology, healthcare, education, and more.
+          </Subtitle>
+        </Header>
+        <LoadingText>Loading blogs...</LoadingText>
+      </PageContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageContainer>
+        <Header>
+          <Title>LifeIntelect Blog</Title>
+          <Subtitle>
+            Discover insights, innovations, and inspiration in technology, healthcare, education, and more.
+          </Subtitle>
+        </Header>
+        <ErrorText>Error: {error}</ErrorText>
+      </PageContainer>
+    );
+  }
+
   return (
     <PageContainer>
       <Header>
@@ -357,18 +369,29 @@ const BlogListingPage = () => {
       {filteredBlogs.length > 0 ? (
         <BlogGrid>
           {filteredBlogs.map((blog, index) => (
-            <BlogCard key={blog.id} index={index}>
+            <BlogCard 
+              key={blog.id} 
+              index={index}
+              onClick={() => {
+                window.location.href = `/blog/${blog.id}`;
+              }}
+            >
               <BlogImageContainer>
-                <BlogImage src={blog.image} alt={blog.title} />
+                <BlogImage 
+                  src={blog.coverImage || blog.image || 'https://via.placeholder.com/350x200'} 
+                  alt={blog.title || 'Blog post'} 
+                />
               </BlogImageContainer>
               <BlogContent>
                 <BlogCategory>{blog.category}</BlogCategory>
-                <BlogTitle>{blog.title}</BlogTitle>
-                <BlogExcerpt>{blog.excerpt}</BlogExcerpt>
-                <BlogMeta>
-                  <span>{blog.date} • {blog.readTime}</span>
-                  <ReadMoreButton to={`/blog/${blog.id}`}>Read More</ReadMoreButton>
-                </BlogMeta>
+                <PostTitle>{blog.title || 'Untitled'}</PostTitle>
+                <BlogExcerpt>{blog.tagline}</BlogExcerpt>
+                <PostFooter>
+                  <Author>By LifeIntelect team</Author>
+                  <StyledDate>
+                    {blog.date ? blog.date : 'No date'}
+                  </StyledDate>
+                </PostFooter>
               </BlogContent>
             </BlogCard>
           ))}

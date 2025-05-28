@@ -18,6 +18,9 @@ import IprSolutionsStartups from './data/IprSolutionsStartupsContent';
 import IpEducationTraining from './data/IpEducationTrainingContent';
 import TermsOfUse from './components/TermsOfUse';
 import CommonFaq from './../src/components/CommonFaq';
+import BlogForm from './components/Blogs/BlogForm';
+import BlogPosts from './components/BlogPosts';
+import BlogDetail from './components/Blogs/BlogDetails';
 
 // Theme configuration
 const themes = {
@@ -121,6 +124,9 @@ const mainRoutes = [
   { path: '/careers', component: CareersPage, title: 'Careers' },
   { path: '/terms', component: TermsOfUse, title: 'Careers' },
   { path: '/faq', component: CommonFaq, title: 'Faq' },
+  { path: "/blog/:id" , component: BlogDetail, title: 'AddBlogForm' },
+  { path: '/blog/addBlog', component: BlogForm, title: 'AddBlogForm' },
+  { path: "/blog/edit/:id?" , component: BlogForm, title: 'EditBlogForm' },
 ];
 
 const patentRoutes = [

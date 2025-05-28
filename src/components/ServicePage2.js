@@ -19,6 +19,8 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
     );
   }
 
+  console.log("Rendering ServicePage2 for:", subService);
+
   const pageTitle = ` ${subService.title}`;
   const pageSubtitle = `Protecting Your Intellectual Property with Expert ${subService.title} Solutions`;
   const ctaHeading = `Ready to ${subService.title.split(" ")[0]} Your Intellectual Property?`;
@@ -35,14 +37,25 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
       
       <ServicesContainer>
         <ServiceCard id={subServiceId}>
+
+          {subService.subTitle && subService.description && (
+            <div style={{marginLeft: "20px"}}>
+          <SectionSubtitle >{subService.subTitle} </SectionSubtitle>
+           <SectionText style={{marginLeft: "10px"}}>{subService.description}</SectionText>
+           </div>
+          )}
+
+
           <ServiceHeader theme={theme}>
             <ServiceName>{subService.title}</ServiceName>
+
           </ServiceHeader>
           
           <ServiceContent>
             {/* Render main description */}
-            {subService.description && (
+            {subService.description && subService.subTitle && (
               <Section>
+                <SectionText>{subService.subTitle}</SectionText>
                 <SectionText>{subService.description}</SectionText>
                 <SectionText>{subService.description1}</SectionText>
                 <SectionText>{subService.description2}</SectionText>
@@ -243,6 +256,13 @@ const SectionText = styled.p`
   color: #4a5568;
   font-size: 1rem;
   line-height: 1.7;
+`;
+
+const SectionSubtitle = styled.p`
+  font-size: 1.5rem;
+  margin:  20px 0 20px 10px;
+  font-weight: 600;
+  color: #1a202c;
 `;
 
 const ServiceList = styled.ul`

@@ -198,231 +198,138 @@ const subServiceContent = {
 	//   }
 	// }
 	iprSolutionsStartups:{
-		title: "IPR Solutions for Startups",
-		description:
-		  "At LifeIntelect, we understand the unique challenges faced by startups in protecting, managing, and leveraging their intellectual property. Our IPR Solutions for Startups are specifically crafted to support early-stage companies in building robust IP foundations, attracting investors, and scaling sustainably. From ideation to exit, we serve as your strategic IP partner every step of the way.",
+		title: "IP SOLUTIONS FOR STARTUPS",
+		subtitle:"Build Smart. Protect Early. Scale Confidently.",
+		description:"Startups operate in fast-moving, high-risk environments where intellectual property can be a game-changer—or a blind spot. LifeIntelect delivers tailored IP strategies for early-stage ventures, helping founders protect what they build, attract investors, and unlock long-term value. From idea to exit, every stage is supported with insight, structure, and strategic foresight.",
 		service_1: {
-		  title: "IP Strategy & Roadmap for Startups",
-		  description:
-			"For startups, an effective IP strategy is key to gaining a competitive edge and long-term success. We help founders create a customized IP roadmap that aligns with their business model, product development cycle, and funding goals. This includes identifying protectable innovations, prioritizing filings, setting timelines, and ensuring alignment with commercial milestones—giving startups a structured path to secure and grow their IP assets.",
-		//   process: [
-		// 	{
-		// 	  title: "Business Model Analysis",
-		// 	  description:
-		// 		"Understanding your business model, product cycle, and funding objectives.",
-		// 	},
-		// 	{
-		// 	  title: "Innovation Identification",
-		// 	  description:
-		// 		"Pinpointing protectable innovations eligible for IP protection.",
-		// 	},
-		// 	{
-		// 	  title: "Filing Prioritization",
-		// 	  description:
-		// 		"Prioritizing IP filings based on market goals and commercial milestones.",
-		// 	},
-		// 	{
-		// 	  title: "Timeline Setting",
-		// 	  description:
-		// 		"Creating timelines for IP protection aligned with development cycles.",
-		// 	},
-		// 	{
-		// 	  title: "Commercial Alignment",
-		// 	  description:
-		// 		"Ensuring IP strategy supports business growth and investor appeal.",
-		// 	},
-		//   ],
-		//   closing:
-		// 	"LifeIntelect’s IP Strategy & Roadmap service builds a strong IP foundation for your startup. Ready to align your IP with your business goals? Let's get started!",
+		  title: "IP Strategy & Roadmap",
+		  subtitle:"Start Right. Protect Smart.",
+		  description:"An effective IP roadmap lays the foundation for differentiation, defensibility, and future growth. For startups, timing and alignment with business goals are everything.",
+		 processTitle: "Core Elements of a Smart Startup IP Plan:",
+		  process: [
+			{
+			  description:"Structured roadmap tied to product development and funding stages",
+			},
+			{
+			  description:"Identification and prioritization of protectable innovations",
+			},
+			{
+			  description:"Timeline and jurisdiction planning for filings",
+			},
+			{
+			  description:"Strategic alignment with go-to-market and commercialization goals",
+			},
+			
+		  ],
+		  description:"A proactive IP plan sets the stage for scaling with confidence.",
 		},
 		service_2: {
-		  title: "Cost-Effective IP Protection",
-		  description:
-			"We understand that startups operate within limited budgets. LifeIntelect offers tailored solutions to help protect your intellectual property cost-effectively. Our team advises on strategic filing in critical markets, phased protection, provisional applications, and leveraging government subsidies or startup incentives. We ensure that budget constraints don’t compromise the quality or strength of your IP protection.",
-		//   process: [
-		// 	{
-		// 	  title: "Budget Assessment",
-		// 	  description:
-		// 		"Evaluating your budget to tailor cost-effective IP solutions.",
-		// 	},
-		// 	{
-		// 	  title: "Strategic Filing",
-		// 	  description:
-		// 		"Advising on filing in critical markets to maximize protection.",
-		// 	},
-		// 	{
-		// 	  title: "Phased Protection",
-		// 	  description:
-		// 		"Implementing provisional applications and phased filings to save costs.",
-		// 	},
-		// 	{
-		// 	  title: "Incentive Utilization",
-		// 	  description:
-		// 		"Leveraging government subsidies and startup incentives for IP protection.",
-		// 	},
-		//   ],
-		//   closing:
-		// 	"LifeIntelect’s Cost-Effective IP Protection service safeguards your IP without breaking the bank. Ready to protect your startup’s IP affordably? Let's get started!",
+		  title: "IP Due Diligence for Investors",
+		  subtitle:"Build Investor Trust. Validate Your Value.",
+		  description:"IP due diligence is a make-or-break moment in funding rounds. Clarity on ownership, scope, and enforceability can drive investment decisions—and accelerate deal flow.",
+		  processTitle:"Investor-Ready Insights:",
+		  process: [
+			{
+			  description:"Portfolio review for strength, scope, and legal standing",
+			},
+			{
+			  description:"Ownership verification and assignment checks",
+			},
+			{
+			  description:"Identification of potential red flags and compliance issues",
+			},
+			{
+			  description:"Clear, structured due diligence reports for presentations and negotiations",
+			},
+		  ],
+		  description:"Well-documented IP earns credibility—and capital.",
 		},
 		service_3: {
-		  title: "IP Due Diligence for Investors",
-		  description:
-			"IP is a key consideration for investors during funding rounds. We perform IP due diligence to assess the strength, ownership, scope, and risk of your IP portfolio. Our reports provide a clear understanding of your intangible assets, helping build investor confidence and facilitating smoother negotiations during seed, Series A, or later-stage investments.",
-		//   subsections: [
-		// 	{
-		// 	  heading: "Our Due Diligence Services",
-		// 	  items: [
-		// 		{
-		// 		  title: "Portfolio Assessment",
-		// 		  description:
-		// 			"Evaluating the strength and scope of your IP portfolio.",
-		// 		},
-		// 		{
-		// 		  title: "Ownership Verification",
-		// 		  description:
-		// 			"Ensuring clear ownership of all IP assets.",
-		// 		},
-		// 		{
-		// 		  title: "Risk Analysis",
-		// 		  description:
-		// 			"Identifying potential IP risks, such as infringement or gaps.",
-		// 		},
-		// 		{
-		// 		  title: "Investor Reporting",
-		// 		  description:
-		// 			"Creating detailed reports to boost investor confidence.",
-		// 		},
-		// 	  ],
-		// 	},
-		//   ],
-		//   closing:
-		// 	"LifeIntelect’s IP Due Diligence service strengthens your position with investors. Ready to showcase your IP to funders? Let's get started!",
+		  title: "IP Licensing & Commercialization.",
+		  subtitle: "Monetize Innovation Early. Multiply Reach.",
+		  description:"IP doesn’t need to wait for scale to deliver value. Strategic licensing opens doors to early revenue and industry partnerships.",
+		processTitle:"Commercial Value Extraction Strategies:",
+		  process: [
+			{
+			  description:"Identification of potential licensees, co-developers, or acquirers",
+			},
+			{
+			  description:"Structuring of licensing terms to maximize flexibility and return",
+			},
+			{
+			  description:"Advice on tech transfer pathways and revenue models",
+			},
+			{
+			  description:"Support through negotiation, compliance, and implementation",
+			},
+		  ],
+		  description:"Turn innovation into income—without giving away control",
 		},
 		service_4: {
-		  title: "IP Licensing & Commercialization",
-		  description:
-			"Startups often have valuable innovations that can be monetized early through licensing. We help identify potential licensees, structure win-win agreements, and advise on strategies for technology transfer and co-development. Our support ensures that your IP doesn’t just sit unused—it becomes a source of revenue and strategic partnerships.",
-		//   subsections: [
-		// 	{
-		// 	  heading: "Our Commercialization Services",
-		// 	  items: [
-		// 		{
-		// 		  title: "Licensee Identification",
-		// 		  description:
-		// 			"Finding potential licensees for your IP assets.",
-		// 		},
-		// 		{
-		// 		  title: "Agreement Structuring",
-		// 		  description:
-		// 			"Crafting licensing agreements for mutual benefit.",
-		// 		},
-		// 		{
-		// 		  title: "Technology Transfer",
-		// 		  description:
-		// 			"Advising on strategies for effective technology transfer.",
-		// 		},
-		// 		{
-		// 		  title: "Co-Development Support",
-		// 		  description:
-		// 			"Facilitating partnerships for joint IP development.",
-		// 		},
-		// 	  ],
-		// 	},
-		//   ],
-		//   closing:
-		// 	"LifeIntelect’s IP Licensing & Commercialization service turns your IP into revenue. Ready to monetize your innovations? Let's get started!",
+		  title: "Funding & Visibility Through IP",
+		  subtitle: "Stand Out in Accelerators. Win Over Funders.",
+		  description:"A strong IP narrative can differentiate your startup in competitive funding environments. The right messaging turns patents into pitch power.",
+		processTitle:"Tools to Strengthen Your IP Story:",
+		  process: [
+			{
+			  description:"Pitch decks and innovation briefs featuring core IP assets",
+			},
+			{
+			  description:"IP-backed market potential analysis",
+			},
+			{
+			  description:"Application support for grants, accelerator programs, and incubators",
+			},
+			{
+			  description:"Strategic framing of IP as a business advantage",
+			},
+		  ],
+		  description:"Showcase your IP not just as protection—but as potential.",
 		},
 		service_5: {
-		  title: "Raising Awareness and Funding with IP",
-		  description:
-			"A well-articulated IP strategy can significantly enhance your visibility with accelerators, incubators, and funding agencies. We help you present your IP as a core business asset—creating pitch materials, innovation reports, and patent highlights that demonstrate market potential and innovation strength. Our services boost your ability to secure grants, funding, and strategic support.",
-		//   process: [
-		// 	{
-		// 	  title: "IP Asset Highlighting",
-		// 	  description:
-		// 		"Identifying key IP assets to showcase in pitches.",
-		// 	},
-		// 	{
-		// 	  title: "Pitch Material Creation",
-		// 	  description:
-		// 		"Developing pitch decks and reports emphasizing IP value.",
-		// 	},
-		// 	{
-		// 	  title: "Grant Positioning",
-		// 	  description:
-		// 		"Positioning your IP for grants and funding opportunities.",
-		// 	},
-		// 	{
-		// 	  title: "Strategic Support",
-		// 	  description:
-		// 		"Advising on engagement with accelerators and incubators.",
-		// 	},
-		//   ],
-		//   closing:
-		// 	"LifeIntelect’s Raising Awareness service amplifies your IP’s funding potential. Ready to attract investors with your IP? Let's get started!",
+		  title: "Startup IP Portfolio Management",
+		  subtitle: "Centralized Oversight. Continuous Alignment.",
+		  description:"Juggling product launches, fundraising, and IP filings is a challenge for any founder. Efficient management ensures that nothing slips through the cracks.",
+		processTitle:"Smart Portfolio Management Includes:",
+		  process: [
+			{
+			  description:"Central tracking of filings, renewals, and jurisdictional coverage",
+			},
+			{
+			  description:"Document control for assignments, licensing, and disclosures",
+			},
+			{
+			  description:"Portfolio audits to ensure alignment with evolving product strategy",
+			},
+			{
+			  description:"Alerts and dashboards for key deadlines and legal events",
+			},
+		  ],
+		  description:"Stay organized. Stay compliant. Stay on course",
 		},
 		service_6: {
-		  title: "Startup IP Portfolio Management",
-		  description:
-			"Managing IP filings, renewals, and strategy while running a startup can be overwhelming. We offer centralized IP portfolio management, helping startups track deadlines, renewals, jurisdictions, and documentation. This ensures nothing is missed and your portfolio remains aligned with your evolving product and market strategy.",
-		//   process: [
-		// 	{
-		// 	  title: "Portfolio Tracking",
-		// 	  description:
-		// 		"Monitoring IP filings, renewals, and deadlines.",
-		// 	},
-		// 	{
-		// 	  title: "Jurisdiction Management",
-		// 	  description:
-		// 		"Managing IP assets across multiple jurisdictions.",
-		// 	},
-		// 	{
-		// 	  title: "Documentation Support",
-		// 	  description:
-		// 		"Organizing and maintaining IP-related documentation.",
-		// 	},
-		// 	{
-		// 	  title: "Strategy Alignment",
-		// 	  description:
-		// 		"Ensuring portfolio aligns with product and market goals.",
-		// 	},
-		//   ],
-		//   closing:
-		// 	"LifeIntelect’s Startup IP Portfolio Management service keeps your IP organized. Ready to streamline your IP management? Let's get started!",
-		},
-		service_7: {
 		  title: "IP Risk Management for Startups",
-		  description:
-			"Unintended infringement, ownership disputes, or unprotected trade secrets can become costly setbacks. We help startups identify and manage IP-related risks early on by reviewing agreements, conducting FTO assessments, ensuring proper inventor documentation, and setting up internal processes to protect confidential information. This reduces future legal complications and supports smoother growth.",
-		//   subsections: [
-		// 	{
-		// 	  heading: "Our Risk Management Services",
-		// 	  items: [
-		// 		{
-		// 		  title: "Agreement Review",
-		// 		  description:
-		// 			"Analyzing contracts to prevent IP disputes.",
-		// 		},
-		// 		{
-		// 		  title: "FTO Assessments",
-		// 		  description:
-		// 			"Conducting freedom-to-operate assessments to avoid infringement.",
-		// 		},
-		// 		{
-		// 		  title: "Inventor Documentation",
-		// 		  description:
-		// 			"Ensuring proper documentation of IP ownership.",
-		// 		},
-		// 		{
-		// 		  title: "Confidentiality Processes",
-		// 		  description:
-		// 			"Setting up internal processes to protect trade secrets.",
-		// 		},
-		// 	  ],
-		// 	},
-		//   ],
-		//   closing:
-		// 	"LifeIntelect’s IP Risk Management service protects your startup from IP pitfalls. Ready to secure your IP risks? Let's get started!",
+		  subtitle: "Avoid Costly Mistakes. Protect What’s Yours.",
+		  description:"Legal risks can derail momentum. Early-stage ventures benefit from preventive IP risk planning before disputes arise.",
+		processTitle:"Early-Stage IP Risk Controls:",
+		  process: [
+			{
+			  description:"Freedom-to-operate (FTO) analysis to avoid infringement",
+			},
+			{
+			  description:"Agreement reviews for co-founders, employees, and contractors",
+			},
+			{
+			  description:"Portfolio audits to ensure alignment with evolving product strategy",
+			},
+			{
+			  description:"Trade secret protocols and internal confidentiality safeguards",
+			},
+			{
+				description:"•	Ownership clarity through proper inventor documentation and IP assignments",
+			}
+		  ],
+		  description:"Mitigate risk before it scales—and protect your competitive edge.",
 		},
 	  }
   };

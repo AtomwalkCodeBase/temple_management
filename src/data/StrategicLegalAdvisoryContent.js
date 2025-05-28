@@ -256,13 +256,17 @@ const subServiceContent = {
   //   }
   // }
   strategicLegalAdvisory: {
-    title: "Strategic & Legal Advisory",
-    description:
-      "At Lifeintelect, our Strategic & Legal Advisory services empower clients to navigate the complex legal, regulatory, and strategic dimensions of intellectual property. From developing robust IP strategies to enforcing rights and monetizing assets, we provide tailored, actionable advice to align with your business objectives. Ready to strengthen your IP strategy with Lifeintelect? Let's get started!",
+    title: "STRATEGY & ADVISORY ",
+    subtitle:"Navigate Complexity. Align IP with Business Vision. Protect and Scale with Confidence.",
+    description:[
+      "Intellectual property is more than a legal asset — it’s a strategic driver of competitive advantage, investment potential, and global scalability. Whether preparing for a product launch, entering a joint venture, or planning an exit, clear, forward-thinking IP advisory ensures every move aligns with long-term business objectives.",
+      "LifeIntelect’s technolegal advisory services empower organizations to make informed IP decisions across jurisdictions, industries, and growth stages — with clarity, compliance, and commercial impact built into every recommendation",
+    ],
     service_1: {
       title: "IP Strategy Development",
-      description:
-        "A strong IP strategy is a business enabler. We work closely with clients to develop comprehensive IP strategies that align with their R&D roadmap, market goals, and long-term vision. This includes identifying core innovations, determining the right type of protection, defining filing strategies across jurisdictions, and integrating IP into your broader business model. Our goal is to help you build a valuable, defensible, and monetizable IP portfolio.",
+      subtitle:"Design a Roadmap Where Innovation Meets Market Value",
+      description:"A clear IP strategy transforms ideas into assets. From identifying core technologies to prioritizing jurisdictions, a tailored strategy enables stronger protection, efficient filings, and maximum monetization. Alignment with R&D and commercial goals ensures your portfolio grows with your business — not ahead or behind it.This creates a future-ready IP blueprint that integrates seamlessly into your business and innovation lifecycle",
+        
     //   process: [
     //     {
     //       title: "Business Goal Analysis",
@@ -294,9 +298,9 @@ const subServiceContent = {
     //     "Lifeintelect’s IP Strategy Development service builds a robust IP foundation for your business. Ready to align your IP with your goals with Lifeintelect? Let's get started!",
     },
     service_2: {
-      title: "IP Litigation & Enforcement Support",
-      description:
-        "Protecting your intellectual property rights doesn’t stop at registration. We support clients in enforcing their IP through litigation preparedness, infringement analysis, evidence documentation, and legal liaison support. While we do not litigate directly, we collaborate with legal firms and provide technical and strategic IP support, ensuring you are fully equipped for enforcement actions or legal disputes.",
+      title: "Licensing & IP Agreements",
+      subtitle:"Structure Partnerships That Monetize IP and Minimize Risk",
+      description:"Licensing deals, Non-Disclosure Agreements (NDAs), technology transfers, and joint development agreements are the foundation of IP commercialization. Precise drafting, due diligence, and negotiation support ensure that your IP remains protected, properly valued, and legally secure across all collaborations.With well-structured contracts, your IP becomes a secure revenue stream and a tool for strategic collaboration.",
     //   subsections: [
     //     {
     //       heading: "Our Support Services",
@@ -326,9 +330,9 @@ const subServiceContent = {
     //   ],
     },
     service_3: {
-      title: "Licensing & IP Agreements",
-      description:
-        "Well-structured licensing and IP agreements are crucial for revenue generation and risk mitigation. We assist in drafting, reviewing, and negotiating various IP-related contracts—including licensing agreements, non-disclosure agreements (NDAs), technology transfer agreements, and joint development contracts. Our expertise ensures that your IP is properly protected and monetized in every partnership or collaboration.",
+      title: "Cross-Border IP Strategy & Compliance",
+      subtitle:"Expand Globally with Comprehensive IP Protection",
+      description:"As businesses grow internationally, navigating the complexities of jurisdictional IP laws is crucial. A customized cross-border strategy ensures seamless protection across key markets. By managing filing timelines, ensuring treaty compliance, and preparing for regional enforcement, companies can prevent IP erosion abroad. With globally aligned rights, international expansion becomes more secure and efficient, supporting your strategic growth.",
     //   process: [
     //     {
     //       title: "Needs Assessment",
@@ -355,9 +359,12 @@ const subServiceContent = {
     //     "Lifeintelect’s Licensing & IP Agreements service safeguards and monetizes your IP. Ready to structure your IP deals with Lifeintelect? Let's get started!",
     },
     service_4: {
-      title: "Cross-Border IP Strategy & Compliance",
-      description:
-        "Expanding into international markets brings both opportunity and complexity. We help clients navigate cross-border IP issues, including jurisdictional filing strategies, regional regulatory compliance, and enforcement challenges. Our team ensures that your IP assets are protected globally while complying with varying laws and treaties across different regions.",
+      title: "Trade Secret Protection & Confidentiality",
+      subtitle:"Protect Your Proprietary Knowledge Before It’s Exposed",
+      description:[
+        "Not all valuable IP is registered—much of it lies in what a business knows and how it operates. Strong internal policies, IP control mechanisms, and well-crafted NDAs ensure confidentiality, safeguarding trade secrets from accidental disclosures or competitive leaks.",
+        "This strategy guarantees that your vital expertise stays protected, enforceable, and strategically hidden from competitors, keeping your competitive edge secure",
+      ],
     //   subsections: [
     //     {
     //       heading: "Our Approach",
@@ -386,9 +393,9 @@ const subServiceContent = {
     //   ],
     },
     service_5: {
-      title: "Trade Secret Protection & Confidentiality",
-      description:
-        "Trade secrets can be among your most valuable assets, especially in tech and scientific sectors. We advise on frameworks for identifying, documenting, and protecting confidential business information. Our services include drafting confidentiality policies, NDAs, and internal IP control mechanisms to reduce the risk of unauthorized disclosure or loss of proprietary knowledge.",
+      title: "IP Exit Strategy & Monetization",
+      subtitle:"Maximize IP Value During Investment, Acquisition, or Licensing",
+      description:"Whether preparing for acquisition, investment, or divestment, a well-structured IP exit strategy maximizes valuation and leverage. By organizing portfolios, clarifying rights, and identifying licensing opportunities, businesses can unlock monetization pathways such as spin-offs, assignments, and technology sales. This approach ensures your IP becomes a valuable asset, strengthening your position in exit negotiations",
     //   process: [
     //     {
     //       title: "Trade Secret Identification",
@@ -415,9 +422,12 @@ const subServiceContent = {
     //     "Lifeintelect’s Trade Secret Protection service secures your confidential assets. Ready to protect your trade secrets with Lifeintelect? Let's get started!",
     },
     service_6: {
-      title: "IP Exit Strategy & Monetization",
-      description:
-        "Whether you're preparing for acquisition, investment, or divestment, having a clear IP exit strategy is critical. We assist in structuring your IP portfolio for maximum valuation, identifying licensing opportunities, and developing monetization pathways such as assignments, spin-offs, or technology sales. This service ensures your IP becomes a tangible asset in exit negotiations.",
+      title: "Corporate IP Governance & Risk Mitigation",
+      subtitle:"Embed IP into Organizational DNA and Prevent Future Disputes",
+      description:[
+        "Strong governance is key to protecting innovation and managing risk effectively. By clarifying ownership, managing disclosures, and standardizing contracts, businesses can reduce exposure to disputes and ensure compliance. Internal workflows across departments guarantee that IP is consistently captured, protected, and managed.",
+        "With robust internal systems and well-designed policies in place, organizations can significantly reduce risk, strengthen their legal position, and protect their intangible assets across all departments, ensuring long-term success and security.",
+      ],
     //   subsections: [
     //     {
     //       heading: "Our Services",
@@ -446,9 +456,12 @@ const subServiceContent = {
     //   ],
     },
     service_7: {
-      title: "Corporate IP Governance & Risk Mitigation",
-      description:
-        "Incorporating IP governance into corporate compliance frameworks is essential for risk management. We help design and implement internal IP policies, establish IP ownership protocols, and create workflows for managing innovations across departments. Our risk mitigation strategies help prevent IP disputes, strengthen contracts, and protect your organization’s intangible assets.",
+      title: "Patent & Trademark Portfolio Optimization",
+      subtitle:"Trim Costs. Focus on Value. Strengthen Strategic Positioning.",
+      description:[
+        "Not all IP assets drive growth equally. A comprehensive portfolio review helps identify high-value assets, as well as redundant or obsolete filings. The outcome is a streamlined portfolio that aligns with market trends, competitive challenges, and business objectives.",
+        "This approach enables you to focus resources on what truly matters, ensuring greater returns on your IP investments.",
+      ],
     //   subsections: [
     //     {
     //       heading: "Our Process",
@@ -478,9 +491,9 @@ const subServiceContent = {
     //   ],
     },
     service_8: {
-      title: "Patent & Trademark Portfolio Optimization",
-      description:
-        "An oversized or misaligned IP portfolio can drain resources. We review and analyze your existing patent and trademark portfolios to assess relevance, commercial potential, and enforceability. Based on this analysis, we recommend which assets to maintain, consolidate, license, or abandon—ensuring a lean, cost-effective, and strategically aligned portfolio.",
+      title: "IP Litigation & Enforcement Support",
+      subtitle:"Be Ready to Defend Your Rights — Strategically and Legally",
+      description:"When IP infringement or disputes arise, thorough preparation is the key. With expert infringement analysis, strategic advisory, and litigation support, businesses can ensure their claims are robust, well-documented, and aligned with legal counsel, strengthening enforcement strategies whether in court or during settlement negotiations.",
     //   process: [
     //     {
     //       title: "Portfolio Review",
@@ -505,10 +518,10 @@ const subServiceContent = {
     //   closing:
     //     "Lifeintelect’s Patent & Trademark Portfolio Optimization service streamlines your IP assets. Ready to optimize your portfolio with Lifeintelect? Let's get started!",
     },
-    service_9: {
-      title: "Government and Policy Advocacy",
-      description:
-        "For clients involved in policy-facing sectors or working with public institutions, we offer support in engaging with government bodies and IP regulators. This includes assistance with public IP filings, regulatory compliance, and positioning for government grants, schemes, or innovation incentives. We also help organizations navigate IP-related legislative changes and participate in shaping policy through strategic advocacy.",
+    // service_9: {
+    //   title: "Government and Policy Advocacy",
+    //   description:
+    //     "For clients involved in policy-facing sectors or working with public institutions, we offer support in engaging with government bodies and IP regulators. This includes assistance with public IP filings, regulatory compliance, and positioning for government grants, schemes, or innovation incentives. We also help organizations navigate IP-related legislative changes and participate in shaping policy through strategic advocacy.",
     //   subsections: [
     //     {
     //       heading: "Our Support",
@@ -536,7 +549,7 @@ const subServiceContent = {
     //       ],
     //     },
     //   ],
-    },
+    // },
   },
 };
 

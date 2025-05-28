@@ -744,9 +744,10 @@ const NavBar = () => {
       subServices: [
         { id: 'patent', name: 'Patent' },
         { id: 'copyright', name: 'Copyright' },
-        { id: 'design', name: 'Design' },
+        { id: 'design', name: 'Industrial Design' },
         { id: 'trademark', name: 'Trademark' },
-        { id: 'geographical-indication', name: 'Geographical Indication' }
+        { id: 'geographical-indication', name: 'Geographical Indication' },
+        { id: 'nba_approval', name: 'NBA Approval' },
       ]
     },
     {

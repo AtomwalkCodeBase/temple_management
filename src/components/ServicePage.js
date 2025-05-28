@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 const ServicePage = ({ serviceType, theme, subServiceContent }) => {
   const services = subServiceContent[serviceType] || {};
-  const pageTitle = `${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} Services`;
+// const serviceData = services[serviceType];
+// const pageTitle = `${serviceData?.title ?? serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} Services`;
+  // const pageTitle = `${services.title} Services`;
   const pageSubtitle = `Protecting Your ${
     serviceType === "patent" ? "Inventions" :
     serviceType === "design" ? "Visual Creations" :
@@ -20,187 +22,369 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
 
   return (
     <PageContainer>
-      <Hero theme={theme}>
-        <HeroContent>
-          <PageTitle>{pageTitle}</PageTitle>
-          <PageSubtitle>{pageSubtitle}</PageSubtitle>
-        </HeroContent>
-      </Hero>
+  <Hero theme={theme}>
+    <HeroContent>
+      <PageTitle>{services.title}</PageTitle>
+      <PageSubtitle>{pageSubtitle}</PageSubtitle>
+    </HeroContent>
+  </Hero>
 
-      {services.title || services.description ? (
-        <Section>
-          {services.title && (
-            <ServiceHeader theme={theme}>
-              <ServiceName>{services.title}</ServiceName>
-            </ServiceHeader>
-          )}
-          {services.description && (
-            <SectionText>{services.description}</SectionText>
-          )}
-        </Section>
-      ) : null}
+  
 
-      <ServicesContainer>
-        {Object.entries(services)
-          .filter(([key]) => key.startsWith("service_"))
-          .map(([serviceId, service]) => (
-            <ServiceCard key={serviceId} id={serviceId}>
-              <ServiceHeader theme={theme}>
-                <ServiceNumber theme={theme}>{serviceId.split("_")[1]}</ServiceNumber>
-                <ServiceName>{service.title}</ServiceName>
-              </ServiceHeader>
+  {/* Main Services Section */}
+  {services.title || services.description ? (
+    <Section>
+      {services.title && (
+        <ServiceHeader theme={theme}>
+          <ServiceName>{services.title}</ServiceName>
+        </ServiceHeader>
+      )}
+        {services.subtitle && (
+        <SectionSubtitle>{services.subtitle}</SectionSubtitle>
+      )}
+
+      {services.description && (
+          Array.isArray(services.description)
+    ? services.description.map((text, index) => (
+        <SectionText key={index}>{text}</SectionText>
+      ))
+    : <SectionText>{services.description}</SectionText>
+)}
+        
+      
+    </Section>
+  ) : null}
+
+  {/* Patent Info Section */}
+  {services.patent_info && (
+    <Section>
+      {services.patent_info.title && (
+        <ServiceHeader theme={theme}>
+          <ServiceName>{services.patent_info.title}</ServiceName>
+        </ServiceHeader>
+      )}
 
 
-            <ServiceContent>
-              {/* Render main description and image if exists */}
-              {service.description && (
-                <Section>
-                  <SectionText>{service.description}</SectionText>
-                  <SectionText>{service.description1}</SectionText>
-                  <SectionText>{service.description2}</SectionText>
-                  <SectionText>{service.description3}</SectionText>
-                  <SectionText>{service.description4}</SectionText>
-                  {service.image && (
-                    <ServiceImage
-                      src={service.image}
-                      alt={`${service.title} Illustration`}
-                    />
-                  )}
-                </Section>
-              )}
+{services.patent_info.description && (
+  Array.isArray(services.patent_info.description)
+    ? services.patent_info.description.map((text, index) => (
+        <SectionText key={index}>{text}</SectionText>
+      ))
+    : <SectionText>{services.patent_info.description}</SectionText>
+)}
 
-              {/* Render process sections */}
-              {service.process && (
-                <Section>
-                <SectionHeading theme={theme}>{service.processTitle ? service.processTitle : "Our process"}</SectionHeading>
+{services.patent_info.typesSection && services.patent_info.typesSection.types?.length > 0 && (
+  <Section>
+    <SectionHeading theme={theme}>
+      {services.patent_info.typesSection.Heading}
+    </SectionHeading>
+    <ServiceList>
+      {services.patent_info.typesSection.types.map((item, i) => (
+        <ServiceListItem key={i}>
+          <ListItemIcon theme={theme}>
+            {/* Same icon as in process */}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <path
+                d="M8 12L11 15L16 9"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </ListItemIcon>
+          <ListItemContent>
+            <ListItemTitle>{item.title}</ListItemTitle>
+            <ListItemDescription>{item.description}</ListItemDescription>
+          </ListItemContent>
+        </ServiceListItem>
+      ))}
+    </ServiceList>
+      <ListItemDescription>{services.patent_info.typesSection.description1}</ListItemDescription>
+  </Section>
+)}
+
+{services.patent_info.advantages && services.patent_info.advantages.types?.length > 0 && (
+  <Section>
+    <SectionHeading theme={theme}>
+      {services.patent_info.advantages.Heading}
+    </SectionHeading>
+    <ServiceList>
+      {services.patent_info.advantages.types.map((item, i) => (
+        <ServiceListItem key={i}>
+          <ListItemIcon theme={theme}>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <path
+                d="M8 12L11 15L16 9"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </ListItemIcon>
+          <ListItemContent>
+            <ListItemTitle>{item.title}</ListItemTitle>
+            <ListItemDescription>{item.description}</ListItemDescription>
+          </ListItemContent>
+        </ServiceListItem>
+      ))}
+    </ServiceList>
+  </Section>
+)}
+
+
+
+    {services.patent_info.sub_info && (
+      <>
+        <SectionSubtitle>{services.patent_info.sub_info.subtitle1}</SectionSubtitle>
+        <SectionSubtitle>{services.patent_info.sub_info.subtitle2}</SectionSubtitle>
+
+        {Array.isArray(services.patent_info.sub_info.description1) &&
+          services.patent_info.sub_info.description1.map((text, index) => (
+            <SectionText key={`desc1-${index}`}>{text}</SectionText>
+          ))}
+      </>
+    )}
+    </Section>
+  )}
+
+  <ServicesContainer>
+    {Object.entries(services)
+      .filter(([key]) => key.startsWith("service_"))
+      .map(([serviceId, service]) => (
+        <ServiceCard key={serviceId} id={serviceId}>
+          <ServiceHeader theme={theme}>
+            <ServiceNumber theme={theme}>{serviceId.split("_")[1]}</ServiceNumber>
+            <ServiceName>{service.title}</ServiceName>
+          </ServiceHeader>
+
+          <ServiceContent>
+
+            {service.subtitle && (
+        <SectionText>{service.subtitle}</SectionText>
+      )}
+            {/* Render main description and image if exists */}
+            {service.description && (
+              <Section>
+                <SectionText>{service.description}</SectionText>
+                <SectionText>{service.description1}</SectionText>
+                <SectionText>{service.description2}</SectionText>
+                <SectionText>{service.description3}</SectionText>
+                <SectionText>{service.description4}</SectionText>
+                {service.image && (
+                  <ServiceImage
+                    src={service.image}
+                    alt={`${service.title} Illustration`}
+                  />
+                )}
+              </Section>
+            )}
+
+            {/* Render process sections */}
+            {service.process && (
+              <Section>
+                <SectionHeading theme={theme}>
+                  {service.processTitle ? service.processTitle : "Our process"}
+                </SectionHeading>
                 <ServiceList>
-                    {service.process.map((item, i) => (
+                  {service.process.map((item, i) => (
+                    <ServiceListItem key={i}>
+                      <ListItemIcon theme={theme}>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          />
+                          <path
+                            d="M8 12L11 15L16 9"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </ListItemIcon>
+                      <ListItemContent>
+                        <ListItemTitle>{item.title}</ListItemTitle>
+                        <ListItemDescription>{item.description}</ListItemDescription>
+                        {item.subPoints && (
+                          <SubPointsList>
+                            {item.subPoints.map((subPoint, j) => (
+                              <SubPointItem key={j}>{subPoint}</SubPointItem>
+                            ))}
+                          </SubPointsList>
+                        )}
+                      </ListItemContent>
+                    </ServiceListItem>
+                  ))}
+                </ServiceList>
+              </Section>
+            )}
+
+            {/* Render service types and image if exists */}
+            {service.typesSection && (
+              <Section>
+                <SectionHeading theme={theme}>
+                    {service.typesSection.manualHeading || `Types of ${service.title} Services`}
+                </SectionHeading>
+                {service.typesSection.image && (
+                  <ServiceImage
+                    src={service.typesSection.image}
+                    alt={`Types of ${service.title} Illustration`}
+                  />
+                )}
+                <ServiceList>
+                  {service.typesSection.types.map((type, i) => (
+                    <ServiceListItem key={i}>
+                      <ListItemIcon theme={theme}>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          />
+                          <path
+                            d="M8 12L11 15L16 9"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </ListItemIcon>
+                      <ListItemContent>
+                        <ListItemTitle>{type.title}</ListItemTitle>
+                        <ListItemDescription>{type.description}</ListItemDescription>
+                      </ListItemContent>
+                    </ServiceListItem>
+                  ))}
+                </ServiceList>
+              </Section>
+            )}
+
+            {/* Render subsections */}
+            {service.subsections && service.subsections.map((subsection, index) => (
+              <Section key={index}>
+                {subsection.heading && (
+                  <SectionHeading theme={theme}>{subsection.heading}</SectionHeading>
+                )}
+                {subsection.description && (
+                  <SectionText>{subsection.description}</SectionText>
+                )}
+
+                {subsection.items && (
+                  <ServiceList>
+                    {subsection.items.map((item, i) => (
                       <ServiceListItem key={i}>
                         <ListItemIcon theme={theme}>
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" />
-                            <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            />
+                            <path
+                              d="M8 12L11 15L16 9"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
                           </svg>
                         </ListItemIcon>
                         <ListItemContent>
-                          <ListItemTitle>{item.title}</ListItemTitle>
+                          {item.title && <ListItemTitle>{item.title}</ListItemTitle>}
                           <ListItemDescription>{item.description}</ListItemDescription>
-                          {item.subPoints && (
+                        </ListItemContent>
+                      </ServiceListItem>
+                    ))}
+                  </ServiceList>
+                )}
+
+                {subsection.steps && (
+                  <StepsList>
+                    {subsection.steps.map((step, i) => (
+                      <StepItem key={i}>
+                        <StepNumber theme={theme}>{i + 1}</StepNumber>
+                        <StepContent>
+                          <StepTitle>{step.title}</StepTitle>
+                          <StepDescription>{step.description}</StepDescription>
+                          {step.subPoints && (
                             <SubPointsList>
-                              {item.subPoints.map((subPoint, j) => (
+                              {step.subPoints.map((subPoint, j) => (
                                 <SubPointItem key={j}>{subPoint}</SubPointItem>
                               ))}
                             </SubPointsList>
                           )}
-                        </ListItemContent>
-                      </ServiceListItem>
+                        </StepContent>
+                      </StepItem>
                     ))}
-                  </ServiceList>
-                </Section>
-              )}
+                  </StepsList>
+                )}
+              </Section>
+            ))}
 
-              {/* Render service types and image if exists */}
-              {service.typesSection && (
-                <Section>
-                  <SectionHeading theme={theme}>Types of {service.title} Services</SectionHeading>
-                  {service.typesSection.image && (
-                    <ServiceImage
-                      src={service.typesSection.image}
-                      alt={`Types of ${service.title} Illustration`}
-                    />
-                  )}
-                  <ServiceList>
-                    {service.typesSection.types.map((type, i) => (
-                      <ServiceListItem key={i}>
-                        <ListItemIcon theme={theme}>
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" />
-                            <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </ListItemIcon>
-                        <ListItemContent>
-                          <ListItemTitle>{type.title}</ListItemTitle>
-                          <ListItemDescription>{type.description}</ListItemDescription>
-                        </ListItemContent>
-                      </ServiceListItem>
-                    ))}
-                  </ServiceList>
-                  {/* {service.typesSection.image && (
-                    <ServiceImage
-                      src={service.typesSection.image}
-                      alt={`Types of ${service.title} Illustration`}
-                    />
-                  )} */}
-                </Section>
-              )}
+            {/* Render closing statement if exists */}
+            {service.closing && (
+              <Section>
+                <SectionText>{service.closing}</SectionText>
+              </Section>
+            )}
+          </ServiceContent>
+        </ServiceCard>
+      ))}
+  </ServicesContainer>
 
-              {/* Render subsections */}
-              {service.subsections && service.subsections.map((subsection, index) => (
-                <Section key={index}>
-                  {subsection.heading && <SectionHeading theme={theme}>{subsection.heading}</SectionHeading>}
-                  {subsection.description && <SectionText>{subsection.description}</SectionText>}
-
-                  {subsection.items && (
-                    <ServiceList>
-                      {subsection.items.map((item, i) => (
-                        <ServiceListItem key={i}>
-                          <ListItemIcon theme={theme}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" />
-                              <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </ListItemIcon>
-                          <ListItemContent>
-                            {item.title && <ListItemTitle>{item.title}</ListItemTitle>}
-                            <ListItemDescription>{item.description}</ListItemDescription>
-                          </ListItemContent>
-                        </ServiceListItem>
-                      ))}
-                    </ServiceList>
-                  )}
-
-                  {subsection.steps && (
-                    <StepsList>
-                      {subsection.steps.map((step, i) => (
-                        <StepItem key={i}>
-                          <StepNumber theme={theme}>{i + 1}</StepNumber>
-                          <StepContent>
-                            <StepTitle>{step.title}</StepTitle>
-                            <StepDescription>{step.description}</StepDescription>
-                            {step.subPoints && (
-                              <SubPointsList>
-                                {step.subPoints.map((subPoint, j) => (
-                                  <SubPointItem key={j}>{subPoint}</SubPointItem>
-                                ))}
-                              </SubPointsList>
-                            )}
-                          </StepContent>
-                        </StepItem>
-                      ))}
-                    </StepsList>
-                  )}
-                </Section>
-              ))}
-
-              {/* Render closing statement if exists */}
-              {service.closing && (
-                <Section>
-                  <SectionText>{service.closing}</SectionText>
-                </Section>
-              )}
-            </ServiceContent>
-          </ServiceCard>
-        ))}
-      </ServicesContainer>
-
-      {/* <CallToAction theme={theme}>
-        <CTAContent>
-          <CTAHeading>{ctaHeading}</CTAHeading>
-          <CTASubheading>{ctaSubheading}</CTASubheading>
-          <CTAButton theme={theme}>Get Started</CTAButton>
-        </CTAContent>
-      </CallToAction> */}
-    </PageContainer>
+  {/* <CallToAction theme={theme}>
+    <CTAContent>
+      <CTAHeading>{ctaHeading}</CTAHeading>
+      <CTASubheading>{ctaSubheading}</CTASubheading>
+      <CTAButton theme={theme}>Get Started</CTAButton>
+    </CTAContent>
+  </CallToAction> */}
+</PageContainer>
   );
 };
 
@@ -350,6 +534,13 @@ const SectionText = styled.p`
   line-height: 1.7;
   margin-Top: 12px;
   padding: 0 10px;
+`;
+
+const SectionSubtitle = styled.p`
+  font-size: 1.5rem;
+  margin:  20px 0 20px 10px;
+  font-weight: 600;
+  color: #1a202c;
 `;
 
 const ServiceImage = styled.img`

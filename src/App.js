@@ -61,6 +61,14 @@ const themes = {
     primaryRgb: '20, 184, 166',
     secondaryRgb: '13, 148, 136',
   },
+  nba_approval: {
+     primary: '#3b82f6',
+    secondary: '#2563eb',
+    light: '#93c5fd',
+    background: '#eff6ff',
+    primaryRgb: '59, 130, 246',
+    secondaryRgb: '37, 99, 235',
+  },
   ipLifeCycleManagement: {
     primary: '#b91c1c',
     secondary: '#991b1b',
@@ -120,7 +128,9 @@ const patentRoutes = [
   { path: '/design', type: 'design', id: 'design', content: subServiceContent, theme: themes.design, component: ServicePage },
   { path: '/copyright', type: 'copyright', id: 'copyright', content: subServiceContent, theme: themes.copyright, component: ServicePage },
   { path: '/trademark', type: 'trademark', id: 'trademark', content: subServiceContent, theme: themes.trademark, component: ServicePage },
-  { path: '/geographical-indication', type: 'geographicalIndications', id: 'geographicalIndications', content: subServiceContent, theme: themes.geographicalIndications, component: ServicePage },
+  { path: '/geographical-indication', type: 'geographicalIndications', id: 'geographical Indications', content: subServiceContent, theme: themes.geographicalIndications, component: ServicePage },
+  { path: '/nba_approval', type: 'nba_approval', id: 'nba_approval', content: subServiceContent, theme: themes.nba_approval, component: ServicePage },
+
 ];
 
 const ipLifecycleRoutes = [

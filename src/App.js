@@ -22,6 +22,7 @@ import CommonFaq from './../src/components/CommonFaq';
 import BlogForm from './components/Blogs/BlogForm';
 import BlogPosts from './components/BlogPosts';
 import BlogDetail from './components/Blogs/BlogDetails';
+import LinkWebsite from './components/LinkWebsite'
 
 // Theme configuration
 const themes = {
@@ -128,6 +129,7 @@ const mainRoutes = [
   { path: "/blog/:id" , component: BlogDetail, title: 'AddBlogForm' },
   { path: '/blog/addBlog', component: BlogForm, title: 'AddBlogForm' },
   { path: "/blog/edit/:id?" , component: BlogForm, title: 'EditBlogForm' },
+  { path: '/links', component: LinkWebsite, title: 'LinksWebsite' },
 ];
 
 const patentRoutes = [

@@ -1,19 +1,16 @@
 const subServiceContent = {
   ipLifeCycleManagement: {
     title: "IP Life Cycle Management",
-    subTitle: "Where Your Ideas Become Strategic Business Assets",
+    subtitle: "Where Your Ideas Become Strategic Business Assets",
     description:
       "Innovation has no value unless it’s protected, managed, and aligned with business goals. LifeIntelect’s IP Lifecycle Management offers end-to-end solutions to transform ideas into market-ready, revenue-generating assets—whether at the seed stage or scaling globally.",
 
-    subServices: {
+    service_1: {
       title: "IP Audit & Evaluation",
-      subTitle: "Gain Clarity. Build Strength.",
-      description:
-        "A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-
-      typesSection: {
-        Heading: "Deliverables That Drive Impact:",
-        types: [
+      subtitle: "Gain Clarity. Build Strength.",
+      description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+        processTitle: "Deliverables That Drive Impact:",
+      process: [
           {
             description:
               "Comprehensive mapping of patents, trademarks, copyrights, designs, and trade secrets",
@@ -33,12 +30,10 @@ const subServiceContent = {
               "Alignment of IP with business goals for sustainable scaling",
           },
         ],
-        description:
-          "Turn oversight into opportunity with insights that inform long-term growth.",
-      },
+        closing:"Turn oversight into opportunity with insights that inform long-term growth.",
     },
 
-    service_1: {
+    service_2: {
       title: "IP Policy & Internal Frameworks",
       subtitle: "Secure Ideas. Empower Innovation",
       description:
@@ -64,10 +59,10 @@ const subServiceContent = {
           description: "Training modules to embed IP literacy across teams",
         },
       ],
-      description:
+      closing:
         "Innovation thrives where systems support protection and ownership.",
     },
-    service_2: {
+    service_3: {
       title: "IP Portfolio Management",
       subtitle: "Elevate Assets. Maximize ROI.",
       description:
@@ -92,9 +87,9 @@ const subServiceContent = {
           description: "Lifecycle tracking to prevent lapses and optimize renewals",
         },
       ],
-      description:"Let your IP portfolio power growth—not sit on the sidelines.",
+      closing:"Let your IP portfolio power growth—not sit on the sidelines.",
     },
-	service_3: {
+	service_4: {
       title: "IP Landscape & Market Intelligence",
       subtitle: "Act with Insight. Compete with Confidence.",
       description:"Informed decisions start with understanding who’s innovating, what’s protected, and where opportunities or threats lie.",
@@ -114,9 +109,9 @@ const subServiceContent = {
           description: "Citation and innovation trend analysis for technology benchmarking",
         },
       ],
-      description:"Make every move with clarity, confidence, and competitive foresight.",
+      closing:"Make every move with clarity, confidence, and competitive foresight.",
     },
-	service_4: {
+	service_5: {
       title: "IP-Based Research & Commercial Strategy",
       subtitle: "Bridge Innovation and Market Success.",
       description:"Strategic planning around IP assets turns potential into performance—by translating ownership into commercial outcomes.",
@@ -136,7 +131,7 @@ const subServiceContent = {
           description: "Advisory support through deal structuring and closure",
         },
       ],
-      description:"IP isn’t just protected—it’s positioned to perform.",
+      closing:"IP isn’t just protected—it’s positioned to perform.",
     },
   },
 };

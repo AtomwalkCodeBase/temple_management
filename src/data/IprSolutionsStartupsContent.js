@@ -201,7 +201,7 @@ const subServiceContent = {
 		title: "IP SOLUTIONS FOR STARTUPS",
 		subtitle:"Build Smart. Protect Early. Scale Confidently.",
 		description:"Startups operate in fast-moving, high-risk environments where intellectual property can be a game-changer—or a blind spot. LifeIntelect delivers tailored IP strategies for early-stage ventures, helping founders protect what they build, attract investors, and unlock long-term value. From idea to exit, every stage is supported with insight, structure, and strategic foresight.",
-		service_1: {
+	service_1: {
 		  title: "IP Strategy & Roadmap",
 		  subtitle:"Start Right. Protect Smart.",
 		  description:"An effective IP roadmap lays the foundation for differentiation, defensibility, and future growth. For startups, timing and alignment with business goals are everything.",
@@ -220,8 +220,8 @@ const subServiceContent = {
 			  description:"Strategic alignment with go-to-market and commercialization goals",
 			},
 			
-		  ],
-		  description:"A proactive IP plan sets the stage for scaling with confidence.",
+		],
+		closing:"A proactive IP plan sets the stage for scaling with confidence.",
 		},
 		service_2: {
 		  title: "IP Due Diligence for Investors",
@@ -242,7 +242,7 @@ const subServiceContent = {
 			  description:"Clear, structured due diligence reports for presentations and negotiations",
 			},
 		  ],
-		  description:"Well-documented IP earns credibility—and capital.",
+		  closing:"Well-documented IP earns credibility—and capital.",
 		},
 		service_3: {
 		  title: "IP Licensing & Commercialization.",
@@ -263,7 +263,7 @@ const subServiceContent = {
 			  description:"Support through negotiation, compliance, and implementation",
 			},
 		  ],
-		  description:"Turn innovation into income—without giving away control",
+		  closing:"Turn innovation into income—without giving away control",
 		},
 		service_4: {
 		  title: "Funding & Visibility Through IP",
@@ -284,7 +284,7 @@ const subServiceContent = {
 			  description:"Strategic framing of IP as a business advantage",
 			},
 		  ],
-		  description:"Showcase your IP not just as protection—but as potential.",
+		  closing:"Showcase your IP not just as protection—but as potential.",
 		},
 		service_5: {
 		  title: "Startup IP Portfolio Management",
@@ -305,7 +305,7 @@ const subServiceContent = {
 			  description:"Alerts and dashboards for key deadlines and legal events",
 			},
 		  ],
-		  description:"Stay organized. Stay compliant. Stay on course",
+		  closing:"Stay organized. Stay compliant. Stay on course",
 		},
 		service_6: {
 		  title: "IP Risk Management for Startups",
@@ -329,7 +329,7 @@ const subServiceContent = {
 				description:"•	Ownership clarity through proper inventor documentation and IP assignments",
 			}
 		  ],
-		  description:"Mitigate risk before it scales—and protect your competitive edge.",
+		  closing:"Mitigate risk before it scales—and protect your competitive edge.",
 		},
 	  }
   };

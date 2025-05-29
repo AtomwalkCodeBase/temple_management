@@ -140,26 +140,26 @@ const patentRoutes = [
 ];
 
 const ipLifecycleRoutes = [
-  { path: '/ip-audit', type: 'ipLifeCycleManagement', id: 'ipAudit', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
-  { path: '/ip-policy', type: 'ipLifeCycleManagement', id: 'ipPolicy', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
-  { path: '/ip-portfolio', type: 'ipLifeCycleManagement', id: 'ipPortfolio', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
-  { path: '/ip-valuation', type: 'ipLifeCycleManagement', id: 'ipValuation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
-  { path: '/technology-transfer', type: 'ipLifeCycleManagement', id: 'technologyTransfer', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
-  { path: '/ip-education', type: 'ipLifeCycleManagement', id: 'ipEducation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
-  { path: '/analysis-diligence', type: 'ipLifeCycleManagement', id: 'ipAnalysis', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
+  { path: '/ip-audit', type: 'ipLifeCycleManagement', id: 'ipAudit', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage },
+  { path: '/ip-policy', type: 'ipLifeCycleManagement', id: 'ipPolicy', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage },
+  { path: '/ip-portfolio', type: 'ipLifeCycleManagement', id: 'ipPortfolio', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage },
+  { path: '/ip-valuation', type: 'ipLifeCycleManagement', id: 'ipValuation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage },
+  { path: '/technology-transfer', type: 'ipLifeCycleManagement', id: 'technologyTransfer', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage },
+  { path: '/ip-education', type: 'ipLifeCycleManagement', id: 'ipEducation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage },
+  { path: '/analysis-diligence', type: 'ipLifeCycleManagement', id: 'ipAnalysis', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage },
 ];
 
 const scientificRoutes = [
-  { path: '/Scientific-&-Technology-Solutions', type: 'scientificTechnology', id: 'scientificSolutions', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/patent-valuations', type: 'scientificTechnology', id: 'patentValuations', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/drug-discovery', type: 'scientificTechnology', id: 'drugDiscoveryDevelopment', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/patent-due-diligence', type: 'scientificTechnology', id: 'patentDueDiligence', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/clinical-potential', type: 'scientificTechnology', id: 'clinicalCommercialPotential', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/competitive-landscape', type: 'scientificTechnology', id: 'competitiveLandscape', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/management-consulting', type: 'scientificTechnology', id: 'managementConsulting', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/market-research', type: 'scientificTechnology', id: 'marketResearch', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/scientific-writing', type: 'scientificTechnology', id: 'scientificWritingEditing', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
-  { path: '/non-patent-searches', type: 'scientificTechnology', id: 'nonPatentSearches', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
+  { path: '/Scientific-&-Technology-Solutions', type: 'scientificTechnology', id: 'scientificSolutions', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/patent-valuations', type: 'scientificTechnology', id: 'patentValuations', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/drug-discovery', type: 'scientificTechnology', id: 'drugDiscoveryDevelopment', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/patent-due-diligence', type: 'scientificTechnology', id: 'patentDueDiligence', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/clinical-potential', type: 'scientificTechnology', id: 'clinicalCommercialPotential', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/competitive-landscape', type: 'scientificTechnology', id: 'competitiveLandscape', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/management-consulting', type: 'scientificTechnology', id: 'managementConsulting', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/market-research', type: 'scientificTechnology', id: 'marketResearch', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/scientific-writing', type: 'scientificTechnology', id: 'scientificWritingEditing', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
+  { path: '/non-patent-searches', type: 'scientificTechnology', id: 'nonPatentSearches', content: Scientific, theme: themes.scientificTechnology, component: ServicePage },
 ];
 
 const strategicRoutes = [

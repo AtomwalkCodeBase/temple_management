@@ -19,7 +19,7 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
     "Brand"
   }?`;
   const ctaSubheading = `Contact our ${serviceType} experts today for a free consultation`;
-
+console.log("data", services.closing)
   return (
     <PageContainer>
   <Hero theme={theme}>
@@ -29,7 +29,6 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
     </HeroContent>
   </Hero>
 
-  
 
   {/* Main Services Section */}
   {services.title || services.description ? (
@@ -112,6 +111,12 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
       ))}
     </ServiceList>
       <ListItemDescription>{services.patent_info.typesSection.description1}</ListItemDescription>
+       {/* Render closing statement if exists */}
+            {services.patent_info.typesSection.closing && (
+              <Section>
+                <SectionText>{services.patent_info.typesSection.closing}</SectionText>
+              </Section>
+            )}
   </Section>
 )}
 
@@ -187,7 +192,7 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
         <SectionText>{service.subtitle}</SectionText>
       )}
             {/* Render main description and image if exists */}
-            {service.description && (
+            {/* {service.description && (
               <Section>
                 <SectionText>{service.description}</SectionText>
                 <SectionText>{service.description1}</SectionText>
@@ -201,7 +206,14 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
                   />
                 )}
               </Section>
-            )}
+            )} */}
+            {service.description && (
+  Array.isArray(service.description)
+    ? service.description.map((text, index) => (
+        <SectionText key={index}>{text}</SectionText>
+      ))
+    : <SectionText>{service.description}</SectionText>
+)}
 
             {/* Render process sections */}
             {service.process && (
@@ -248,6 +260,13 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
                     </ServiceListItem>
                   ))}
                 </ServiceList>
+              </Section>
+            )}
+
+                {/* Render closing statement if exists */}
+            {service.closing && (
+              <Section>
+                <SectionText>{service.closing}</SectionText>
               </Section>
             )}
 
@@ -366,16 +385,23 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
               </Section>
             ))}
 
-            {/* Render closing statement if exists */}
-            {service.closing && (
+            {/* Render closing statement if exists
+            {services.closing && (
               <Section>
-                <SectionText>{service.closing}</SectionText>
+                <SectionText>{services.closing}</SectionText>
               </Section>
-            )}
+            )} */}
           </ServiceContent>
         </ServiceCard>
       ))}
   </ServicesContainer>
+
+   {/* Render closing statement if exists */}
+            {/* {services.closing && (
+              <Section>
+                <SectionText>{services.closing}</SectionText>
+              </Section>
+            )} */}
 
   {/* <CallToAction theme={theme}>
     <CTAContent>

@@ -19,7 +19,7 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
     "Brand"
   }?`;
   const ctaSubheading = `Contact our ${serviceType} experts today for a free consultation`;
-console.log("data", services.closing)
+console.log("data", serviceType)
   return (
     <PageContainer>
   <Hero theme={theme}>

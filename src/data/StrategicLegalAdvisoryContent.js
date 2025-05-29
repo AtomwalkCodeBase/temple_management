@@ -300,7 +300,7 @@ const subServiceContent = {
     service_2: {
       title: "Licensing & IP Agreements",
       subtitle:"Structure Partnerships That Monetize IP and Minimize Risk",
-      description:"Licensing deals, Non-Disclosure Agreements (NDAs), technology transfers, and joint development agreements are the foundation of IP commercialization. Precise drafting, due diligence, and negotiation support ensure that your IP remains protected, properly valued, and legally secure across all collaborations.With well-structured contracts, your IP becomes a secure revenue stream and a tool for strategic collaboration.",
+      description:["Licensing deals, Non-Disclosure Agreements (NDAs), technology transfers, and joint development agreements are the foundation of IP commercialization. Precise drafting, due diligence, and negotiation support ensure that your IP remains protected, properly valued, and legally secure across all collaborations","With well-structured contracts, your IP becomes a secure revenue stream and a tool for strategic collaboration."],
     //   subsections: [
     //     {
     //       heading: "Our Support Services",

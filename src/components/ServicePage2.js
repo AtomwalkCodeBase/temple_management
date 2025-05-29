@@ -53,14 +53,14 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
           
           <ServiceContent>
             {/* Render main description */}
-            {/* {subService.description && subService.subTitle && (
+            {subService.description && subService.subTitle && (
               <Section>
                 <SectionText>{subService.subTitle}</SectionText>
                 <SectionText>{subService.description}</SectionText>
                 <SectionText>{subService.description1}</SectionText>
                 <SectionText>{subService.description2}</SectionText>
               </Section>
-            )} */}
+            )}
             
             {/* Render process section */}
             {subService.process && (

@@ -750,6 +750,14 @@ const NavBar = () => {
         { id: 'nba_approval', name: 'NBA Approval' },
       ]
     },
+
+    // {
+    //   id: 'ip-solutions',
+    //   title: 'IP Solutions',
+    //   subServices: [
+    //     { id: 'patent', name: 'Patent' },
+    //   ]
+    // },
     {
       id: 'ip-lifecycle',
       title: 'IP Lifecycle Management',
@@ -767,13 +775,13 @@ const NavBar = () => {
       title: 'Scientific & Technology Solutions',
       subServices: [
         { id: 'Scientific-&-Technology-Solutions', name: 'Scientific & Technology Solutions' },
-        { id: 'patent-valuations', name: 'Patent Valuations' },
+        // { id: 'patent-valuations', name: 'Patent Valuations' },
         { id: 'drug-discovery', name: 'Drug Discovery and Development' },
-        { id: 'patent-due-diligence', name: 'Patent Due Diligence & Variability Analysis' },
+        // { id: 'patent-due-diligence', name: 'Patent Due Diligence & Variability Analysis' },
         { id: 'clinical-potential', name: 'Assessment of Clinical & Commercial Potential' },
-        { id: 'competitive-landscape', name: 'Competitive Landscape & Industry Trends' },
+        // { id: 'competitive-landscape', name: 'Competitive Landscape & Industry Trends' },
         { id: 'management-consulting', name: 'Management Consulting' },
-        { id: 'market-research', name: 'Market Research' },
+        { id: 'market-research', name: 'Market Research & Industry Trends' },
         { id: 'scientific-writing', name: 'Scientific Writing and Editing' },
         { id: 'non-patent-searches', name: 'Non-Patent Searches and Analysis' }
       ]
@@ -783,14 +791,14 @@ const NavBar = () => {
       title: 'Strategic & Legal Advisory',
       subServices: [
         { id: 'IP-Strategy-Development', name: 'IP Strategy Development' },
-        { id: 'IP-Litigation-&-Enforcement-Support', name: 'IP Litigation & Enforcement Support' },
         { id: 'Licensing-&-IP-Agreements', name: 'Licensing & IP Agreements' },
         { id: 'Cross-Border-IP-Strategy-&-Compliance', name: 'Cross-Border IP Strategy & Compliance' },
         { id: 'Trade-Secret-Protection-&-Confidentiality', name: 'Trade Secret Protection & Confidentiality' },
         { id: 'IP-Exit-Strategy-&-Monetization', name: 'IP Exit Strategy & Monetization' },
         { id: 'Corporate-IP-Governance-&-Risk-Mitigation', name: 'Corporate IP Governance & Risk Mitigation' },
         { id: 'Patent-&-Trademark-Portfolio-Optimization', name: 'Patent & Trademark Portfolio Optimization' },
-        { id: 'Government-and-Policy-Advocacy', name: 'Government and Policy Advocacy' },
+        { id: 'IP-Litigation-&-Enforcement-Support', name: 'IP Litigation & Enforcement Support' },
+        // { id: 'Government-and-Policy-Advocacy', name: 'Government and Policy Advocacy' },
       ]
     },
     {
@@ -810,14 +818,14 @@ const NavBar = () => {
       id: 'IP education and training',
       title: 'IP education and training',
       subServices: [
-        { id: 'Custom-IP-Workshops-for-Teams', name: 'Custom IP Workshops for Teams' },
-        { id: 'IP-Fundamentals-for-Startups-and-Entrepreneurs', name: 'IP Fundamentals for Startups and Entrepreneurs' },
+        { id: 'Custom-IP-Workshops-for-Teams', name: 'IP Workshops for Startups and Entrepreneurs' },
         { id: 'IP-Law-&-Policy-Updates', name: 'IP Law & Policy Updates' },
         { id: 'IP-Management-Best-Practices', name: 'IP Management Best Practices' },
         { id: 'IP-Strategy-for-Product-Development', name: 'IP Strategy for Product Development' },
         { id: 'IP-Commercialization-&-Licensing-Training', name: 'IP Commercialization & Licensing Training' },
         { id: 'IP-Dispute-Resolution-&-Enforcement', name: 'IP Dispute Resolution & Enforcement' },
         { id: 'Sector-Specific-IP-Training', name: 'Sector-Specific IP Training' },
+        // { id: 'IP-Fundamentals-for-Startups-and-Entrepreneurs', name: 'IP Fundamentals for Startups and Entrepreneurs' },
       ]
     }
   ];

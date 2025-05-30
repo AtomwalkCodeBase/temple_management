@@ -15,34 +15,14 @@ const fadeIn = keyframes`
   }
 `;
 
-const slideInLeft = keyframes`
+const slideIn = keyframes`
   from {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translateX(-30px);
   }
   to {
     opacity: 1;
     transform: translateX(0);
-  }
-`;
-
-const scaleIn = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-
-const float = keyframes`
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
   }
 `;
 
@@ -55,420 +35,345 @@ const shimmer = keyframes`
   }
 `;
 
-const gradientShift = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
-
 // Main Container
 const PageContainer = styled.div`
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  position: relative;
-  overflow-x: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-    pointer-events: none;
-  }
+  background: #ffffff;
 `;
 
-// Hero Section
-const HeroSection = styled.section`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+// Header Section - Completely New Design
+const HeaderSection = styled.section`
+  padding: 120px 0 0 0;
+  background: #ffffff;
   position: relative;
-  padding: 120px 0 80px 0;
-  overflow: hidden;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background: linear-gradient(to bottom, transparent, #ffffff);
-  }
 
   @media (max-width: 768px) {
-    min-height: auto;
-    padding: 140px 20px 80px 20px;
+    padding: 100px 0 0 0;
   }
 `;
 
-const HeroContainer = styled.div`
-  max-width: 1400px;
+const HeaderContainer = styled.div`
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 60px;
-  width: 100%;
-  z-index: 2;
-  position: relative;
+  padding: 0 40px;
 
   @media (max-width: 768px) {
     padding: 0 20px;
   }
 `;
 
-const HeroContent = styled.div`
-  text-align: center;
-  animation: ${fadeIn} 1s ease-out;
-  max-width: 900px;
-  margin: 0 auto;
+const BreadcrumbNav = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+  color: #666;
+  animation: ${slideIn} 0.6s ease-out;
+
+  span {
+    color: #999;
+  }
+
+  .current {
+    color: #2563eb;
+    font-weight: 500;
+  }
 `;
 
-const CategoryBadge = styled.div`
+const HeaderContent = styled.div`
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+  animation: ${fadeIn} 0.8s ease-out;
+`;
+
+const CategoryChip = styled.div`
   display: inline-flex;
   align-items: center;
-  padding: 8px 20px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
-  color: white;
-  font-size: 0.85rem;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 30px;
-  animation: ${float} 3s ease-in-out infinite;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
 `;
 
-const HeroTitle = styled.h1`
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 800;
-  color: white;
+const MainTitle = styled.h1`
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  color: #0f172a;
   line-height: 1.1;
-  margin-bottom: 25px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  animation: ${slideInLeft} 1s ease-out 0.2s both;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 `;
 
-const HeroSubtitle = styled.p`
-  font-size: 1.4rem;
-  color: rgba(255, 255, 255, 0.9);
+const Subtitle = styled.p`
+  font-size: 1.25rem;
+  color: #64748b;
   line-height: 1.6;
-  margin-bottom: 40px;
-  font-weight: 300;
-  animation: ${slideInLeft} 1s ease-out 0.4s both;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 32px;
+  font-weight: 400;
 `;
 
-const MetaSection = styled.div`
+const AuthorMeta = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 40px;
-  margin-bottom: 50px;
-  animation: ${fadeIn} 1s ease-out 0.6s both;
+  gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 480px) {
     flex-direction: column;
-    gap: 20px;
-    align-items: center;
+    gap: 16px;
   }
 `;
 
-const MetaCard = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 20px 30px;
-  text-align: center;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  }
+const MetaItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 0.9rem;
 
   .label {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 1px;
     font-weight: 600;
-    margin-bottom: 5px;
+    color: #374151;
   }
 
   .value {
-    font-size: 1.1rem;
-    color: white;
-    font-weight: 600;
+    color: #6b7280;
   }
 `;
 
-const HeroImageContainer = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
+const FeaturedImageContainer = styled.div`
   position: relative;
-  animation: ${scaleIn} 1s ease-out 0.8s both;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-    border-radius: 30px;
-    filter: blur(20px);
-    z-index: -1;
-  }
+  margin-bottom: 80px;
+  animation: ${fadeIn} 0.8s ease-out 0.2s both;
 `;
 
-const HeroImage = styled.img`
+const FeaturedImage = styled.img`
   width: 100%;
   height: 500px;
   object-fit: cover;
-  border-radius: 24px;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.4s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-
-  &:hover {
-    transform: scale(1.02);
-    box-shadow: 
-      0 30px 60px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 
   @media (max-width: 768px) {
     height: 300px;
+    border-radius: 12px;
+  }
+`;
+
+const ImageOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border-radius: 16px;
+
+  @media (max-width: 768px) {
+    border-radius: 12px;
   }
 `;
 
 // Content Section
 const ContentSection = styled.section`
   background: #ffffff;
-  position: relative;
-  z-index: 3;
-  min-height: 100vh;
+  padding-bottom: 100px;
 `;
 
 const ContentContainer = styled.div`
-  max-width: 900px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 100px 60px;
+  padding: 0 40px;
 
   @media (max-width: 768px) {
-    padding: 80px 20px;
+    padding: 0 20px;
   }
 `;
 
-const ContentBlock = styled.div`
-  margin-bottom: 80px;
-  animation: ${fadeIn} 0.8s ease-out;
+const ArticleSection = styled.div`
+  margin-bottom: 48px;
+  animation: ${fadeIn} 0.6s ease-out;
 
   &:last-child {
     margin-bottom: 0;
   }
 `;
 
-const SectionTitle = styled.h2`
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 16px;
+const SectionHeading = styled.h2`
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 10px;
+  line-height: 1.3;
   position: relative;
-  line-height: 1.2;
+  padding-bottom: 12px;
 
   &::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: 0;
     left: 0;
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
     border-radius: 2px;
   }
 
   @media (max-width: 768px) {
-    font-size: 2.2rem;
+    font-size: 1.75rem;
   }
 `;
 
-const SectionSubtitle = styled.h3`
-  font-size: 2rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin: 50px 0 25px 0;
-  line-height: 1.3;
-  position: relative;
-  padding-left: 20px;
+const SubHeading = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 36px 0 20px 0;
+  line-height: 1.4;
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 4px;
-    height: 40px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 2px;
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+`;
+
+const ArticleParagraph = styled.p`
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #374151;
+  margin-bottom: 24px;
+  text-align: justify;
+
+  &.lead-paragraph {
+    font-size: 1.2rem;
+    color: #1f2937;
+    font-weight: 400;
+    
+    &::first-letter {
+      font-size: 3.5rem;
+      font-weight: 800;
+      float: left;
+      line-height: 1;
+      margin: 4px 12px 0 0;
+      color: #2563eb;
+      font-family: 'Georgia', serif;
+    }
   }
 
   @media (max-width: 768px) {
-    font-size: 1.6rem;
-    padding-left: 16px;
+    font-size: 1rem;
+    text-align: left;
     
-    &::before {
-      height: 32px;
-      top: 6px;
+    &.lead-paragraph::first-letter {
+      font-size: 2.8rem;
+      margin: 2px 8px 0 0;
     }
   }
 `;
 
-const StyledParagraph = styled.p`
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #444444;
-  margin-bottom: 30px;
-  text-align: justify;
-  font-weight: 400;
-  
-  &:first-letter {
-    font-size: 3.5rem;
-    font-weight: 700;
-    float: left;
-    line-height: 1;
-    margin: 8px 8px 0 0;
-    color: #667eea;
-    font-family: serif;
-  }
-`;
-
-const RegularParagraph = styled.p`
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #444444;
-  margin-bottom: 30px;
-  text-align: justify;
-  font-weight: 400;
-`;
-
-const ModernList = styled.ul`
-  margin: 40px 0;
+const BulletList = styled.ul`
+  margin: 10px 0;
   padding: 0;
   list-style: none;
 
   li {
     position: relative;
-    padding: 20px 0 20px 60px;
-    margin-bottom: 16px;
-    font-size: 1.2rem;
+    padding: 12px 0 12px 32px;
+    margin-bottom: 8px;
+    font-size: 1.125rem;
     line-height: 1.7;
-    color: #444444;
-    background: #f8f9ff;
-    border-radius: 16px;
-    border-left: 4px solid #667eea;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+    color: #374151;
 
     &::before {
       content: '';
       position: absolute;
-      left: 20px;
-      top: 28px;
-      width: 12px;
-      height: 12px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      left: 0;
+      top: 20px;
+      width: 6px;
+      height: 6px;
+      background: #2563eb;
       border-radius: 50%;
-      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
     }
+  }
 
-    &:hover {
-      transform: translateX(8px);
-      background: #f0f2ff;
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+  @media (max-width: 768px) {
+    margin: 24px 0;
+    
+    li {
+      font-size: 1rem;
     }
   }
 `;
 
-const ModernOrderedList = styled.ol`
-  margin: 40px 0;
+const NumberedList = styled.ol`
+  margin: 32px 0;
   padding: 0;
   list-style: none;
-  counter-reset: step-counter;
+  counter-reset: list-counter;
 
   li {
-    counter-increment: step-counter;
+    counter-increment: list-counter;
     position: relative;
-    padding: 25px 25px 25px 80px;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+    padding: 16px 0 16px 50px;
+    margin-bottom: 12px;
+    font-size: 1.125rem;
     line-height: 1.7;
-    color: #444444;
-    background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
-    border: 1px solid rgba(102, 126, 234, 0.1);
+    color: #374151;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding-right: 20px;
 
     &::before {
-      content: counter(step-counter);
+      content: counter(list-counter);
       position: absolute;
-      left: 20px;
-      top: 20px;
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      left: 16px;
+      top: 16px;
+      width: 24px;
+      height: 24px;
+      background: #2563eb;
       color: white;
-      border-radius: 12px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      font-weight: 600;
+      font-size: 0.875rem;
     }
+  }
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.2);
-      background: linear-gradient(135deg, #f0f2ff 0%, #e8ebff 100%);
+  @media (max-width: 768px) {
+    margin: 24px 0;
+    
+    li {
+      font-size: 1rem;
+      padding-left: 45px;
     }
   }
 `;
 
-const ContentImage = styled.img`
+const ArticleImage = styled.img`
   width: 100%;
-  max-width: 100%;
   height: auto;
-  border-radius: 20px;
-  margin: 50px 0;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  transition: all 0.4s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-
-  &:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
-  }
+  border-radius: 12px;
+  margin: 40px 0;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 `;
 
 // Loading States
@@ -478,18 +383,17 @@ const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #f8fafc;
 `;
 
 const LoadingSpinner = styled.div`
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(255, 255, 255, 0.2);
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
   border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s linear infinite;
-  margin-bottom: 30px;
+  border-top-color: #2563eb;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 20px;
 
   @keyframes spin {
     to { transform: rotate(360deg); }
@@ -497,15 +401,14 @@ const LoadingSpinner = styled.div`
 `;
 
 const LoadingText = styled.p`
-  font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.9);
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 25%, white 50%, rgba(255, 255, 255, 0.7) 75%);
+  font-size: 1rem;
+  color: #64748b;
+  background: linear-gradient(90deg, #9ca3af 25%, #6b7280 50%, #9ca3af 75%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: ${shimmer} 2s infinite;
-  font-weight: 300;
+  animation: ${shimmer} 1.5s infinite;
 `;
 
 const ErrorContainer = styled.div`
@@ -514,21 +417,20 @@ const ErrorContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #f8fafc;
   text-align: center;
   padding: 0 20px;
 
   h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 1.875rem;
+    color: #1f2937;
+    margin-bottom: 12px;
     font-weight: 700;
   }
 
   p {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 300;
+    font-size: 1rem;
+    color: #6b7280;
   }
 `;
 
@@ -540,7 +442,7 @@ const BlogDetail = () => {
     return (
       <LoadingContainer>
         <LoadingSpinner />
-        <LoadingText>Loading amazing content...</LoadingText>
+        <LoadingText>Loading article...</LoadingText>
       </LoadingContainer>
     );
   }
@@ -548,7 +450,7 @@ const BlogDetail = () => {
   if (error) {
     return (
       <ErrorContainer>
-        <h2>Oops! Something went wrong</h2>
+        <h2>Unable to load article</h2>
         <p>{error}</p>
       </ErrorContainer>
     );
@@ -557,8 +459,8 @@ const BlogDetail = () => {
   if (!blog || !blogContent) {
     return (
       <ErrorContainer>
-        <h2>Content Not Found</h2>
-        <p>The blog post you're looking for doesn't exist.</p>
+        <h2>Article not found</h2>
+        <p>The article you're looking for doesn't exist or has been removed.</p>
       </ErrorContainer>
     );
   }
@@ -566,27 +468,29 @@ const BlogDetail = () => {
   const renderContent = (content, isFirst = false) => {
     switch (content.type) {
       case 'paragraph':
-        return isFirst ? 
-          <StyledParagraph>{content.data}</StyledParagraph> :
-          <RegularParagraph>{content.data}</RegularParagraph>;
+        return (
+          <ArticleParagraph className={isFirst ? 'lead-paragraph' : ''}>
+            {content.data}
+          </ArticleParagraph>
+        );
       case 'bullets':
         return (
-          <ModernList>
+          <BulletList>
             {content.data.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
-          </ModernList>
+          </BulletList>
         );
       case 'steps':
         return (
-          <ModernOrderedList>
+          <NumberedList>
             {content.data.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
-          </ModernOrderedList>
+          </NumberedList>
         );
       case 'image':
-        return <ContentImage src={content.data} alt="" />;
+        return <ArticleImage src={content.data} alt="" />;
       default:
         return null;
     }
@@ -594,36 +498,37 @@ const BlogDetail = () => {
 
   return (
     <PageContainer>
-      <HeroSection>
-        <HeroContainer>
-          <HeroContent>
-            <CategoryBadge>{blog.category}</CategoryBadge>
-            <HeroTitle>{blogContent.header.title}</HeroTitle>
-            <HeroSubtitle>{blogContent.header.tagline}</HeroSubtitle>
+      <HeaderSection>
+        <HeaderContainer>
+          <HeaderContent>
+            <CategoryChip>{blog.category}</CategoryChip>
+            <MainTitle>{blogContent.header.title}</MainTitle>
+            <Subtitle>{blogContent.header.tagline}</Subtitle>
             
-            <MetaSection>
-              <MetaCard>
-                <div className="label">Published</div>
-                <div className="value">{blog.date}</div>
-              </MetaCard>
-            </MetaSection>
+            <AuthorMeta>
+              <MetaItem>
+                <span className="label">Published:</span>
+                <span className="value">{blog.date}</span>
+              </MetaItem>
+            </AuthorMeta>
+          </HeaderContent>
 
-            <HeroImageContainer>
-              <HeroImage
-                src={blogContent.header.coverImage}
-                alt={blogContent.header.title}
-              />
-            </HeroImageContainer>
-          </HeroContent>
-        </HeroContainer>
-      </HeroSection>
+          <FeaturedImageContainer>
+            <FeaturedImage
+              src={blogContent.header.coverImage}
+              alt={blogContent.header.title}
+            />
+            <ImageOverlay />
+          </FeaturedImageContainer>
+        </HeaderContainer>
+      </HeaderSection>
 
       <ContentSection>
         <ContentContainer>
           {blogContent.sections.map((section, sectionIndex) => (
-            <ContentBlock key={sectionIndex}>
-              {section.title && <SectionTitle>{section.title}</SectionTitle>}
-              {section.subtitle && <SectionSubtitle>{section.subtitle}</SectionSubtitle>}
+            <ArticleSection key={sectionIndex}>
+              {section.title && <SectionHeading>{section.title}</SectionHeading>}
+              {section.subtitle && <SubHeading>{section.subtitle}</SubHeading>}
               <div>
                 {section.contents.map((content, contentIndex) => (
                   <div key={contentIndex}>
@@ -631,7 +536,7 @@ const BlogDetail = () => {
                   </div>
                 ))}
               </div>
-            </ContentBlock>
+            </ArticleSection>
           ))}
         </ContentContainer>
       </ContentSection>

@@ -808,6 +808,7 @@ const Herosection = () => {
   };
 
   const handleServiceClick = (service) => {
+    console.log("service", service)
     const serviceToPathMap = {
       // IP Solutions
       "Patent":"/Patent",
@@ -815,7 +816,7 @@ const Herosection = () => {
       "Industrial Design": "/design",
       "Copyright": "/copyright",
       "Geographical Indication": "/geographical-indication",
-      "nba_approval": "/nba_approval",
+      "National Biodiversity Authority(NBA) Approval": "/nba_approval",
       // IP Lifecycle Management
       "IP Audit of the Company": "/ip-audit",
       "IP Policy and Process Setup": "/ip-policy",
@@ -838,6 +839,7 @@ const Herosection = () => {
     };
 
     const path = serviceToPathMap[service];
+    console.log("path", path)
     if (path) {
       navigate(path);
     } else {

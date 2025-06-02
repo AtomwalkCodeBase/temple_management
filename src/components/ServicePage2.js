@@ -38,12 +38,12 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
       <ServicesContainer>
         <ServiceCard id={subServiceId}>
 
-          {subService.subTitle && subService.description && (
+          {/* {subService.subTitle && subService.description && (
             <div style={{marginLeft: "20px"}}>
           <SectionSubtitle >{subService.subTitle} </SectionSubtitle>
            <SectionText style={{marginLeft: "10px"}}>{subService.description}</SectionText>
            </div>
-          )}
+          )} */}
 
 
           <ServiceHeader theme={theme}>

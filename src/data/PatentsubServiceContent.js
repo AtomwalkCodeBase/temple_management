@@ -10,7 +10,7 @@ const subServiceContent = {
     title: "Patent",
     subtitle: "Secure What Sets You Apart",
     description:[
-      "At every stage of innovation, securing intellectual property is critical to long-term success. With a focus on both legal strength and strategic positioning, LifeIntelect delivers end-to-end patent services—from early assessment and drafting to global filings and enforcement. Businesses and innovators gain more than protection; they unlock the commercial value of their ideas through a framework designed for growth, compliance, and competitive edge.",
+      "At every stage of innovation, securing intellectual property is critical to long-term success. with a focus on both legal strength and strategic positioning, LifeIntelect delivers end-to-end patent services—from early assessment and drafting to global filings and enforcement. Businesses and innovators gain more than protection; they unlock the commercial value of their ideas through a framework designed for growth, compliance, and competitive edge.",
       "Innovation deserves more than just recognition—it requires legal protection and strategic positioning. Patent protection acts as a powerful business tool, safeguarding competitive advantage and enhancing investor appeal across markets."],
     patent_info: {
       title: "What is a Patent and Why Patents Matter for Business?",
@@ -492,7 +492,7 @@ copyright: {
             "description": "Tailored application drafting based on content type and jurisdiction."
           },
           {
-            "description": "Procedural compliance With Indian and global copyright frameworks."
+            "description": "Procedural compliance with Indian and global copyright frameworks."
           },
           {
             "description": "Documentation accuracy to reduce rejections and delays."
@@ -654,14 +654,14 @@ copyright: {
         manualHeading: "What Strategic Search Involves:",
         types: [
           {
-            description: "Comprehensive checks Across Indian and international trademark databases.",
+            description: "Comprehensive checks across Indian and International trademark databases.",
           },
           {
             
-            description: "Conflict analysis With existing or similar marks.",
+            description: "Conflict analysis with existing or similar marks.",
           },
           {
-            description: "Trademark registrability opinion With actionable insights.",
+            description: "Trademark registrability opinion with actionable insights.",
           },
           {
             description: "Legal risk assessment To flag potential oppositions or challenges.",
@@ -671,7 +671,7 @@ copyright: {
     },
     service_2: {
       title: "Trademark Filing & Registration",
-      subtitle: "File With Confidence. Register With Precision.", 
+      subtitle: "File With Confidence. Register with Precision.", 
       description:
         "A well-prepared application is key to smooth approval and long-term protection.",
       typesSection: {
@@ -707,7 +707,7 @@ copyright: {
             description: "Compilation of evidence arguments, and clarifications.",
           },
           {
-            description: "Communication With trademark authorities.",
+            description: "Communication with trademark authorities.",
           },
           {
             description: "Trademark renewal tracking and timely filings.",
@@ -767,10 +767,10 @@ copyright: {
             description: "Monitoring of trademark registries and digital platforms.",
           },
           {
-            description: "Early identification Of similar or infringing marks.",
+            description: "Early identification of similar or infringing marks.",
           },
           {
-            description: "Legal action planningOppositions, cease-and-desist, or litigation.",
+            description: "Legal action planning: oppositions, cease-and-desist, or litigation",
           },
         ],
       },
@@ -895,7 +895,7 @@ copyright: {
 },
 
 nba_approval: {
-  title: "NBA (National Biodiversity Authority) Approval",
+  title: "NATIONAL BIODIVERSITY AUTHORITY (NBA) APPROVAL",
   subtitle:"Ensure Compliance. Protect Innovation. Advance Ethically. ",
   description:[
     "When innovation draws from India’s biological wealth — be it plants, microorganisms, or traditional knowledge — NBA (National Biodiversity Authority) approval becomes more than a formality. It is a legal mandate under the Biological Diversity Act, 2023, and a foundational step in safeguarding ethical and compliant IP protection.",

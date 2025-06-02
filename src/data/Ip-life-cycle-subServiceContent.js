@@ -158,6 +158,29 @@ const subServiceContent = {
 		  closing:
 			"Lifeintelect’s IP audit service is designed to give you a clear understanding of your intellectual property landscape, allowing you to make informed decisions and maximize the value of your IP assets. Ready to audit your IP with Lifeintelect? Let's get started!",
 		},
+		ipLandscape:{
+		title: "IP Landscape & Market Intelligence",
+		subHeading: "IP Landscape & Market Intelligence",
+      subTitle: "Act with Insight. Compete with Confidence.",
+      description:"Informed decisions start with understanding who’s innovating, what’s protected, and where opportunities or threats lie.",
+      processTitle: "What Market Clarity Looks Like:",
+      process: [
+        {
+          description:
+            "Patent analytics and competitor IP mapping for strategic positioning",
+        },
+        {
+          description:"Identification of emerging players, partners, or acquisition targets",
+        },
+        {
+          description: "Regulatory insights to navigate compliance across jurisdictions",
+        },
+        {
+          description: "Citation and innovation trend analysis for technology benchmarking",
+        },
+      ],
+      closing:"Make every move with clarity, confidence, and competitive foresight.",	
+		},
 		ipPolicy: {
 		  title: "IP Policy and Process Setup",
 		  description:
@@ -194,6 +217,29 @@ const subServiceContent = {
 		  closing:
 			"We compile a comprehensive IP policy document and process manual, providing clear guidelines and step-by-step procedures. Lifeintelect’s IP policy and process setup service ensures that your intellectual property is well-protected and efficiently managed, giving you a strategic advantage in the market. Ready to establish a strong IP framework with Lifeintelect? Let's get started!",
 		},
+		ipResearch: {
+      title: "IP-Based Research & Commercial Strategy",
+      subHeading: "IP-Based Research & Commercial Strategy",
+      subTitle: "Bridge Innovation and Market Success.",
+      description:"Strategic planning around IP assets turns potential into performance—by translating ownership into commercial outcomes.",
+      processTitle: "Strategy That Converts:",
+      process: [
+        {
+          description:
+            "In-depth market research to identify unmet demand and niche potential",
+        },
+        {
+          description:"Shortlisting of prospective licensees, acquirers, or JV partners",
+        },
+        {
+          description: "Messaging and value proposition creation for tech transfer or partnerships",
+        },
+        {
+          description: "Advisory support through deal structuring and closure",
+        },
+      ],
+      closing:"IP isn’t just protected—it’s positioned to perform.",
+    },
 		ipPortfolio: {
 		  title: "IP Portfolio Management",
 		  description:

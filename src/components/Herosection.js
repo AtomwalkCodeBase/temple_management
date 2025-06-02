@@ -855,12 +855,14 @@ const Herosection = () => {
       "IP Policy and Process Setup": "/ip-policy",
       "IP Portfolio Management": "/ip-portfolio",
       "IP Landscape": "/ip-landscape",
-      "IP Research and Strategy Development": "",
+      "IP-Based Research & Commercial Strategy":"/ip-research",
       // Scientific and Technology Solutions
       "Technology Transfer": "/ipcommercial",
       "Patent Valuation": "/patent-valuations",
       "Patent Due Diligence & Variability Analysis": "/patent-due-diligence",
-      "Competitive Landscape & Industry Trends": "/competitive-landscape",
+      // "Competitive Landscape & Industry Trends": "/competitive-landscape",
+      "Patent Landscaping Report": "/competitive-landscape",
+      "Post-Transfer Support": "/post-transfer",
       // Strategy & Advisory (Startups)
       "IP Strategy & Roadmap for Startups": "/IP-Strategy-&-Roadmap-for-Startups",
       "Cost-Effective IP Protection": "/Cost-Effective-IP-Protection",
@@ -974,7 +976,7 @@ const Herosection = () => {
         "IP Policy and Process Setup",
         "IP Portfolio Management",
         "IP Landscape",
-        "IP Research and Strategy Development",
+        "IP-Based Research & Commercial Strategy"
       ],
       imageIdea: "Flowchart or lifecycle diagram of IP management.",
     },

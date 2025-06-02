@@ -151,6 +151,27 @@ const subServiceContent = {
       ],
       closing:"Technology transfer doesn’t end with a signature—it begins a partnership",
     },
+     subServices: {
+        postTransfer: {
+      title: "Post-Transfer Support",
+      subHeading: "Post-Transfer Support",
+      subTitle: "Ensure Seamless Integration. Build Long-Term Value.",
+      description:"After the deal, continued engagement ensures a smooth transition and protects the integrity of the technology.",
+      processTitle: "Ongoing Support Includes:",
+      process: [
+         {
+            description:"Training for licensees and acquirers to integrate IP effectively",
+          },
+           {
+            description:"Troubleshooting and assistance during operational adoption",
+          },
+           {
+            description:"Relationship management to preserve long-term trust and collaboration",
+          },
+      ],
+      closing:"Technology transfer doesn’t end with a signature—it begins a partnership",
+    },
+         },
   },
 };
 

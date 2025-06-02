@@ -770,9 +770,11 @@ const NavBar = () => {
         { id: 'ip-audit', name: 'IP Audit of the Company' },
         { id: 'ip-policy', name: 'IP Policy and Process Setup' },
         { id: 'ip-portfolio', name: 'IP Portfolio Management' },
-        { id: 'ip-valuation', name: 'IP Valuation' },
-        { id: 'technology-transfer', name: 'Technology Transfer' },
-        { id: 'analysis-diligence', name: 'Analysis and Due Diligence' },
+        { id: 'ip-landscape', name: 'IP Landscape' },
+        { id: 'ip-research', name: 'IP-Based Research & Commercial Strategy' },
+        // { id: 'ip-valuation', name: 'IP Valuation' },
+        // { id: 'technology-transfer', name: 'Technology Transfer' },
+        // { id: 'analysis-diligence', name: 'Analysis and Due Diligence' },
       ]
     },
     {
@@ -830,6 +832,20 @@ const NavBar = () => {
         { id: 'IP-Commercialization-&-Licensing-Training', name: 'IP Commercialization & Licensing Training' },
         { id: 'IP-Dispute-Resolution-&-Enforcement', name: 'IP Dispute Resolution & Enforcement' },
         { id: 'Sector-Specific-IP-Training', name: 'Sector-Specific IP Training' },
+        // { id: 'IP-Fundamentals-for-Startups-and-Entrepreneurs', name: 'IP Fundamentals for Startups and Entrepreneurs' },
+      ]
+    },
+    {
+      id: 'IP Commercialization & Tech Transfer',
+      title: 'IP Commercialization & Tech Transfer',
+      subServices: [
+        { id: 'post-transfer', name: 'Technology Transfer' },
+        { id: 'patent-valuations', name: 'Patent Valuation' },
+        { id: 'patent-due-diligence', name: 'Patent Due Diligence & Variability Analysis' },
+        { id: 'competitive-landscape', name: 'Patent Landscaping Report' },
+        { id: 'post-transfer', name: 'Post-Transfer Support' },
+        // { id: 'IP-Dispute-Resolution-&-Enforcement', name: 'IP Dispute Resolution & Enforcement' },
+        // { id: 'Sector-Specific-IP-Training', name: 'Sector-Specific IP Training' },
         // { id: 'IP-Fundamentals-for-Startups-and-Entrepreneurs', name: 'IP Fundamentals for Startups and Entrepreneurs' },
       ]
     }

@@ -199,7 +199,12 @@ const MenuItemWrapper = styled.div`
 `;
 
 const MenuItem = styled.a`
-  color: ${props => props.isScrolled ? '#333' : '#333'};
+  color: ${props =>
+    props.forceBlackText
+      ? '#fff'
+      : props.isScrolled
+      ? '#222'
+      : '#222'};
   font-size: ${props => props.isScrolled ? '16px' : '18px'};
   font-weight: 600;
   letter-spacing: 1px;
@@ -863,6 +868,9 @@ const NavBar = () => {
     { id: 'resources', label: 'Resources' }
   ];
 
+  const forceWhiteTextPages = ['/', '/about'];
+  const forceBlackText = isScrolled ? false : forceWhiteTextPages.some(path => window.location.pathname === path);
+
   const navigateTo = (path) => {
     window.location.href = `/${path}`;
     setShowServicesDropdown(false);
@@ -906,6 +914,7 @@ const NavBar = () => {
               <MenuItem 
                 isScrolled={isScrolled}
                 index={index}
+                forceBlackText={forceBlackText}
                 data-menu-item={item.id}
                 onClick={() => {
                   if (item.id === 'services') {

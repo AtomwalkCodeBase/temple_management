@@ -664,6 +664,7 @@ const Herosection = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [popupData, setPopupData] = useState(null);
   const navigate = useNavigate();
+  const [showNavBar, setShowNavBar] = useState(false);
 
   useEffect(() => {
     const observerOptions = {
@@ -767,6 +768,37 @@ const Herosection = () => {
       observer.observe(splitSectionRef.current);
     }
 
+    // Show NavBar only between carousel and section3
+    const firstSection = carouselRef.current;
+    const lastSection = sectionRefs.current[2]; // section3
+
+    let navBarRangeObserver;
+    if (firstSection && lastSection) {
+      navBarRangeObserver = new IntersectionObserver(
+        (entries) => {
+          let firstVisible = false;
+          let lastVisible = false;
+          entries.forEach((entry) => {
+            if (entry.target === firstSection) firstVisible = entry.isIntersecting;
+            if (entry.target === lastSection) lastVisible = entry.isIntersecting && entry.intersectionRatio >= 0.1;
+          });
+          // Show NavBar if user is between firstSection and lastSection (inclusive)
+          if (
+            firstVisible ||
+            lastVisible ||
+            (window.scrollY >= firstSection.offsetTop && window.scrollY <= lastSection.offsetTop + lastSection.offsetHeight)
+          ) {
+            setShowNavBar(true);
+          } else {
+            setShowNavBar(false);
+          }
+        },
+        { threshold: [0, 0.1] }
+      );
+      navBarRangeObserver.observe(firstSection);
+      navBarRangeObserver.observe(lastSection);
+    }
+
     return () => {
       if (carouselRef.current) {
         observer.unobserve(carouselRef.current);
@@ -783,6 +815,8 @@ const Herosection = () => {
       if (splitSectionRef.current) {
         observer.unobserve(splitSectionRef.current);
       }
+      if (navBarRangeObserver && firstSection) navBarRangeObserver.unobserve(firstSection);
+      if (navBarRangeObserver && lastSection) navBarRangeObserver.unobserve(lastSection);
     };
   }, []);
 
@@ -808,11 +842,10 @@ const Herosection = () => {
   };
 
   const handleServiceClick = (service) => {
-    console.log("service", service)
     const serviceToPathMap = {
       // IP Solutions
-      "Patent":"/Patent",
-      "Trademark":"/Trademark",
+      "Patent": "/Patent",
+      "Trademark": "/Trademark",
       "Industrial Design": "/design",
       "Copyright": "/copyright",
       "Geographical Indication": "/geographical-indication",
@@ -822,7 +855,7 @@ const Herosection = () => {
       "IP Policy and Process Setup": "/ip-policy",
       "IP Portfolio Management": "/ip-portfolio",
       "IP Landscape": "/ip-landscape",
-      "IP Research and Strategy Development":"",
+      "IP Research and Strategy Development": "",
       // Scientific and Technology Solutions
       "Technology Transfer": "/ipcommercial",
       "Patent Valuation": "/patent-valuations",
@@ -839,7 +872,6 @@ const Herosection = () => {
     };
 
     const path = serviceToPathMap[service];
-    console.log("path", path)
     if (path) {
       navigate(path);
     } else {
@@ -942,7 +974,7 @@ const Herosection = () => {
         "IP Policy and Process Setup",
         "IP Portfolio Management",
         "IP Landscape",
-        "IP Research and Strategy Development"
+        "IP Research and Strategy Development",
       ],
       imageIdea: "Flowchart or lifecycle diagram of IP management.",
     },
@@ -955,7 +987,7 @@ const Herosection = () => {
         "Patent Valuation",
         "Patent Due Diligence & Variability Analysis",
         "Post-Transfer Support",
-        "Patent Landscaping Report"
+        "Patent Landscaping Report",
       ],
       imageIdea: "A bird mid-flight carrying a twig between two different trees.",
     },
@@ -976,29 +1008,31 @@ const Herosection = () => {
   ];
 
   return (
-    <div style={{backgroundColor:"#8E2D8D"}}>
+    <div style={{ backgroundColor: "#8E2D8D" }}>
       <CarouselWrapper ref={carouselRef}>
         <Carousel1 />
       </CarouselWrapper>
-      <NavBar isOpen={isOpen}>
-        {navItems.map((item) => (
-          <NavItem
-            key={item.id}
-            active={activeSection === item.id}
-            onClick={() => {
-              scrollToSection(item.id);
-              setIsOpen(false);
-            }}
-            aria-label={`Navigate to ${item.label}`}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && scrollToSection(item.id)}
-          >
-            {item.icon}
-            <Tooltip>{item.label}</Tooltip>
-          </NavItem>
-        ))}
-      </NavBar>
+      {showNavBar && (
+        <NavBar isOpen={isOpen} activeSection={activeSection}>
+          {navItems.map((item) => (
+            <NavItem
+              key={item.id}
+              active={activeSection === item.id}
+              onClick={() => {
+                scrollToSection(item.id);
+                setIsOpen(false);
+              }}
+              aria-label={`Navigate to ${item.label}`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && scrollToSection(item.id)}
+            >
+              {item.icon}
+              <Tooltip>{item.label}</Tooltip>
+            </NavItem>
+          ))}
+        </NavBar>
+      )}
 
       {/* New Split Section Implementation */}
       <SplitSection ref={splitSectionRef} id="ip-solutions">
@@ -1018,23 +1052,23 @@ const Herosection = () => {
           </IPCTAButton>
         </LeftPanel>
         <RightPanel ref={rightPanelRef}>
-  <CardGrid ref={cardGridRef} className="visible">
-    {cards.map((card, i) => (
-      <Card 
-        key={i}
-        ref={el => cardRefs.current[i] = el}
-        className="visible"
-        onClick={() => openPopup(featureData[i])}
-      >
-        <CardImage className="card-image" image={card.image} />
-        <CardContent>
-          <CardIcon>{card.icon}</CardIcon>
-          <CardTitle>{card.title}</CardTitle>
-        </CardContent>
-      </Card>
-    ))}
-  </CardGrid>
-</RightPanel>
+          <CardGrid ref={cardGridRef} className="visible">
+            {cards.map((card, i) => (
+              <Card
+                key={i}
+                ref={(el) => (cardRefs.current[i] = el)}
+                className="visible"
+                onClick={() => openPopup(featureData[i])}
+              >
+                <CardImage className="card-image" image={card.image} />
+                <CardContent>
+                  <CardIcon>{card.icon}</CardIcon>
+                  <CardTitle>{card.title}</CardTitle>
+                </CardContent>
+              </Card>
+            ))}
+          </CardGrid>
+        </RightPanel>
       </SplitSection>
 
       {sections.map((section, index) => (

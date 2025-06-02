@@ -152,7 +152,12 @@ const ipLifecycleRoutes = [
   { path: '/ip-valuation', type: 'ipLifeCycleManagement', id: 'ipValuation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
   { path: '/technology-transfer', type: 'ipLifeCycleManagement', id: 'technologyTransfer', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
   { path: '/ip-education', type: 'ipLifeCycleManagement', id: 'ipEducation', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
+  { path: '/ip-research', type: 'ipLifeCycleManagement', id: 'ipResearch', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
+
   { path: '/analysis-diligence', type: 'ipLifeCycleManagement', id: 'ipAnalysis', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
+  { path: '/ip-landscape', type: 'ipLifeCycleManagement', id: 'ipLandscape', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
+    { path: '/ip-research-strategy', type: 'ipLifeCycleManagement', id: 'ip-research-strategy', content: subServiceContent2, theme: themes.ipLifeCycleManagement, component: ServicePage2 },
+
 ];
 
 const scientificRoutes = [
@@ -166,6 +171,15 @@ const scientificRoutes = [
   { path: '/market-research', type: 'scientificTechnology', id: 'marketResearch', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
   { path: '/scientific-writing', type: 'scientificTechnology', id: 'scientificWritingEditing', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
   { path: '/non-patent-searches', type: 'scientificTechnology', id: 'nonPatentSearches', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
+];
+
+const CommercializationRoutes = [
+  // { path: '/patent-valuations', type: 'scientificTechnology', id: 'patentValuations', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
+  // { path: '/IP-Commercialization-&-Licensing-Training', type: 'ipEducationTraining', id: 'ipCommercializationLicensing', content: IpEducationTraining, theme: themes.ipEducationTraining, component: ServicePage },
+  // { path: '/patent-due-diligence', type: 'scientificTechnology', id: 'patentDueDiligence', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
+  { path: '/competitive-landscape', type: 'scientificTechnology', id: 'competitiveLandscape', content: Scientific, theme: themes.scientificTechnology, component: ServicePage2 },
+  { path: '/post-transfer', type: 'ipCommercial', id: 'postTransfer', content: IpCommercial, theme: themes.scientificTechnology, component: ServicePage2 },
+
 ];
 
 const strategicRoutes = [
@@ -313,6 +327,20 @@ function App() {
 
           {/* IP Education and Training */}
           {educationRoutes.map(({ path, type, id, content, theme, component: Component }) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <Component
+                  serviceType={type}
+                  subServiceId={id}
+                  theme={theme}
+                  subServiceContent={content}
+                />
+              }
+            />
+          ))}
+          {CommercializationRoutes.map(({ path, type, id, content, theme, component: Component }) => (
             <Route
               key={path}
               path={path}

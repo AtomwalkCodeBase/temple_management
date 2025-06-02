@@ -244,7 +244,7 @@ export default function FullscreenCarousel() {
 		src: Ptent2,
 		author: 'LIFEINTELECT',
 		// title: 'Copyright Services',
-		topic: 'For Thoughts to Thrive let us help Nurture your Idea.',
+		topic: 'For Thoughts to Thrive, let us help Nurture your Idea.',
 		// description:
 		//   'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
 	  },
@@ -252,7 +252,7 @@ export default function FullscreenCarousel() {
 		src: Ptent3,
 		author: 'LIFEINTELECT',
 		// title: 'Trademark Service',
-		topic: 'Design with Inovation, Strengthen with Protection.',
+		topic: 'Design with Innovation, Strengthen with Protection.',
 		// description:
 		//   'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
 	  },

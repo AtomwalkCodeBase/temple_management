@@ -326,7 +326,7 @@ const subServiceContent = {
 			  description:"Trade secret protocols and internal confidentiality safeguards",
 			},
 			{
-				description:"•	Ownership clarity through proper inventor documentation and IP assignments",
+				description:"Ownership clarity through proper inventor documentation and IP assignments",
 			}
 		  ],
 		  closing:"Mitigate risk before it scales—and protect your competitive edge.",

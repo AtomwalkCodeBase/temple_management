@@ -778,8 +778,8 @@ const TestimonialAndCustomersPage = () => {
     },
     {
       text: "Total Solutions, established in 1995, specializes in accounting and indirect taxation, providing comprehensive solutions with flexibility, precision, and quick responses. We have utilized Dr. Lipika Sahoo's expertise for trademark registrations, benefiting from her in-depth knowledge and professional approach. Our clients have consistently expressed satisfaction with her services. We highly recommend Dr. Lipika Sahoo and LifeIntelect Consultancy for their exceptional trademark services.",
-      name: "Total Solutions",
-      position: "Representative, Total Solutions",
+      name: "Padmanabhan Gayatri",
+      position: "Director, Total Solutions",
       stars: 5,
     },
     {
@@ -791,7 +791,7 @@ const TestimonialAndCustomersPage = () => {
     {
       text: "At RAAGA, we focus on providing top-quality construction solutions within committed timelines, driven by customer satisfaction and long-term relationships. We are pleased to certify the excellent service offered by Dr. Lipika Sahoo for our trademark registration. Dr. Lipika is a thorough expert in this field and provides hassle-free solutions. She diligently followed up with the authorities and kept us informed about the various stages of the logo registration process. It was indeed special to have our first trademark done, thanks to Dr. Lipika Sahoo. We have no hesitation in recommending her to our contacts and wish her continued success in her career.",
       name: "Ranganath Kuntumalla",
-      position: "Representative, RAAGA Constructions",
+      position: "Director, RAAGA Construction",
       stars: 5,
     },
     {
@@ -829,14 +829,14 @@ const TestimonialAndCustomersPage = () => {
     },
     {
       text: "At Kanika - The Jewellery Boutique, we believe in creating unique and customized gold and diamond jewels. I had the privilege of working with Dr. Lipika Sahoo for legal drafting work for Meteonic Innovation Pvt Ltd and trademark protection for Kanika. Dr. Lipika’s knowledge and competence are outstanding. She handled our case with remarkable speed and fought diligently to protect our brand name from being claimed by someone in Agra. Dr. Lipika and her team conducted thorough research and analysis, keeping us well-informed throughout the process. Her communication and responsiveness were beyond my expectations. We highly recommend Dr. Lipika Sahoo for all legal and trademark needs.",
-      name: "Ankur",
-      position: "Representative, Kanika - The Jewellery Boutique",
+      name: "Ankur Malhotra",
+      position: "Director, Kanika-The Jewellery Boutique",
       stars: 5,
     },
     {
       text: "Kanika - The Jewellery Boutique, where you dream, we design, and I deliver. We believe you are a star and deserve something unique, so we focus on customized jewels in gold and diamond. We wanted to register a trademark for Kanika Jewels. Dr. Lipika Sahoo advised us on the right categories and guided us through each step. We are truly happy with her speed and domain knowledge and are pleased to recommend her to our friends and family.",
-      name: "Ankur",
-      position: "Representative, Kanika - The Jewellery Boutique",
+      name: "Ankur Malhotra",
+      position: "Director, Kanika-The Jewellery Boutique",
       stars: 5,
     },
     {
@@ -854,8 +854,8 @@ const TestimonialAndCustomersPage = () => {
     },
     {
       text: "Saptha Innovations Pvt Ltd, an authorized distributor for Grundfos pumps and AO Smith heat pumps, availed the services of LifeIntelect Consultancy Pvt Ltd, headed by Dr. Lipika Sahoo, for our trademark registration. We appreciate the valuable advice received from the team during the process. We thank the team for their support and wish them the very best in their business.",
-      name: "Unknown",
-      position: "Representative, Saptha Innovations Pvt Ltd",
+      name: "Sagiraju Chandrashekar",
+      position: "Director, Saptha Innovations Pvt Ltd",
       stars: 5,
     },
   ];

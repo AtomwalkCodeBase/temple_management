@@ -197,7 +197,7 @@ const AboutUsHero = () => {
         visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeInOut" } }
       }}>
         <Title variants={fadeInUp}>
-          <PlanetText>PLANET</PlanetText>
+          {/* <PlanetText>PLANET</PlanetText> */}
           <EarthText>About <span style={{ color: "#00c6ff" }}>Us</span></EarthText>
         </Title>
         <Subtitle variants={fadeInUp}>
@@ -217,7 +217,7 @@ const AboutUsHero = () => {
         >
           <TaglineItem>Empowering Ideas</TaglineItem>
           <TaglineItem>Protecting Innovation</TaglineItem>
-          <TaglineItem>Transforming Futures</TaglineItem>
+          <TaglineItem>Transforming Future</TaglineItem>
         </Tagline>
       </Content>
     </HeroSection>

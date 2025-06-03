@@ -10,7 +10,7 @@ const subServiceContent = {
     title: "Scientific & Technology Solutions",
     subtitle: "Science-Driven Strategy for Innovation and Growth",
     description: [
-      "Stay ahead of innovation with strategic, science-driven solutions tailored to your business goals. Whether you're refining an idea or scaling a breakthrough, Lifeintelect brings cross-functional expertise—from academia and industry—to support every stage of your innovation journey. With insights rooted in deep scientific, operational, and strategic knowledge, you gain the clarity to make confident, future-ready decisions.",
+      "Stay ahead of innovation with strategic, science-driven solutions tailored to your business goals. Whether you're refining an idea or scaling a breakthrough, Lifeintelect brings cross-functional expertise—from academia and industry—to support every stage of your innovation journey. with insights rooted in deep scientific, operational, and strategic knowledge, you gain the clarity to make confident, future-ready decisions.",
     ],
     // patent_info: {
     // //   title: "Lifeintelect’s expertise extends across a wide range of sectors, including:",
@@ -256,7 +256,7 @@ const subServiceContent = {
       subtitle: "Accelerate Your Drug Development Journey",
       description: [
         "The life sciences and healthcare sectors are rapidly evolving, driven by new technologies and innovations. To stay ahead, making data-driven decisions early in the drug development process is crucial. Drug profiling is key to assessing a drug's efficacy, safety, and market potential, even before clinical trials begin.",
-        "With expertise in therapeutic clinical intelligence and competitive analysis, we provide in-depth insights into the competitive landscape, ongoing clinical trials, and emerging therapies, empowering you to make more informed, strategic decisions throughout the drug discovery process.",
+        "with expertise in therapeutic clinical intelligence and competitive analysis, we provide in-depth insights into the competitive landscape, ongoing clinical trials, and emerging therapies, empowering you to make more informed, strategic decisions throughout the drug discovery process.",
       ],
     },
     service_11: {
@@ -280,7 +280,7 @@ const subServiceContent = {
       subtitle: "Unlock Key Insights to Drive Strategic Decisions",
       description: [
         "Staying ahead of market shifts is crucial for long-term success. Market research services provide a competitive edge by offering a deep understanding of industry trends, emerging technologies, and the competitive landscape.",
-        "Whether it's R&D information, competitor analysis, or an overview of market dynamics, actionable insights are delivered to guide business strategies. With services such as market access research, pricing analysis, and social media audits, you gain the intelligence needed to make informed decisions and drive innovation.",
+        "Whether it's R&D information, competitor analysis, or an overview of market dynamics, actionable insights are delivered to guide business strategies. with services such as market access research, pricing analysis, and social media audits, you gain the intelligence needed to make informed decisions and drive innovation.",
       ],
     },
     service_14: {
@@ -304,7 +304,7 @@ const subServiceContent = {
       scientificSolutions: {
         title: "Scientific & Technology Solutions",
         description:
-          "At Lifeintelect, we provide scientific, operational, and strategic solutions for various industry functions. Our team has extensive experience in both academia and industry, possessing both functional expertise and industry focus. With our in-depth knowledge, we assist our clients at every stage of the Idea to Innovation process.",
+          "At Lifeintelect, we provide scientific, operational, and strategic solutions for various industry functions. Our team has extensive experience in both academia and industry, possessing both functional expertise and industry focus. with our in-depth knowledge, we assist our clients at every stage of the Idea to Innovation process.",
         processTitle:
           "We offer techno-legal consulting across a diverse range of disciplines, including:",
         process: [
@@ -364,7 +364,7 @@ const subServiceContent = {
           },
         ],
         closing:
-          "With our comprehensive patent valuation services, you can stay ahead of the competition and make informed strategic decisions to enhance your business outcomes.",
+          "with our comprehensive patent valuation services, you can stay ahead of the competition and make informed strategic decisions to enhance your business outcomes.",
       },
       drugDiscoveryDevelopment: {
         title: "Drug Discovery and Development",
@@ -390,7 +390,7 @@ const subServiceContent = {
               "Approvals (Country-Wise Information): Providing details on the regulatory approvals the drug has received in various countries.",
             ],
             closing:
-              "With our comprehensive drug profiling services, you can ensure a thorough understanding of your drug's potential, making informed decisions to enhance its market prospects and successfully bring it to market.",
+              "with our comprehensive drug profiling services, you can ensure a thorough understanding of your drug's potential, making informed decisions to enhance its market prospects and successfully bring it to market.",
           },
           {
             title: "Therapeutic Clinical Intelligence",
@@ -411,7 +411,7 @@ const subServiceContent = {
               "The supporting organization or institution.",
             ],
             closing:
-              "With our comprehensive Therapeutic Clinical Intelligence services, you can gain valuable insights into the competitive landscape and make informed decisions about your clinical development strategy.",
+              "with our comprehensive Therapeutic Clinical Intelligence services, you can gain valuable insights into the competitive landscape and make informed decisions about your clinical development strategy.",
           },
           {
             title: "Competitive Intelligence",
@@ -423,7 +423,7 @@ const subServiceContent = {
               "Market landscape and trends analysis",
             ],
             closing:
-              "With our comprehensive competitive intelligence services, you can stay ahead of the competition and make informed strategic decisions to enhance your business outcomes.",
+              "with our comprehensive competitive intelligence services, you can stay ahead of the competition and make informed strategic decisions to enhance your business outcomes.",
           },
           {
             title: "R&D Information Solutions",
@@ -441,7 +441,7 @@ const subServiceContent = {
           },
         ],
         closing:
-          "With our research and development information solutions, you can stay ahead in the competitive landscape and make informed decisions to drive innovation and growth in your business. Ready to enhance your research and development strategy with Lifeintelect? Let's get started!",
+          "with our research and development information solutions, you can stay ahead in the competitive landscape and make informed decisions to drive innovation and growth in your business. Ready to enhance your research and development strategy with Lifeintelect? Let's get started!",
         subPoints: [
           "Analyzing the competitive landscape within a therapeutic area.",
           "Developing business decisions on clinical analogues.",
@@ -450,7 +450,7 @@ const subServiceContent = {
           "Designing effective clinical trials for better market penetration.",
         ],
         closing1:
-          "With Lifeintelect, you can be confident that your drug discovery and development processes are supported by thorough analysis, strategic insights, and cutting-edge solutions. Ready to enhance your innovation journey with Lifeintelect? Let's get started!",
+          "with Lifeintelect, you can be confident that your drug discovery and development processes are supported by thorough analysis, strategic insights, and cutting-edge solutions. Ready to enhance your innovation journey with Lifeintelect? Let's get started!",
       },
       patentDueDiligence: {
         title: "Patent Due Diligence & Variability Analysis",
@@ -568,7 +568,7 @@ const subServiceContent = {
           },
         ],
         closing:
-          "With our expertise and comprehensive approach, we help you navigate the complexities of the industry and achieve your business objectives. Ready to transform your business with Lifeintelect's management consulting services? Let's get started!",
+          "with our expertise and comprehensive approach, we help you navigate the complexities of the industry and achieve your business objectives. Ready to transform your business with Lifeintelect's management consulting services? Let's get started!",
         image: Pepole,
         // image: pen,
       },
@@ -642,7 +642,7 @@ const subServiceContent = {
           },
         ],
         closing:
-          "With our comprehensive market research services, you can gain valuable insights and make informed decisions to drive innovation and growth in your business. Ready to enhance your market strategy with Lifeintelect? Let's get started!",
+          "with our comprehensive market research services, you can gain valuable insights and make informed decisions to drive innovation and growth in your business. Ready to enhance your market strategy with Lifeintelect? Let's get started!",
       },
       scientificWritingEditing: {
         title: "Scientific Writing and Editing",
@@ -676,7 +676,7 @@ const subServiceContent = {
           },
         ],
         closing:
-          "With Lifeintelect’s scientific writing and editing services, you can be assured of high-quality, accurate, and impactful documents that meet your specific requirements. Ready to enhance your scientific writing with Lifeintelect? Let's get started!",
+          "with Lifeintelect’s scientific writing and editing services, you can be assured of high-quality, accurate, and impactful documents that meet your specific requirements. Ready to enhance your scientific writing with Lifeintelect? Let's get started!",
         image: Geometry,
         // image: pen,
       },

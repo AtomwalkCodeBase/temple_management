@@ -250,7 +250,7 @@ const subServiceContent = {
 		},
 		service_3: {
 		  title: "IP Law & Policy Updates",
-		  description:"With laws and treaties in constant flux, staying updated is essential. Our expert-led briefings decode key shifts in IP legislation—national and global—helping legal counsels, compliance officers, and strategy leaders stay aligned, mitigate risks, and respond to policy changes with agility.",
+		  description:"with laws and treaties in constant flux, staying updated is essential. Our expert-led briefings decode key shifts in IP legislation—national and global—helping legal counsels, compliance officers, and strategy leaders stay aligned, mitigate risks, and respond to policy changes with agility.",
 		  subsections: [
 			{
 			  heading: "What You’ll Learn:",

@@ -478,7 +478,7 @@ copyright: {
       "title": "What is Copyright and Why is it essential?",
       "description": [
       "Copyright is a legal right that grants creators exclusive ownership and control over their original works — from literature, music, and software, to digital content, design, and more. It protects the expression of ideas, not the ideas themselves, and ensures that you, as the creator, control how your work is used, reproduced, distributed, or monetized.",
-      " Without proper protection, your original work is at risk of being copied, misused, or exploited without your permission. By securing copyright, you not only establish legal ownership, but also gain the ability to license, commercialize, and enforce your rights across markets."
+      " without proper protection, your original work is at risk of being copied, misused, or exploited without your permission. By securing copyright, you not only establish legal ownership, but also gain the ability to license, commercialize, and enforce your rights across markets."
     ]
     },
     "service_1": {
@@ -539,7 +539,7 @@ copyright: {
             "description": "Submission of supportive documentation and evidence."
           },
           {
-            "description": "Communicating with the Copyright Office for resolution."
+            "description": "Communicating with the Copyright office for resolution."
           },
           {
             "description": "Minimizing disruption to your enforcement timeline."
@@ -671,7 +671,7 @@ copyright: {
     },
     service_2: {
       title: "Trademark Filing & Registration",
-      subtitle: "File With Confidence. Register with Precision.", 
+      subtitle: "File with Confidence. Register with Precision.", 
       description:
         "A well-prepared application is key to smooth approval and long-term protection.",
       typesSection: {

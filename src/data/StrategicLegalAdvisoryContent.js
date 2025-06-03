@@ -300,7 +300,7 @@ const subServiceContent = {
     service_2: {
       title: "Licensing & IP Agreements",
       subtitle:"Structure Partnerships That Monetize IP and Minimize Risk",
-      description:["Licensing deals, Non-Disclosure Agreements (NDAs), technology transfers, and joint development agreements are the foundation of IP commercialization. Precise drafting, due diligence, and negotiation support ensure that your IP remains protected, properly valued, and legally secure across all collaborations","With well-structured contracts, your IP becomes a secure revenue stream and a tool for strategic collaboration."],
+      description:["Licensing deals, Non-Disclosure Agreements (NDAs), technology transfers, and joint development agreements are the foundation of IP commercialization. Precise drafting, due diligence, and negotiation support ensure that your IP remains protected, properly valued, and legally secure across all collaborations","with well-structured contracts, your IP becomes a secure revenue stream and a tool for strategic collaboration."],
     //   subsections: [
     //     {
     //       heading: "Our Support Services",
@@ -332,7 +332,7 @@ const subServiceContent = {
     service_3: {
       title: "Cross-Border IP Strategy & Compliance",
       subtitle:"Expand Globally with Comprehensive IP Protection",
-      description:"As businesses grow internationally, navigating the complexities of jurisdictional IP laws is crucial. A customized cross-border strategy ensures seamless protection across key markets. By managing filing timelines, ensuring treaty compliance, and preparing for regional enforcement, companies can prevent IP erosion abroad. With globally aligned rights, international expansion becomes more secure and efficient, supporting your strategic growth.",
+      description:"As businesses grow internationally, navigating the complexities of jurisdictional IP laws is crucial. A customized cross-border strategy ensures seamless protection across key markets. By managing filing timelines, ensuring treaty compliance, and preparing for regional enforcement, companies can prevent IP erosion abroad. with globally aligned rights, international expansion becomes more secure and efficient, supporting your strategic growth.",
     //   process: [
     //     {
     //       title: "Needs Assessment",
@@ -426,7 +426,7 @@ const subServiceContent = {
       subtitle:"Embed IP into Organizational DNA and Prevent Future Disputes",
       description:[
         "Strong governance is key to protecting innovation and managing risk effectively. By clarifying ownership, managing disclosures, and standardizing contracts, businesses can reduce exposure to disputes and ensure compliance. Internal workflows across departments guarantee that IP is consistently captured, protected, and managed.",
-        "With robust internal systems and well-designed policies in place, organizations can significantly reduce risk, strengthen their legal position, and protect their intangible assets across all departments, ensuring long-term success and security.",
+        "with robust internal systems and well-designed policies in place, organizations can significantly reduce risk, strengthen their legal position, and protect their intangible assets across all departments, ensuring long-term success and security.",
       ],
     //   subsections: [
     //     {
@@ -493,7 +493,7 @@ const subServiceContent = {
     service_8: {
       title: "IP Litigation & Enforcement Support",
       subtitle:"Be Ready to Defend Your Rights — Strategically and Legally",
-      description:"When IP infringement or disputes arise, thorough preparation is the key. With expert infringement analysis, strategic advisory, and litigation support, businesses can ensure their claims are robust, well-documented, and aligned with legal counsel, strengthening enforcement strategies whether in court or during settlement negotiations.",
+      description:"When IP infringement or disputes arise, thorough preparation is the key. with expert infringement analysis, strategic advisory, and litigation support, businesses can ensure their claims are robust, well-documented, and aligned with legal counsel, strengthening enforcement strategies whether in court or during settlement negotiations.",
     //   process: [
     //     {
     //       title: "Portfolio Review",

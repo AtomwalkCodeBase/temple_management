@@ -508,7 +508,7 @@ const cards = [
   },
   {
     image: "https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop",
-    title: "Tech Transfer and IP Commercialization",
+    title: "IP Commercialization & Tech Transfer",
     icon: <FaLaptopCode />
   },
   {
@@ -863,6 +863,7 @@ const Herosection = () => {
       // "Competitive Landscape & Industry Trends": "/competitive-landscape",
       "Patent Landscaping Report": "/competitive-landscape",
       "Post-Transfer Support": "/post-transfer",
+      "IP valuation Services": "/ip-valuation",
       // Strategy & Advisory (Startups)
       "IP Strategy & Roadmap for Startups": "/IP-Strategy-&-Roadmap-for-Startups",
       "Cost-Effective IP Protection": "/Cost-Effective-IP-Protection",
@@ -990,6 +991,7 @@ const Herosection = () => {
         "Patent Due Diligence & Variability Analysis",
         "Post-Transfer Support",
         "Patent Landscaping Report",
+        "IP valuation Services",
       ],
       imageIdea: "A bird mid-flight carrying a twig between two different trees.",
     },

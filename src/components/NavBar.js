@@ -850,12 +850,12 @@ const NavBar = () => {
       icon: '✍️', // Pencil writing (better for blogs)
       color: '#4e73df'
     },
-    { 
-      id: 'presentations', 
-      name: 'PRESENTATIONS', 
-      icon: '📊', // Chart increasing (represents slides/presentations)
-      color: '#1cc88a'
-    },
+    // { 
+    //   id: 'presentations', 
+    //   name: 'PRESENTATIONS', 
+    //   icon: '📊', // Chart increasing (represents slides/presentations)
+    //   color: '#1cc88a'
+    // },
     { 
       id: 'faq', 
       name: 'FREQUENTLY ASKED QUESTIONS (FAQs)', 

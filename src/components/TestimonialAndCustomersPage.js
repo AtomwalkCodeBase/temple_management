@@ -827,12 +827,12 @@ const TestimonialAndCustomersPage = () => {
       stars: 5,
       patentRelated: true,
     },
-    {
-      text: "At Kanika - The Jewellery Boutique, we believe in creating unique and customized gold and diamond jewels. I had the privilege of working with Dr. Lipika Sahoo for legal drafting work for Meteonic Innovation Pvt Ltd and trademark protection for Kanika. Dr. Lipika’s knowledge and competence are outstanding. She handled our case with remarkable speed and fought diligently to protect our brand name from being claimed by someone in Agra. Dr. Lipika and her team conducted thorough research and analysis, keeping us well-informed throughout the process. Her communication and responsiveness were beyond my expectations. We highly recommend Dr. Lipika Sahoo for all legal and trademark needs.",
-      name: "Ankur Malhotra",
-      position: "Director, Kanika-The Jewellery Boutique",
-      stars: 5,
-    },
+    // {
+    //   text: "At Kanika - The Jewellery Boutique, we believe in creating unique and customized gold and diamond jewels. I had the privilege of working with Dr. Lipika Sahoo for legal drafting work for Meteonic Innovation Pvt Ltd and trademark protection for Kanika. Dr. Lipika’s knowledge and competence are outstanding. She handled our case with remarkable speed and fought diligently to protect our brand name from being claimed by someone in Agra. Dr. Lipika and her team conducted thorough research and analysis, keeping us well-informed throughout the process. Her communication and responsiveness were beyond my expectations. We highly recommend Dr. Lipika Sahoo for all legal and trademark needs.",
+    //   name: "Ankur Malhotra",
+    //   position: "Director, Kanika-The Jewellery Boutique",
+    //   stars: 5,
+    // },
     {
       text: "Kanika - The Jewellery Boutique, where you dream, we design, and I deliver. We believe you are a star and deserve something unique, so we focus on customized jewels in gold and diamond. We wanted to register a trademark for Kanika Jewels. Dr. Lipika Sahoo advised us on the right categories and guided us through each step. We are truly happy with her speed and domain knowledge and are pleased to recommend her to our friends and family.",
       name: "Ankur Malhotra",
@@ -1014,7 +1014,9 @@ const TestimonialAndCustomersPage = () => {
     setDirection('prev');
     setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
-
+  const navigatetocontact = () => {
+    window.location.href = '/contact';
+  };
   return (
     <>
       {/* <GlobalStyle /> */}
@@ -1118,7 +1120,8 @@ const TestimonialAndCustomersPage = () => {
         <CTASection>
           <CTAContent>
             <CTATitle>Ready to join our list of happy customers?</CTATitle>
-            <CTAButton>Get Started Today</CTAButton>
+            <CTAButton onClick={navigatetocontact}>Get Started Today</CTAButton>
+
           </CTAContent>
         </CTASection>
       </PageContainer>

@@ -916,7 +916,7 @@ const Herosection = () => {
     {
       id: "carousel",
       icon: <FaHome />,
-      label: "Go to Next Section",
+      label: "Home",
       ref: carouselRef,
     },
     {
@@ -928,19 +928,19 @@ const Herosection = () => {
     {
       id: "section1",
       icon: <FaLightbulb />,
-      label: "STRATEGY",
+      label: "Strategy",
       ref: sectionRefs.current[0],
     },
     {
       id: "section2",
       icon: <FaFlask />,
-      label: "SCIENTIFIC",
+      label: "Scientific",
       ref: sectionRefs.current[1],
     },
     {
       id: "section3",
       icon: <FaLaptop />,
-      label: "Intellectual",
+      label: "Training",
       ref: sectionRefs.current[2],
     },
   ];

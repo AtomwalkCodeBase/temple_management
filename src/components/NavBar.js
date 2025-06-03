@@ -460,7 +460,7 @@ const MobileDropdown = styled.div`
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
   overflow: hidden;
-  max-height: ${props => props.isOpen ? '2000px' : '0'};
+  max-height: ${props => props.isOpen ? '3000px' : '0'};
   transition: max-height 0.5s ease-in-out;
 `;
 
@@ -755,14 +755,6 @@ const NavBar = () => {
         { id: 'nba_approval', name: 'NBA Approval' },
       ]
     },
-
-    // {
-    //   id: 'ip-solutions',
-    //   title: 'IP Solutions',
-    //   subServices: [
-    //     { id: 'patent', name: 'Patent' },
-    //   ]
-    // },
     {
       id: 'ip-lifecycle',
       title: 'IP Lifecycle Management',
@@ -907,6 +899,7 @@ const NavBar = () => {
   const navigatetocontact = () => {
     window.location.href = '/contact';
   };
+  
 
   return (
     <>
@@ -983,6 +976,7 @@ const NavBar = () => {
                   ))}
                 </MobileDropdown>
               )}
+              
 
               {/* Mobile Resources Dropdown */}
               {isMobile && item.id === 'resources' && (

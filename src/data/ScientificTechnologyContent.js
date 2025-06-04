@@ -8,10 +8,10 @@ import { title } from "framer-motion/client";
 const subServiceContent = {
   scientificTechnology: {
     title: "Scientific & Technology Solutions",
-    subtitle: "Science-Driven Strategy for Innovation and Growth",
-    description: [
-      "Stay ahead of innovation with strategic, science-driven solutions tailored to your business goals. Whether you're refining an idea or scaling a breakthrough, Lifeintelect brings cross-functional expertise—from academia and industry—to support every stage of your innovation journey. with insights rooted in deep scientific, operational, and strategic knowledge, you gain the clarity to make confident, future-ready decisions.",
-    ],
+    // subtitle: "Science-Driven Strategy for Innovation and Growth",
+    // description: [
+    //   "Stay ahead of innovation with strategic, science-driven solutions tailored to your business goals. Whether you're refining an idea or scaling a breakthrough, Lifeintelect brings cross-functional expertise—from academia and industry—to support every stage of your innovation journey. with insights rooted in deep scientific, operational, and strategic knowledge, you gain the clarity to make confident, future-ready decisions.",
+    // ],
     // patent_info: {
     // //   title: "Lifeintelect’s expertise extends across a wide range of sectors, including:",
     // //   description: "Lifeintelect’s expertise extends across a wide range of sectors, ensuring tailored solutions for diverse industries.",
@@ -38,62 +38,73 @@ const subServiceContent = {
     // 	closing:"By providing in-depth evaluations of R&D, technology, industry shifts, and market trends, we empower you to make informed decisions, shape your business strategy, and seize growth opportunities.",
     //   },
     // },
-
-    service_1: {
-      title: "Life Sciences & Biomedicine",
-      subtitle: "Breakthroughs in biology demand bulletproof legal strategies.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
-          description: "Molecular & Cell Biology",
-        },
-        {
-          description: "Genomics & Proteomics",
-        },
-        {
-          description: "Stem Cell & Regenerative Medicine",
-        },
-        {
-          description: "Immunology & Vaccines",
-        },
-        {
-          description: "Neuroscience & Brain Technologies",
-        },
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_2: {
-      title: "Pharmaceuticals & Drug Development",
-      subtitle: "From molecule to market—legally fortified every step of the way.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
-          description: "Drug Discovery & Lead Optimization",
-        },
-        {
-          description: "PK/PD & Preclinical Strategy",
-        },
-        {
-          description: "Biopharmaceuticals & Biosimilars",
-        },
-        {
-          description: "Regulatory Affairs & Clinical Trials",
-        },
-        {
-          description: "Drug Formulations & Delivery Systems",
-        },
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_3: {
-      title: "Biotechnology & Industrial Biosciences",
-      subtitle: "Where biology powers industries—your IP fuels success.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
+    service_1:{
+       title: "Scientific & Technology Solutions",
+    subtitle: "Science-Driven Strategy for Innovation and Growth",
+    description: [
+      "Stay ahead of innovation with strategic, science-driven solutions tailored to your business goals. Whether you're refining an idea or scaling a breakthrough, Lifeintelect brings cross-functional expertise—from academia and industry—to support every stage of your innovation journey. with insights rooted in deep scientific, operational, and strategic knowledge, you gain the clarity to make confident, future-ready decisions.",
+      "Lifeintelect’s expertise extends across a wide range of sectors, including:"
+    ],
+    Accordion:[
+      {
+        title: "Life Sciences & Biomedicine",
+        description: "Breakthroughs in biology demand bulletproof legal strategies.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
+            // title: "Novel",
+            description: "Molecular & Cell Biology",
+          },
+          {
+            description: "Genomics & Proteomics",
+          },
+          {
+            // title: "Industrially applicable",
+            description: "Stem Cell & Regenerative Medicine",
+          },
+          {
+            // title: "Industrially applicable",
+            description: "Immunology & Vaccines",
+          },
+          {
+            // title: "Industrially applicable",
+            description: "Neuroscience & Brain Technologies",
+          },
+        ],
+      }
+      },
+      {
+        title: "Pharmaceuticals & Drug Development",
+        description: "From molecule to market—legally fortified every step of the way.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
+            // title: "Novel",
+            description: "Drug Discovery & Lead Optimization",
+          },
+          {
+            // title: "Inventive",
+            description: "PK/PD & Preclinical Strategy",
+          },
+          {
+            // title: "Industrially applicable",
+            description: "Regulatory Affairs & Clinical Trials",
+          },
+          {
+            description:"Drug Formulations & Delivery Systems",
+          }
+        ],
+      }
+      },
+      {
+        title: "Biotechnology & Industrial Biosciences",
+        description: "Where biology powers industries—your IP fuels success.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
           description: "CRISPR & Gene Editing",
         },
         {
@@ -105,17 +116,16 @@ const subServiceContent = {
         {
           description: "Enzyme & Microbial Technologies",
         },
-        
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_4: {
-      title: "Healthcare, Dentistry & Medical Technology",
-      subtitle: "Modern medicine meets smart IP and regulatory solutions.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
+        ],
+      }
+      },
+      {
+        title: "Healthcare, Dentistry & Medical Technology",
+        description: "Modern medicine meets smart IP and regulatory solutions.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
           description: "Medical Devices & Diagnostics",
         },
         {
@@ -130,20 +140,23 @@ const subServiceContent = {
         {
           description: "Dental Technology & Oral Innovations",
         },
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_5: {
-      title: "Agriculture, Natural Products & Sustainability",
-      subtitle: "Protecting nature-inspired innovations and green technologies.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
+        ],
+      }
+      },
+      {
+        title: "Agriculture, Natural Products & Sustainability",
+        description: "Protecting nature-inspired innovations and green technologies.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
           description: "AgriTech & Precision Farming",
         },
         {
           description: "Nutraceuticals",
+        },
+        {
+          description: "Clinical Research",
         },
         {
           description: "Fisheries & Marine Biotechnology",
@@ -151,17 +164,16 @@ const subServiceContent = {
         {
           description: "Environmental Biotech & Bioremediation",
         },
-        
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_6: {
-      title: "Materials Science, Nanotech & Energy",
-      subtitle: "Strategizing IP at the atomic level and beyond.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
+        ],
+      }
+      },
+      {
+        title: "Materials Science, Nanotech & Energy",
+        description: "Strategizing IP at the atomic level and beyond.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
           description: "Nanotechnology & Nano-enabled Devices",
         },
         {
@@ -176,16 +188,16 @@ const subServiceContent = {
         {
           description: "Renewable Energy & Biofuels",
         },
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_7: {
-      title: "Mechanical, Electronics & Telecommunications",
-      subtitle: "From machines to mobile—engineering innovation with legal clarity",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
+        ],
+      }
+      },
+      {
+        title: "Mechanical, Electronics & Telecommunications",
+        description: "From machines to mobile—engineering innovation with legal clarity.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
           description: "Mechatronics & Mechanical Systems",
         },
         {
@@ -200,16 +212,16 @@ const subServiceContent = {
         {
           description: "Power Electronics & Automation",
         },
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_8: {
-      title: "Automotive & Mobility Innovations",
-      subtitle: "Accelerating IP strategy in the fast lane of innovation.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
+        ],
+      }
+      },
+      {
+        title: "Automotive & Mobility Innovations",
+        description: "Accelerating IP strategy in the fast lane of innovation.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
           description: "Electric & Hybrid Vehicles (EV/HEV)",
         },
         {
@@ -224,16 +236,16 @@ const subServiceContent = {
         {
           description: "Lightweight & Sustainable Materials",
         },
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
-    },
-    service_9: {
-      title: "Software, Digital Platforms & Emerging Tech",
-      subtitle: "Protecting innovation in the code and in the cloud.",
-      //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
-      processTitle: "Core Domains:",
-      process: [
-        {
+        ],
+      }
+      },
+      {
+        title: "Software, Digital Platforms & Emerging Tech",
+        description: "Protecting innovation in the code and in the cloud.",
+        typesSection: {
+        Heading: "Core Domains: ",
+        types: [
+          {
           description: "Artificial Intelligence (AI) & Machine Learning (ML)",
         },
         {
@@ -248,10 +260,226 @@ const subServiceContent = {
         {
           description: "Bioinformatics & Data Security",
         },
-      ],
-      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+        ],
+      }
+      },
+    ],
+    closing: "By providing in-depth evaluations of R&D, technology, industry shifts, and market trends, we empower you to make informed decisions, shape your business strategy, and seize growth opportunities."
     },
-    service_10: {
+
+    // service_2: {
+    //   title: "Life Sciences & Biomedicine",
+    //   subtitle: "Breakthroughs in biology demand bulletproof legal strategies.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "Molecular & Cell Biology",
+    //     },
+    //     {
+    //       description: "Genomics & Proteomics",
+    //     },
+    //     {
+    //       description: "Stem Cell & Regenerative Medicine",
+    //     },
+    //     {
+    //       description: "Immunology & Vaccines",
+    //     },
+    //     {
+    //       description: "Neuroscience & Brain Technologies",
+    //     },
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_3: {
+    //   title: "Pharmaceuticals & Drug Development",
+    //   subtitle: "From molecule to market—legally fortified every step of the way.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "Drug Discovery & Lead Optimization",
+    //     },
+    //     {
+    //       description: "PK/PD & Preclinical Strategy",
+    //     },
+    //     {
+    //       description: "Biopharmaceuticals & Biosimilars",
+    //     },
+    //     {
+    //       description: "Regulatory Affairs & Clinical Trials",
+    //     },
+    //     {
+    //       description: "Drug Formulations & Delivery Systems",
+    //     },
+    //   ],
+      // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_4: {
+    //   title: "Biotechnology & Industrial Biosciences",
+    //   subtitle: "Where biology powers industries—your IP fuels success.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "CRISPR & Gene Editing",
+    //     },
+    //     {
+    //       description: "Synthetic Biology",
+    //     },
+    //     {
+    //       description: "Bioprocess Engineering",
+    //     },
+    //     {
+    //       description: "Enzyme & Microbial Technologies",
+    //     },
+        
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_5: {
+    //   title: "Healthcare, Dentistry & Medical Technology",
+    //   subtitle: "Modern medicine meets smart IP and regulatory solutions.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "Medical Devices & Diagnostics",
+    //     },
+    //     {
+    //       description: "Digital Health & Personalized Care",
+    //     },
+    //     {
+    //       description: "Clinical Research",
+    //     },
+    //     {
+    //       description: "Telemedicine ",
+    //     },
+    //     {
+    //       description: "Dental Technology & Oral Innovations",
+    //     },
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_6: {
+    //   title: "Agriculture, Natural Products & Sustainability",
+    //   subtitle: "Protecting nature-inspired innovations and green technologies.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "AgriTech & Precision Farming",
+    //     },
+    //     {
+    //       description: "Nutraceuticals",
+    //     },
+    //     {
+    //       description: "Fisheries & Marine Biotechnology",
+    //     },
+    //     {
+    //       description: "Environmental Biotech & Bioremediation",
+    //     },
+        
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_7: {
+    //   title: "Materials Science, Nanotech & Energy",
+    //   subtitle: "Strategizing IP at the atomic level and beyond.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "Nanotechnology & Nano-enabled Devices",
+    //     },
+    //     {
+    //       description: "Advanced Materials & Composites",
+    //     },
+    //     {
+    //       description: "Smart Polymers & Functional Surfaces",
+    //     },
+    //     {
+    //       description: "Green Chemistry",
+    //     },
+    //     {
+    //       description: "Renewable Energy & Biofuels",
+    //     },
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_8: {
+    //   title: "Mechanical, Electronics & Telecommunications",
+    //   subtitle: "From machines to mobile—engineering innovation with legal clarity",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "Mechatronics & Mechanical Systems",
+    //     },
+    //     {
+    //       description: "Electronics & Robotics",
+    //     },
+    //     {
+    //       description: "Instrumentation & Control Systems",
+    //     },
+    //     {
+    //       description: "5G, IoT & Telecommunication Systems",
+    //     },
+    //     {
+    //       description: "Power Electronics & Automation",
+    //     },
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_8: {
+    //   title: "Automotive & Mobility Innovations",
+    //   subtitle: "Accelerating IP strategy in the fast lane of innovation.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "Electric & Hybrid Vehicles (EV/HEV)",
+    //     },
+    //     {
+    //       description: "Autonomous & Connected Vehicles",
+    //     },
+    //     {
+    //       description: "Automotive Sensors & Control Systems",
+    //     },
+    //     {
+    //       description: "Telematics & In-Vehicle Communication",
+    //     },
+    //     {
+    //       description: "Lightweight & Sustainable Materials",
+    //     },
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    // service_9: {
+    //   title: "Software, Digital Platforms & Emerging Tech",
+    //   subtitle: "Protecting innovation in the code and in the cloud.",
+    //   //   description:"A full-spectrum view of your intellectual property reveals untapped value and hidden risks—critical for making informed, strategic decisions.",
+    //   processTitle: "Core Domains:",
+    //   process: [
+    //     {
+    //       description: "Artificial Intelligence (AI) & Machine Learning (ML)",
+    //     },
+    //     {
+    //       description: "Software as a Medical Device (SaMD)",
+    //     },
+    //     {
+    //       description: "Blockchain in Healthcare & IP",
+    //     },
+    //     {
+    //       description: "Clinical Decision Support Systems",
+    //     },
+    //     {
+    //       description: "Bioinformatics & Data Security",
+    //     },
+    //   ],
+    //   // closing:"Turn oversight into opportunity with insights that inform long-term growth.",
+    // },
+    service_2: {
       title: "Drug Discovery & Development",
       subtitle: "Accelerate Your Drug Development Journey",
       description: [
@@ -259,7 +487,7 @@ const subServiceContent = {
         "with expertise in therapeutic clinical intelligence and competitive analysis, we provide in-depth insights into the competitive landscape, ongoing clinical trials, and emerging therapies, empowering you to make more informed, strategic decisions throughout the drug discovery process.",
       ],
     },
-    service_11: {
+    service_3: {
       title: "Assessment of Clinical & Commercial Potential ",
       subtitle: "Position Your Innovations for Success",
       description: [
@@ -267,7 +495,7 @@ const subServiceContent = {
         "Through market size estimation, projected growth, and return on investment (ROI) analysis, you can position your technology for success. Tailored patent licensing and commercialization strategies open the door to partnerships and opportunities, optimizing both the financial and strategic value of your innovations.",
       ],
     },
-    service_12: {
+    service_4: {
       title: "Management Consulting",
       subtitle: "Navigate Industry Challenges with Expert Guidance",
       description: [
@@ -275,7 +503,7 @@ const subServiceContent = {
         "Services such as competitive intelligence, strategic planning, and business development provide the insights and actionable strategies needed to optimize operations, stay ahead of competitors, and achieve sustainable success in a rapidly changing landscape.",
       ],
     },
-    service_13: {
+    service_5: {
       title: "Market Research & Industry Trends",
       subtitle: "Unlock Key Insights to Drive Strategic Decisions",
       description: [
@@ -283,7 +511,7 @@ const subServiceContent = {
         "Whether it's R&D information, competitor analysis, or an overview of market dynamics, actionable insights are delivered to guide business strategies. with services such as market access research, pricing analysis, and social media audits, you gain the intelligence needed to make informed decisions and drive innovation.",
       ],
     },
-    service_14: {
+    service_6: {
       title: "Scientific Writing & Editing",
       subtitle: "Communicate Your Innovations with Precision and Impact",
       description: [
@@ -291,7 +519,7 @@ const subServiceContent = {
         "By applying a deep understanding of scientific writing principles, content is crafted to be both precise and impactful. Whether it involves technical writing, literature reviews, or proposal drafting, these services ensure your research is communicated with clarity and authority, making a strong and lasting impression on your target audience.",
       ],
     },
-    service_15: {
+    service_7: {
       title: "Non-Patent Searches & Analysis",
       subtitle: "Leverage In-Depth Literature Reviews to Inform Your Strategy",
       description: [
@@ -299,6 +527,7 @@ const subServiceContent = {
         "These in-depth reports help avoid duplication, identify market gaps, and refine your approach. Whether you're a patent attorney, researcher, or scientist, customized reports synthesize key information, equipping you with the knowledge needed to make informed, strategic decisions.",
       ],
     },
+   
 
     subServices: {
       scientificSolutions: {

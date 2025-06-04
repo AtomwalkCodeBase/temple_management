@@ -260,7 +260,7 @@ const subServiceContent = {
       ],
     },
     service_11: {
-      title: "Clinical & Commercial Potential Assessment",
+      title: "Assessment of Clinical & Commercial Potential ",
       subtitle: "Position Your Innovations for Success",
       description: [
         "Evaluating the clinical and commercial potential of patented technologies is essential to ensure they align with market needs and address key healthcare challenges. By analyzing clinical trials, FDA approvals, and emerging biotech trends, the real-world applicability of innovations is assessed.",

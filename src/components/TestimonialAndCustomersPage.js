@@ -748,8 +748,8 @@ const TestimonialAndCustomersPage = () => {
   const testimonials = [
     {
       text: "We recently availed the services of LifeIntelect Consultancy Pvt Ltd for our company trademark registration. Dr. Lipika Sahoo guided us through the process with professionalism and expertise. The service was exceptional, and we received our trademark on time. The team was very responsive and helpful with our queries. We highly recommend LifeIntelect Consultancy to our business associates and clients for their outstanding service. We wish them all success in their business endeavours.",
-      name: "Total Solutions",
-      position: "Representative, Total Solutions",
+      name: "Amitha Subramanya",
+      position: "Director, Total Solutions",
       stars: 5,
     },
     {
@@ -760,8 +760,8 @@ const TestimonialAndCustomersPage = () => {
     },
     {
       text: "We recently worked with LifeIntelect Consultancy Pvt Ltd for a trademark registration for a product branding project. Dr. Lipika Sahoo provided exceptional guidance throughout the entire process. Her wealth of knowledge, experience and expertise ensured that all our queries were addressed promptly and clearly. The service was efficient, cost-effective, and thoroughly professional. We were very impressed with the timely and effective solutions provided. I highly recommend LifeIntelect Consultancy to anyone seeking to secure their intellectual property rights. Thank you, Dr. Lipika, for your excellent work. Wishing you continued success.",
-      name: "Gayatri",
-      position: "Director, Raj Viha Tours and Travels P Ltd",
+      name: "Padmanabhan Gayatri",
+      position: "Director, Raj Viha Tours and Travels Pvt Ltd",
       stars: 5,
     },
     {
@@ -1028,7 +1028,7 @@ const TestimonialAndCustomersPage = () => {
         
         {/* Header */}
         <Header>
-          <Title>OUR CLIENTS TRUST US</Title>
+          <Title>Empowering Clients Through Unwavering Assistance</Title>
           <Subtitle>
             Discover why hundreds of companies trust us with their business needs and hear their success stories directly from the source.
           </Subtitle>

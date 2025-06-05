@@ -831,7 +831,7 @@ const NavBar = () => {
       id: 'IP Commercialization & Tech Transfer',
       title: 'IP Commercialization & Tech Transfer',
       subServices: [
-        { id: 'ipCommercial', name: 'Technology Transfer' },
+        { id: 'ipCommercial', name: 'Technology Transfer'},
         { id: 'patent-valuations', name: 'Patent Valuation' },
         { id: 'patent-due-diligence', name: 'Patent Due Diligence & Variability Analysis' },
         { id: 'competitive-landscape', name: 'Patent Landscaping Report' },

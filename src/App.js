@@ -195,13 +195,13 @@ const strategicRoutes = [
 ];
 
 const startupRoutes = [
-  { path: '/IP-Strategy-&-Roadmap-for-Startups', type: 'iprSolutionsStartups', id: 'ipStrategyRoadmap', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
-  { path: '/Cost-Effective-IP-Protection', type: 'iprSolutionsStartups', id: 'costEffectiveProtection', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
-  { path: '/IP-Due-Diligence-for-Investors', type: 'iprSolutionsStartups', id: 'ipDueDiligenceInvestors', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
-  { path: '/IP-Licensing-&-Commercialization', type: 'iprSolutionsStartups', id: 'ipLicensingCommercialization', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
-  { path: '/Raising-Awareness-and-Funding-with-IP', type: 'iprSolutionsStartups', id: 'raisingAwarenessFunding', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
-  { path: '/Startup-IP-Portfolio-Management', type: 'iprSolutionsStartups', id: 'startupIpPortfolio', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
-  { path: '/IP-Risk-Management-for-Startups', type: 'iprSolutionsStartups', id: 'ipRiskManagement', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
+  { path: '/IP-Strategy-&-Roadmap-for-Startups', type: 'iprSolutionsStartups', id: 'ipStrategyRoadmap', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/Cost-Effective-IP-Protection', type: 'iprSolutionsStartups', id: 'costEffectiveProtection', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/IP-Due-Diligence-for-Investors', type: 'iprSolutionsStartups', id: 'ipDueDiligenceInvestors', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/IP-Licensing-&-Commercialization', type: 'iprSolutionsStartups', id: 'ipLicensingCommercialization', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/Raising-Awareness-and-Funding-with-IP', type: 'iprSolutionsStartups', id: 'raisingAwarenessFunding', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/Startup-IP-Portfolio-Management', type: 'iprSolutionsStartups', id: 'startupIpPortfolio', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/IP-Risk-Management-for-Startups', type: 'iprSolutionsStartups', id: 'ipRiskManagement', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
 ];
 
 const educationRoutes = [

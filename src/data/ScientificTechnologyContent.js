@@ -566,34 +566,32 @@ const subServiceContent = {
           "Ready to transform your business with Lifeintelect's expertise? Let's get started!",
       },
       patentValuations: {
-        title: "Patent Valuations",
+        title: "Patent Valuation Reports",
+        subHeading: "Patent Valuation Reports",
+        subTitle: "Quantify Potential. Justify Investment.",
         description:
-          "At Lifeintelect, we combine primary and secondary intelligence gathering of publicly available information with our analytical skills and domain expertise to provide in-depth, strategic, and broad-spectrum patent valuation reports. These reports come with recommendations and implications that add value to your intellectual property management and business strategies.",
-        processTitle: "Our patent valuation services include:",
+          "A well-structured valuation report supports deal-making and technology transfers by delivering credible, defensible asset appraisals.",
+        processTitle: "Valuation Components Include:",
         process: [
           {
-            title: "Intrinsic Valuation",
-            description:
-              "At Lifeintelect, we employ a comprehensive approach to estimate a patent's worth, integrating cost-based, income-based, and market-based methodologies. The cost-based approach assesses the expenses incurred in developing the patent, including research and development costs, legal fees, and filing expenses. The income-based approach projects the future cash flows the patent is expected to generate, applying a discounted cash flow (DCF) analysis to determine its present value whereas market-based approach compares the patent to similar patents that have been sold or licensed, providing a benchmark for its value. By employing these methods, our team offers a robust valuation that reflects the patent's economic potential. ",
+            title: "Intrinsic Valuation Models:",
+            description:"Deep analysis using cost, income, and market comparisons",
           },
           {
-            title: "Monetization Potential",
-            description:
-              "Our analysis delves into various monetization strategies to unlock the patent's commercial value. We explore licensing revenue models, estimating potential royalty rates based on industry standards and comparable agreements. Additionally, we assess the patent's acquisition potential, considering its strategic importance to potential buyers and it’s fit within their portfolios. This comprehensive evaluation provides insights into the most effective pathways for generating revenue from the patent, whether through licensing, sale, or other commercialization strategies.",
+            title:"Monetization Pathways:",
+            description:"Licensing potential, royalty forecasting, and acquisition interest",
           },
           {
-            title: "Market Demand Analysis",
-            description:
-              "We identify potential buyers and licensees by analyzing market trends, industry needs, and technological advancements. Our assessment includes evaluating the patent's alignment with current market demands and its potential to address unmet needs. We also consider the competitive landscape, identifying key players and assessing their interest in the patented technology. This analysis ensures that the patent's value is aligned with market realities, enhancing its attractiveness to potential partners and investors.",
+            title:"Market Alignment: ",
+            description:"Demand forecasting, trend analysis, and fit within competitive ecosystems",
           },
           {
-            title: "Regulatory & IP Risk Assessment",
-            description:
-              "Our team evaluates the patent's compliance with relevant regulatory requirements, particularly in sectors like biotechnology where patentability criteria are stringent. Our assessment includes reviewing the patent's legal standing, ensuring it is free from encumbrances and challenges. We also consider potential intellectual property risks, such as infringement issues or challenges to the patent's validity, and provide strategies to mitigate these risks. This comprehensive evaluation ensures that the patent is enforceable and ready for commercialization in the global market.",
+            title:"Regulatory & IP Risk Review",
+            description:"Assessment of enforceability, challenges, and compliance",
           },
         ],
         closing:
-          "with our comprehensive patent valuation services, you can stay ahead of the competition and make informed strategic decisions to enhance your business outcomes.",
+          "Stakeholders gain clear, actionable insight to support high-stakes IP decisions.",
       },
       drugDiscoveryDevelopment: {
         title: "Drug Discovery and Development",
@@ -683,32 +681,29 @@ const subServiceContent = {
       },
       patentDueDiligence: {
         title: "Patent Due Diligence & Variability Analysis",
-        description:
-          "Our patent due diligence and variability analysis services ensure thorough evaluation of patents to support strategic decision-making and maximize intellectual property value.",
+        subHeading: "Patent Due Diligence & Variability Analysis",
+        subTitle: "Validate Strength. Secure Position.",
+        description:"Before entering deals or scaling innovation, understanding a patent's legal and commercial robustness is essential.",
+        processTitle: "Due Diligence Coverage:",
         process: [
           {
-            title: "Patent Validity Assessment",
-            description:
-              "We at Lifeintelect conduct a comprehensive evaluation of a patent's enforceability by analyzing its novelty and non-obviousness through rigorous prior art searches. Our experts interpret the scope of claims to ensure clarity and prevent ambiguity, aligning with international standards. We also assess the patent's utility, confirming that it has a specific, substantial, and credible application, as required under patent laws. This thorough analysis ensures that the patent meets all legal criteria for validity and is defensible in potential litigation. ",
+            title: "Validity & Prior Art Checks: ",
+            description:"Rigorous searches to confirm novelty, utility, and enforceability",
           },
           {
-            title: "Legal Status & Ownership Verification",
-            description:
-              "Our team meticulously verifies the current legal status of patents, including grant and renewal statuses, to ensure they are active and enforceable. We examine any pending oppositions or challenges that might affect the patent's validity or scope. Ownership history is thoroughly reviewed to confirm rightful ownership and identify any potential disputes or encumbrances. This process ensures that the patent holder has clear and unencumbered rights to the intellectual property.",
+            title:"Legal Status & Ownership Clarity: ",
+            description:"Verification of current ownership, oppositions, and encumbrances",
           },
           {
-            title: "Patent Strength & Claim Breadth Analysis",
-            description:
-              "Our subject experts evaluate the breadth of patent claims to determine the extent of protection they afford. We assess whether the claims are sufficiently broad to prevent competitors from designing around the patent, yet specific enough to avoid prior art conflicts. This analysis includes reviewing dependent claims to ensure they add meaningful protection and are not overly reliant on independent claims. By balancing claim scope, we enhance the patent's strategic value in litigation and licensing negotiations. ",
+            title:"Claim Strength Analysis:",
+            description:"Examination of scope, protection breadth, and freedom-to-operate",
           },
           {
-            title: "Technology Variability Analysis",
-            description:
-              "We also assess the adaptability of the patented invention across various technological domains, evaluating its potential for modification or application in different industries. This analysis considers the invention's scalability, integration with existing technologies, and alignment with emerging trends. By identifying broader applications, we enhance the patent's commercial potential and strategic value, opening avenues for cross-industry collaborations and licensing opportunities. ",
+            title:"Technology Adaptability: ",
+            description:"Review of cross-domain application potential and integration feasibility",
           },
         ],
-        //   closing:
-        // 	"Lifeintelect’s due diligence services provide clarity and confidence in your patent portfolio, enabling strategic IP management. Ready to evaluate your patents with Lifeintelect? Let's get started!"
+        closing:"Confidence in your IP starts with knowing it can stand up in court—and in the market.",
       },
       clinicalCommercialPotential: {
         title: "Assessment of Clinical & Commercial Potential",
@@ -735,35 +730,30 @@ const subServiceContent = {
         // 	"Lifeintelect’s assessments empower you to make informed decisions for successful commercialization and market growth. Ready to assess your technology’s potential with Lifeintelect? Let's get started!"
       },
       competitiveLandscape: {
-        title: "Competitive Landscape & Industry Trends",
-        subHeading: "Competitive Landscape & Industry Trends",
-        subTitle: "Competitive Landscape & Industry Trends",
-        description:
-          "At Lifeintelect, we excel in providing deep insights into the competitive landscape and emerging industry trends. Our expertise ensures that clients are not only prepared to navigate challenges but are also empowered to seize opportunities in a dynamic market. From in-depth competitor patent analysis to evaluating market players and tackling regulatory hurdles, we equip businesses with the intelligence they need to make informed decisions and maintain a competitive edge. Let's delve into how our tailored approaches redefine strategic positioning for success.",
+        title: "Patent Landscaping Reports",
+        subHeading: "Patent Landscaping Reports",
+        subTitle: "Position Technologies. Navigate Markets.",
+        description:"A comprehensive look at the IP landscape helps innovators and investors understand where technologies stand—and where they can lead.",
+        processTitle: "Strategic Insights Include:",
         process: [
           {
-            title: "Competitor Patent Analysis",
-            description:
-              "Our subject experts conduct a comprehensive review of related patents, assessing technological scope, claim breadth, and enforceability. Our analysis highlights unique competitive advantages, minimizes infringement risks, and informs strategic positioning in the market. By identifying patent clusters and overlaps, we help clients navigate complex patent landscapes and make informed decisions about R&D investments and market entry strategies. This proactive approach enables clients to anticipate competitor moves and secure a competitive edge in their respective industries.",
+            title: "Patent Mapping: ",
+            description:"Identification of overlapping technologies, trends, and whitespace",
           },
           {
-            title: "Key Market Players",
-            description:
-              "We identify leading companies and startups working on similar technologies, providing insights into market dynamics and potential collaborators or competitors. Our research aids in strategic decision-making related to licensing, R&D, and commercialization efforts. By understanding the strengths and weaknesses of key market players, clients can identify opportunities for partnerships, joint ventures, or acquisitions that align with their business objectives. This intelligence supports the development of robust strategies to enhance market positioning and drive growth.",
+            title:"Competitive Analysis: ",
+            description:"Profiles of key players, potential partners, and threats",
           },
           {
-            title: "Regulatory & Market Entry Challenges",
-            description:
-              "We analyze barriers to commercialization in different jurisdictions, understanding regulatory requirements, compliance issues, and market entry challenges. Our insights inform strategies to navigate complex regulatory landscapes and facilitate successful market entry. By identifying potential obstacles early, clients can develop mitigation plans to address regulatory hurdles, reduce time-to-market, and ensure compliance with local laws and standards. This approach enhances the likelihood of successful product launches and market acceptance.",
+            title:"Novelty & Non-Obviousness Review: ",
+            description:"Assessment of differentiation in current IP ecosystems",
           },
           {
-            title: "Patent Citations & Forward Citations",
-            description:
-              "We evaluate the influence and future potential of patents based on references in other innovations. Our analysis of patent citations and forward citations provides insights into the patent's impact on subsequent technological developments and its strategic importance. By examining citation patterns, clients can assess the relevance and longevity of their intellectual property, identify potential infringement risks, and uncover opportunities for licensing or collaboration. This intelligence supports informed decision-making and strengthens IP portfolio management strategies.",
+            title:"Commercial Fit:  ",
+            description:"Technology-to-market alignment and infringement risk detection",
           },
         ],
-        //   closing:
-        // 	"Lifeintelect’s insights into competitive landscapes and industry trends drive strategic success. Ready to stay ahead with Lifeintelect? Let's get started!"
+        closing:"Empower your technology with insights that clarify its path to market.",
       },
       managementConsulting: {
         title: "Management Consulting",

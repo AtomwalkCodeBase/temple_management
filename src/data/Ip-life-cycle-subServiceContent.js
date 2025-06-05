@@ -182,40 +182,29 @@ const subServiceContent = {
       closing:"Make every move with clarity, confidence, and competitive foresight.",	
 		},
 		ipPolicy: {
-		  title: "IP Policy and Process Setup",
-		  description:
-			"At Lifeintelect, we help you establish robust IP policies and processes to safeguard and manage your intellectual property effectively.",
-		  description1:
-			"We start by understanding your business, its operations, and existing IP assets. Our experts then work with you to develop a customized IP policy that aligns with your business goals and industry standards. This policy outlines the procedures for identifying, protecting, and managing your IP assets, ensuring consistency and compliance across your organization.",
-		  process: [
-			{
-			  title: "IP Identification",
-			  description:
-				"Establishing methods for recognizing and documenting new IP assets, such as inventions, designs, trademarks, and copyrights.",
-			},
-			{
-			  title: "IP Protection",
-			  description:
-				"Defining procedures for securing IP rights, including filing patents, registering trademarks, and protecting trade secrets.",
-			},
-			{
-			  title: "IP Management",
-			  description:
-				"Setting up systems for maintaining and monitoring IP assets, managing renewals, and tracking IP performance.",
-			},
-			{
-			  title: "IP Enforcement",
-			  description:
-				"Developing strategies for detecting and addressing IP infringements, including legal actions and dispute resolution.",
-			},
-			{
-			  title: "IP Training",
-			  description:
-				"Providing training programs for employees to raise awareness about the importance of IP and their roles in protecting it.",
-			},
-		  ],
-		  closing:
-			"We compile a comprehensive IP policy document and process manual, providing clear guidelines and step-by-step procedures. Lifeintelect’s IP policy and process setup service ensures that your intellectual property is well-protected and efficiently managed, giving you a strategic advantage in the market. Ready to establish a strong IP framework with Lifeintelect? Let's get started!",
+		  title: "IP Policy & Internal Frameworks",
+      subHeading: "IP Policy & Internal Frameworks",
+      subTitle: "Secure Ideas. Empower Innovation.",
+      description:"A strong internal IP ecosystem protects ideas at every stage, fosters accountability, and builds a culture of innovation from within.",
+      processTitle: "Frameworks That Enable Growth:",
+      process: [
+        {
+          description:"Bespoke IP policies tailored to sector and strategic vision",
+        },
+        {
+          description:"Streamlined processes for invention identification and protection",
+        },
+        {
+          description: "Automated systems for renewals, deadlines, and audits",
+        },
+        {
+          description: "Infringement response protocols and dispute readiness",
+        },
+		{
+          description: "Training modules to embed IP literacy across teams",
+        },
+      ],
+      closing:"Innovation thrives where systems support protection and ownership",
 		},
 		ipResearch: {
       title: "IP-Based Research & Commercial Strategy",
@@ -242,43 +231,28 @@ const subServiceContent = {
     },
 		ipPortfolio: {
 		  title: "IP Portfolio Management",
-		  description:
-			"At Lifeintelect, we offer comprehensive IP portfolio management services to ensure your intellectual property assets are effectively utilized and protected.",
-		  description1:
-			"We begin by conducting a thorough review of your existing IP portfolio, which includes patents, trademarks, copyrights, and trade secrets. Our experts assess the strength, scope, and strategic value of each asset, identifying opportunities for optimization and growth. ",
-			  process: [
-			{
-			  title: "Asset Valuation",
-			  description: "Evaluating the commercial value of your IP assets.",
-			},
-			{
-			  title: "Optimization",
-			  description:
-				"Identifying underutilized assets and opportunities for improvement or expansion.",
-			},
-			{
-			  title: "Risk Management",
-			  description:
-				"Assessing potential risks and implementing strategies to mitigate them.",
-			},
-			{
-			  title: "Licensing and Monetization",
-			  description:
-				"Exploring opportunities for licensing, partnerships, and other revenue-generating activities.",
-			},
-			{
-			  title: "Renewals and Maintenance",
-			  description:
-				"Managing deadlines and fees to ensure your IP assets remain in force.",
-			},
-			{
-			  title: "Monitoring and Enforcement",
-			  description:
-				"Keeping an eye on the market for potential infringements and taking necessary actions to protect your rights.",
-			},
-		  ],
-		  closing:
-			"We provide regular updates and reports, keeping you informed about the status and performance of your IP portfolio. Lifeintelect's IP portfolio management service is designed to maximize the value of your intellectual property and support your business goals. Ready to optimize your IP assets with Lifeintelect? Let's get started!",
+      subHeading: "IP Portfolio Management",
+      subTitle: "Elevate Assets. Maximize ROI.",
+      description:"Effective portfolio management turns static IP into a dynamic tool for business expansion, market entry, and competitive advantage.",
+      processTitle: "Portfolio Actions that Matter:",
+      process: [
+        {
+          description:"Valuation and performance audit of existing IP assets",
+        },
+        {
+          description:"Strategic prioritization based on market potential and business alignment",
+        },
+        {
+          description: "Exploration of licensing, joint ventures, and commercialization channels",
+        },
+        {
+          description: "Continuous monitoring for infringements or market misuse",
+        },
+		{
+          description: "Lifecycle tracking to prevent lapses and optimize renewals",
+        },
+      ],
+      closing:"Let your IP portfolio power growth—not sit on the sidelines.",
 		},
 		ipValuation: {
 		  title: "IP Valuation",

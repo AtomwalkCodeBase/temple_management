@@ -195,7 +195,7 @@ const strategicRoutes = [
 ];
 
 const startupRoutes = [
-  { path: '/IP-Strategy-&-Roadmap-for-Startups', type: 'iprSolutionsStartups', id: 'ipStrategyRoadmap', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
+  { path: '/IP-Strategy-&-Roadmap-for-Startups', type: 'iprSolutionsStartups', id: 'ipStrategyRoadmap', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage },
   { path: '/Cost-Effective-IP-Protection', type: 'iprSolutionsStartups', id: 'costEffectiveProtection', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
   { path: '/IP-Due-Diligence-for-Investors', type: 'iprSolutionsStartups', id: 'ipDueDiligenceInvestors', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },
   { path: '/IP-Licensing-&-Commercialization', type: 'iprSolutionsStartups', id: 'ipLicensingCommercialization', content: IprSolutionsStartups, theme: themes.iprSolutionsStartups, component: ServicePage2 },

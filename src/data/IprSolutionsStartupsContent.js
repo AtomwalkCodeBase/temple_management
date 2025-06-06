@@ -216,7 +216,7 @@ const subServiceContent = {
           "Mitigate risk before it scales—and protect your competitive edge.",
       },
     },
-    iprSolutionsStartups: {
+    // iprSolutionsStartups: {
       title: "IP SOLUTIONS FOR STARTUPS",
       subtitle: "Build Smart. Protect Early. Scale Confidently.",
       description:
@@ -378,7 +378,7 @@ const subServiceContent = {
         closing:
           "Mitigate risk before it scales—and protect your competitive edge.",
       },
-    },
+    // },
   },
 };
 

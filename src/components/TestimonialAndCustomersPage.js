@@ -1028,7 +1028,7 @@ const TestimonialAndCustomersPage = () => {
         
         {/* Header */}
         <Header>
-          <Title>EMPOWERING CLIENTS THROUGH UNWAVERING ASSISTANCE</Title>
+          <Title>Empowering Clients Through Unwavering Assistance</Title>
           <Subtitle>
             Discover why hundreds of companies trust us with their business needs and hear their success stories directly from the source.
           </Subtitle>

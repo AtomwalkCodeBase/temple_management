@@ -150,7 +150,7 @@ export default function Footer2() {
             <SocialLink href="http://instagram.com/lifeintelect_consultancy/" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Instagram size={18} />
             </SocialLink>
-            <SocialLink href="https://youtube.com/@lifeintelect_13?feature=shared" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <SocialLink href="https://youtube.com/@lifeintelect_consultancy?si=hlsKXxK-Ne51OrLp" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Youtube size={18} />
             </SocialLink>
           </SocialLinks>

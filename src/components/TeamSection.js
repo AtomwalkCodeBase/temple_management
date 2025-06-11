@@ -81,6 +81,7 @@ const MemberRole = styled.p`
 `
 
 const MemberBio = styled.p`
+text-align: justify;
   font-size: 1rem;
   line-height: 1.7;
   color: #555;

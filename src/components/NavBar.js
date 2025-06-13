@@ -850,12 +850,12 @@ const NavBar = () => {
       icon: '✍️', // Pencil writing (better for blogs)
       color: '#4e73df'
     },
-    // { 
-    //   id: 'presentations', 
-    //   name: 'PRESENTATIONS', 
-    //   icon: '📊', // Chart increasing (represents slides/presentations)
-    //   color: '#1cc88a'
-    // },
+    { 
+      id: 'presentations', 
+      name: 'PRESENTATIONS', 
+      icon: '📊', 
+      color: '#1cc88a'
+    },
     { 
       id: 'faq', 
       name: 'FREQUENTLY ASKED QUESTIONS (FAQs)', 
@@ -876,7 +876,7 @@ const NavBar = () => {
     { id: 'resources', label: 'Resources' }
   ];
 
-  const forceWhiteTextPages = ['/', '/about'];
+  const forceWhiteTextPages = ['/', '/about', '/presentations','/news'];
   const forceBlackText = isScrolled ? false : forceWhiteTextPages.some(path => window.location.pathname === path);
 
   const navigateTo = (path) => {
@@ -982,7 +982,7 @@ const NavBar = () => {
               {isMobile && item.id === 'resources' && (
                 <MobileDropdown isOpen={showResourcesDropdown}>
                   <MobileServiceCategoryContainer>
-                    <MobileServiceTitle>Explore Our Products</MobileServiceTitle>
+                    <MobileServiceTitle>Knowledge & Insights</MobileServiceTitle>
                     <MobileServiceList>
                       {resourcesData.map((resource) => (
                         <MobileServiceItem 
@@ -1036,7 +1036,7 @@ const NavBar = () => {
             isScrolled={isScrolled}
             onMouseLeave={() => setShowResourcesDropdown(false)}
           >
-              <ResourcesHeader>Explore Our Products</ResourcesHeader>
+              <ResourcesHeader>Knowledge & Insights</ResourcesHeader>
               <ResourcesList>
                 {resourcesData.map((resource) => (
                   <ResourceItem 

@@ -26,6 +26,7 @@ import LinkWebsite from "./components/LinkWebsite";
 import NewsEventDetail from "./components/News/NewsEventDetail";
 import NewsEventsList from "./components/News/NewsEventsList";
 import NewsEventForm from "./components/News/NewsEventForm";
+import PresentationPage from "./components/Presentation";
 
 // Theme configuration
 const themes = {
@@ -137,6 +138,7 @@ const mainRoutes = [
   { path: "/news/addNewsEvent", component: NewsEventForm, title: "AddNewsEventForm" },
   { path: "/news/edit/:id", component: NewsEventForm, title: "AddNewsEventForm" },
   { path: "/links", component: LinkWebsite, title: "LinksWebsite" },
+  { path: "/presentations", component: PresentationPage, title: "Presentation" }
 ];
 
 const patentRoutes = [

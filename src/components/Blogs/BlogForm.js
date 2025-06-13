@@ -28,16 +28,30 @@ const BlogForm = () => {
 
   useEffect(() => {
     if (id && blog && blogContent) {
+      const strippedSections = blogContent.sections.map(section => ({
+        ...section,
+        contents: section.contents.map(content => {
+          if (content.type === 'image' && content.data.startsWith('https://cdn.jsdelivr.net/gh/AtomwalkCodeBase/Blogs@main/')) {
+            return {
+              ...content,
+              data: content.data.replace('https://cdn.jsdelivr.net/gh/AtomwalkCodeBase/Blogs@main/', '')
+            };
+          }
+          return content;
+        })
+      }));
+  
       setFormData({
         title: blog.title,
         tagline: blog.tagline,
         coverImagePath: blog.coverImage.replace('https://cdn.jsdelivr.net/gh/AtomwalkCodeBase/Blogs@main/', ''),
         date: blog.date || getToday(),
-        sections: blogContent.sections,
+        sections: strippedSections,
         category: blog.category || ''
       });
     }
   }, [id, blog, blogContent]);
+  
 
   const addSection = () => {
     setFormData(prev => ({
@@ -211,7 +225,8 @@ const BlogForm = () => {
             value={content.data}
             onChange={(e) => updateContent(sectionIndex, contentIndex, e.target.value)}
             placeholder="Enter paragraph text..."
-            rows={4}
+            rows={10}
+            style={{width: '100%'}}
           />
         );
       case 'image':
@@ -221,6 +236,7 @@ const BlogForm = () => {
             value={content.data}
             onChange={(e) => updateContent(sectionIndex, contentIndex, e.target.value)}
             placeholder="folder/image.jpg"
+            style={{width: '100%', height: '50px'}}
           />
         );
       case 'bullets':

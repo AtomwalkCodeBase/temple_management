@@ -376,6 +376,89 @@ const ArticleImage = styled.img`
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 `;
 
+const ShareSection = styled.div`
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+`;
+
+const ShareTitle = styled.h3`
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+const ShareButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    gap: 0.75rem;
+  }
+`;
+
+const ShareButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+
+  &.twitter {
+    background: #1da1f2;
+    color: white;
+    
+    &:hover {
+      background: #0d8bd9;
+      transform: translateY(-1px);
+    }
+  }
+  
+  &.linkedin {
+    background: #0077b5;
+    color: white;
+    
+    &:hover {
+      background: #005885;
+      transform: translateY(-1px);
+    }
+  }
+  
+  &.facebook {
+    background: #4267b2;
+    color: white;
+    
+    &:hover {
+      background: #365899;
+      transform: translateY(-1px);
+    }
+  }
+  
+  &.copy {
+    background: #6b7280;
+    color: white;
+    
+    &:hover {
+      background: #4b5563;
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8rem;
+  }
+`;
+
 // Loading States
 const LoadingContainer = styled.div`
   display: flex;
@@ -437,6 +520,26 @@ const ErrorContainer = styled.div`
 const BlogDetail = () => {
   const { id } = useParams();
   const { blog, blogContent, loading, error } = useBlog(id);
+
+  const handleShare = (platform) => {
+    const url = window.location.href;
+    const title = blog?.title;
+    
+    const shareUrls = {
+      twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+    };
+    
+    if (platform === 'copy') {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard!');
+      });
+      return;
+    }
+    
+    window.open(shareUrls[platform], '_blank', 'width=600,height=400');
+  };
 
   if (loading) {
     return (
@@ -515,7 +618,7 @@ const BlogDetail = () => {
 
           <FeaturedImageContainer>
             <FeaturedImage
-              src={blogContent.header.coverImage}
+              src={blogContent.header.leadImage}
               alt={blogContent.header.title}
             />
             <ImageOverlay />
@@ -537,9 +640,40 @@ const BlogDetail = () => {
                 ))}
               </div>
             </ArticleSection>
+            
           ))}
         </ContentContainer>
+        <ShareSection>
+        <ShareTitle>Share this article</ShareTitle>
+        <ShareButtons>
+          <ShareButton 
+            className="twitter"
+            onClick={() => handleShare('twitter')}
+          >
+            🐦 Twitter
+          </ShareButton>
+          <ShareButton 
+            className="linkedin"
+            onClick={() => handleShare('linkedin')}
+          >
+            💼 LinkedIn
+          </ShareButton>
+          <ShareButton 
+            className="facebook"
+            onClick={() => handleShare('facebook')}
+          >
+            📘 Facebook
+          </ShareButton>
+          <ShareButton 
+            className="copy"
+            onClick={() => handleShare('copy')}
+          >
+            🔗 Copy Link
+          </ShareButton>
+        </ShareButtons>
+      </ShareSection>
       </ContentSection>
+      
     </PageContainer>
   );
 };

@@ -8,7 +8,7 @@ import { Eye, Download, X, Play, Calendar, Users, Presentation, ArrowRight, Spar
 const presentations = [
   {
     id: 1,
-    title: "Company Profile 2025",
+    title: "Powering your Innovations",
     description: "Comprehensive overview of our company's vision, mission, and achievements for the year 2025.",
     image: presentationImg,
     pdfUrl: "https://raw.githubusercontent.com/AtomwalkCodeBase/Blogs/main/Lifeintelect_NewsEvent/Document/companyprofile.pdf",

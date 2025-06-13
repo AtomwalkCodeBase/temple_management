@@ -982,7 +982,7 @@ const NavBar = () => {
               {isMobile && item.id === 'resources' && (
                 <MobileDropdown isOpen={showResourcesDropdown}>
                   <MobileServiceCategoryContainer>
-                    <MobileServiceTitle>Knowledge & Insights</MobileServiceTitle>
+                    <MobileServiceTitle>Explore our Resources</MobileServiceTitle>
                     <MobileServiceList>
                       {resourcesData.map((resource) => (
                         <MobileServiceItem 
@@ -1036,7 +1036,7 @@ const NavBar = () => {
             isScrolled={isScrolled}
             onMouseLeave={() => setShowResourcesDropdown(false)}
           >
-              <ResourcesHeader>Knowledge & Insights</ResourcesHeader>
+              <ResourcesHeader>Explore our Resources</ResourcesHeader>
               <ResourcesList>
                 {resourcesData.map((resource) => (
                   <ResourceItem 

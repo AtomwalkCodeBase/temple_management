@@ -618,7 +618,7 @@ const BlogDetail = () => {
 
           <FeaturedImageContainer>
             <FeaturedImage
-              src={blogContent.header.leadImage}
+              src={blogContent.header.coverImage}
               alt={blogContent.header.title}
             />
             <ImageOverlay />

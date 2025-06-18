@@ -4,7 +4,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebasee';
 import sanitizeHtml from 'sanitize-html';
 import styled from 'styled-components';
-
+import { FaFacebookF, FaLinkedinIn, FaLink, FaReddit, FaWhatsapp, FaShareAlt } from 'react-icons/fa';
+import { SiX } from 'react-icons/si'; 
 // Styled Components
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -104,7 +105,7 @@ const ArticleCard = styled.article`
 `;
 
 const HeroSection = styled.div`
-margin-top: 40px;
+  margin-top: 40px;
   position: relative;
   height: 400px;
   overflow: hidden;
@@ -436,85 +437,73 @@ const ArticleContent = styled.div`
 `;
 
 const ShareSection = styled.div`
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 40px 0 80px 0;
+  border-top: 1px solid #f0f0f0;
+`;
+
+const ShareContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+`;
+
+const ShareButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
 `;
 
 const ShareTitle = styled.h3`
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 1rem;
-  text-align: center;
-`;
-
-const ShareButtons = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-
-  @media (max-width: 480px) {
-    gap: 0.75rem;
-  }
-`;
-
-const ShareButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
+  font-size: 1.25rem;
+  color: #2c2c2c;
+  margin: 0;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
+`;
+
+const ShareOptionsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 15px;
+  width: 100%;
+  max-width: 500px;
+`;
+
+const ShareOption = styled.button`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-
-  &.twitter {
-    background: #1da1f2;
-    color: white;
-    
-    &:hover {
-      background: #0d8bd9;
-      transform: translateY(-1px);
-    }
-  }
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: ${props => props.$color || '#333'};
   
-  &.linkedin {
-    background: #0077b5;
-    color: white;
-    
-    &:hover {
-      background: #005885;
-      transform: translateY(-1px);
-    }
-  }
-  
-  &.facebook {
-    background: #4267b2;
-    color: white;
-    
-    &:hover {
-      background: #365899;
-      transform: translateY(-1px);
-    }
-  }
-  
-  &.copy {
-    background: #6b7280;
-    color: white;
-    
-    &:hover {
-      background: #4b5563;
-      transform: translateY(-1px);
-    }
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: ${props => props.$color || '#ff6b6b'};
   }
 
-  @media (max-width: 480px) {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.8rem;
+  svg {
+    font-size: 1.5rem;
+  }
+
+  span {
+    font-size: 0.75rem;
+    font-weight: 500;
   }
 `;
 
@@ -596,18 +585,29 @@ const NewsEventDetail = () => {
 
   const handleShare = (platform) => {
     const url = window.location.href;
-    const title = item?.title;
+    const title = item?.title || 'Check out this article';
     
     const shareUrls = {
       twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(`${title}: ${url}`)}`,
     };
     
     if (platform === 'copy') {
       navigator.clipboard.writeText(url).then(() => {
         alert('Link copied to clipboard!');
       });
+      return;
+    }
+    
+    if (platform === 'native' && navigator.share) {
+      navigator.share({
+        title: title,
+        text: title,
+        url: url,
+      }).catch(err => console.error('Error sharing:', err));
       return;
     }
     
@@ -759,38 +759,74 @@ const NewsEventDetail = () => {
             </ArticleContent>
 
             <ShareSection>
-              <ShareTitle>Share this article</ShareTitle>
-              <ShareButtons>
-                <ShareButton 
-                  className="twitter"
-                  onClick={() => handleShare('twitter')}
-                >
-                  🐦 Twitter
-                </ShareButton>
-                <ShareButton 
-                  className="linkedin"
-                  onClick={() => handleShare('linkedin')}
-                >
-                  💼 LinkedIn
-                </ShareButton>
-                <ShareButton 
-                  className="facebook"
-                  onClick={() => handleShare('facebook')}
-                >
-                  📘 Facebook
-                </ShareButton>
-                <ShareButton 
-                  className="copy"
-                  onClick={() => handleShare('copy')}
-                >
-                  🔗 Copy Link
-                </ShareButton>
-              </ShareButtons>
+              <ShareContainer>
+                <ShareButtonWrapper>
+                  <ShareTitle>Share this article</ShareTitle>
+                  <ShareOptionsGrid>
+                    <ShareOption 
+                      onClick={() => handleShare('twitter')}
+                      $color="#1DA1F2"
+                      aria-label="Share on Twitter"
+                    >
+                      <SiX size={20} />
+                      <span>Twitter</span>
+                    </ShareOption>
+                    <ShareOption 
+                      onClick={() => handleShare('facebook')}
+                      $color="#4267B2"
+                      aria-label="Share on Facebook"
+                    >
+                      <FaFacebookF />
+                      <span>Facebook</span>
+                    </ShareOption>
+                    <ShareOption 
+                      onClick={() => handleShare('linkedin')}
+                      $color="#0077B5"
+                      aria-label="Share on LinkedIn"
+                    >
+                      <FaLinkedinIn />
+                      <span>LinkedIn</span>
+                    </ShareOption>
+                    <ShareOption 
+                      onClick={() => handleShare('reddit')}
+                      $color="#FF5700"
+                      aria-label="Share on Reddit"
+                    >
+                      <FaReddit />
+                      <span>Reddit</span>
+                    </ShareOption>
+                    <ShareOption 
+                      onClick={() => handleShare('whatsapp')}
+                      $color="#25D366"
+                      aria-label="Share on WhatsApp"
+                    >
+                      <FaWhatsapp />
+                      <span>WhatsApp</span>
+                    </ShareOption>
+                    
+                    {navigator.share && (
+                      <ShareOption 
+                        onClick={() => handleShare('native')}
+                        aria-label="Share via native share"
+                      >
+                        <FaShareAlt />
+                        <span>More</span>
+                      </ShareOption>
+                    )}
+                    <ShareOption 
+                      onClick={() => handleShare('copy')}
+                      aria-label="Copy link"
+                    >
+                      <FaLink />
+                      <span>Copy Link</span>
+                    </ShareOption>
+                  </ShareOptionsGrid>
+                </ShareButtonWrapper>
+              </ShareContainer>
             </ShareSection>
           </ContentSection>
         </ArticleCard>
         
-        {/* Back button moved to the bottom */}
         <BackButton onClick={handleBackNavigation}>
           <span className="back-icon">←</span>
           <span className="back-text">Back to News & Events</span>

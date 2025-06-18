@@ -758,12 +758,12 @@ const TestimonialAndCustomersPage = () => {
       position: "Managing Partner, ENVIVA",
       stars: 5,
     },
-    {
-      text: "We recently worked with LifeIntelect Consultancy Pvt Ltd for a trademark registration for a product branding project. Dr. Lipika Sahoo provided exceptional guidance throughout the entire process. Her wealth of knowledge, experience and expertise ensured that all our queries were addressed promptly and clearly. The service was efficient, cost-effective, and thoroughly professional. We were very impressed with the timely and effective solutions provided. I highly recommend LifeIntelect Consultancy to anyone seeking to secure their intellectual property rights. Thank you, Dr. Lipika, for your excellent work. Wishing you continued success.",
-      name: "Padmanabhan Gayatri",
-      position: "Director, Raj Viha Tours and Travels Pvt Ltd",
-      stars: 5,
-    },
+    // {
+    //   text: "We recently worked with LifeIntelect Consultancy Pvt Ltd for a trademark registration for a product branding project. Dr. Lipika Sahoo provided exceptional guidance throughout the entire process. Her wealth of knowledge, experience and expertise ensured that all our queries were addressed promptly and clearly. The service was efficient, cost-effective, and thoroughly professional. We were very impressed with the timely and effective solutions provided. I highly recommend LifeIntelect Consultancy to anyone seeking to secure their intellectual property rights. Thank you, Dr. Lipika, for your excellent work. Wishing you continued success.",
+    //   name: "Padmanabhan Gayatri",
+    //   position: "Director, Raj Viha Tours and Travels Pvt Ltd",
+    //   stars: 5,
+    // },
     {
       text: "We are a twenty-year-old government regulated registered Chit Fund Company that enables monthly savers to borrow multiples of their savings in times of need. Recently, my son Sandeep required trademark services for his e-commerce business. I referred him to Dr. Lipika Sahoo of LifeIntelect Consultancy. Sandeep had this to say after the assignment was completed: 'Dad, thanks for referring Dr. Lipika Sahoo’s services. She displayed in-depth knowledge of the subject and handled the assignment professionally and quickly.' I strongly recommend Dr. Lipika Sahoo’s services for trademark and copyright-related matters.",
       name: "Sridhar Alampalli",

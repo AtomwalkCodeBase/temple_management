@@ -163,9 +163,9 @@ export default function Footer2() {
           {/* <FooterLink href="/services.html">Services</FooterLink> */}
           <FooterLink href="/about#team">Our Team</FooterLink>
           <FooterLink href="/blog">Blog</FooterLink>
-          <FooterLink href="/news">News and Event</FooterLink>
+          <FooterLink href="/news">News and Events</FooterLink>
           <FooterLink href="/contact">Contact</FooterLink>
-          <FooterLink href="/faq">FAQ</FooterLink>
+          <FooterLink href="/faq">FAQs</FooterLink>
         </FooterColumn>
 
         <FooterColumn>

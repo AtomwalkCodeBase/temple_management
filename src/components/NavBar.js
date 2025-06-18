@@ -870,7 +870,7 @@ const NavBar = () => {
     },
     { 
       id: 'knowledgehub', 
-      name: 'Knowledge Hub', 
+      name: 'KNOWLEDGE HUB', 
       icon: '🧠',
       color: '#fd7e14'
     }

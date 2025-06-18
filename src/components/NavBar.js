@@ -867,6 +867,12 @@ const NavBar = () => {
       name: 'LINKS TO ASSOCIATED WEBSITES', 
       icon: '🔗', // Link symbol (perfect for website links)
       color: '#f6c23e'
+    },
+    { 
+      id: 'knowledgehub', 
+      name: 'Knowledge Hub', 
+      icon: '🧠',
+      color: '#fd7e14'
     }
 ];
   const menuItems = [

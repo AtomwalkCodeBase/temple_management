@@ -27,6 +27,9 @@ import NewsEventDetail from "./components/News/NewsEventDetail";
 import NewsEventsList from "./components/News/NewsEventsList";
 import NewsEventForm from "./components/News/NewsEventForm";
 import PresentationPage from "./components/Presentation";
+import KnowledgeHub from "./components/Knowledge/Knowledge";
+import KnowledgeDetails from "./components/Knowledge/KnowledgeDetail";
+import KnowledgeForm from "./components/Knowledge/KnowledgeForm";
 
 // Theme configuration
 const themes = {
@@ -138,7 +141,12 @@ const mainRoutes = [
   { path: "/news/addNewsEvent", component: NewsEventForm, title: "AddNewsEventForm" },
   { path: "/news/edit/:id", component: NewsEventForm, title: "AddNewsEventForm" },
   { path: "/links", component: LinkWebsite, title: "LinksWebsite" },
-  { path: "/presentations", component: PresentationPage, title: "Presentation" }
+  { path: "/presentations", component: PresentationPage, title: "Presentation" },
+  {path: "/knowledgehub", component: KnowledgeHub, title:"Knowledge"},
+  { path: "/knowledgehub/:id", component: KnowledgeDetails, title: "AddKnowledgeDetails" },
+  {path:"/knowledgehub/addknowledgehub", component: KnowledgeForm, title:"Addknowledgehub"},
+  {path:"/knowledgehub/edit/:id", component: KnowledgeForm, title:"Addknowledgehub"}
+
 ];
 
 const patentRoutes = [

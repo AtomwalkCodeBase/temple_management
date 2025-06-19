@@ -480,7 +480,7 @@ const ContactUsForm = () => {
         
         <ContactMethod>
           <ContactMethodTitle>Call us</ContactMethodTitle>
-          <ContactMethodText>Call our team Mon-Fri from 8am to 5pm.</ContactMethodText>
+          <ContactMethodText>Call our team Mon-Fri from 8am to 17pm.</ContactMethodText>
           
           <ContactLink href="tel:+(91)-9591600666" title="Call our team">
             <IconWrapper>

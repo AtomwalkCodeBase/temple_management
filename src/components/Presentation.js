@@ -4,19 +4,6 @@ import presentationImg from "../assets/img/persentation1.png";
 import presentationImg1 from "../assets/img/persentation.png";
 import { Eye, Download, X, Play, Calendar, Users, Presentation, ArrowRight, Sparkles } from "lucide-react";
 
-// Mock data - fixed duplicate id and ensured unique entries
-const presentations = [
-  {
-    id: 1,
-    title: "Powering your Innovations",
-    description: "Comprehensive overview of our company's vision, mission, and achievements for the year 2025.",
-    image: presentationImg,
-    pdfUrl: "https://raw.githubusercontent.com/AtomwalkCodeBase/Blogs/main/Lifeintelect_NewsEvent/Document/companyprofile.pdf",
-    date: "March 2025",
-    category: "Corporate",
-    duration: "15 min",
-  },
-];
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -679,8 +666,19 @@ export default function PresentationPage() {
   const [currentPresentation, setCurrentPresentation] = useState(null);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfError, setPdfError] = useState(false);
-
-  const memoizedPresentations = useMemo(() => presentations, []);
+const presentations = [
+  {
+    id: 1,
+    title: "Powering your Innovations",
+    description: "Comprehensive overview of our company's vision, mission, and achievements for the year 2025.",
+    image: presentationImg,
+    pdfUrl: "https://raw.githubusercontent.com/AtomwalkCodeBase/Blogs/main/Lifeintelect_NewsEvent/Document/companyprofile.pdf",
+    date: "March 2025",
+    category: "Corporate",
+    duration: "15 min",
+  },
+];
+   const memoizedPresentations = useMemo(() => presentations, []);
 
   const handleViewPdf = useCallback((presentation) => {
     const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(presentation.pdfUrl)}&embedded=true`;

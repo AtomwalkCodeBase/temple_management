@@ -160,7 +160,7 @@ const Section = styled.section`
   @media (max-width: 1024px) {
     min-height: auto;
     padding: 60px 20px;
-  }
+      }
 
   @media (max-width: 768px) {
     padding: 40px 20px;
@@ -199,7 +199,12 @@ const SectionContent = styled.div`
     padding: 0;
     text-align: center;
   }
+
+  @media (min-width: 1440px) {
+    padding: 90px; // or whatever value you want for larger screens
+  }
 `;
+
 
 const SectionMedia = styled.div`
   flex: 1;

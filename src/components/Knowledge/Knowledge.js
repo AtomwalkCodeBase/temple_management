@@ -136,7 +136,7 @@ const KnowledgeHub = () => {
       totalPosts: `${totalPosts}`,
       totalEngagement: `${(totalEngagement / 1000).toFixed(1)}K`,
       platforms,
-      satisfaction: '98%'
+      satisfaction: '100%'
     };
   }, [posts]);
 

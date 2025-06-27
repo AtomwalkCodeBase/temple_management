@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { motion } from "framer-motion"
 import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react"
-import companyimage from "../assets/img/company_logo.png"
+// import companyimage from "../assets/img/company_logo.png"
 import { FaCalendarCheck } from 'react-icons/fa';
 const FooterContainer = styled.footer`
   background: linear-gradient(135deg, #0a2342 0%, #0047AB 100%);

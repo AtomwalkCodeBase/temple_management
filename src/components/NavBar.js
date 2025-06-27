@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import companylogo from '../assets/img/company_logo.png';
-import { link } from 'framer-motion/client';
+// import { link } from 'framer-motion/client';
 
 // Animations
 const fadeIn = keyframes`
@@ -666,7 +666,7 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeItem, setActiveItem] = useState('home');
+  // const [activeItem, setActiveItem] = useState('home');
   const [showServicesDropdown, setShowServicesDropdown] = useState(false);
   const [showResourcesDropdown, setShowResourcesDropdown] = useState(false);
   const [isMobile, setIsMobile] = useState(false);

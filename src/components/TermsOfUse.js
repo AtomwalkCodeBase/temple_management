@@ -13,20 +13,20 @@ const fadeIn = keyframes`
   }
 `;
 
-const slideDown = keyframes`
-  from {
-    max-height: 0;
-    opacity: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  to {
-    max-height: 1000px;
-    opacity: 1;
-    padding-top: 24px;
-    padding-bottom: 8px;
-  }
-`;
+// const slideDown = keyframes`
+//   from {
+//     max-height: 0;
+//     opacity: 0;
+//     padding-top: 0;
+//     padding-bottom: 0;
+//   }
+//   to {
+//     max-height: 1000px;
+//     opacity: 1;
+//     padding-top: 24px;
+//     padding-bottom: 8px;
+//   }
+// `;
 
 const rotate = keyframes`
   from {

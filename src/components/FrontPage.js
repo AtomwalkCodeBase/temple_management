@@ -4,7 +4,7 @@ import ServicesSection from './ServicesSection'
 import AboutSection from './AboutSection'
 import ContactPage from './ContactPage'
 import TestimonialAndCustomersPage from './TestimonialAndCustomersPage'
-import Herosection1 from './Herosection1'
+// import Herosection1 from './Herosection1'
 
 const FrontPage = () => {
   // Array of your hero section components

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { motion } from "framer-motion";
 import SpaceImage_2 from "../assets/img/aboutus_image.png";
 
@@ -63,14 +63,14 @@ const Title = styled(motion.div)`
   margin-bottom: 20px;
 `;
 
-const PlanetText = styled(motion.span)`
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  color: #FFFFFF;
-`;
+// const PlanetText = styled(motion.span)`
+//   font-size: 16px;
+//   font-weight: 500;
+//   letter-spacing: 2px;
+//   text-transform: uppercase;
+//   margin-bottom: 10px;
+//   color: #FFFFFF;
+// `;
 
 const EarthText = styled(motion.span)`
   font-size: 64px;
@@ -91,32 +91,32 @@ const Subtitle = styled(motion.p)`
 `;
 
 // Updated Button styles
-const Button = styled(motion.button)`
-  background: #FFFFFF;
-  color: #000000;
-  border: none;
-  padding: 12px 30px;
-  font-size: 18px;
-  font-weight: 700;
-  border-radius: 24px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+// const Button = styled(motion.button)`
+//   background: #FFFFFF;
+//   color: #000000;
+//   border: none;
+//   padding: 12px 30px;
+//   font-size: 18px;
+//   font-weight: 700;
+//   border-radius: 24px;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
   
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-  }
-`;
+//   &:hover {
+//     transform: scale(1.05);
+//     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+//   }
+// `;
 
-const ParticlesContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-`;
+// const ParticlesContainer = styled.div`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   overflow: hidden;
+//   z-index: 0;
+// `;
 
 const Tagline = styled(motion.div)`
   display: flex;

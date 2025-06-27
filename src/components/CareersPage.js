@@ -7,10 +7,10 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const slideIn = keyframes`
-  from { transform: translateX(-50px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-`;
+// const slideIn = keyframes`
+//   from { transform: translateX(-50px); opacity: 0; }
+//   to { transform: translateX(0); opacity: 1; }
+// `;
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -287,12 +287,12 @@ const CTAButton = styled.button`
   }
 `;
 
-const Footer = styled.footer`
-  padding: 3rem 2rem;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-`;
+// const Footer = styled.footer`
+//   padding: 3rem 2rem;
+//   background-color: #333;
+//   color: #fff;
+//   text-align: center;
+// `;
 
 // Main Component
 const CareersPage = () => {

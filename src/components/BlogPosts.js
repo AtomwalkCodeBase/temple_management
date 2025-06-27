@@ -52,12 +52,12 @@ const PostContent = styled.div`
   padding: 15px;
 `;
 
-const PostCategory = styled.span`
-  font-size: 12px;
-  color: #007BFF;
-  font-weight: bold;
-  text-transform: uppercase;
-`;
+// const PostCategory = styled.span`
+//   font-size: 12px;
+//   color: #007BFF;
+//   font-weight: bold;
+//   text-transform: uppercase;
+// `;
 
 const PostTitle = styled.h2`
   font-size: 18px;

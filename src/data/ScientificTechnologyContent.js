@@ -1,9 +1,9 @@
 import scientificSolutions from "../assets/img/website_06.png";
-import Pepole from "../assets/img/website_10.png";
-import pen from "../assets/img/website_12.png";
-import Geometry from "../assets/img/website_11.jpg";
-import Pen_Hand from "../assets/img/website_09.jpg";
-import { title } from "framer-motion/client";
+// import Pepole from "../assets/img/website_10.png";
+// import pen from "../assets/img/website_12.png";
+// import Geometry from "../assets/img/website_11.jpg";
+// import Pen_Hand from "../assets/img/website_09.jpg";
+// import { title } from "framer-motion/client";
 
 const subServiceContent = {
   scientificTechnology: {

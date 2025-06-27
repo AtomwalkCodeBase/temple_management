@@ -92,15 +92,15 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const fadeInRight = keyframes`
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-`;
+// const fadeInRight = keyframes`
+//   from { opacity: 0; transform: translateX(30px); }
+//   to { opacity: 1; transform: translateX(0); }
+// `;
 
-const fadeInLeft = keyframes`
-  from { opacity: 0; transform: translateX(-30px); }
-  to { opacity: 1; transform: translateX(0); }
-`;
+// const fadeInLeft = keyframes`
+//   from { opacity: 0; transform: translateX(-30px); }
+//   to { opacity: 1; transform: translateX(0); }
+// `;
 
 const float = keyframes`
   0% { transform: translateY(0); }
@@ -124,11 +124,11 @@ const marquee = keyframes`
   100% { transform: translateX(-50%); }
 `;
 
-const glow = keyframes`
-  0% { box-shadow: 0 0 5px rgba(80, 102, 225, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(80, 102, 225, 0.8); }
-  100% { box-shadow: 0 0 5px rgba(80, 102, 225, 0.5); }
-`;
+// const glow = keyframes`
+//   0% { box-shadow: 0 0 5px rgba(80, 102, 225, 0.5); }
+//   50% { box-shadow: 0 0 20px rgba(80, 102, 225, 0.8); }
+//   100% { box-shadow: 0 0 5px rgba(80, 102, 225, 0.5); }
+// `;
 
 const shimmer = keyframes`
   0% { background-position: -500px 0; }
@@ -328,20 +328,20 @@ const BrandLogo = styled.div`
   }
 `;
 
-const BrandText = styled.div`
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #c0c5d0;
-  transition: all 0.3s ease;
-  background: linear-gradient(135deg, #3a6cd9 0%, #8662f7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0.4;
+// const BrandText = styled.div`
+//   font-weight: 600;
+//   font-size: 1.2rem;
+//   color: #c0c5d0;
+//   transition: all 0.3s ease;
+//   background: linear-gradient(135deg, #3a6cd9 0%, #8662f7 100%);
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+//   opacity: 0.4;
   
-  ${BrandLogo}:hover & {
-    opacity: 1;
-  }
-`;
+//   ${BrandLogo}:hover & {
+//     opacity: 1;
+//   }
+// `;
 
 // Testimonials Section
 const TestimonialsSection = styled.section`
@@ -467,27 +467,27 @@ const TestimonialProfile = styled.div`
   margin-bottom: 30px;
 `;
 
-const ProfileImageWrapper = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 20px;
-  position: relative;
+// const ProfileImageWrapper = styled.div`
+//   width: 80px;
+//   height: 80px;
+//   border-radius: 50%;
+//   overflow: hidden;
+//   margin-right: 20px;
+//   position: relative;
   
-  &:before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: linear-gradient(135deg, #3a6cd9 0%, #8662f7 100%);
-    border-radius: 50%;
-    z-index: -1;
-    animation: ${pulse} 2s infinite;
-  }
-`;
+//   &:before {
+//     content: '';
+//     position: absolute;
+//     top: -3px;
+//     left: -3px;
+//     right: -3px;
+//     bottom: -3px;
+//     background: linear-gradient(135deg, #3a6cd9 0%, #8662f7 100%);
+//     border-radius: 50%;
+//     z-index: -1;
+//     animation: ${pulse} 2s infinite;
+//   }
+// `;
 
 const ProfileImage = styled.div`
   width: 100%;

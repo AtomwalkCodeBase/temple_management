@@ -1,27 +1,27 @@
 import React, { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useAnimation } from 'framer-motion';
-import { ArrowRight, Award, Eye, Glasses, Globe, Leaf, Lightbulb, RefreshCw, Rocket, ShieldCheck, Target, TrendingUp, User, Users } from 'lucide-react';
+// import { useAnimation } from 'framer-motion';
+import { Award, Glasses, Globe, Leaf, Lightbulb, RefreshCw, Rocket, ShieldCheck,  TrendingUp, User, Users } from 'lucide-react';
 import AboutUsHero from './AboutUsHero';
 import TeamSection from './TeamSection';
 import { useLocation } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 
 // Animations
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
+// const fadeIn = keyframes`
+//   from { opacity: 0; }
+//   to { opacity: 1; }
+// `;
 
-const slideInRight = keyframes`
-  from { transform: translateX(30px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-`;
+// const slideInRight = keyframes`
+//   from { transform: translateX(30px); opacity: 0; }
+//   to { transform: translateX(0); opacity: 1; }
+// `;
 
-const slideInLeft = keyframes`
-  from { transform: translateX(-30px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-`;
+// const slideInLeft = keyframes`
+//   from { transform: translateX(-30px); opacity: 0; }
+//   to { transform: translateX(0); opacity: 1; }
+// `;
 
 // Base Components
 const Container = styled.div`
@@ -284,26 +284,26 @@ const StatsContainer = styled.div`
   margin: 0 auto;
 `;
 
-const StatsTitle = styled.h2`
-  font-size: 42px;
-  font-weight: 800;
-  color: white;
-  text-align: center;
-  margin-bottom: 70px;
-  position: relative;
+// const StatsTitle = styled.h2`
+//   font-size: 42px;
+//   font-weight: 800;
+//   color: white;
+//   text-align: center;
+//   margin-bottom: 70px;
+//   position: relative;
   
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 2px;
-  }
-`;
+//   &:after {
+//     content: '';
+//     position: absolute;
+//     bottom: -20px;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     width: 80px;
+//     height: 4px;
+//     background: rgba(255, 255, 255, 0.6);
+//     border-radius: 2px;
+//   }
+// `;
 
 const StatsGrid = styled.div`
   display: grid;
@@ -768,66 +768,66 @@ const USPPoint = styled.li`
 `;
 
 // CTA Section
-const MinimalTeamCTA = styled.div`
-  margin: 80px auto;
-  background: linear-gradient(135deg, #0047AB 0%, #4169E1 100%);
-  border-radius: 12px;
-  padding: 50px 30px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 71, 171, 0.1);
-  position: relative;
-  overflow: hidden;
-`;
+// const MinimalTeamCTA = styled.div`
+//   margin: 80px auto;
+//   background: linear-gradient(135deg, #0047AB 0%, #4169E1 100%);
+//   border-radius: 12px;
+//   padding: 50px 30px;
+//   text-align: center;
+//   box-shadow: 0 10px 30px rgba(0, 71, 171, 0.1);
+//   position: relative;
+//   overflow: hidden;
+// `;
 
-const CTAContent = styled.div`
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-  margin: 0 auto;
-`;
+// const CTAContent = styled.div`
+//   position: relative;
+//   z-index: 1;
+//   max-width: 700px;
+//   margin: 0 auto;
+// `;
 
-const CTATitle = styled.h3`
-  font-size: 36px;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 24px;
-`;
+// const CTATitle = styled.h3`
+//   font-size: 36px;
+//   font-weight: 700;
+//   color: white;
+//   margin-bottom: 24px;
+// `;
 
-const CTADescription = styled.p`
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0 auto 32px;
-  line-height: 1.7;
-`;
+// const CTADescription = styled.p`
+//   font-size: 18px;
+//   color: rgba(255, 255, 255, 0.9);
+//   margin: 0 auto 32px;
+//   line-height: 1.7;
+// `;
 
-const CTAButton = styled.a`
-  display: inline-flex;
-  align-items: center;
-  padding: 14px 32px;
-  background: white;
-  color: #0047AB;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 18px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+// const CTAButton = styled.a`
+//   display: inline-flex;
+//   align-items: center;
+//   padding: 14px 32px;
+//   background: white;
+//   color: #0047AB;
+//   border-radius: 8px;
+//   font-weight: 600;
+//   font-size: 18px;
+//   text-decoration: none;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   
-  svg {
-    margin-left: 10px;
-    transition: transform 0.3s ease;
-  }
+//   svg {
+//     margin-left: 10px;
+//     transition: transform 0.3s ease;
+//   }
   
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+//   &:hover {
+//     transform: translateY(-5px);
+//     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
     
-    svg {
-      transform: translateX(5px);
-    }
-  }
-`;
+//     svg {
+//       transform: translateX(5px);
+//     }
+//   }
+// `;
 
 // Main Component
 const AboutUs = () => {

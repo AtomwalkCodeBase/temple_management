@@ -4,6 +4,9 @@ import { Search, Share2, Copy, Check } from 'lucide-react';
 import { FaLinkedin, FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 import { db } from '../News/firebasee';
 import { collection, getDocs } from 'firebase/firestore';
+import { SiX } from "react-icons/si";
+import knowledgebg from '../../assets/img/knowledgebg.jpg'; 
+// knowledgebg 
 
 const KnowledgeHub = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -40,7 +43,7 @@ const KnowledgeHub = () => {
     },
     twitter: {
       name: 'Twitter/X',
-      icon: <FaTwitter />,
+      icon: <SiX size={20} />,
       bgColor: '#1da1f2',
       textColor: '#ffffff'
     },
@@ -65,7 +68,7 @@ const KnowledgeHub = () => {
     if (typeof dateInput === 'string') {
       date = new Date(dateInput);
     } else if (dateInput.toDate) {
-      date = dateInput.toDate(); 
+      date = dateInput.toDate();
     } else {
       date = new Date(dateInput);
     }
@@ -75,6 +78,14 @@ const KnowledgeHub = () => {
       month: 'long',
       day: 'numeric'
     }).format(date).replace(/(\d+),/, '$1,');
+  };
+
+  // Get the first image for display
+  const getDisplayImage = (post) => {
+    if (post.images && Array.isArray(post.images) && post.images.length > 0) {
+      return post.images[0]; // Return the first image from the images array
+    }
+    return post.image || null; // Fallback to single image or null
   };
 
   // Filter and search posts
@@ -158,14 +169,24 @@ const KnowledgeHub = () => {
     overflow: 'hidden'
   };
 
+  // const headerStyle = {
+  //   background: 'linear-gradient(135deg, #0b09e8, #3498db)',
+  //   color: 'white',
+  //   padding: 'clamp(30px, 6vw, 60px) clamp(20px, 4vw, 40px)',
+  //   textAlign: 'center',
+  //   position: 'relative',
+  //   overflow: 'hidden'
+  // };
   const headerStyle = {
-    background: 'linear-gradient(135deg, #0b09e8, #3498db)',
-    color: 'white',
-    padding: 'clamp(30px, 6vw, 60px) clamp(20px, 4vw, 40px)',
-    textAlign: 'center',
-    position: 'relative',
-    overflow: 'hidden'
-  };
+  backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${knowledgebg})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  color: 'white', // safe with dark overlay
+  padding: 'clamp(30px, 6vw, 60px) clamp(20px, 4vw, 40px)',
+  textAlign: 'center',
+  position: 'relative',
+  overflow: 'hidden'
+};
 
   const headerContentStyle = {
     position: 'relative',
@@ -254,7 +275,6 @@ const KnowledgeHub = () => {
     padding: 'clamp(25px, 5vw, 50px) clamp(20px, 4vw, 40px)',
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 90vw), 1fr))',
-    
     gap: 'clamp(16px, 3vw, 32px)'
   };
 
@@ -499,9 +519,9 @@ const KnowledgeHub = () => {
               {/* Post Content */}
               <div style={postContentStyle}>
                 <p style={postTextStyle}>{post.content}</p>
-                {post.image && (
+                {getDisplayImage(post) && (
                   <img
-                    src={post.image}
+                    src={getDisplayImage(post)}
                     alt="Post content"
                     style={postImageStyle}
                   />
@@ -570,11 +590,11 @@ const KnowledgeHub = () => {
             <button
               onClick={loadMorePosts}
               style={loadMoreButtonStyle}
-              onMouseEnter={(e) => {
+              onMouseOver={(e) => {
                 e.target.style.transform = 'translateY(-3px)';
                 e.target.style.boxShadow = '0 12px 35px rgba(52, 152, 219, 0.4)';
               }}
-              onMouseLeave={(e) => {
+              onMouseOut={(e) => {
                 e.target.style.transform = 'translateY(0)';
                 e.target.style.boxShadow = '0 8px 25px rgba(52, 152, 219, 0.3)';
               }}

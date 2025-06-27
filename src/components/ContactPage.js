@@ -3,16 +3,16 @@ import styled, { keyframes } from "styled-components"
 import { Send, Mail, Phone, MapPin, ArrowRight } from "lucide-react"
 
 // Animations
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
+// const fadeIn = keyframes`
+//   from {
+//     opacity: 0;
+//     transform: translateY(20px);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// `
 
 const slideInLeft = keyframes`
   from {

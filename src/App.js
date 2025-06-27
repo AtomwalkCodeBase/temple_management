@@ -20,7 +20,7 @@ import IpCommercial from "./data/IpCommercial-and-TechTransfer";
 import TermsOfUse from "./components/TermsOfUse";
 import CommonFaq from "./../src/components/CommonFaq";
 import BlogForm from "./components/Blogs/BlogForm";
-import BlogPosts from "./components/BlogPosts";
+// import BlogPosts from "./components/BlogPosts";
 import BlogDetail from "./components/Blogs/BlogDetails";
 import LinkWebsite from "./components/LinkWebsite";
 import NewsEventDetail from "./components/News/NewsEventDetail";

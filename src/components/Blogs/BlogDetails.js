@@ -64,24 +64,24 @@ const HeaderContainer = styled.div`
   }
 `;
 
-const BreadcrumbNav = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 30px;
-  font-size: 0.9rem;
-  color: #666;
-  animation: ${slideIn} 0.6s ease-out;
+// const BreadcrumbNav = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+//   margin-bottom: 30px;
+//   font-size: 0.9rem;
+//   color: #666;
+//   animation: ${slideIn} 0.6s ease-out;
 
-  span {
-    color: #999;
-  }
+//   span {
+//     color: #999;
+//   }
 
-  .current {
-    color: #2563eb;
-    font-weight: 500;
-  }
-`;
+//   .current {
+//     color: #2563eb;
+//     font-weight: 500;
+//   }
+// `;
 
 const HeaderContent = styled.div`
   text-align: center;

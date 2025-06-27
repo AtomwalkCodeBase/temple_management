@@ -1,23 +1,12 @@
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ThumbsUp, MessageCircle, Share2, Copy, Check } from "lucide-react";
-import { FaLinkedin, FaTwitter, FaFacebook, FaReddit, FaWhatsapp, FaShareAlt } from "react-icons/fa";
-import styled, { keyframes } from "styled-components";
+import { Copy, Check } from "lucide-react";
+import { FaLinkedin, FaTwitter, FaFacebook, FaReddit, FaWhatsapp, FaShareAlt,FaInstagram  } from "react-icons/fa";
+import styled from "styled-components";
 import { db } from "../News/firebasee";
 import { doc, getDoc } from "firebase/firestore";
-import { SiX } from 'react-icons/si'; // New Twitter/X icon
-
-// Animations
-const fadeInUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+import { SiX } from "react-icons/si";
 
 const platformConfig = {
   linkedin: {
@@ -28,19 +17,69 @@ const platformConfig = {
   },
   twitter: {
     name: "Twitter/X",
-    icon: <FaTwitter />,
-    bgColor: "#1da1f2",
+    icon: <SiX size={20} />,
+    bgColor: "#0077f2",
     textColor: "#ffffff",
   },
   facebook: {
     name: "Facebook",
     icon: <FaFacebook />,
-    bgColor: "#1877f2",
+    bgColor: "#0077f2",
+    textColor: "#ffffff",
+  },
+  instagram: {
+    name: 'Instagram',
+    icon: <FaInstagram />,
+    bgColor: '#E1306C',
+    textColor: '#ffffff'
+  },
+  default: {
+    name: "Unknown Platform",
+    icon: <span>🌐</span>, // Fallback emoji
+    bgColor: "#6c757d",
     textColor: "#ffffff",
   },
 };
 
-// Styled Components
+// Styled Components for Modal
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  max-width: 90vw;
+  max-height: 90vh;
+  position: relative;
+`;
+
+const ModalImage = styled.img`
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+`;
+
 const PageContainer = styled.div`
   margin-top: 115px;
   min-height: 100vh;
@@ -60,7 +99,7 @@ const MainContainer = styled.div`
 `;
 
 const TopNavigation = styled.div`
-  background: white;
+  background: #ffffff;
   border-bottom: 1px solid #e9ecef;
   padding: 20px 40px;
   position: sticky;
@@ -91,15 +130,56 @@ const BackButton = styled.button`
 const HeroSection = styled.div`
   position: relative;
   height: 400px;
-  overflow: hidden;
   background: #f8f9fa;
+  overflow: hidden;
 `;
 
-const CoverImage = styled.img`
+const CarouselContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CarouselImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px 12px 0 0;
+  border-radius: 12px;
+  cursor: pointer;
+`;
+
+const NavButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 10;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const PrevButton = styled(NavButton)`
+  left: 10px;
+`;
+
+const NextButton = styled(NavButton)`
+  right: 10px;
 `;
 
 const ImageFallback = styled.div`
@@ -116,8 +196,7 @@ const PlatformBadge = styled.div`
   top: 20px;
   right: 20px;
   padding: 8px 16px;
-  background: ${(props) =>
-    platformConfig[props.platform]?.bgColor || "#3498db"};
+  background: ${(props) => props.bgColor || "#3498db"};
   color: #ffffff;
   border-radius: 20px;
   font-size: 14px;
@@ -146,8 +225,7 @@ const PlatformIcon = styled.div`
   align-items: center;
   justify-content: center;
   color: white;
-  background: ${(props) =>
-    platformConfig[props.platform]?.bgColor || "#3498db"};
+  background: ${(props) => props.bgColor || "#3498db"};
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 `;
 
@@ -287,6 +365,9 @@ const KnowledgeHubDetail = () => {
   const [loading, setLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -294,10 +375,11 @@ const KnowledgeHubDetail = () => {
         const postRef = doc(db, "posts", id);
         const postSnap = await getDoc(postRef);
         if (postSnap.exists()) {
+          const postData = postSnap.data();
           setPost({
             id: postSnap.id,
-            ...postSnap.data(),
-            engagement: postSnap.data().engagement || {
+            ...postData,
+            engagement: postData.engagement || {
               likes: 0,
               comments: 0,
               shares: 0,
@@ -315,6 +397,32 @@ const KnowledgeHubDetail = () => {
     };
     fetchPost();
   }, [id]);
+
+  const getDisplayImages = () => {
+    if (post?.images && Array.isArray(post.images) && post.images.length > 0) {
+      return post.images;
+    }
+    if (post?.image) {
+      return [post.image];
+    }
+    return [];
+  };
+
+  const getPlatformConfig = (platform) => {
+    return platformConfig[platform] || platformConfig.default;
+  };
+
+  const handlePrevImage = () => {
+    const images = getDisplayImages();
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setImageError(false);
+  };
+
+  const handleNextImage = () => {
+    const images = getDisplayImages();
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setImageError(false);
+  };
 
   const formatDate = (dateInput) => {
     if (!dateInput) return "Unknown date";
@@ -380,6 +488,16 @@ const KnowledgeHubDetail = () => {
     }
   };
 
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage('');
+  };
+
   const handleBackNavigation = () => {
     navigate("/knowledgehub");
   };
@@ -410,6 +528,10 @@ const KnowledgeHubDetail = () => {
     );
   }
 
+  const displayImages = getDisplayImages();
+  const currentImage = displayImages[currentImageIndex];
+  const platform = getPlatformConfig(post.platform);
+
   return (
     <PageContainer>
       <MainContainer>
@@ -424,28 +546,51 @@ const KnowledgeHubDetail = () => {
         </TopNavigation>
 
         <HeroSection>
-          {post.image && !imageError ? (
-            <CoverImage
-              src={post.image}
-              alt="Post content"
-              onError={() => setImageError(true)}
-            />
+          {displayImages.length > 0 ? (
+            <CarouselContainer>
+              {currentImage && !imageError ? (
+                <CarouselImage
+                  src={currentImage}
+                  alt={`Post image ${currentImageIndex + 1}`}
+                  onError={() => setImageError(true)}
+                  onClick={() => handleImageClick(currentImage)}
+                />
+              ) : (
+                <ImageFallback>🖼️</ImageFallback>
+              )}
+              {displayImages.length > 1 && (
+                <>
+                  <PrevButton
+                    onClick={handlePrevImage}
+                    aria-label="Previous image"
+                  >
+                    ←
+                  </PrevButton>
+                  <NextButton
+                    onClick={handleNextImage}
+                    aria-label="Next image"
+                  >
+                    →
+                  </NextButton>
+                </>
+              )}
+            </CarouselContainer>
           ) : (
             <ImageFallback>🖼️</ImageFallback>
           )}
-          <PlatformBadge platform={post.platform}>
-            {platformConfig[post.platform].icon}
-            <span>{platformConfig[post.platform].name}</span>
+          <PlatformBadge bgColor={platform.bgColor}>
+            {platform.icon}
+            <span>{platform.name}</span>
           </PlatformBadge>
         </HeroSection>
 
         <ContentSection>
           <PostHeader>
-            <PlatformIcon platform={post.platform}>
-              {platformConfig[post.platform].icon}
+            <PlatformIcon bgColor={platform.bgColor}>
+              {platform.icon}
             </PlatformIcon>
             <PostMeta>
-              <PlatformName>{platformConfig[post.platform].name}</PlatformName>
+              <PlatformName>{platform.name}</PlatformName>
               <PostDate>{formatDate(post.date)}</PostDate>
             </PostMeta>
           </PostHeader>
@@ -481,9 +626,7 @@ const KnowledgeHubDetail = () => {
                     <FaFacebook />
                     <span>Facebook</span>
                   </ShareOption>
-                  
-                  
-                  <ShareOption 
+                  <ShareOption
                     onClick={() => handleShare("whatsapp")}
                     $color="#25D366"
                     aria-label="Share on WhatsApp"
@@ -499,7 +642,6 @@ const KnowledgeHubDetail = () => {
                     <FaReddit />
                     <span>Reddit</span>
                   </ShareOption>
-                 
                   {navigator.share && (
                     <ShareOption
                       onClick={() => handleShare("native")}
@@ -509,7 +651,7 @@ const KnowledgeHubDetail = () => {
                       <span>More</span>
                     </ShareOption>
                   )}
-                   <ShareOption
+                  <ShareOption
                     onClick={() => handleShare("copy")}
                     aria-label="Copy link"
                   >
@@ -522,6 +664,15 @@ const KnowledgeHubDetail = () => {
           </ShareSection>
         </ContentSection>
       </MainContainer>
+
+      {isModalOpen && (
+        <ModalOverlay onClick={closeModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <CloseButton onClick={closeModal}>×</CloseButton>
+            <ModalImage src={selectedImage} alt="Full-size post image" />
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </PageContainer>
   );
 };

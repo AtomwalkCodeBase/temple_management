@@ -12,13 +12,13 @@ const ServicePage = ({ serviceType, theme, subServiceContent }) => {
     serviceType === "copyright" ? "Creative Works" :
     "Brand Identity"
   } with Expert IP Solutions`;
-  const ctaHeading = `Ready to Protect Your ${
-    serviceType === "patent" ? "Inventions" :
-    serviceType === "design" ? "Designs" :
-    serviceType === "copyright" ? "Creative Works" :
-    "Brand"
-  }?`;
-  const ctaSubheading = `Contact our ${serviceType} experts today for a free consultation`;
+  // const ctaHeading = `Ready to Protect Your ${
+  //   serviceType === "patent" ? "Inventions" :
+  //   serviceType === "design" ? "Designs" :
+  //   serviceType === "copyright" ? "Creative Works" :
+  //   "Brand"
+  // }?`;
+  // const ctaSubheading = `Contact our ${serviceType} experts today for a free consultation`;
 console.log("data", serviceType)
   return (
     <PageContainer>
@@ -734,58 +734,58 @@ const StepDescription = styled.div`
   line-height: 1.7;
 `;
 
-const CallToAction = styled.div`
-  margin: 60px 0 40px;
-  border-radius: 24px;
-  background: ${({ theme }) => `linear-gradient(135deg, ${theme.secondary}, ${theme.primary})`};
-  padding: 4px;
-  position: relative;
-  overflow: hidden;
-`;
+// const CallToAction = styled.div`
+//   margin: 60px 0 40px;
+//   border-radius: 24px;
+//   background: ${({ theme }) => `linear-gradient(135deg, ${theme.secondary}, ${theme.primary})`};
+//   padding: 4px;
+//   position: relative;
+//   overflow: hidden;
+// `;
 
-const CTAContent = styled.div`
-  background: white;
-  border-radius: 20px;
-  padding: 48px;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-`;
+// const CTAContent = styled.div`
+//   background: white;
+//   border-radius: 20px;
+//   padding: 48px;
+//   text-align: center;
+//   position: relative;
+//   z-index: 1;
+// `;
 
-const CTAHeading = styled.h3`
-  color: #1a202c;
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 16px 0;
-`;
+// const CTAHeading = styled.h3`
+//   color: #1a202c;
+//   font-size: 2rem;
+//   font-weight: 700;
+//   margin: 0 0 16px 0;
+// `;
 
-const CTASubheading = styled.p`
-  color: #4a5568;
-  font-size: 1.125rem;
-  margin-bottom: 32px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-`;
+// const CTASubheading = styled.p`
+//   color: #4a5568;
+//   font-size: 1.125rem;
+//   margin-bottom: 32px;
+//   max-width: 600px;
+//   margin-left: auto;
+//   margin-right: auto;
+// `;
 
-const CTAButton = styled.button`
-  padding: 14px 36px;
-  background: ${({ theme }) => theme.primary};
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.125rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 15px -3px ${({ theme }) => `rgba(${theme.primaryRgb}, 0.3)`};
+// const CTAButton = styled.button`
+//   padding: 14px 36px;
+//   background: ${({ theme }) => theme.primary};
+//   color: white;
+//   border: none;
+//   border-radius: 12px;
+//   font-size: 1.125rem;
+//   font-weight: 600;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   box-shadow: 0 10px 15px -3px ${({ theme }) => `rgba(${theme.primaryRgb}, 0.3)`};
   
-  &:hover {
-    background: ${({ theme }) => theme.secondary};
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px ${({ theme }) => `rgba(${theme.secondaryRgb}, 0.4)`};
-  }
-`;
+//   &:hover {
+//     background: ${({ theme }) => theme.secondary};
+//     transform: translateY(-4px);
+//     box-shadow: 0 20px 25px -5px ${({ theme }) => `rgba(${theme.secondaryRgb}, 0.4)`};
+//   }
+// `;
 const SubPointsList = styled.ul`
   margin: 12px 0 0 20px;
   padding: 0;

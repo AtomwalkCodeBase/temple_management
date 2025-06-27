@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 // Styled Components
@@ -104,31 +104,31 @@ const ContactText = styled.p`
   color: #4b5563;
 `;
 
-const LocationButton = styled(motion.button)`
-  width: 100%;
-  margin-top: 1.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  color: #1f2937;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: white;
-  cursor: pointer;
+// const LocationButton = styled(motion.button)`
+//   width: 100%;
+//   margin-top: 1.5rem;
+//   border: 1px solid #d1d5db;
+//   border-radius: 0.5rem;
+//   padding: 0.75rem 1rem;
+//   color: #1f2937;
+//   font-weight: 500;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 0.5rem;
+//   background-color: white;
+//   cursor: pointer;
   
-  &:hover {
-    background-color: #1a202c;
-    color: white;
-  }
-`;
+//   &:hover {
+//     background-color: #1a202c;
+//     color: white;
+//   }
+// `;
 
-const ArrowIcon = styled(motion.svg)`
-  width: 16px;
-  height: 16px;
-`;
+// const ArrowIcon = styled(motion.svg)`
+//   width: 16px;
+//   height: 16px;
+// `;
 
 const ContactHero = () => {
   const [hoveredCard, setHoveredCard] = useState(null);

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import presentationImg from "../assets/img/persentation1.png";
-import presentationImg1 from "../assets/img/persentation.png";
+// import presentationImg1 from "../assets/img/persentation.png";
 import { Eye, Download, X, Play, Calendar, Users, Presentation, ArrowRight, Sparkles } from "lucide-react";
+
+// Mock data - fixed duplicate id and ensured unique entries
 
 
 const Wrapper = styled.div`
@@ -666,7 +668,8 @@ export default function PresentationPage() {
   const [currentPresentation, setCurrentPresentation] = useState(null);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfError, setPdfError] = useState(false);
-const presentations = [
+
+  const presentations = [
   {
     id: 1,
     title: "Powering your Innovations",
@@ -678,7 +681,8 @@ const presentations = [
     duration: "15 min",
   },
 ];
-   const memoizedPresentations = useMemo(() => presentations, []);
+
+  const memoizedPresentations = useMemo(() => presentations, []);
 
   const handleViewPdf = useCallback((presentation) => {
     const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(presentation.pdfUrl)}&embedded=true`;

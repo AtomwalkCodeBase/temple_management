@@ -23,8 +23,8 @@ const ServicePage2 = ({ serviceType, subServiceId, theme, subServiceContent }) =
 
   const pageTitle = ` ${subService.title}`;
   const pageSubtitle = `Protecting Your Intellectual Property with Expert ${subService.title} Solutions`;
-  const ctaHeading = `Ready to ${subService.title.split(" ")[0]} Your Intellectual Property?`;
-  const ctaSubheading = `Contact our ${serviceType} experts today for a free consultation`;
+  // const ctaHeading = `Ready to ${subService.title.split(" ")[0]} Your Intellectual Property?`;
+  // const ctaSubheading = `Contact our ${serviceType} experts today for a free consultation`;
 
   return (
     <PageContainer>
@@ -258,12 +258,12 @@ const SectionText = styled.p`
   line-height: 1.7;
 `;
 
-const SectionSubtitle = styled.p`
-  font-size: 1.5rem;
-  margin:  20px 0 20px 10px;
-  font-weight: 600;
-  color: #1a202c;
-`;
+// const SectionSubtitle = styled.p`
+//   font-size: 1.5rem;
+//   margin:  20px 0 20px 10px;
+//   font-weight: 600;
+//   color: #1a202c;
+// `;
 
 const ServiceList = styled.ul`
   margin: 0;
@@ -335,57 +335,57 @@ const SubPointItem = styled.li`
   margin-bottom: 8px;
 `;
 
-const CallToAction = styled.div`
-  margin: 60px 0 40px;
-  border-radius: 24px;
-  background: ${({ theme }) => `linear-gradient(135deg, ${theme.secondary}, ${theme.primary})`};
-  padding: 4px;
-  position: relative;
-  overflow: hidden;
-`;
+// const CallToAction = styled.div`
+//   margin: 60px 0 40px;
+//   border-radius: 24px;
+//   background: ${({ theme }) => `linear-gradient(135deg, ${theme.secondary}, ${theme.primary})`};
+//   padding: 4px;
+//   position: relative;
+//   overflow: hidden;
+// `;
 
-const CTAContent = styled.div`
-  background: white;
-  border-radius: 20px;
-  padding: 48px;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-`;
+// const CTAContent = styled.div`
+//   background: white;
+//   border-radius: 20px;
+//   padding: 48px;
+//   text-align: center;
+//   position: relative;
+//   z-index: 1;
+// `;
 
-const CTAHeading = styled.h3`
-  color: #1a202c;
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 16px 0;
-`;
+// const CTAHeading = styled.h3`
+//   color: #1a202c;
+//   font-size: 2rem;
+//   font-weight: 700;
+//   margin: 0 0 16px 0;
+// `;
 
-const CTASubheading = styled.p`
-  color: #4a5568;
-  font-size: 1.125rem;
-  margin-bottom: 32px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-`;
+// const CTASubheading = styled.p`
+//   color: #4a5568;
+//   font-size: 1.125rem;
+//   margin-bottom: 32px;
+//   max-width: 600px;
+//   margin-left: auto;
+//   margin-right: auto;
+// `;
 
-const CTAButton = styled.button`
-  padding: 14px 36px;
-  background: ${({ theme }) => theme.primary};
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.125rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 15px -3px ${({ theme }) => `rgba(${theme.primaryRgb}, 0.3)`};
+// const CTAButton = styled.button`
+//   padding: 14px 36px;
+//   background: ${({ theme }) => theme.primary};
+//   color: white;
+//   border: none;
+//   border-radius: 12px;
+//   font-size: 1.125rem;
+//   font-weight: 600;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   box-shadow: 0 10px 15px -3px ${({ theme }) => `rgba(${theme.primaryRgb}, 0.3)`};
   
-  &:hover {
-    background: ${({ theme }) => theme.secondary};
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px ${({ theme }) => `rgba(${theme.secondaryRgb}, 0.4)`};
-  }
-`;
+//   &:hover {
+//     background: ${({ theme }) => theme.secondary};
+//     transform: translateY(-4px);
+//     box-shadow: 0 20px 25px -5px ${({ theme }) => `rgba(${theme.secondaryRgb}, 0.4)`};
+//   }
+// `;
 
 export default ServicePage2;

@@ -410,14 +410,14 @@ const IconContainer = styled.div`
   }
 `;
 
-const Icon = styled.svg`
-  color: #8b5cf6;
-  transition: all 0.3s ease;
+// const Icon = styled.svg`
+//   color: #8b5cf6;
+//   transition: all 0.3s ease;
   
-  ${ProcessCard}:hover & {
-    filter: brightness(10);
-  }
-`;
+//   ${ProcessCard}:hover & {
+//     filter: brightness(10);
+//   }
+// `;
 
 const ProcessCardTitle = styled.h3`
   margin-bottom: 1rem;

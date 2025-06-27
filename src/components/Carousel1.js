@@ -169,34 +169,34 @@ const TextOverlay = styled.div`
   }
 `;
 
-const NavButton = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border: none;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  font-size: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: background 0.3s;
+// const NavButton = styled.button`
+//   position: absolute;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   background: rgba(255, 255, 255, 0.2);
+//   color: #fff;
+//   border: none;
+//   width: 50px;
+//   height: 50px;
+//   cursor: pointer;
+//   font-size: 24px;
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   z-index: 10;
+//   transition: background 0.3s;
   
-  &:hover {
-    background: rgba(255, 255, 255, 0.4);
-  }
+//   &:hover {
+//     background: rgba(255, 255, 255, 0.4);
+//   }
   
-  &:focus {
-    outline: none;
-  }
+//   &:focus {
+//     outline: none;
+//   }
   
-  ${props => props.left ? 'left: 20px;' : 'right: 20px;'}
-`;
+//   ${props => props.left ? 'left: 20px;' : 'right: 20px;'}
+// `;
 
 const DotsContainer = styled.div`
   position: absolute;
@@ -270,9 +270,9 @@ export default function FullscreenCarousel() {
 	  setCurrentIndex((prev) => (prev + 1) % items.length);
 	};
   
-	const prevSlide = () => {
-	  setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
-	};
+	// const prevSlide = () => {
+	//   setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
+	// };
   
 	const goToSlide = (index) => {
 	  setCurrentIndex(index);

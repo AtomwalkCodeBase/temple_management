@@ -1,9 +1,9 @@
-import PatentSearch from "../assets/img/website_03.png";
-import PatentDraft from "../assets/img/website_02.png";
-import DesignPatent from "../assets/img/website_01.png";
-import CopyRightServices from "../assets/img/website_04.png";
-import TrademarkServices from "../assets/img/website_05.png";
-import GeographicalIndication from "../assets/img/GI.png";
+// import PatentSearch from "../assets/img/website_03.png";
+// import PatentDraft from "../assets/img/website_02.png";
+// import DesignPatent from "../assets/img/website_01.png";
+// import CopyRightServices from "../assets/img/website_04.png";
+// import TrademarkServices from "../assets/img/website_05.png";
+// import GeographicalIndication from "../assets/img/GI.png";
 const subServiceContent = {
 
   patent: {

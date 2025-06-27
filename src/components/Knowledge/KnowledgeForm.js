@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, setDoc, serverTimestamp, getDoc, collection } from 'firebase/firestore';
@@ -172,6 +173,29 @@ const ImagePreview = styled.img`
   display: block;
 `;
 
+const AddImageButton = styled.button`
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+`;
+
+const RemoveImageButton = styled.button`
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+`;
+
 const CDN_BASE_URL = 'https://cdn.jsdelivr.net/gh/AtomwalkCodeBase/Blogs@main/';
 
 function KnowledgeForm() {
@@ -182,7 +206,7 @@ function KnowledgeForm() {
   const [formData, setFormData] = useState({
     platform: 'linkedin',
     content: '',
-    image: '',
+    images: [''],
     date: null
   });
 
@@ -197,13 +221,15 @@ function KnowledgeForm() {
 
         if (postSnap.exists()) {
           const postData = postSnap.data();
-          const fullImage = postData.image || '';
-          const relativeImage = fullImage.replace(/^https?:\/+cdn\.jsdelivr\.net\/gh\/AtomwalkCodeBase\/Blogs@main\/?/i, '');
+          const fullImages = Array.isArray(postData.images) ? postData.images : [postData.image || ''];
+          const relativeImages = fullImages.map(img => 
+            img.replace(/^https?:\/+cdn\.jsdelivr\.net\/gh\/AtomwalkCodeBase\/Blogs@main\/?/i, '')
+          );
           
           setFormData({
             platform: postData.platform || 'linkedin',
             content: postData.content || '',
-            image: relativeImage,
+            images: relativeImages.length > 0 ? relativeImages : [''],
             date: postData.date ? new Date(postData.date) : null
           });
         } else {
@@ -226,6 +252,29 @@ function KnowledgeForm() {
       [name]: value.trim()
     }));
     setError(null);
+  };
+
+  const handleImageChange = (index, value) => {
+    setFormData((prev) => {
+      const newImages = [...prev.images];
+      newImages[index] = value.trim();
+      return { ...prev, images: newImages };
+    });
+    setError(null);
+  };
+
+  const addImageField = () => {
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, '']
+    }));
+  };
+
+  const removeImageField = (index) => {
+    setFormData((prev) => {
+      const newImages = prev.images.filter((_, i) => i !== index);
+      return { ...prev, images: newImages.length > 0 ? newImages : [''] };
+    });
   };
 
   const handleDateChange = (date) => {
@@ -263,17 +312,33 @@ function KnowledgeForm() {
     setLoading(true);
     setError(null);
 
-    const { content, date, image, platform } = formData;
-    if (!content.trim()) return setError('Content is required.'), setLoading(false);
-    if (!date) return setError('Date is required.'), setLoading(false);
-    if (!image.trim()) return setError('Image path is required.'), setLoading(false);
-
-    const fullImageUrl = getFullImageUrl(image);
-    const isValidImage = await validateImageUrl(fullImageUrl);
-    if (!isValidImage) {
-      setError('Invalid image URL or path. Please verify the image exists.');
+    const { content, date, images, platform } = formData;
+    if (!content.trim()) {
+      setError('Content is required.');
       setLoading(false);
       return;
+    }
+    if (!date) {
+      setError('Date is required.');
+      setLoading(false);
+      return;
+    }
+    if (images.every(img => !img.trim())) {
+      setError('At least one image is required.');
+      setLoading(false);
+      return;
+    }
+
+    const fullImageUrls = images.map(img => getFullImageUrl(img));
+    for (const url of fullImageUrls) {
+      if (url) {
+        const isValidImage = await validateImageUrl(url);
+        if (!isValidImage) {
+          setError(`Invalid image URL: ${url}. Please verify the image exists.`);
+          setLoading(false);
+          return;
+        }
+      }
     }
 
     try {
@@ -283,7 +348,7 @@ function KnowledgeForm() {
       const postData = {
         platform,
         content: content.trim(),
-        image: fullImageUrl,
+        images: fullImageUrls.filter(img => img),
         date: date.toISOString(),
         engagement: { likes: 0, comments: 0, shares: 0 },
         updatedAt: serverTimestamp()
@@ -325,22 +390,33 @@ function KnowledgeForm() {
         </FormGroup>
 
         <FormGroup>
-          <Label>Image Path (e.g. Folder Name/image name)</Label>
-          <Input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            required
-            placeholder="Enter relative path or full URL"
-          />
-          {formData.image && (
-            <ImagePreview
-              src={getFullImageUrl(formData.image)}
-              alt="Image preview"
-              onError={() => setError('Image preview failed to load.')}
-            />
-          )}
+          <Label>Image Paths (e.g. Folder Name/image name)</Label>
+          {formData.images.map((image, index) => (
+            <div key={index} style={{ marginBottom: '1rem' }}>
+              <Input
+                type="text"
+                value={image}
+                onChange={(e) => handleImageChange(index, e.target.value)}
+                required={index === 0 && formData.images.length === 1}
+                placeholder="Enter relative path or full URL"
+              />
+              {image && (
+                <ImagePreview
+                  src={getFullImageUrl(image)}
+                  alt={`Image preview ${index + 1}`}
+                  onError={() => setError('Image preview failed to load.')}
+                />
+              )}
+              {formData.images.length > 1 && (
+                <RemoveImageButton type="button" onClick={() => removeImageField(index)}>
+                  Remove Image
+                </RemoveImageButton>
+              )}
+            </div>
+          ))}
+          <AddImageButton type="button" onClick={addImageField}>
+            Add Another Image
+          </AddImageButton>
         </FormGroup>
 
         <FormGroup>

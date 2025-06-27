@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled, { keyframes, css } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {
   FaLock,
   FaSyncAlt,
   FaLaptopCode,
   FaLightbulb,
-  FaUsers,
   FaGavel,
-  FaGraduationCap,
-  FaGlobeAmericas,
   FaHome,
   FaTimes,
   FaChevronRight,
@@ -19,37 +16,37 @@ import Carousel1 from "./Carousel1";
 import Section1Image from "../assets/img/section1.png";
 import Section2Image from "../assets/img/section2.png";
 import Section3Image from "../assets/img/KYB_Brain_Basics_Brain040522.png";
-import Section4Image from "../assets/img/Picture9-removebg-preview.png";
+// import Section4Image from "../assets/img/Picture9-removebg-preview.png";
 import { useNavigate } from "react-router-dom";
 
 // Animations
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
+// const fadeIn = keyframes`
+//   from { opacity: 0; transform: translateY(20px); }
+//   to { opacity: 1; transform: translateY(0); }
+// `;
 
-const pulse = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-`;
+// const pulse = keyframes`
+//   0% { transform: scale(1); }
+//   50% { transform: scale(1.05); }
+//   100% { transform: scale(1); }
+// `;
 
-const float = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-`;
+// const float = keyframes`
+//   0% { transform: translateY(0px); }
+//   50% { transform: translateY(-8px); }
+//   100% { transform: translateY(0px); }
+// `;
 
-const shimmer = keyframes`
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-`;
+// const shimmer = keyframes`
+//   0% { background-position: -200% 0; }
+//   100% { background-position: 200% 0; }
+// `;
 
-const gradientAnimation = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
+// const gradientAnimation = keyframes`
+//   0% { background-position: 0% 50%; }
+//   50% { background-position: 100% 50%; }
+//   100% { background-position: 0% 50%; }
+// `;
 
 // Styled Components
 const NavBar = styled.nav`
@@ -160,7 +157,7 @@ const Section = styled.section`
   @media (max-width: 1024px) {
     min-height: auto;
     padding: 60px 20px;
-      }
+  }
 
   @media (max-width: 768px) {
     padding: 40px 20px;
@@ -199,12 +196,11 @@ const SectionContent = styled.div`
     padding: 0;
     text-align: center;
   }
-
+  
   @media (min-width: 1440px) {
-    padding: 90px; // or whatever value you want for larger screens
+    padding: 90px;
   }
 `;
-
 
 const SectionMedia = styled.div`
   flex: 1;
@@ -951,12 +947,12 @@ const Herosection = () => {
     },
   ];
 
-  const backgroundPatterns = {
-    "IP Solutions": "url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1920&auto=format&fit=crop')",
-    "IP Lifecycle Management": "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop')",
-    "Technology Transfer Solutions": "url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop')",
-    "Intellectual Property Rights Solutions for Startups": "url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1920&auto=format&fit=crop')",
-  };
+  // const backgroundPatterns = {
+  //   "IP Solutions": "url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1920&auto=format&fit=crop')",
+  //   "IP Lifecycle Management": "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop')",
+  //   "Technology Transfer Solutions": "url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=1920&auto=format&fit=crop')",
+  //   "Intellectual Property Rights Solutions for Startups": "url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1920&auto=format&fit=crop')",
+  // };
 
   const featureData = [
     {

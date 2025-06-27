@@ -243,14 +243,14 @@ const ResetButton = styled.button`
   }
 `;
 
-const Footer = styled.footer`
-  margin-top: auto;
-  background: #1a365d;
-  color: white;
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 0.9rem;
-`;
+// const Footer = styled.footer`
+//   margin-top: auto;
+//   background: #1a365d;
+//   color: white;
+//   text-align: center;
+//   padding: 1.5rem;
+//   font-size: 0.9rem;
+// `;
 
 const App = () => {
   const [filteredLinks, setFilteredLinks] = useState(links);

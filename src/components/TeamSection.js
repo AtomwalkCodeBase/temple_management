@@ -1,24 +1,24 @@
-import { useRef } from "react"
-import styled from "styled-components"
-import { motion, useInView } from "framer-motion"
+import { useRef } from "react";
+import styled from "styled-components";
+import { motion, useInView } from "framer-motion";
 // import shantha from "../assets/img/shantha.png"
-import Lipika from "../assets/img/ lipika2.png"
-import syamanand from "../assets/img/syamanand.png"
+import Lipika from "../assets/img/ lipika2.png";
+import syamanand from "../assets/img/syamanand.png";
 // import Jagannath from "../assets/img/mr.png"
 // import img_3 from "../assets/img/img_3.jpg"
 // import img_4 from "../assets/img/img_4.jpg"
-import img_5 from "../assets/img/img_5.jpg"
-import Bharat from "../assets/img/Bharat.jpg"
-import prasanti from "../assets/img/Prashanthi.jpg"
-import HR from "../assets/img/freepik__enhance__57693.png"
-import Samartha from "../assets/img/Samartha.jpg"
+import img_5 from "../assets/img/img_5.jpg";
+import Bharat from "../assets/img/Bharat.jpg";
+import prasanti from "../assets/img/Prashanthi.jpg";
+import HR from "../assets/img/freepik__enhance__57693.png";
+import Samartha from "../assets/img/Samartha.jpg";
 
 const TeamContainer = styled.section`
   padding: 4rem 5%;
   background-color: white;
   max-width: 1200px;
   margin: 0 auto;
-`
+`;
 
 const MemberCard = styled(motion.div)`
   background: white;
@@ -40,13 +40,13 @@ const MemberCard = styled(motion.div)`
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 71, 171, 0.15);
   }
-`
+`;
 
 const MemberImage = styled.div`
   width: 100%;
   height: 300px;
   overflow: hidden;
-  
+
   @media (min-width: 768px) {
     width: 300px;
     height: 300px;
@@ -59,57 +59,57 @@ const MemberImage = styled.div`
     object-fit: cover;
     transition: transform 0.5s ease;
   }
-`
+`;
 
 const MemberInfo = styled.div`
   padding: 2rem;
   flex-grow: 1;
-`
+`;
 
 const MemberName = styled.h3`
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #0047AB;
-`
+  color: #0047ab;
+`;
 
 const MemberRole = styled.p`
   font-size: 1.1rem;
-  color: #FF4500;
+  color: #ff4500;
   margin-bottom: 1.5rem;
   font-weight: 600;
-`
+`;
 
 const MemberBio = styled.p`
-text-align: justify;
+  text-align: justify;
   font-size: 1rem;
   line-height: 1.7;
   color: #555;
   margin-bottom: 1.5rem;
-`
+`;
 
 const SectionTitle = styled(motion.h2)`
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
   text-align: center;
-  background: linear-gradient(90deg, #0047AB 0%, #4169E1 100%);
+  background: linear-gradient(90deg, #0047ab 0%, #4169e1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
-  
+
   @media (max-width: 768px) {
     font-size: 2rem;
   }
-`
+`;
 
 const Divider = styled(motion.div)`
   height: 4px;
   width: 80px;
-  background: linear-gradient(90deg, #0047AB 0%, #FF4500 100%);
+  background: linear-gradient(90deg, #0047ab 0%, #ff4500 100%);
   margin: 1rem auto 3rem;
   border-radius: 2px;
-`
+`;
 
 const TeamDescription = styled(motion.p)`
   text-align: center;
@@ -119,11 +119,11 @@ const TeamDescription = styled(motion.p)`
   line-height: 1.8;
   color: #555;
   font-weight: 500;
-`
+`;
 
 export default function TeamSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   const team = [
     {
@@ -148,7 +148,8 @@ export default function TeamSection() {
       name: "Dr. M R Jagganath",
       role: "Technology & Innovation Leader",
       bio: "Dr. Jagannath is an accomplished scientific leader with a strong track record in drug discovery and healthcare innovation. As the former Chief Scientific Officer at Connexios Life Sciences, he led multidisciplinary teams in developing novel therapeutics for chronic diseases such as type 2 diabetes. He holds a PhD from the Indian Institute of Science and has published extensively across diverse scientific domains. With a background spanning agriculture, microbiology, finance, and startup advisory.",
-      image: "https://home.atomwalk.com/static/media/sk2.7c9fc7c4395d941a8f1bcca5c65f2b7c.svg",
+      image:
+        "https://home.atomwalk.com/static/media/sk2.7c9fc7c4395d941a8f1bcca5c65f2b7c.svg",
     },
     {
       name: "Dr. K. Prashanthi",
@@ -163,7 +164,7 @@ export default function TeamSection() {
       image: HR,
     },
     {
-      name: "Dr. Syam Anand",
+      name: "Dr. Syam Anan",
       role: "Technical Specialist and US Patent Agent",
       bio: "Dr. Syam Anand is a Technical Specialist and US Patent Agent with over 20 years of expertise in molecular biology, biochemistry, and intellectual property. He specializes in patent drafting, prosecution, and strategy, focusing on life sciences and biotechnology innovations. Dr. Anand provides strategic guidance on patent portfolio development, helping clients secure and protect their intellectual property. His deep scientific knowledge and understanding of IP law enable him to effectively navigate complex patent issues.",
       image: syamanand,
@@ -174,7 +175,7 @@ export default function TeamSection() {
       bio: "Mr. Samartha Srinivasa is a skilled legal professional with deep expertise in intellectual property, international trade law, and regulatory compliance. He holds an L.L.B. from Bangalore University and an L.L.M. in International Trade Law from the University of Essex, UK. At LifeIntelect, Mr. Srinivasa provides expert legal advice on intellectual property, contract law, and regulatory strategy, helping clients navigate global legal complexities. His expertise ensures practical, legally sound solutions for startups.",
       image: Samartha,
     },
-  ]
+  ];
 
   return (
     <TeamContainer id="team" ref={ref}>
@@ -185,19 +186,23 @@ export default function TeamSection() {
       >
         OUR TEAM
       </SectionTitle>
-      
+
       <Divider
         initial={{ width: 0 }}
         animate={isInView ? { width: 80 } : { width: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       />
-      
+
       <TeamDescription
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
-        LifeIntelect excels in knowledge processes, guided by a skilled team of PhDs, experts, and patent agents. Our diverse professionals—patent attorneys, innovation strategists, and IP specialists—bring decades of expertise to your challenges. Meet the team dedicated to protecting and maximizing your innovations.
+        LifeIntelect excels in knowledge processes, guided by a skilled team of
+        PhDs, experts, and patent agents. Our diverse professionals—patent
+        attorneys, innovation strategists, and IP specialists—bring decades of
+        expertise to your challenges. Meet the team dedicated to protecting and
+        maximizing your innovations.
       </TeamDescription>
 
       <div>
@@ -220,5 +225,5 @@ export default function TeamSection() {
         ))}
       </div>
     </TeamContainer>
-  )
+  );
 }

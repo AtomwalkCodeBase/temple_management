@@ -1,6 +1,6 @@
 export const theme = {
   colors: {
-    primary: "#FF9933",
+    primary: "#ab353d",
     secondary: "#FF6B35",
     accent: "#3B5998",
     background: "#FFF8E7",
@@ -17,7 +17,7 @@ export const theme = {
     green: "#00B894",
     red: "#E17055",
     gradient: {
-      primary: "linear-gradient(135deg, #FF9933 0%, #DAA520 100%)",
+      primary: "linear-gradient(135deg, #ab353d 0%, #de8634ff 100%)",
       secondary: "linear-gradient(135deg, #3B5998 0%, #6C5CE7 100%)",
       sunset: "linear-gradient(135deg, #FF6B35 0%, #FF9933 50%, #DAA520 100%)",
       divine: "linear-gradient(135deg, #FFD700 0%, #FF9933 50%, #FF6B35 100%)",

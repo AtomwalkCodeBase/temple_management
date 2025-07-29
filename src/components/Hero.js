@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { ChevronLeft, ChevronRight, Play, ArrowRight } from "lucide-react";
+import durgaMaa from '../../src/assets/img/durgaMaa.png';
+import ganesh from '../../src/assets/img/Ganesh.png';
+import Shiva from '../../src/assets/img/LordShiva.png';
 
 const fadeInUp = keyframes`
   from {
@@ -45,7 +48,6 @@ const CarouselContainer = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 `;
 
 const Slide = styled.div`
@@ -57,11 +59,12 @@ const Slide = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: ${(props) => (props.active ? 1 : 0)};
   transform: translateX(${(props) => (props.active ? "0" : "100%")});
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  background: ${(props) => props.gradient};
-  background-size: 400% 400%;
+  background-image: url(${(props) => props.img});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   animation: ${(props) =>
     props.active ? css`gradientShift 8s ease infinite` : "none"};
 
@@ -76,26 +79,11 @@ const Slide = styled.div`
       background-position: 0% 50%;
     }
   }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-      circle at 30% 20%,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 50%
-    );
-    pointer-events: none;
-  }
 `;
 
 const Content = styled.div`
   max-width: 1200px;
-  padding: 0 2rem;
+  padding: 0.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
@@ -199,6 +187,7 @@ const VisualContent = styled.div`
 `;
 
 const FloatingElement = styled.div`
+  opacity: 0.3;
   width: ${(props) => props.size || "300px"};
   height: ${(props) => props.size || "300px"};
   background: ${(props) =>
@@ -298,30 +287,33 @@ const ProgressBar = styled.div`
 const slides = [
   {
     id: 1,
-    title: "Revolutionary Design System",
+    title: "Maa Durga’s Blessings for All",
     subtitle:
-      "Transform your digital presence with cutting-edge design patterns and seamless user experiences that captivate and convert.",
-    gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      "She rises with strength, protects with grace, The divine energy in every time and space.",
+    gradient: "linear-gradient(135deg, #DC143C 0%, #FF8C00 100%)",
     cta1: "Get Started",
     cta2: "Watch Demo",
+    img: durgaMaa,
   },
   {
     id: 2,
-    title: "AI-Powered Innovation",
+    title: "Divine Beginnings with Lord Ganesha",
     subtitle:
-      "Harness the power of artificial intelligence to automate workflows, enhance productivity, and unlock new possibilities for your business.",
+      "Seek blessings under the sacred shade,Where wisdom and new journeys are made.",
     gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-    cta1: "Explore AI",
-    cta2: "Learn More",
+    cta1: "Explore",
+    cta2: "More",
+    img: ganesh
   },
   {
     id: 3,
-    title: "Global Scale Solutions",
+    title: "Ganesh Chaturthi Celebrations Begin",
     subtitle:
-      "Built for enterprise-level performance with cloud-native architecture that scales seamlessly from startup to global corporation.",
+      "In the heart of nature, Bappa arrives with grace,Let wisdom and joy fill every sacred space.",
     gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     cta1: "Start Free Trial",
     cta2: "View Pricing",
+    img: Shiva
   },
 ];
 
@@ -371,6 +363,7 @@ export default function HeroCarousel() {
           key={slide.id}
           active={index === currentSlide}
           gradient={slide.gradient}
+          img={slide.img}
         >
           <Content>
             <TextContent active={index === currentSlide}>

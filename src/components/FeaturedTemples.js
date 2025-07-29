@@ -40,7 +40,7 @@ const SectionHeader = styled.div`
 const SectionTitle = styled(motion.h2)`
   font-size: 4rem;
   font-weight: 900;
-  background: ${(props) => props.theme.colors.gradient.primary};
+  background: #ab353d;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

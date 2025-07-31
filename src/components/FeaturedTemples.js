@@ -227,7 +227,7 @@ const FeaturedTemples = () => {
       location: "Andhra Pradesh",
       deity: "Lord Venkateswara",
       timings: "3AM-11:30PM",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-agvMxTV3rSTZCB9Npd1ueYqg-qbe0bxhQ&s"
+      image: "https://www.pilgrimagetour.in/blog/wp-content/uploads/2023/09/How-to-Reach-Tirupati-Balaji-Temple.jpg"
     },
     {
       id: 5,
@@ -235,7 +235,7 @@ const FeaturedTemples = () => {
       location: "Gujarat",
       deity: "Lord Shiva",
       timings: "6AM-10PM",
-      image: "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg"
+      image: "https://c9admin.cottage9.com/uploads/5839/somnath-temple.jpg"
     },
     {
       id: 6,

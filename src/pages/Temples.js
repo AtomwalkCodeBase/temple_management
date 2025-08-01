@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
 import IndiaMap from "../assets/img/India.png";
 
 const TemplesContainer = styled.div`
@@ -339,6 +340,7 @@ const HeroButtons = styled.div`
 `;
 
 const Temples = () => {
+  const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState("All");
 
   const temples = [
@@ -385,42 +387,15 @@ const Temples = () => {
       image:
         "https://imgs.search.brave.com/45u5nMGwZQRxHkFDlGaIEogjQe3M86of3p3a3-Q_rKA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMudHJhdmVsdHJp/YW5nbGUuY29tL2Js/b2cvd3AtY29udGVu/dC91cGxvYWRzLzIw/MTkvMTIvVmVua2F0/ZXN3YXJhLVRlbXBs/ZS10aXJ1cGF0aS5q/cGc",
     },
-    {
-      id: 6,
-      name: "Somnath Temple",
-      location: "Gujarat",
-      deity: "Lord Shiva",
-      timings: "6AM-10PM",
-      image:
-        "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-    },
-    {
-      id: 7,
-      name: "Vaishno Devi Temple",
-      location: "Jammu & Kashmir",
-      deity: "Goddess Vaishno Devi",
-      timings: "5AM-10PM",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-agvMxTV3rSTZCB9Npd1ueYqg-qbe0bxhQ&s",
-    },
-    {
-      id: 8,
-      name: "Kashi Vishwanath Temple",
-      location: "Varanasi, Uttar Pradesh",
-      deity: "Lord Shiva",
-      timings: "5AM-11AM, 4PM-9PM",
-      image: "https://static.toiimg.com/photo/61820954.cms",
-    },
-    {
-      id: 9,
-      name: "Badrinath Temple",
-      location: "Uttarakhand",
-      deity: "Lord Vishnu",
-      timings: "4AM-1PM, 4PM-9PM",
-      image:
-        "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-    },
   ];
+
+  const handleViewDetails = (templeId) => {
+    navigate(`/templeDetails/${templeId}`);
+  };
+
+  // const handleBookSeva = (templeId) => {
+  //   navigate(`/bookPuja?temple=${templeId}`);
+  // };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -515,12 +490,14 @@ const Temples = () => {
 
                   <ActionButtons>
                     <ViewDetailsButton
+                      onClick={() => handleViewDetails(temple.id)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       View Details
                     </ViewDetailsButton>
                     <BookSevaButton
+                      // onClick={() => handleBookSeva(temple.id)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >

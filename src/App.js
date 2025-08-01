@@ -11,6 +11,7 @@ import LiveDarshan from "./pages/LiveDarshan";
 // import Blogs from "./pages/Blogs";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import TempleDetails from "./pages/TempleDetails";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/temples" element={<Temples />} />
+          <Route path="/templeDetails/:templeId" element={<TempleDetails />} />
           <Route path="/book-puja" element={<BookPuja />} />
           <Route path="/live-darshan" element={<LiveDarshan />} />
           {/* <Route path="/shop" element={<Shop />} /> */}

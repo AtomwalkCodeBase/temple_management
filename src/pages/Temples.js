@@ -393,6 +393,10 @@ const Temples = () => {
     navigate(`/templeDetails/${templeId}`);
   };
 
+  const handleBookSeva = (templeId) => {
+    navigate('/book-seva', { state: { templeId } });
+  };
+
   // const handleBookSeva = (templeId) => {
   //   navigate(`/bookPuja?temple=${templeId}`);
   // };
@@ -497,7 +501,7 @@ const Temples = () => {
                       View Details
                     </ViewDetailsButton>
                     <BookSevaButton
-                      // onClick={() => handleBookSeva(temple.id)}
+                      onClick={() => handleBookSeva(temple.id)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >

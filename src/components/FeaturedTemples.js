@@ -1,9 +1,10 @@
 "use client";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Section = styled.section`
-  padding: 8rem 0;
+  padding: 2.5rem 0;
   background: url('https://ayodhyadarshanam.com/static/media/SubHeroBg.eefb8ef14f7af1951305.png');
   background-size: cover;
   background-position: center;
@@ -32,7 +33,7 @@ const Section = styled.section`
 
 const SectionHeader = styled.div`
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
   position: relative;
   z-index: 2;
 `;
@@ -196,6 +197,12 @@ const BookSevaButton = styled(motion.button)`
 `;
 
 const FeaturedTemples = () => {
+  const navigate = useNavigate();
+  
+  const handleBookSeva = (templeId) => {
+    navigate('/book-seva', { state: { templeId } });
+  };
+
   const temples = [
     {
       id: 1,
@@ -330,6 +337,7 @@ const FeaturedTemples = () => {
                       View Details
                     </ViewDetailsButton>
                     <BookSevaButton
+                      onClick={() => handleBookSeva(temple.id)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >

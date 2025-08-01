@@ -5,6 +5,7 @@ import { theme } from "./styles/theme";
 import Navbar from "./components/Navbar";
 import Temples from "./pages/Temples";
 import BookPuja from "./pages/BookPuja";
+import BookSeva from "./pages/BookSeva";
 import LiveDarshan from "./pages/LiveDarshan";
 // import Shop from "./pages/Shop";
 // import Bhajans from "./pages/Bhajans";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/temples" element={<Temples />} />
           <Route path="/templeDetails/:templeId" element={<TempleDetails />} />
           <Route path="/book-puja" element={<BookPuja />} />
+          <Route path="/book-seva" element={<BookSeva />} />
           <Route path="/live-darshan" element={<LiveDarshan />} />
           {/* <Route path="/shop" element={<Shop />} /> */}
           {/* <Route path="/bhajans" element={<Bhajans />} /> */}

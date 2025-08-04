@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import HallBooking from "../components/HallBooking";
+import SpecialPuja from "../components/SpecialPuja";
 
 const BookSevaContainer = styled.div`
   min-height: 100vh;
@@ -708,10 +709,7 @@ const BookSeva = () => {
         {activeTab === "hall-booking" && <HallBooking />}
         
         {activeTab === "special-puja" && (
-          <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-            <h2 style={{ color: '#8B4513', marginBottom: '1rem' }}>Special Puja</h2>
-            <p style={{ color: '#D2691E' }}>Coming Soon...</p>
-          </div>
+          <SpecialPuja />
         )}
         
         {activeTab === "donations" && (

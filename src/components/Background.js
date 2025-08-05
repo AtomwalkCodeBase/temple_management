@@ -33,15 +33,11 @@ const TempleImage = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  margin-bottom: 3rem;
+  background-position-y: 30%;
 `;
 
-
-
-
-
 const CardTitle = styled.h2`
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 700;
   font-size: 36px;
   line-height: 44px;
@@ -49,20 +45,18 @@ const CardTitle = styled.h2`
   margin-bottom: 16px;
 `;
 
-
-
 const LearnMoreButton = styled.button`
-  background: #EBCF89;
+  background: #ebcf89;
   color: #333333;
   border: none;
   border-radius: 9999px;
   padding: 12px 28px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 18px;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background: #d4b876;
     transform: scale(1.02);
@@ -97,7 +91,7 @@ const RestorationText = styled.div`
 `;
 
 const RestorationTitle = styled.h2`
-  font-family: 'Lora', serif;
+  font-family: "Lora", serif;
   font-weight: 500;
   font-size: 40px;
   line-height: 48px;
@@ -106,14 +100,16 @@ const RestorationTitle = styled.h2`
 `;
 
 const RestorationParagraph = styled.p`
-  font-family: 'Lora', serif;
+  font-family: "Lora", serif;
   font-weight: 400;
   font-size: 22px;
   line-height: 34px;
   color: rgb(67, 63, 76);
   margin-bottom: 1.5rem;
   text-align: left;
-  &:last-child { margin-bottom: 0; }
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const RestorationImage = styled.img`
@@ -121,7 +117,7 @@ const RestorationImage = styled.img`
   border-radius: 20px;
   object-fit: cover;
   max-height: 420px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 `;
 
 const TempleScienceCard = styled.div`
@@ -129,11 +125,11 @@ const TempleScienceCard = styled.div`
   top: 65%;
   right: 6%;
   transform: translateY(-50%);
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 20px;
   padding: 40px;
   width: 480px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   z-index: 10;
 `;
 
@@ -141,11 +137,11 @@ const TempleCardLeft = styled.div`
   position: absolute;
   top: 10%;
   left: 8%;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 20px;
   padding: 40px;
   width: 480px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   z-index: 10;
 `;
 
@@ -153,20 +149,20 @@ const TempleCardRight = styled.div`
   position: absolute;
   top: 48%;
   right: 4%;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 20px;
   padding: 40px;
   width: 480px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   z-index: 10;
 `;
 
 const CardSubtitle = styled.p`
-  font-family: 'Lora', serif;
+  font-family: "Lora", serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
-  color: #55525A;
+  color: #55525a;
   margin-bottom: 28px;
 `;
 
@@ -179,7 +175,10 @@ const Background = () => {
         </BackgroundImage>
         <TempleScienceCard>
           <CardTitle>Science Behind Hindu Temples</CardTitle>
-          <CardSubtitle>Discover the Ancient Science of Temple Architecture and Vaastu Shastras.</CardSubtitle>
+          <CardSubtitle>
+            Discover the Ancient Science of Temple Architecture and Vaastu
+            Shastras.
+          </CardSubtitle>
           <LearnMoreButton>LEARN MORE</LearnMoreButton>
         </TempleScienceCard>
         {/* No CloudOverlay here */}
@@ -187,15 +186,26 @@ const Background = () => {
       <RestorationSection>
         <RestorationContainer>
           <RestorationText>
-            <RestorationTitle>Not Anyone Can Restore Ancient Temples</RestorationTitle>
+            <RestorationTitle>
+              Not Anyone Can Restore Ancient Temples
+            </RestorationTitle>
             <RestorationParagraph>
-              Temple architecture is an entire field of knowledge on its own and is based upon deep scientific and spiritual principles. Various texts like the Agamas and Shilpa Sastras teach the principles of temple architecture. Renovation cannot and must not be done by traditional contractors who have no regard towards the ancient texts/methodologies.
+              Temple architecture is an entire field of knowledge on its own and
+              is based upon deep scientific and spiritual principles. Various
+              texts like the Agamas and Shilpa Sastras teach the principles of
+              temple architecture. Renovation cannot and must not be done by
+              traditional contractors who have no regard towards the ancient
+              texts/methodologies.
             </RestorationParagraph>
             <RestorationParagraph>
-              Instead, highly-qualified, trained, and established temple architects, or sthapathis as they are known, must undertake the renovation of these ancient temples so that the subtle energies do not get disturbed or ruined.
+              Instead, highly-qualified, trained, and established temple
+              architects, or sthapathis as they are known, must undertake the
+              renovation of these ancient temples so that the subtle energies do
+              not get disturbed or ruined.
             </RestorationParagraph>
             <RestorationParagraph>
-              Behind Every Temple only utilizes these highly trained individuals to ensure 100% authentic renovations are done.
+              Behind Every Temple only utilizes these highly trained individuals
+              to ensure 100% authentic renovations are done.
             </RestorationParagraph>
           </RestorationText>
           <RestorationImage src={temple02} alt="Ancient ruined temple" />
@@ -207,7 +217,9 @@ const Background = () => {
         </BackgroundImage>
         <TempleCardLeft>
           <CardTitle>Completed Temple Renovations</CardTitle>
-          <CardSubtitle>Explore some of the completed temple renovation projects!</CardSubtitle>
+          <CardSubtitle>
+            Explore some of the completed temple renovation projects!
+          </CardSubtitle>
           <LearnMoreButton>LEARN MORE</LearnMoreButton>
         </TempleCardLeft>
       </Section>
@@ -217,7 +229,10 @@ const Background = () => {
         </BackgroundImage>
         <TempleCardRight>
           <CardTitle>Upcoming Temple Projects</CardTitle>
-          <CardSubtitle>Discover temples that are currently under restoration and how you can contribute!</CardSubtitle>
+          <CardSubtitle>
+            Discover temples that are currently under restoration and how you
+            can contribute!
+          </CardSubtitle>
           <LearnMoreButton>LEARN MORE</LearnMoreButton>
         </TempleCardRight>
       </Section>
@@ -225,4 +240,4 @@ const Background = () => {
   );
 };
 
-export default Background; 
+export default Background;

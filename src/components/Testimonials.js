@@ -6,7 +6,8 @@ import testimonialImage from "../assets/img/testimonial_01.png"
 
 const Section = styled.section`
   width: 100%;
-  height: 88vh;
+  min-height: 100vh;
+  height: auto;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -17,6 +18,7 @@ const Section = styled.section`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding: 4rem 0;
   
   &::before {
     content: '';
@@ -28,6 +30,12 @@ const Section = styled.section`
     background: linear-gradient(135deg, rgba(255, 153, 51, 0.3), rgba(255, 193, 7, 0.2));
     z-index: 1;
   }
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+    min-height: auto;
+    height: auto;
+  }
 `
 
 const Content = styled.div`
@@ -37,11 +45,15 @@ const Content = styled.div`
   max-width: 1200px;
   padding: 0 20px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
 `
 
 const Title = styled(motion.h2)`
   font-family: 'Lora', serif;
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: bold;
   color: white;
   margin-bottom: 0.5rem;
@@ -56,21 +68,29 @@ const Title = styled(motion.h2)`
     margin: 1rem auto;
   }
   
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
+  @media (max-width: 480px) {
+    &::after {
+      width: 70px;
+      margin: 0.8rem auto;
+    }
   }
 `
 
 const Subtitle = styled(motion.p)`
   font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   color: white;
   margin-bottom: 3rem;
   line-height: 1.6;
   opacity: 0.9;
-  
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+
   @media (max-width: 768px) {
-    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0;
   }
 `
 
@@ -78,16 +98,27 @@ const CardContainer = styled.div`
   position: relative;
   width: 100%;
   max-width: 800px;
-  height: 380px;
+  min-height: 380px;
+  height: auto;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    min-height: 320px;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 400px;
+  }
 `
 
 const TestimonialCard = styled(motion.div)`
   width: 100%;
-  height: 100%;
+  min-height: 380px;
+  height: auto;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -103,6 +134,12 @@ const TestimonialCard = styled(motion.div)`
   
   @media (max-width: 768px) {
     padding: 1.5rem;
+    min-height: 320px;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 400px;
+    padding: 1.2rem;
   }
 `
 
@@ -140,27 +177,25 @@ const ProfileImage = styled.div`
     height: 70px;
     font-size: 1.8rem;
   }
+
+  @media (max-width: 480px) {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
 `
 
 const ProfileName = styled.h4`
   font-family: 'Inter', sans-serif;
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
   margin-bottom: 0.25rem;
-  
-  @media (max-width: 768px) {
-    font-size: 1.1rem;
-  }
 `
 
 const ProfileLocation = styled.p`
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
   opacity: 0.7;
-  
-  @media (max-width: 768px) {
-    font-size: 0.85rem;
-  }
 `
 
 const RatingSection = styled.div`
@@ -174,13 +209,13 @@ const Rating = styled.div`
   
   .stars {
     color: white;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
     margin-bottom: 0.25rem;
   }
   
   .label {
     font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 1vw, 0.85rem);
     opacity: 0.8;
   }
 `
@@ -188,10 +223,10 @@ const Rating = styled.div`
 const ReviewText = styled.p`
   font-family: 'Inter', sans-serif;
   line-height: 1.7;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   font-style: italic;
   max-width: 600px;
-  margin: 0.5rem 0;
+  margin: 1rem 0;
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -199,9 +234,9 @@ const ReviewText = styled.p`
   padding: 0 1rem;
   
   @media (max-width: 768px) {
-    font-size: 0.95rem;
     line-height: 1.6;
     padding: 0;
+    margin: 0.5rem 0 1rem;
   }
 `
 
@@ -220,6 +255,18 @@ const NavigationContainer = styled.div`
   @media (min-width: 768px) {
     width: calc(100% - 100px);
     left: 50px;
+  }
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    margin-top: 1rem;
+    pointer-events: auto;
+    justify-content: center;
+    gap: 2rem;
   }
 `
 
@@ -255,11 +302,50 @@ const NavigationButton = styled.button`
     width: 60px;
     height: 60px;
     font-size: 1.5rem;
+    position: static;
+  }
+
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+`
+
+const DotsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 10;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+`
+
+const Dot = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: ${({ active }) => active ? '#ff9933' : 'rgba(255, 255, 255, 0.5)'};
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #ff9933;
+  }
+
+  @media (max-width: 480px) {
+    width: 10px;
+    height: 10px;
   }
 `
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   
   const testimonials = [
     {
@@ -307,6 +393,16 @@ const Testimonials = () => {
   ]
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length)
     }, 4000)
@@ -320,6 +416,10 @@ const Testimonials = () => {
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index)
   }
 
   const renderStars = () => {
@@ -398,11 +498,24 @@ const Testimonials = () => {
         </CardContainer>
 
         <NavigationContainer>
-          <NavigationButton onClick={prevSlide}>
+          <NavigationButton onClick={prevSlide} aria-label="Previous testimonial">
             ←
           </NavigationButton>
           
-          <NavigationButton onClick={nextSlide}>
+          {isMobile && (
+            <DotsContainer>
+              {testimonials.map((_, index) => (
+                <Dot 
+                  key={index} 
+                  active={index === currentIndex} 
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </DotsContainer>
+          )}
+          
+          <NavigationButton onClick={nextSlide} aria-label="Next testimonial">
             →
           </NavigationButton>
         </NavigationContainer>

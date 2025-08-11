@@ -1,14 +1,25 @@
-import React from "react";
-import Sidebar from "./Sidebar";
+import React, { useState } from "react";
+import Sidebar, { SIDEBAR_WIDTH, SIDEBAR_COLLAPSED_WIDTH } from "./Sidebar";
 
 const AdminLayout = ({ children }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const sidebarWidth = collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH;
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <Sidebar />
-      <main style={{ flex: 1, padding: "2rem", background: "#f9f7f4" }}>
+    <>
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <main
+        style={{
+          marginLeft: sidebarWidth,
+          minHeight: "100vh",
+          padding: "2rem",
+          background: "#f9f7f4",
+          boxSizing: "border-box",
+          transition: "margin-left 0.3s ease"
+        }}
+      >
         {children}
       </main>
-    </div>
+    </>
   );
 };
 

@@ -2,9 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const Section = styled.section`
-  padding: 4.5rem 0 3.5rem 0;
+  padding: 4.5rem 1.5rem 3.5rem;
   background: #fff;
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1rem 2rem;
+  }
 `;
 
 const Title = styled.h2`
@@ -15,6 +19,20 @@ const Title = styled.h2`
   letter-spacing: -1px;
   line-height: 1.12;
   text-align: center;
+
+  @media (max-width: 1024px) {
+    font-size: 2.8rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const Subtitle = styled.p`
@@ -22,14 +40,40 @@ const Subtitle = styled.p`
   color: #444;
   margin-bottom: 3.2rem;
   font-weight: 400;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0;
+  }
 `;
 
 const FeaturesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.2rem 3.8rem;
   max-width: 1100px;
   margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1.5rem;
+  }
 `;
 
 const FeatureItem = styled.div`
@@ -38,6 +82,13 @@ const FeatureItem = styled.div`
   align-items: flex-start;
   text-align: left;
   gap: 1.1rem;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+    gap: 0.8rem;
+  }
 `;
 
 const FeatureIconBox = styled.div`
@@ -51,14 +102,24 @@ const FeatureIconBox = styled.div`
   background: ${({ color }) => color || '#F4A300'};
   color: #fff;
   margin-bottom: 0.2rem;
+
+  @media (max-width: 768px) {
+    width: 48px;
+    height: 48px;
+    font-size: 1.8rem;
+    border-radius: 12px;
+  }
 `;
 
 const FeatureTitle = styled.h3`
   font-size: 1.45rem;
   font-weight: 950;
   color: #111;
-  margin-bottom: 0;
-  margin-top: 0;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const FeatureDesc = styled.p`
@@ -67,7 +128,12 @@ const FeatureDesc = styled.p`
   line-height: 1.6;
   font-weight: 500;
   margin: 0;
-  margin-top: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 300px;
+  }
 `;
 
 const features = [
@@ -127,4 +193,4 @@ const DevotionalFeatures = () => (
   </Section>
 );
 
-export default DevotionalFeatures; 
+export default DevotionalFeatures;

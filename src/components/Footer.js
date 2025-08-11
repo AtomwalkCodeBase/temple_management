@@ -1,6 +1,6 @@
 "use client"
 import styled from "styled-components"
-import { motion } from "framer-motion"
+// import { motion } from "framer-motion"
 import footerTree from '../assets/img/footer_01.png';
 import footerTemple from '../assets/img/footer_02.png';
 import testimonialBg from '../assets/img/testimonial_01.png';
@@ -14,7 +14,7 @@ const FooterContainer = styled.footer`
   color: #EDEDED;
   padding: 0;
   overflow: hidden;
-  min-height: 600px;
+  min-height: auto;
 
   &::before {
     content: '';
@@ -26,6 +26,10 @@ const FooterContainer = styled.footer`
     background: rgba(0, 0, 0, 0.82);
     z-index: 1;
   }
+
+  @media (max-width: 768px) {
+    min-height: auto;
+  }
 `;
 
 const FooterContent = styled.div`
@@ -33,31 +37,52 @@ const FooterContent = styled.div`
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 60px 0;
+  padding: 60px 20px 0;
+
+  @media (min-width: 768px) {
+    padding: 80px 60px 0;
+  }
 `;
 
 const TopSection = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 80px;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 60px;
+
+  @media (min-width: 992px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 80px;
+  }
 `;
 
 const BrandSection = styled.div`
   display: flex;
-  align-items: flex-start;
-  gap: 40px;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
 `;
 
 const Logo = styled.h2`
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #FFFFFF;
   margin: 0;
   
   span {
     color: #F59E0B;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
   }
 `;
 
@@ -72,7 +97,11 @@ const Tagline = styled.p`
 `;
 
 const NewsletterSection = styled.div`
-  text-align: right;
+  text-align: left;
+
+  @media (min-width: 992px) {
+    text-align: right;
+  }
 `;
 
 const NewsletterTitle = styled.h3`
@@ -80,20 +109,25 @@ const NewsletterTitle = styled.h3`
   font-weight: 600;
   font-size: 1.2rem;
   color: #FFFFFF;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 `;
 
 const NewsletterForm = styled.form`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 15px;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 const NewsletterInput = styled.input`
-  padding: 15px 20px;
+  padding: 12px 20px;
   border-radius: 30px;
   border: none;
-  width: 300px;
+  width: 100%;
   font-family: 'Poppins', sans-serif;
   font-size: 1rem;
   background-color: #FFFFFF;
@@ -106,6 +140,11 @@ const NewsletterInput = styled.input`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #F59E0B;
+  }
+
+  @media (min-width: 576px) {
+    width: 300px;
+    padding: 15px 20px;
   }
 `;
 
@@ -122,18 +161,29 @@ const SubmitButton = styled.button`
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  align-self: flex-start;
 
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(255, 106, 0, 0.3);
   }
+
+  @media (min-width: 576px) {
+    align-self: center;
+  }
 `;
 
 const LinksSection = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 60px;
-  margin-bottom: 80px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    margin-bottom: 80px;
+  }
 `;
 
 const LinksColumn = styled.div``;
@@ -141,53 +191,60 @@ const LinksColumn = styled.div``;
 const ColumnTitle = styled.h3`
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #FFFFFF;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+
+  @media (min-width: 768px) {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
 `;
 
 const LinkItem = styled.a`
   display: block;
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #F3F4F6;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   text-decoration: none;
   transition: color 0.3s ease;
 
   &:hover {
     color: #F59E0B;
   }
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
 `;
 
 const FooterBottomBar = styled.div`
-  background: transparent;
   display: flex;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  padding-top: 0;
+  gap: 10px;
+  padding: 20px 0;
   position: relative;
   z-index: 4;
-  box-sizing: border-box;
   width: 100%;
   border-top: 1px solid rgba(255,255,255,0.2);
-  margin-top: 0;
 
-  @media (max-width: 700px) {
-    flex-wrap: wrap;
+  @media (min-width: 768px) {
+    justify-content: flex-start;
     gap: 12px;
-    padding: 20px 0 0 0;
+    padding: 20px 0 40px;
   }
 `;
 
 const FooterBottomItem = styled.span`
   font-family: 'Inter', 'Roboto', 'Poppins', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 500;
   color: #f3f4f6;
-  margin: 0 12px;
-  letter-spacing: 0.01em;
   white-space: nowrap;
   transition: color 0.2s;
   cursor: pointer;
@@ -196,9 +253,15 @@ const FooterBottomItem = styled.span`
     color: #f59e0b;
   }
 
-  @media (max-width: 700px) {
+  @media (min-width: 576px) {
     font-size: 14px;
-    margin: 0 6px;
+    font-weight: 600;
+    margin: 0 8px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 15px;
+    margin: 0 12px;
   }
 `;
 
@@ -206,12 +269,13 @@ const TreeImg = styled.img`
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 200px;
+  width: 150px;
   z-index: 3;
   opacity: 0.8;
+  display: none;
 
-  @media (max-width: 768px) {
-    display: none;
+  @media (min-width: 992px) {
+    display: block;
   }
 `;
 
@@ -219,12 +283,14 @@ const TempleImg = styled.img`
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 300px;
+  width: 200px;
   z-index: 3;
   opacity: 0.8;
+  display: none;
 
-  @media (max-width: 768px) {
-    display: none;
+  @media (min-width: 992px) {
+    display: block;
+    width: 300px;
   }
 `;
 
@@ -244,7 +310,7 @@ const Footer = () => {
             <NewsletterTitle>Get Updates</NewsletterTitle>
             <NewsletterForm>
               <NewsletterInput type="email" placeholder="Enter your email..." />
-              <SubmitButton type="submit">→</SubmitButton>
+              <SubmitButton type="submit" aria-label="Subscribe">→</SubmitButton>
             </NewsletterForm>
           </NewsletterSection>
         </TopSection>
@@ -287,7 +353,6 @@ const Footer = () => {
           <FooterBottomItem>Support</FooterBottomItem>
           <FooterBottomItem>Privacy Policy</FooterBottomItem>
           <FooterBottomItem>Terms of Use</FooterBottomItem>
-          <FooterBottomItem>Cookie Policy</FooterBottomItem>
           <FooterBottomItem>Cookie Policy</FooterBottomItem>
         </FooterBottomBar>
       </FooterContent>

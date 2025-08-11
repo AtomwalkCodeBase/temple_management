@@ -14,7 +14,6 @@ const Section = styled.section`
 `;
 
 const BackgroundImage = styled.div`
-  /* position: absolute; */
   position: relative;
   top: 0;
   left: 0;
@@ -28,12 +27,18 @@ const BackgroundImage = styled.div`
 
 const TempleImage = styled.div`
   height: 100vh;
+  min-height: 500px;
   width: 100%;
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-position-y: 30%;
+
+  @media (max-width: 768px) {
+    min-height: 400px;
+    background-position-y: center;
+  }
 `;
 
 const CardTitle = styled.h2`
@@ -43,6 +48,11 @@ const CardTitle = styled.h2`
   line-height: 44px;
   color: #000000;
   margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    line-height: 36px;
+  }
 `;
 
 const LearnMoreButton = styled.button`
@@ -61,6 +71,11 @@ const LearnMoreButton = styled.button`
     background: #d4b876;
     transform: scale(1.02);
   }
+
+  @media (max-width: 768px) {
+    padding: 10px 24px;
+    font-size: 16px;
+  }
 `;
 
 const RestorationSection = styled.section`
@@ -68,6 +83,10 @@ const RestorationSection = styled.section`
   padding: 60px 0;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    padding: 40px 0;
+  }
 `;
 
 const RestorationContainer = styled.div`
@@ -78,9 +97,15 @@ const RestorationContainer = styled.div`
   gap: 48px;
   align-items: center;
   padding: 0 32px;
+
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    gap: 24px;
   }
 `;
 
@@ -88,6 +113,11 @@ const RestorationText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  order: 1;
+
+  @media (max-width: 900px) {
+    order: 2;
+  }
 `;
 
 const RestorationTitle = styled.h2`
@@ -97,6 +127,12 @@ const RestorationTitle = styled.h2`
   line-height: 48px;
   color: #2d253f;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const RestorationParagraph = styled.p`
@@ -107,8 +143,15 @@ const RestorationParagraph = styled.p`
   color: rgb(67, 63, 76);
   margin-bottom: 1.5rem;
   text-align: left;
+
   &:last-child {
     margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -118,43 +161,81 @@ const RestorationImage = styled.img`
   object-fit: cover;
   max-height: 420px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  order: 2;
+
+  @media (max-width: 900px) {
+    order: 1;
+    max-height: 350px;
+  }
 `;
 
-const TempleScienceCard = styled.div`
+const TempleCardBase = styled.div`
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  width: 480px;
+  max-width: 90%;
+  margin: 20px;
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    width: calc(100% - 40px);
+    padding: 30px;
+    margin: 20px auto;
+  }
+`;
+
+const TempleScienceCard = styled(TempleCardBase)`
   position: absolute;
   top: 65%;
   right: 6%;
   transform: translateY(-50%);
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 40px;
-  width: 480px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  z-index: 10;
+
+  @media (max-width: 1024px) {
+    right: 4%;
+    width: 400px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: -60px;
+  }
 `;
 
-const TempleCardLeft = styled.div`
+const TempleCardLeft = styled(TempleCardBase)`
   position: absolute;
   top: 10%;
   left: 8%;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 40px;
-  width: 480px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  z-index: 10;
+
+  @media (max-width: 1024px) {
+    left: 4%;
+    width: 400px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: -60px;
+  }
 `;
 
-const TempleCardRight = styled.div`
+const TempleCardRight = styled(TempleCardBase)`
   position: absolute;
   top: 48%;
   right: 4%;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 40px;
-  width: 480px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  z-index: 10;
+
+  @media (max-width: 1024px) {
+    right: 4%;
+    width: 400px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: -60px;
+  }
 `;
 
 const CardSubtitle = styled.p`
@@ -164,6 +245,18 @@ const CardSubtitle = styled.p`
   line-height: 30px;
   color: #55525a;
   margin-bottom: 28px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px;
+  }
+`;
+
+const MobileCardContainer = styled.div`
+  @media (min-width: 769px) {
+    display: none;
+  }
 `;
 
 const Background = () => {
@@ -181,8 +274,8 @@ const Background = () => {
           </CardSubtitle>
           <LearnMoreButton>LEARN MORE</LearnMoreButton>
         </TempleScienceCard>
-        {/* No CloudOverlay here */}
       </Section>
+      
       <RestorationSection>
         <RestorationContainer>
           <RestorationText>
@@ -211,10 +304,20 @@ const Background = () => {
           <RestorationImage src={temple02} alt="Ancient ruined temple" />
         </RestorationContainer>
       </RestorationSection>
+      
       <Section>
         <BackgroundImage>
           <TempleImage imageUrl={temple03} />
         </BackgroundImage>
+        <MobileCardContainer>
+          <TempleCardLeft>
+            <CardTitle>Completed Temple Renovations</CardTitle>
+            <CardSubtitle>
+              Explore some of the completed temple renovation projects!
+            </CardSubtitle>
+            <LearnMoreButton>LEARN MORE</LearnMoreButton>
+          </TempleCardLeft>
+        </MobileCardContainer>
         <TempleCardLeft>
           <CardTitle>Completed Temple Renovations</CardTitle>
           <CardSubtitle>
@@ -223,10 +326,21 @@ const Background = () => {
           <LearnMoreButton>LEARN MORE</LearnMoreButton>
         </TempleCardLeft>
       </Section>
+      
       <Section>
         <BackgroundImage>
           <TempleImage imageUrl={temple04} />
         </BackgroundImage>
+        <MobileCardContainer>
+          <TempleCardRight>
+            <CardTitle>Upcoming Temple Projects</CardTitle>
+            <CardSubtitle>
+              Discover temples that are currently under restoration and how you
+              can contribute!
+            </CardSubtitle>
+            <LearnMoreButton>LEARN MORE</LearnMoreButton>
+          </TempleCardRight>
+        </MobileCardContainer>
         <TempleCardRight>
           <CardTitle>Upcoming Temple Projects</CardTitle>
           <CardSubtitle>

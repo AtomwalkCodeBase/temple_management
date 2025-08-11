@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const TIME_SLOTS = [
-  { label: "Morning (6–8 AM)", value: "morning" },
-  { label: "Afternoon (12–2 PM)", value: "afternoon" },
-  { label: "Evening (6–8 PM)", value: "evening" },
-];
+// Using centralized time slot management instead of hardcoded slots
 const DURATION_UNITS = ["Minutes", "Hours"];
 
 const styles = {
@@ -218,20 +214,13 @@ function AddPujaModal({ open, onClose, onSave }) {
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  const toggleTimeSlot = (slot) => {
-    const newSlots = formData.timeSlots.includes(slot)
-      ? formData.timeSlots.filter((s) => s !== slot)
-      : [...formData.timeSlots, slot];
-    handleChange("timeSlots", newSlots);
-  };
+  // Time slots are now managed centrally in the Time Slot Manager
 
   const validate = () => {
     const newErrors = {};
     if (!formData.pujaName.trim()) newErrors.pujaName = "Required field";
     if (!formData.price || isNaN(formData.price) || formData.price <= 0)
       newErrors.price = "Enter a valid amount";
-    if (formData.timeSlots.length === 0)
-      newErrors.timeSlots = "Select at least one time slot";
     if (!formData.duration || isNaN(formData.duration) || formData.duration <= 0)
       newErrors.duration = "Enter a valid duration";
     if (
@@ -309,18 +298,19 @@ function AddPujaModal({ open, onClose, onSave }) {
               <div style={styles.formGroup}>
                 <label style={styles.label}>Time Slot(s) *</label>
                 <div style={styles.timeSlotContainer}>
-                  {TIME_SLOTS.map((slot) => (
-                    <button
-                      type="button"
-                      key={slot.value}
-                      style={styles.timeSlotButton(
-                        formData.timeSlots.includes(slot.value)
-                      )}
-                      onClick={() => toggleTimeSlot(slot.value)}
-                    >
-                      {slot.label}
-                    </button>
-                  ))}
+                  <div style={{ 
+                    padding: "1rem", 
+                    background: "#f8f9fa", 
+                    borderRadius: "8px", 
+                    border: "1px solid #e9ecef",
+                    color: "#6c757d",
+                    fontSize: "0.9rem",
+                    textAlign: "center"
+                  }}>
+                    Time slots are now managed centrally in the Time Slot Manager.
+                    <br />
+                    Please use the Puja Master to create pujas with time slot assignments.
+                  </div>
                 </div>
                 {errors.timeSlots && (
                   <span style={styles.errorText}>{errors.timeSlots}</span>

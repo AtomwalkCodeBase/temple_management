@@ -14,8 +14,9 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import TempleDetails from "./pages/TempleDetails";
 import Dashboard from "./pages/Admin/Dashboard";
+import PujaMaster from "./pages/Admin/PujaMaster";
 // Placeholder imports for future admin pages
-const PujaMaster = () => <div style={{padding: '2rem'}}>Puja Master Page (Coming Soon)</div>;
+const PujaMasterPage = () => <div style={{padding: '2rem'}}>Puja Master Page (Coming Soon)</div>;
 const HallMaster = () => <div style={{padding: '2rem'}}>Hall Master Page (Coming Soon)</div>;
 const PujaBookings = () => <div style={{padding: '2rem'}}>Puja Bookings Page (Coming Soon)</div>;
 const HallBookings = () => <div style={{padding: '2rem'}}>Hall Bookings Page (Coming Soon)</div>;

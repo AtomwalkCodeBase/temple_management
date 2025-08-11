@@ -213,7 +213,7 @@ const Navbar = () => {
     { path: "/live-darshan", label: "Live Darshan" },
     { path: "/shop", label: "Shop" },
     { path: "/bhajans", label: "Bhajans" },
-    { path: "/blogs", label: "Blogs" },
+    { path: "/login", label: "Login" },
   ];
 
   return (

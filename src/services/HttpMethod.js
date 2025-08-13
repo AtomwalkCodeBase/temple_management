@@ -32,11 +32,13 @@ export const authAxiosget = async (url, data) => {
 
 export const authAxiosPost = async (url, data) => {
   const token = getToken();
+  
   return axios
     .create({
       baseURL: endpoint,
       headers: {
         Authorization: token ? `Token ${token}` : "",
+        "Content-Type": "application/json",
       },
     })
     .post(url, data);

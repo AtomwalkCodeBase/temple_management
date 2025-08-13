@@ -18,31 +18,9 @@ import LiveDarshan from "./pages/LiveDarshan";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import TempleDetails from "./pages/TempleDetails";
-import Dashboard from "./pages/Admin/Dashboard";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminRouter from "./components/Admin/AdminRouter";
 import Login from "./pages/Login"; // Import Login component
-// Placeholder imports for future admin pages
-const PujaMasterPage = () => (
-  <div style={{ padding: "2rem" }}>Puja Master Page (Coming Soon)</div>
-);
-const HallMaster = () => (
-  <div style={{ padding: "2rem" }}>Hall Master Page (Coming Soon)</div>
-);
-const PujaBookings = () => (
-  <div style={{ padding: "2rem" }}>Puja Bookings Page (Coming Soon)</div>
-);
-const HallBookings = () => (
-  <div style={{ padding: "2rem" }}>Hall Bookings Page (Coming Soon)</div>
-);
-const Calendar = () => (
-  <div style={{ padding: "2rem" }}>Calendar Page (Coming Soon)</div>
-);
-const ManualBooking = () => (
-  <div style={{ padding: "2rem" }}>Manual Booking Page (Coming Soon)</div>
-);
-const Reports = () => (
-  <div style={{ padding: "2rem" }}>Reports Page (Coming Soon)</div>
-);
 
 function AppContent() {
   const location = useLocation();
@@ -65,7 +43,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         {/* Admin routes */}
         <Route path="/admin/*" element={<AdminDashboard />} />
-        <Route path="/templeadmin" element={<Dashboard />} />
+        <Route path="/templeadmin/*" element={<AdminRouter />} />
       </Routes>
       {!isAdminRoute && <Footer />}
     </>

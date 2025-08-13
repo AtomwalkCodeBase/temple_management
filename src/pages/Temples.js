@@ -1,9 +1,10 @@
 "use client";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import IndiaMap from "../assets/img/India.png";
+import { gettemplist } from "../services/productServices";
 
 const TemplesContainer = styled.div`
   min-height: 100vh;
@@ -342,52 +343,49 @@ const HeroButtons = styled.div`
 const Temples = () => {
   const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState("All");
+  const [temples, setTemples] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const temples = [
-    {
-      id: 1,
-      name: "Jagannath Temple",
-      location: "Puri, Odisha",
-      deity: "Lord Jagannath",
-      timings: "6AM-9PM",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-agvMxTV3rSTZCB9Npd1ueYqg-qbe0bxhQ&s",
-    },
-    {
-      id: 2,
-      name: "Golden Temple",
-      location: "Amritsar, Punjab",
-      deity: "Guru Granth Sahib",
-      timings: "Open 24 Hours",
-      image: "https://static.toiimg.com/photo/61820954.cms",
-    },
-    {
-      id: 3,
-      name: "Meenakshi Temple",
-      location: "Madurai, Tamil Nadu",
-      deity: "Goddess Meenakshi",
-      timings: "5AM-12:30PM, 4PM-9:30PM",
-      image:
-        "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-    },
-    {
-      id: 4,
-      name: "Kedarnath Temple",
-      location: "Uttarakhand",
-      deity: "Lord Shiva",
-      timings: "6AM-3PM, 5PM-7PM",
-      image: "https://static.toiimg.com/photo/61820954.cms",
-    },
-    {
-      id: 5,
-      name: "Tirupati Balaji",
-      location: "Andhra Pradesh",
-      deity: "Lord Venkateswara",
-      timings: "3AM-11:30PM",
-      image:
-        "https://imgs.search.brave.com/45u5nMGwZQRxHkFDlGaIEogjQe3M86of3p3a3-Q_rKA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMudHJhdmVsdHJp/YW5nbGUuY29tL2Js/b2cvd3AtY29udGVu/dC91cGxvYWRzLzIw/MTkvMTIvVmVua2F0/ZXN3YXJhLVRlbXBs/ZS10aXJ1cGF0aS5q/cGc",
-    },
-  ];
+  const DEFAULT_IMAGE =
+    "https://images.unsplash.com/photo-1589758900165-9581f6d5b25e?q=80&w=1200&auto=format&fit=crop";
+
+  useEffect(() => {
+    const fetchTemples = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const response = await gettemplist();
+        const list = Array.isArray(response?.data) ? response.data : [];
+        const mapped = list.map((t) => {
+          const timingsObj = t?.additional_field_list?.temple_timings;
+          const timingsText = [timingsObj?.morning_opening, timingsObj?.evening_closing]
+            .filter(Boolean)
+            .join(" - ");
+
+          return {
+            id: t.temple_id || t.id,
+            name: t.name || "Unnamed Temple",
+            location:
+              t.location ||
+              [t.address_line_3, t.state_code].filter(Boolean).join(", ") ||
+              "",
+            image: t.image || DEFAULT_IMAGE,
+            // placeholders to preserve current card layout
+            deity: t.deity || null,
+            timings: timingsText || null,
+          };
+        });
+        setTemples(mapped);
+      } catch (e) {
+        setError("Failed to load temples");
+        setTemples([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTemples();
+  }, []);
 
   const handleViewDetails = (templeId) => {
     navigate(`/templeDetails/${templeId}`);
@@ -424,11 +422,14 @@ const Temples = () => {
   };
 
   // Filter temples based on selected location
-  const filteredTemples = selectedLocation === "All"
-    ? temples
-    : temples.filter((temple) => 
-        temple.location.toLowerCase().includes(selectedLocation.toLowerCase())
-      );
+  const filteredTemples =
+    selectedLocation === "All"
+      ? temples
+      : temples.filter((temple) =>
+          (temple.location || "")
+            .toLowerCase()
+            .includes(selectedLocation.toLowerCase())
+        );
 
   return (
     <TemplesContainer>
@@ -467,14 +468,24 @@ const Temples = () => {
       <TemplesGrid>
         <motion.div variants={containerVariants} initial="hidden" animate="visible">
           <GridContainer>
-            {filteredTemples.map((temple) => (
+            {loading && (
+              <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "2rem", color: "#888" }}>
+                Loading temples...
+              </div>
+            )}
+            {!loading && error && (
+              <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "2rem", color: "#c00" }}>
+                {error}
+              </div>
+            )}
+            {!loading && !error && filteredTemples.map((temple) => (
               <TempleCard
                 key={temple.id}
                 variants={cardVariants}
                 whileHover={{ y: -5 }}
               >
                 <TempleImageContainer>
-                  <TempleImage src={temple.image} alt={temple.name} />
+                  <TempleImage src={temple.image || DEFAULT_IMAGE} alt={temple.name} />
                 </TempleImageContainer>
 
                 <TempleInfo>
@@ -484,12 +495,12 @@ const Temples = () => {
                   <TempleDetail>
                     <span role="img" aria-label="Om">🕉️</span>
                     <DetailLabel>Deity:</DetailLabel>
-                    <DetailValue>{temple.deity}</DetailValue>
+                    <DetailValue>{temple.deity || "—"}</DetailValue>
                   </TempleDetail>
                   <TempleDetail>
                     <span role="img" aria-label="Clock">🕒</span>
                     <DetailLabel>Timings:</DetailLabel>
-                    <DetailValue>{temple.timings}</DetailValue>
+                    <DetailValue>{temple.timings || "—"}</DetailValue>
                   </TempleDetail>
 
                   <ActionButtons>

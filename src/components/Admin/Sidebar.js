@@ -23,7 +23,7 @@ const SIDEBAR_TEXT_COLOR = '#fff';
 const SIDEBAR_HOVER_BG = 'rgba(128,0,0,0.08)';
 const SIDEBAR_ACTIVE_BG = '#fff';
 const SIDEBAR_ACTIVE_TEXT = '#800000';
-const SIDEBAR_ICON_BG = '#fff7f7';
+// Removed unused SIDEBAR_ICON_BG
 
 const SidebarContainer = styled.aside`
   position: fixed;
@@ -250,22 +250,18 @@ const LogoutIconWrapper = styled(IconWrapper)`
 `;
 
 const sidebarLinks = [
-  { label: "Dashboard", icon: <MdDashboard />, to: "/admin" },
-  { label: "Puja Master", icon: <MdOutlineTempleBuddhist />, to: "/admin/puja-master" },
-  { label: "Hall Master", icon: <MdMeetingRoom />, to: "/admin/hall-master" },
-  { label: "Puja Bookings", icon: <MdEventAvailable />, to: "/admin/puja-bookings" },
-  { label: "Hall Bookings", icon: <MdEventSeat />, to: "/admin/hall-bookings" },
-  { label: "Calendar", icon: <MdCalendarMonth />, to: "/admin/calendar" },
-  { label: "Manual Booking", icon: <MdEditNote />, to: "/admin/manual-booking" },
-  { label: "Reports", icon: <MdBarChart />, to: "/admin/reports" },
+  { label: "Dashboard", icon: <MdDashboard />, to: "/templeadmin/dashboard" },
+  { label: "Temple Master", icon: <MdOutlineTempleBuddhist />, to: "/templeadmin/temple-master" },
+  { label: "Puja Master", icon: <MdEditNote />, to: "/templeadmin/puja-master" },
+  { label: "Hall Master", icon: <MdMeetingRoom />, to: "/templeadmin/hall-master" },
+  { label: "Puja Bookings", icon: <MdEventAvailable />, to: "/templeadmin/puja-bookings" },
+  { label: "Hall Bookings", icon: <MdEventSeat />, to: "/templeadmin/hall-bookings" },
+  { label: "Calendar", icon: <MdCalendarMonth />, to: "/templeadmin/calendar" },
+  { label: "Manual Booking", icon: <MdEditNote />, to: "/templeadmin/manual-booking" },
+  { label: "Reports", icon: <MdBarChart />, to: "/templeadmin/reports" },
 ];
 
-function handleNavWheel(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const target = e.currentTarget;
-  target.scrollTop += e.deltaY;
-}
+// Removed unused handleNavWheel
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
   const location = useLocation();

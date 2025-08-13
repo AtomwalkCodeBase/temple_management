@@ -499,7 +499,6 @@ const Categories = ({
   return (
     <Container>
       <Header>
-        <Title>Category Management</Title>
         <AddButton onClick={() => handleOpenForm()}>
           <MdAdd /> Add Category
         </AddButton>

@@ -9,3 +9,5 @@ export const loginEndpoint = `${authEndpoint}/login/`;
 // Temple endpoints
 export const AddupdateTemple = `${endpoint}/process_temple_data/`;
 export const getTempleList = `${endpoint}/get_temple_list/`;
+export const AddTempleImages = `${endpoint}/process_temple_images/`;
+

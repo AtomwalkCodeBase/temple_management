@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "../../components/Dropdown";
+import ProgressBar from "../../components/Admin/ProgressBar";
 
 // Mock data for dropdowns
 const CATEGORIES = ["Daily", "Festival", "Special"];
@@ -25,56 +26,7 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const ProgressContainer = styled.div`
-  margin-bottom: 2rem;
-`;
 
-const ProgressSteps = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  color: #666;
-`;
-
-const StepItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const StepNumber = styled.span`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: ${props => props.active ? PROGRESS_STEP_ACTIVE : "#e0e0e0"};
-  color: ${props => props.active ? PROGRESS_STEP_TEXT : "#666"};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 600;
-`;
-
-const StepLabel = styled.span`
-  font-weight: ${props => props.active ? "600" : "400"};
-  color: ${props => props.active ? PROGRESS_STEP_ACTIVE : "#666"};
-`;
-
-const ProgressBar = styled.div`
-  height: 4px;
-  background: #e0e0e0;
-  border-radius: 2px;
-  position: relative;
-`;
-
-const ProgressFill = styled.div`
-  height: 100%;
-  background: ${PROGRESS_BG};
-  border-radius: 2px;
-  width: ${props => props.progress}%;
-  transition: width 0.3s ease;
-`;
 
 const FormContainer = styled.div`
   background: #fff;
@@ -733,28 +685,12 @@ const AddEditPuja = ({ onSavePuja, onCancel, initialValues, timeSlots = [], cate
     }
   };
 
-  const progressPercentage = ((sections.findIndex(s => s.id === activeSection) + 1) / sections.length) * 100;
+  const currentStepIndex = sections.findIndex(s => s.id === activeSection);
 
   return (
     <Container>
       {/* Progress Bar */}
-      <ProgressContainer>
-        <ProgressSteps>
-          {sections.map((section, index) => (
-            <StepItem key={section.id}>
-              <StepNumber active={activeSection === section.id}>
-                {index + 1}
-              </StepNumber>
-              <StepLabel active={activeSection === section.id}>
-                {section.label}
-              </StepLabel>
-            </StepItem>
-          ))}
-        </ProgressSteps>
-        <ProgressBar>
-          <ProgressFill progress={progressPercentage} />
-        </ProgressBar>
-      </ProgressContainer>
+      <ProgressBar steps={sections} currentStep={currentStepIndex} />
 
       {/* Form Content */}
       <FormContainer>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { addupdatetempale } from "../services/productServices";
+import Button from "./Button";
 
 const ModalOverlay = styled(motion.div)`
   position: fixed;
@@ -127,30 +128,7 @@ const ButtonGroup = styled.div`
   border-top: 1px solid #e5e7eb;
 `;
 
-const Button = styled(motion.button)`
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-
-  &.primary {
-    background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
-  }
-
-  &.secondary {
-    background: #f3f4f6;
-    color: #374151;
-    border: 1px solid #d1d5db;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-`;
+// Button component is now imported from ./Button
 
 const ErrorMessage = styled.div`
   background: #fee2e2;
@@ -180,7 +158,10 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
     web_page: "",
     location: "",
     geo_location_data: "",
-    // temple_id: "",
+    temple_group: "",
+    temple_sub_group: "",
+    temple_group_id: null,
+    temple_sub_group_id: null,
   });
 
   const [loading, setLoading] = useState(false);
@@ -205,6 +186,10 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
         web_page: temple.web_page || "",
         location: temple.location || "",
         geo_location_data: temple.geo_location_data || "",
+        temple_group: temple.temple_group || "",
+        temple_sub_group: temple.temple_sub_group || "",
+        temple_group_id: temple.temple_group_id || null,
+        temple_sub_group_id: temple.temple_sub_group_id || null,
         temple_id: temple.temple_id || "",
       });
     }
@@ -229,17 +214,21 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
         ...formData,
       };
 
-      // Only add temple_id if updating
-      // if (temple?.temple_id) {
-      //   templeData.temple_id = temple.temple_id;
-      // }
+      // Add temple_id if updating
+      if (temple?.temple_id) {
+        templeData.temple_id = temple.temple_id;
+      }
 
-      await addupdatetempale({
+      console.log("Sending temple data:", { temple_data: templeData });
+
+      const response = await addupdatetempale({
         temple_data: templeData,
       });
 
+      console.log("API Response:", response);
       onSuccess();
     } catch (err) {
+      console.error("API Error:", err);
       setError(err.message || "Failed to save temple. Please try again.");
     } finally {
       setLoading(false);
@@ -443,6 +432,30 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
               />
             </FormGroup>
 
+            <FormGroup>
+              <Label htmlFor="temple_group">Temple Group</Label>
+              <Input
+                type="text"
+                id="temple_group"
+                name="temple_group"
+                value={formData.temple_group}
+                onChange={handleChange}
+                placeholder="e.g., Narayan, Shiva, etc."
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <Label htmlFor="temple_sub_group">Temple Sub Group</Label>
+              <Input
+                type="text"
+                id="temple_sub_group"
+                name="temple_sub_group"
+                value={formData.temple_sub_group}
+                onChange={handleChange}
+                placeholder="e.g., Heritage, Modern, etc."
+              />
+            </FormGroup>
+
             <FormGroup className="full-width">
               <Label htmlFor="remarks">Remarks</Label>
               <TextArea
@@ -457,19 +470,17 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
             <ButtonGroup>
               <Button
                 type="button"
-                className="secondary"
+                variant="outline"
+                color="gray"
                 onClick={onClose}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="primary"
+                color="orange"
                 disabled={loading}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                loading={loading}
               >
                 {loading
                   ? "🙏 Saving..."

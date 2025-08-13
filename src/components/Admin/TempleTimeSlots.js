@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../components/Button";
+import Button from "../Button";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 
@@ -225,21 +225,21 @@ const ActionButton = styled.button`
     `}
 `;
 
-const TimeSlots = ({ timeSlots, onAddTimeSlot, onEditTimeSlot, onDeleteTimeSlot, onToggleTimeSlotStatus }) => {
+const TempleTimeSlots = ({ timeSlots, onAddTimeSlot, onEditTimeSlot, onDeleteTimeSlot, onToggleTimeSlotStatus }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingSlot, setEditingSlot] = useState(null);
-  const [form, setForm] = useState({ name: "", start: "", end: "", capacity: "" });
+  const [form, setForm] = useState({ name: "", start: "", end: "" });
   const [error, setError] = useState("");
 
   const resetForm = () => {
-    setForm({ name: "", start: "", end: "", capacity: "" });
+    setForm({ name: "", start: "", end: "" });
     setEditingSlot(null);
     setError("");
   };
 
   const handleOpenForm = (slot = null) => {
     if (slot) {
-      setForm({ name: slot.name, start: slot.start, end: slot.end, capacity: slot.capacity });
+      setForm({ name: slot.name, start: slot.start, end: slot.end });
       setEditingSlot(slot);
     } else {
       resetForm();
@@ -259,7 +259,7 @@ const TimeSlots = ({ timeSlots, onAddTimeSlot, onEditTimeSlot, onDeleteTimeSlot,
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.start || !form.end || !form.capacity) {
+    if (!form.name.trim() || !form.start || !form.end) {
       setError("All fields are required.");
       return;
     }
@@ -267,14 +267,10 @@ const TimeSlots = ({ timeSlots, onAddTimeSlot, onEditTimeSlot, onDeleteTimeSlot,
       setError("Start time must be before end time.");
       return;
     }
-    if (isNaN(form.capacity) || Number(form.capacity) <= 0) {
-      setError("Capacity must be a positive number.");
-      return;
-    }
     if (editingSlot) {
-      onEditTimeSlot(editingSlot.id, { ...editingSlot, ...form, capacity: Number(form.capacity) });
+      onEditTimeSlot(editingSlot.id, { ...editingSlot, ...form });
     } else {
-      onAddTimeSlot({ ...form, capacity: Number(form.capacity) });
+      onAddTimeSlot({ ...form });
     }
     handleCloseForm();
   };
@@ -296,21 +292,19 @@ const TimeSlots = ({ timeSlots, onAddTimeSlot, onEditTimeSlot, onDeleteTimeSlot,
               <Th>Name</Th>
               <Th>Start Time</Th>
               <Th>End Time</Th>
-              <Th>Capacity</Th>
               <Th>Status</Th>
               <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>
             {timeSlots.length === 0 ? (
-              <tr><Td colSpan={6}><EmptyState>No time slots defined.</EmptyState></Td></tr>
+              <tr><Td colSpan={5}><EmptyState>No time slots defined.</EmptyState></Td></tr>
             ) : (
               timeSlots.map((slot, idx) => (
                 <Tr key={slot.id} $zebra={idx % 2 === 1}>
                   <Td>{slot.name}</Td>
                   <Td>{slot.start}</Td>
                   <Td>{slot.end}</Td>
-                  <Td>{slot.capacity}</Td>
                   <Td><StatusBadge $status={slot.status}>{slot.status}</StatusBadge></Td>
                   <Td>
                     <TableActions>
@@ -365,10 +359,6 @@ const TimeSlots = ({ timeSlots, onAddTimeSlot, onEditTimeSlot, onDeleteTimeSlot,
                 <ModalInput name="end" type="time" value={form.end} onChange={handleChange} />
               </div>
             </ModalField>
-            <ModalField>
-              <ModalLabel>Capacity</ModalLabel>
-              <ModalInput name="capacity" type="number" min="1" value={form.capacity} onChange={handleChange} />
-            </ModalField>
             {error && <ModalError>{error}</ModalError>}
             <ModalActions>
               <Button
@@ -396,4 +386,5 @@ const TimeSlots = ({ timeSlots, onAddTimeSlot, onEditTimeSlot, onDeleteTimeSlot,
   );
 };
 
-export default TimeSlots; 
+export default TempleTimeSlots;
+

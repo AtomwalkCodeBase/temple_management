@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
-import { MdEdit, MdDelete, MdVisibility, MdSearch, MdFilterList } from "react-icons/md";
+import { MdVisibility, MdSearch, MdFilterList } from "react-icons/md";
 import Button from "../Button";
 
 const Container = styled.div`
@@ -163,7 +164,7 @@ const ErrorState = styled.div`
   margin: 1rem 2rem;
 `;
 
-const TempleList = () => {
+const TempleList = ({ onEditTemple }) => {
   const [temples, setTemples] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -216,13 +217,12 @@ const TempleList = () => {
 
   const handleEditTemple = (temple) => {
     console.log("Edit temple:", temple);
-    // TODO: Implement edit functionality
+    if (onEditTemple) {
+      onEditTemple(temple);
+    }
   };
 
-  const handleDeleteTemple = (temple) => {
-    console.log("Delete temple:", temple);
-    // TODO: Implement delete functionality
-  };
+
 
   const handleViewTemple = (temple) => {
     console.log("View temple:", temple);
@@ -325,33 +325,23 @@ const TempleList = () => {
                   </Td>
                   <Td>
                     <ActionButtons>
-                      <ActionButton
+                      <Button
                         color="blue"
                         variant="outline"
                         size="sm"
                         onClick={() => handleViewTemple(temple)}
-                        title="View Temple"
+                        style={{ minWidth: 70 }}
                       >
-                        <MdVisibility />
-                      </ActionButton>
-                      <ActionButton
-                        color="orange"
-                        variant="outline"
+                        View
+                      </Button>
+                      <Button
+                        color="blue"
                         size="sm"
                         onClick={() => handleEditTemple(temple)}
-                        title="Edit Temple"
+                        style={{ minWidth: 70 }}
                       >
-                        <MdEdit />
-                      </ActionButton>
-                      <ActionButton
-                        color="red"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDeleteTemple(temple)}
-                        title="Delete Temple"
-                      >
-                        <MdDelete />
-                      </ActionButton>
+                        Edit
+                      </Button>
                     </ActionButtons>
                   </Td>
                 </Tr>
@@ -362,6 +352,10 @@ const TempleList = () => {
       </TableContainer>
     </Container>
   );
+};
+
+TempleList.propTypes = {
+  onEditTemple: PropTypes.func
 };
 
 export default TempleList;

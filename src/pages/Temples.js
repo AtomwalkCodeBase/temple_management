@@ -9,6 +9,10 @@ import { gettemplist } from "../services/productServices";
 const TemplesContainer = styled.div`
   min-height: 100vh;
   padding-top: 100px;
+
+  @media (max-width: 768px) {
+    padding-top: 80px;
+  }
 `;
 
 const HeroSection = styled.section`
@@ -18,15 +22,31 @@ const HeroSection = styled.section`
     rgba(255, 153, 51, 0.1)
   );
   text-align: center;
+  padding: 2rem 1rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 0.5rem;
+  }
 `;
 
 const HeroTitle = styled(motion.h1)`
   font-size: 2.1rem;
   color: ${(props) => props.theme.colors.text};
   margin-bottom: 1rem;
+  line-height: 1.2;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: 1024px) {
+    font-size: 1.8rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 480px) {
     font-size: 1.3rem;
+    margin-bottom: 0.6rem;
   }
 `;
 
@@ -35,10 +55,19 @@ const HeroSubtitle = styled(motion.p)`
   color: ${(props) => props.theme.colors.darkGray};
   max-width: 600px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
 `;
 
 const TemplesGrid = styled.section`
   padding: 1rem 0;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 0;
+  }
 `;
 
 const GridContainer = styled.div`
@@ -49,6 +78,24 @@ const GridContainer = styled.div`
   margin: 0 auto;
   padding: 0 10px 20px;
   align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 0 8px 16px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    padding: 0 6px 12px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 4px 8px;
+  }
 `;
 
 const TempleCard = styled(motion.div)`
@@ -65,12 +112,28 @@ const TempleCard = styled(motion.div)`
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
+
+  @media (max-width: 768px) {
+    border-radius: 12px;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
 `;
 
 const TempleImageContainer = styled.div`
   height: 200px;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    height: 180px;
+  }
+
+  @media (max-width: 480px) {
+    height: 160px;
+  }
 `;
 
 const TempleImage = styled.img`
@@ -81,6 +144,14 @@ const TempleImage = styled.img`
 
 const TempleInfo = styled.div`
   padding: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const TempleName = styled.h3`
@@ -88,6 +159,17 @@ const TempleName = styled.h3`
   font-weight: 700;
   color: ${(props) => props.theme.colors.text};
   margin-bottom: 0.5rem;
+  line-height: 1.3;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
 `;
 
 const TempleLocation = styled.p`
@@ -97,6 +179,16 @@ const TempleLocation = styled.p`
   display: flex;
   align-items: center;
   gap: 0.3rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
 `;
 
 const TempleDetail = styled.div`
@@ -104,23 +196,60 @@ const TempleDetail = styled.div`
   align-items: center;
   margin-bottom: 0.8rem;
   gap: 0.4rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.6rem;
+    gap: 0.3rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 0.5rem;
+    gap: 0.25rem;
+  }
 `;
 
 const DetailLabel = styled.span`
   color: ${(props) => props.theme.colors.darkGray};
   font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const DetailValue = styled.span`
   color: ${(props) => props.theme.colors.text};
   font-weight: 500;
   font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ActionButtons = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.6rem;
+    margin-top: 1rem;
+    flex-direction: column;
+  }
 `;
 
 const ViewDetailsButton = styled(motion.button)`
@@ -137,6 +266,16 @@ const ViewDetailsButton = styled(motion.button)`
 
   &:hover {
     background: rgba(255, 153, 51, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -155,6 +294,20 @@ const BookSevaButton = styled(motion.button)`
   &:hover {
     background: ${(props) => props.theme.colors.primaryDark};
     transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+    
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -186,6 +339,21 @@ const ActionButton = styled.button`
       transform: translateY(-2px);
     }
   }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    
+    &.primary:hover,
+    &.secondary:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const locations = [
@@ -204,7 +372,7 @@ const locations = [
   },
   {
     name: "Mathura",
-    image:"https://imgs.search.brave.com/cjAJYo3sJVI1NA6qdY5oO_vFsDHGPnLtQ6_r3XRjgdg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/dG91cm15aW5kaWEu/Y29tL2Jsb2cvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIxLzA2/L0R3YXJrYWRoaXNo/LVRlbXBsZS1NYXRo/dXJhLmpwZw",
+    image:"https://imgs.search.brave.com/cjAJYo3sJVI1NA6qdY5oO_vFsDHGPnLtQ6_r3XRjgdg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/dG91cm15aW5kaWEu/Y29tL2Jsb2cvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIxLzA2/L0R3YXJrYWRoaXNo/LVRlbXBsZS1NYXRodXJh/LmpwZw",
   },
   {
     name: "Vrindavan",
@@ -241,6 +409,24 @@ const FilterBar = styled.div`
   margin-bottom: 1.5rem;
   border-bottom: 2px solid #f3f3f3;
   background: transparent;
+  flex-wrap: wrap;
+
+  @media (max-width: 1024px) {
+    gap: 1.5rem;
+    padding: 1.5rem 0 1rem 0;
+  }
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    padding: 1rem 0 0.8rem 0;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.8rem;
+    padding: 0.8rem 0 0.6rem 0;
+    margin-bottom: 0.8rem;
+  }
 `;
 
 const FilterItem = styled.div`
@@ -249,6 +435,14 @@ const FilterItem = styled.div`
   align-items: center;
   cursor: pointer;
   min-width: 80px;
+
+  @media (max-width: 768px) {
+    min-width: 70px;
+  }
+
+  @media (max-width: 480px) {
+    min-width: 60px;
+  }
 `;
 
 const FilterImage = styled.img`
@@ -259,12 +453,26 @@ const FilterImage = styled.img`
   border-radius: 50%;
   border: 3px solid transparent;
   transition: border 0.2s, box-shadow 0.2s;
+  
   &.active {
     border-color: #ab353d;
     box-shadow: 0 0 0 4px #f3e3e5;
   }
+  
   &:hover {
     border-color: #e67c1c;
+  }
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 0.3rem;
   }
 `;
 
@@ -273,9 +481,19 @@ const FilterLabel = styled.span`
   color: #888;
   font-weight: 500;
   transition: color 0.2s, font-weight 0.2s;
+  text-align: center;
+  
   &.active {
     color: #ab353d;
     font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
   }
 `;
 
@@ -286,17 +504,36 @@ const HeroFlex = styled.div`
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
+
+  @media (max-width: 1024px) {
+    gap: 1.5rem;
+    padding: 0 0.8rem;
+  }
+
   @media (max-width: 900px) {
     flex-direction: column;
     text-align: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 0.5rem;
+    gap: 0.8rem;
   }
 `;
 
 const HeroLeft = styled.div`
   flex: 1.2;
   text-align: left;
+
   @media (max-width: 900px) {
     text-align: center;
+    flex: 1;
+  }
+
+  @media (max-width: 768px) {
+    order: 2;
   }
 `;
 
@@ -305,6 +542,14 @@ const HeroRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 900px) {
+    order: 1;
+  }
+
+  @media (max-width: 768px) {
+    order: 1;
+  }
 `;
 
 const MapImage = styled.img`
@@ -313,11 +558,37 @@ const MapImage = styled.img`
   display: block;
   margin-left: auto;
   margin-right: 0;
+
+  @media (max-width: 1024px) {
+    width: 350px;
+  }
+
+  @media (max-width: 900px) {
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 250px;
+  }
+
+  @media (max-width: 480px) {
+    width: 200px;
+  }
 `;
 
 const BulletList = styled.ul`
   padding: 0;
   list-style: none;
+  margin: 1.5rem 0;
+
+  @media (max-width: 768px) {
+    margin: 1.2rem 0;
+  }
+
+  @media (max-width: 480px) {
+    margin: 1rem 0;
+  }
 `;
 
 const Bullet = styled.li`
@@ -326,11 +597,37 @@ const Bullet = styled.li`
   font-size: 1.25rem;
   color: #888;
   margin-bottom: 1rem;
+  
   &::before {
     content: '✔';
     color: orange;
     font-size: 1.3rem;
     margin-right: 0.8rem;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    
+    &::before {
+      font-size: 1.2rem;
+      margin-right: 0.6rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    
+    &::before {
+      font-size: 1.1rem;
+      margin-right: 0.5rem;
+    }
   }
 `;
 
@@ -338,6 +635,19 @@ const HeroButtons = styled.div`
   display: flex;
   gap: 1.2rem;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Temples = () => {
@@ -348,7 +658,7 @@ const Temples = () => {
   const [error, setError] = useState("");
 
   const DEFAULT_IMAGE =
-    "https://images.unsplash.com/photo-1589758900165-9581f6d5b25e?q=80&w=1200&auto=format&fit=crop";
+    "https://www.poojn.in/wp-content/uploads/2025/02/Govindaraja-Temple-History-Architecture-and-Significance.jpeg.jpg";
 
   useEffect(() => {
     const fetchTemples = async () => {

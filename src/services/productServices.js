@@ -1,4 +1,4 @@
-import { AddupdateTemple, getTempleList, AddTempleImages } from "../services/ConstantServies";
+import { AddupdateTemple, getTempleList, AddTempleImages, AddTempleGroupData, getTempleGroupData } from "../services/ConstantServies";
 import { authAxios, authAxiosFilePost, authAxiosPost } from "./HttpMethod";
 
 export function addupdatetempale(tempale_data) {
@@ -25,4 +25,17 @@ export function uploadTempleImages(templeId, formData) {
     legacyFormData.append(key, file);
   });
   return authAxiosFilePost(AddTempleImages, legacyFormData);
+}
+
+export function addTempleGroup(groupData) {
+  // If FormData (with image), use file post
+  if (groupData instanceof FormData) {
+    return authAxiosFilePost(AddTempleGroupData, groupData);
+  }
+  // If JSON data (without image), use regular post
+  return authAxiosPost(AddTempleGroupData, groupData);
+}
+
+export function getTempleGroups() {
+  return authAxios(getTempleGroupData);
 }

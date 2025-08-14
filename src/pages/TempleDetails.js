@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { gettemplist } from "../services/productServices";
 
 const TempleContainer = styled.div`
   min-height: 100vh;
@@ -269,144 +270,235 @@ const QuickInfoItem = styled.div`
   }
 `;
 
-// Updated temple data to ensure timingsText (for summary) and timings (for array).
-const templesData = {
-  1: {
-    name: "Jagannath Temple",
-    location: "Puri, Odisha",
-    deity: "Lord Jagannath",
-    timingsText: "6AM-9PM",
-    history: "The Jagannath Temple was built by King Anantavarman Chodaganga Deva of the Eastern Ganga dynasty in the 12th century. The temple is famous for its annual Rath Yatra, or chariot festival, in which the three principal deities are pulled on huge and elaborately decorated temple cars.",
-    significance: "The Jagannath Temple is one of the Char Dham pilgrimage sites and is considered one of the most sacred temples in Hinduism. The temple is known for its unique architecture and the annual Rath Yatra festival.",
-    architecture: "The temple is built in the Kalinga style of architecture, with the Pancharatha (Five chariots) type consisting of two anurathas, two konakas and one ratha. The temple has four distinct sectional structures, namely - Deula, Vimana or Garba griha where the triad deities are lodged on the ratnavedi (Throne of Pearls).",
-    timings: [
-      { title: "Morning Opening", time: "06:00 AM - 09:00 PM" },
-      { title: "Morning Aarti", time: "06:00 AM - 06:30 AM" },
-      { title: "Morning Darshan", time: "06:30 AM - 12:00 PM" },
-      { title: "Afternoon Break", time: "12:00 PM - 03:00 PM" },
-      { title: "Evening Darshan", time: "03:00 PM - 09:00 PM" },
-      { title: "Evening Aarti", time: "08:30 PM - 09:00 PM" },
-    ],
-    offerings: ["Prasad", "Flowers", "Coconut", "Banana", "Sweets"],
-    freeMeals: "The temple provides free meals (Mahaprasad) to all devotees. The main meal is served from 11:00 AM to 2:00 PM daily. The temple kitchen can serve up to 100,000 people daily during peak seasons.",
-    images: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-agvMxTV3rSTZCB9Npd1ueYqg-qbe0bxhQ&s",
-      "https://static.toiimg.com/photo/61820954.cms",
-      "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-    ],
-  },
-  2: {
-    name: "Golden Temple",
-    location: "Amritsar, Punjab",
-    deity: "Guru Granth Sahib",
-    timingsText: "Open 24 Hours",
-    history: "The Golden Temple was built by Guru Arjan Dev, the fifth Sikh Guru, in 1604. The temple was designed to be built in the center of a holy pool, which was completed by Guru Ram Das in 1577. The temple has been destroyed and rebuilt several times throughout history.",
-    significance: "The Golden Temple is the holiest Gurdwara of Sikhism and is considered the spiritual and cultural center of the Sikh religion. It is open to people of all faiths and backgrounds, symbolizing the Sikh principle of universal brotherhood.",
-    architecture: "The temple is built in the center of a square tank, surrounded by a walkway. The temple itself is a two-story marble structure inlaid with mother-of-pearl and decorated with gold foil. The upper floor is covered with pure gold leaf, giving it its distinctive appearance.",
-    timings: [
-      { title: "24 Hours Open", time: "Open All Day" },
-      { title: "Morning Aarti", time: "04:00 AM - 05:00 AM" },
-      { title: "Evening Aarti", time: "07:00 PM - 08:00 PM" },
-      { title: "Langar Service", time: "24 Hours" },
-    ],
-    offerings: ["Karah Parshad", "Langar", "Flowers", "Donations"],
-    freeMeals: "The Golden Temple is famous for its Langar (community kitchen) which serves free meals 24 hours a day to all visitors regardless of religion, caste, or creed. The Langar serves approximately 100,000 people daily.",
-    images: [
-      "https://static.toiimg.com/photo/61820954.cms",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-agvMxTV3rSTZCB9Npd1ueYqg-qbe0bxhQ&s",
-      "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-    ],
-  },
-  3: {
-    name: "Meenakshi Temple",
-    location: "Madurai, Tamil Nadu",
-    deity: "Goddess Meenakshi",
-    timingsText: "5AM-12:30PM, 4PM-9:30PM",
-    history: "The temple was originally built by the Pandya dynasty in the 6th century CE, but was largely rebuilt and expanded during the Nayak dynasty in the 16th and 17th centuries. The temple complex is one of the largest in India.",
-    significance: "The Meenakshi Temple is one of the most important temples in Tamil Nadu and is considered a masterpiece of Dravidian architecture. The temple is famous for its colorful gopurams (temple towers) and intricate sculptures.",
-    architecture: "The temple complex covers 14 acres and has 14 gopurams (towers), the tallest of which is 170 feet high. The temple is built in the Dravidian style of architecture with elaborate carvings and sculptures depicting various mythological stories.",
-    timings: [
-      { title: "Morning Opening", time: "05:00 AM - 12:30 PM" },
-      { title: "Morning Aarti", time: "05:00 AM - 06:00 AM" },
-      { title: "Morning Darshan", time: "06:00 AM - 12:30 PM" },
-      { title: "Afternoon Break", time: "12:30 PM - 04:00 PM" },
-      { title: "Evening Opening", time: "04:00 PM - 09:30 PM" },
-      { title: "Evening Aarti", time: "06:30 PM - 07:30 PM" },
-    ],
-    offerings: ["Flowers", "Coconut", "Banana", "Sweets", "Kumkum"],
-    freeMeals: "The temple provides free meals to devotees during special occasions and festivals. Regular prasad distribution takes place after morning and evening aartis. During major festivals, the temple serves meals to thousands of devotees.",
-    images: [
-      "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-      "https://static.toiimg.com/photo/61820954.cms",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-agvMxTV3rSTZCB9Npd1ueYqg-qbe0bxhQ&s",
-    ],
-  },
-   4: {
-     name: "Kedarnath Temple",
-     location: "Uttarakhand",
-     deity: "Lord Shiva",
-     timingsText: "6AM-3PM, 5PM-7PM",
-     history: "The temple was built by Adi Shankaracharya and is one of the twelve Jyotirlingas, the holiest Hindu shrines of Shiva. The temple is believed to have been built by the Pandavas and revived by Adi Shankaracharya.",
-     significance: "Kedarnath Temple is one of the four major sites in India's Chota Char Dham pilgrimage of Northern Himalayas and is the first of the Panch Kedar pilgrimage sites. The temple is at the height of 3,583 m (11,755 ft), 223 km from Rishikesh, on the shores of Mandakini river.",
-     architecture: "The temple is built of extremely large, evenly cut grey slabs of stones. It is of unknown date. The structure is believed to have been constructed in the 8th century CE, when Adi Shankaracharya visited. The walls are 6 feet thick and built of area stones.",
-     timings: [
-       { title: "Morning Opening", time: "06:00 AM - 03:00 PM" },
-       { title: "Morning Aarti", time: "06:00 AM - 07:00 AM" },
-       { title: "Morning Darshan", time: "07:00 AM - 03:00 PM" },
-       { title: "Afternoon Break", time: "03:00 PM - 05:00 PM" },
-       { title: "Evening Opening", time: "05:00 PM - 07:00 PM" },
-       { title: "Evening Aarti", time: "06:30 PM - 07:00 PM" },
-     ],
-     offerings: ["Bilva Patra", "Flowers", "Milk", "Honey", "Ghee"],
-     freeMeals: "Due to the remote location and harsh weather conditions, the temple provides basic meals to pilgrims during the pilgrimage season (May to November). Meals are served from 8:00 AM to 10:00 AM and 6:00 PM to 8:00 PM.",
-     images: [
-       "https://static.toiimg.com/photo/61820954.cms",
-       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-agvMxTV3rSTZCB9Npd1ueYqg-qbe0bxhQ&s",
-       "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-     ],
-   },
-   5: {
-     name: "Tirupati Balaji",
-     location: "Andhra Pradesh",
-     deity: "Lord Venkateswara",
-     timingsText: "3AM-11:30PM",
-     history: "The temple is believed to have been built by King Thondaiman, Tamil ruler of the ancient Thondaimandalam, after he had a dream of Lord Vishnu. The temple has been patronized by various dynasties including the Pallavas, Cholas, and Vijayanagara Empire.",
-     significance: "Tirupati Balaji Temple is the most visited temple in the world and is considered one of the most sacred pilgrimage sites in Hinduism. The temple is famous for the tradition of hair offering by devotees.",
-     architecture: "The temple is built in Dravidian architecture and is constructed in South Indian style. The temple complex has several mandapams, shrines, and other structures. The main temple is built on the top of the seven hills.",
-     timings: [
-       { title: "Early Morning", time: "03:00 AM - 11:30 PM" },
-       { title: "Suprabhatam", time: "03:00 AM - 03:30 AM" },
-       { title: "Morning Aarti", time: "04:00 AM - 04:30 AM" },
-       { title: "Morning Darshan", time: "04:30 AM - 11:30 PM" },
-       { title: "Evening Aarti", time: "06:30 PM - 07:00 PM" },
-     ],
-     offerings: ["Laddu", "Hair Donation", "Flowers", "Coconut", "Kumkum"],
-     freeMeals: "Tirupati Balaji Temple serves free meals (Annadanam) to all devotees. The main meal is served from 11:00 AM to 3:00 PM and 7:00 PM to 9:00 PM daily. The temple serves over 50,000 devotees daily.",
-     images: [
-       "https://imgs.search.brave.com/45u5nMGwZQRxHkFDlGaIEogjQe3M86of3p3a3-Q_rKA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMudHJhdmVsdHJp/YW5nbGUuY29tL2Js/b2cvd3AtY29udGVu/dC91cGxvYWRzLzIw/MTkvMTIvVmVua2F0/ZXN3YXJhLVRlbXBs/ZS10aXJ1cGF0aS5q/cGc",
-       "https://static.toiimg.com/photo/61820954.cms",
-       "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
-     ],
-   },
- };
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.2rem;
+  color: #8b4513;
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+`;
+
+const ErrorMessage = styled.div`
+  font-size: 1.2rem;
+  color: #c00;
+  margin-bottom: 20px;
+`;
+
+const RetryButton = styled.button`
+  background: #8b4513;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+
+  &:hover {
+    background: #a0522d;
+  }
+`;
+
+const DEFAULT_IMAGE = "https://www.poojn.in/wp-content/uploads/2025/02/Govindaraja-Temple-History-Architecture-and-Significance.jpeg.jpg";
 
 const TempleDetails = () => {
   const { templeId } = useParams();
   const navigate = useNavigate();
   const [currentImage, setCurrentImage] = useState(0);
   const [templeData, setTempleData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const temple = templesData[templeId];
-    if (temple) {
-      setTempleData(temple);
-    } else {
-      navigate('/temples');
+    const fetchTempleDetails = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        
+        console.log("Fetching temple details for ID:", templeId);
+        
+        // Use the existing working API to get all temples
+        const response = await gettemplist();
+        
+        console.log("API Response:", response);
+        console.log("Response data:", response?.data);
+        
+        if (response?.data && Array.isArray(response.data)) {
+          console.log("Temple list length:", response.data.length);
+          
+          // Find the specific temple by ID
+          const temple = response.data.find(t => {
+            const templeIdNum = t.temple_id || t.id;
+            console.log(`Checking temple: ${t.name}, ID: ${templeIdNum}, Looking for: ${templeId}`);
+            return templeIdNum == templeId;
+          });
+          
+          console.log("Found temple:", temple);
+          
+          if (temple) {
+            // Transform API data to match our component structure
+            const transformedData = {
+              id: temple.temple_id || temple.id,
+              name: temple.name || "Unnamed Temple",
+              location: temple.location || 
+                       [temple.address_line_3, temple.state_code].filter(Boolean).join(", ") ||
+                       "Location not specified",
+              deity: temple.deity || "Deity not specified",
+              timingsText: getTimingsText(temple.additional_field_list?.temple_timings),
+              // Use temple_data_list for dynamic sections
+              sections: getTempleSections(temple.additional_field_list?.temple_data_list),
+              timings: getDetailedTimings(temple.additional_field_list?.temple_timings),
+              // Collect all available images
+              images: getAllTempleImages(temple)
+            };
+            
+            console.log("Transformed data:", transformedData);
+            setTempleData(transformedData);
+          } else {
+            setError("Temple not found");
+          }
+        } else {
+          setError("Failed to load temple data");
+        }
+      } catch (err) {
+        console.error("Error fetching temple details:", err);
+        setError("Failed to load temple details. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (templeId) {
+      fetchTempleDetails();
     }
-  }, [templeId, navigate]);
+  }, [templeId]);
+
+  // Helper function to get all temple images
+  const getAllTempleImages = (temple) => {
+    const images = [];
+    
+    console.log("Processing images for temple:", temple.name);
+    console.log("Main image:", temple.image);
+    
+    // Add main image if exists
+    if (temple.image) {
+      images.push(temple.image);
+      console.log("Added main image:", temple.image);
+    }
+    
+    // Add additional images (image_1, image_2, etc.)
+    for (let i = 1; i <= 9; i++) {
+      const imageKey = `image_${i}`;
+      if (temple[imageKey]) {
+        images.push(temple[imageKey]);
+        console.log(`Added ${imageKey}:`, temple[imageKey]);
+      }
+    }
+    
+    console.log("Total images collected:", images.length);
+    console.log("All images:", images);
+    
+    // If no images found, use default
+    if (images.length === 0) {
+      images.push(DEFAULT_IMAGE);
+      console.log("No images found, using default");
+    }
+    
+    return images;
+  };
+
+  // Helper function to create dynamic sections from temple_data_list
+  const getTempleSections = (templeDataList) => {
+    console.log("Processing temple_data_list:", templeDataList);
+    
+    if (!templeDataList || !Array.isArray(templeDataList)) {
+      console.log("No temple_data_list found, using fallback");
+      return [
+        {
+          title: "Information",
+          content: "Temple information not available."
+        }
+      ];
+    }
+    
+    const sections = templeDataList.map(item => ({
+      title: item.title || "Section",
+      content: item.paragraph || "Content not available."
+    }));
+    
+    console.log("Processed sections:", sections);
+    return sections;
+  };
+
+  // Helper function to format timings text from selected_time_slots
+  const getTimingsText = (timingsObj) => {
+    console.log("Processing timings object:", timingsObj);
+    
+    if (!timingsObj || !timingsObj.selected_time_slots || !Array.isArray(timingsObj.selected_time_slots)) {
+      console.log("No selected_time_slots found");
+      return "Timings not available";
+    }
+    
+    const timeSlots = timingsObj.selected_time_slots;
+    console.log("Time slots found:", timeSlots);
+    
+    if (timeSlots.length === 0) {
+      return "Timings not available";
+    }
+    
+    // Format as "6:30 AM - 11:30 AM, 2:30 PM - 8:30 PM"
+    const formattedTimings = timeSlots.map(slot => {
+      const start = slot.start || "";
+      const end = slot.end || "";
+      return `${start} - ${end}`;
+    }).join(", ");
+    
+    console.log("Formatted timings:", formattedTimings);
+    return formattedTimings;
+  };
+
+  // Helper function to create detailed timings from selected_time_slots
+  const getDetailedTimings = (timingsObj) => {
+    console.log("Processing detailed timings:", timingsObj);
+    
+    if (!timingsObj || !timingsObj.selected_time_slots || !Array.isArray(timingsObj.selected_time_slots)) {
+      console.log("No selected_time_slots for detailed timings");
+      return [
+        { title: "General Timings", time: "Information not available" }
+      ];
+    }
+
+    const timeSlots = timingsObj.selected_time_slots;
+    console.log("Time slots for detailed timings:", timeSlots);
+    
+    if (timeSlots.length === 0) {
+      return [
+        { title: "General Timings", time: "Information not available" }
+      ];
+    }
+
+    // Convert selected_time_slots to our timing format
+    const detailedTimings = timeSlots.map(slot => ({
+      title: slot.name || "Time Slot",
+      time: `${slot.start || ""} - ${slot.end || ""}`
+    }));
+    
+    console.log("Detailed timings created:", detailedTimings);
+    return detailedTimings;
+  };
 
   useEffect(() => {
-    if (templeData && templeData.images.length > 1) {
+    if (templeData && templeData.images && templeData.images.length > 1) {
       const interval = setInterval(() => {
         setCurrentImage((prev) => (prev + 1) % templeData.images.length);
       }, 5000);
@@ -414,8 +506,23 @@ const TempleDetails = () => {
     }
   }, [templeData]);
 
-  if (!templeData) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <div>🕉️ Loading temple details...</div>
+      </LoadingContainer>
+    );
+  }
+
+  if (error || !templeData) {
+    return (
+      <ErrorContainer>
+        <ErrorMessage>{error || "Something went wrong"}</ErrorMessage>
+        <RetryButton onClick={() => window.location.reload()}>
+          Try Again
+        </RetryButton>
+      </ErrorContainer>
+    );
   }
 
   const containerVariants = {
@@ -476,11 +583,15 @@ const TempleDetails = () => {
           transition={{ delay: 0.3 }}
         >
           <CarouselImage
-            src={templeData.images[currentImage]}
+            src={templeData.images && templeData.images.length > 0 ? templeData.images[currentImage] : DEFAULT_IMAGE}
             alt={`${templeData.name} Image ${currentImage + 1}`}
+            onError={(e) => {
+              console.log("Image failed to load, using default");
+              e.target.src = DEFAULT_IMAGE;
+            }}
           />
         </MainImage>
-        {templeData.images.length > 1 && (
+        {templeData.images && templeData.images.length > 1 && (
           <ImageIndicators>
             {templeData.images.map((_, index) => (
               <Indicator
@@ -496,32 +607,30 @@ const TempleDetails = () => {
       <ContentContainer>
         <MainContent>
           <motion.div variants={containerVariants} initial="hidden" animate="visible">
-            <Section variants={itemVariants}>
-              <SectionTitle>Sacred History</SectionTitle>
-              <SectionContent>{templeData.history}</SectionContent>
-            </Section>
-
-            <Section variants={itemVariants}>
-              <SectionTitle>Spiritual Significance</SectionTitle>
-              <SectionContent>{templeData.significance}</SectionContent>
-            </Section>
-
-            <Section variants={itemVariants}>
-              <SectionTitle>Divine Architecture</SectionTitle>
-              <SectionContent>{templeData.architecture}</SectionContent>
-            </Section>
-
-            <Section variants={itemVariants}>
-              <SectionTitle>Free Meals</SectionTitle>
-              <SectionContent>{templeData.freeMeals}</SectionContent>
-            </Section>
-              <BookSevaButton
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => navigate('/book-seva')}
-              >
-                🙏 Book Seva
-              </BookSevaButton>
+            {templeData.sections && templeData.sections.length > 0 ? (
+              templeData.sections.map((section, index) => (
+                <Section key={index} variants={itemVariants}>
+                  <SectionTitle>{section.title}</SectionTitle>
+                  <SectionContent>{section.content}</SectionContent>
+                </Section>
+              ))
+            ) : (
+              <Section variants={itemVariants}>
+                <SectionTitle>About This Temple</SectionTitle>
+                <SectionContent>
+                  Welcome to {templeData.name}. This sacred place offers spiritual solace and divine blessings to all devotees. 
+                  The temple is located in {templeData.location} and is dedicated to {templeData.deity}.
+                </SectionContent>
+              </Section>
+            )}
+            
+            <BookSevaButton
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate('/book-seva', { state: { templeId: templeData.id } })}
+            >
+              🙏 Book Seva
+            </BookSevaButton>
           </motion.div>
         </MainContent>
 
@@ -554,11 +663,9 @@ const TempleDetails = () => {
 
             <InfoCard variants={itemVariants}>
               <InfoCardTitle>🙏 Sacred Offerings</InfoCardTitle>
-              <OfferingsContainer>
-                {templeData.offerings.map((offering, index) => (
-                  <OfferingTag key={index}>{offering}</OfferingTag>
-                ))}
-              </OfferingsContainer>
+              <div style={{ textAlign: 'center', color: '#888', padding: '20px' }}>
+                Offerings information not available
+              </div>
             </InfoCard>
           </motion.div>
         </Sidebar>

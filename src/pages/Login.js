@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { loginUser } from "../services/authServices";
-// import { loginUser } from "../services/authServices";
+import { loginUser, getUserProfile } from "../services/authServices";
 
 const LoginContainer = styled.div`
   min-height: 100vh;
@@ -127,11 +126,32 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
+
     try {
       const response = await loginUser(credentials);
+
       if (response.key) {
+        // Store token and username
         localStorage.setItem("userToken", response.key);
-        navigate("/admin");
+        localStorage.setItem("username", credentials.username);
+
+        // Get user profile to fetch first_name
+        try {
+          const userProfile = await getUserProfile();
+          if (userProfile.first_name) {
+            localStorage.setItem("firstName", userProfile.first_name);
+            // You can use first_name to match with temple_id here
+            // For now, we'll store a sample temple_id
+            localStorage.setItem(
+              "templeId",
+              userProfile.first_name || "T_0000010"
+            );
+          }
+        } catch (profileError) {
+          console.error("Error fetching user profile:", profileError);
+        }
+
+        navigate("/dashboard");
       } else {
         setError("Invalid response from server");
       }

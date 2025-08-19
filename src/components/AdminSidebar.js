@@ -2,6 +2,7 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { getStoredFirstName } from "../services/authServices";
 
 const SidebarContainer = styled.div`
   position: fixed;
@@ -41,6 +42,13 @@ const Logo = styled.div`
     font-size: 0.9rem;
     color: #94a3b8;
     margin-top: 0.25rem;
+  }
+
+  .admin-name {
+    font-size: 0.8rem;
+    color: #f59e0b;
+    margin-top: 0.5rem;
+    font-weight: 500;
   }
 `;
 
@@ -88,15 +96,42 @@ const MenuItem = styled(Link)`
 
 const AdminSidebar = () => {
   const location = useLocation();
+  const firstName = getStoredFirstName();
 
   const menuItems = [
     {
       path: "/admin/temples",
       icon: "🏛️",
-      label: "All Temple List",
+      label: "Temple Management",
       section: "Temple Management",
     },
+    {
+      path: "/admin/services",
+      icon: "⚙️",
+      label: "Temple Services",
+      section: "Service Management",
+    },
+    {
+      path: "/admin/advance-policies",
+      icon: "💰",
+      label: "Advance Policies",
+      section: "Policy Management",
+    },
+    {
+      path: "/admin/refund-policies",
+      icon: "🔄",
+      label: "Refund Policies",
+      section: "Policy Management",
+    },
+    {
+      path: "/admin/pricing-rules",
+      icon: "💲",
+      label: "Pricing Rules",
+      section: "Policy Management",
+    },
   ];
+
+  const sections = [...new Set(menuItems.map((item) => item.section))];
 
   return (
     <SidebarContainer>
@@ -120,21 +155,26 @@ const AdminSidebar = () => {
         </motion.div>
         <div className="title">Temple Admin</div>
         <div className="subtitle">Management Portal</div>
+        {firstName && <div className="admin-name">Welcome, {firstName}</div>}
       </Logo>
 
-      <MenuSection>
-        <MenuTitle>Temple Management</MenuTitle>
-        {menuItems.map((item) => (
-          <MenuItem
-            key={item.path}
-            to={item.path}
-            active={location.pathname === item.path}
-          >
-            <span className="icon">{item.icon}</span>
-            <span className="label">{item.label}</span>
-          </MenuItem>
-        ))}
-      </MenuSection>
+      {sections.map((section) => (
+        <MenuSection key={section}>
+          <MenuTitle>{section}</MenuTitle>
+          {menuItems
+            .filter((item) => item.section === section)
+            .map((item) => (
+              <MenuItem
+                key={item.path}
+                to={item.path}
+                active={location.pathname === item.path}
+              >
+                <span className="icon">{item.icon}</span>
+                <span className="label">{item.label}</span>
+              </MenuItem>
+            ))}
+        </MenuSection>
+      ))}
     </SidebarContainer>
   );
 };

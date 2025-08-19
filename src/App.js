@@ -12,21 +12,29 @@ import Temples from "./pages/Temples";
 import BookPuja from "./pages/BookPuja";
 import BookSeva from "./pages/BookSeva";
 import LiveDarshan from "./pages/LiveDarshan";
-// import Shop from "./pages/Shop";
-// import Bhajans from "./pages/Bhajans";
-// import Blogs from "./pages/Blogs";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import TempleDetails from "./pages/TempleDetails";
+import Login from "./pages/Login";
+import AdminLayout from "./components/AdminLayout/AdminLayout";
+import AllTempleList from "./pages/Admin/AllTempleList";
+import TempleServices from "./pages/Admin/TempleServices";
+import AdvancePolicies from "./pages/Admin/AdvancePolicies";
+import RefundPolicies from "./pages/Admin/RefundPolicies";
+import PricingRules from "./pages/Admin/PricingRules";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
-import AdminRouter from "./components/Admin/AdminRouter";
-import Login from "./pages/Login"; // Import Login component
 
 function AppContent() {
   const location = useLocation();
-  const isAdminRoute =
-    location.pathname.startsWith("/admin") ||
-    location.pathname.startsWith("/templeadmin");
+  const isAdminRoute = [
+    "/dashboard",
+    "/temple-list",
+    "/services",
+    "/advance-policies",
+    "/refund-policies",
+    "/pricing-rules",
+  ].some((route) => location.pathname.startsWith(route));
+
   return (
     <>
       {!isAdminRoute && <Navbar />}
@@ -37,13 +45,57 @@ function AppContent() {
         <Route path="/book-puja" element={<BookPuja />} />
         <Route path="/book-seva" element={<BookSeva />} />
         <Route path="/live-darshan" element={<LiveDarshan />} />
-        {/* <Route path="/shop" element={<Shop />} /> */}
-        {/* <Route path="/bhajans" element={<Bhajans />} /> */}
-        {/* <Route path="/blogs" element={<Blogs />} /> */}
         <Route path="/login" element={<Login />} />
-        {/* Admin routes */}
-        <Route path="/admin/*" element={<AdminDashboard />} />
-        <Route path="/templeadmin/*" element={<AdminRouter />} />
+
+        {/* Admin routes with AdminLayout wrapper */}
+        <Route
+          path="/dashboard"
+          element={
+            <AdminLayout>
+              <AdminDashboard />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/temple-list"
+          element={
+            <AdminLayout>
+              <AllTempleList />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/services"
+          element={
+            <AdminLayout>
+              <TempleServices />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/advance-policies"
+          element={
+            <AdminLayout>
+              <AdvancePolicies />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/refund-policies"
+          element={
+            <AdminLayout>
+              <RefundPolicies />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/pricing-rules"
+          element={
+            <AdminLayout>
+              <PricingRules />
+            </AdminLayout>
+          }
+        />
       </Routes>
       {!isAdminRoute && <Footer />}
     </>

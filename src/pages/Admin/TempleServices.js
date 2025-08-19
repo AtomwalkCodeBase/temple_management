@@ -294,7 +294,10 @@ const TempleServices = () => {
   const fetchAdvancePolicies = async () => {
     try {
       const response = await getAdvancePolicyList();
-      setAdvancePolicies(response);
+      const filteredServices = response.filter(
+        (service) => !templeId || service.temple_id === templeId
+      );
+      setAdvancePolicies(filteredServices);
     } catch (error) {
       console.error("Error fetching advance policies:", error);
     }
@@ -303,7 +306,10 @@ const TempleServices = () => {
   const fetchRefundPolicies = async () => {
     try {
       const response = await getRefundPolicyList();
-      setRefundPolicies(response);
+      const filteredServices = response.filter(
+        (service) => !templeId || service.temple_id === templeId
+      );
+      setRefundPolicies(filteredServices);
     } catch (error) {
       console.error("Error fetching refund policies:", error);
     }
@@ -312,7 +318,10 @@ const TempleServices = () => {
   const fetchPricingRules = async () => {
     try {
       const response = await getPricingRuleList();
-      setPricingRules(response);
+      const filteredServices = response.filter(
+        (service) => !templeId || service.temple_id === templeId
+      );
+      setPricingRules(filteredServices);
     } catch (error) {
       console.error("Error fetching pricing rules:", error);
     }

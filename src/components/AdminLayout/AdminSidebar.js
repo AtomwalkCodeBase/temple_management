@@ -90,7 +90,7 @@ const Logo = styled.div`
 const CollapseButton = styled.button`
   position: absolute;
   top: 50%;
-  right: -12px;
+  right: 6px;
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
@@ -299,7 +299,7 @@ const AdminSidebar = ({
       >
         <SidebarHeader collapsed={collapsed}>
           <Logo collapsed={collapsed}>
-            <motion.div
+            {/* <motion.div
               className="om-symbol"
               animate={{
                 filter: [
@@ -314,8 +314,8 @@ const AdminSidebar = ({
                 repeatType: "reverse",
               }}
             >
-              🕉️
-            </motion.div>
+              
+            </motion.div> */}
             <div className="brand-text">
               <div className="title">Temple Admin</div>
               <div className="subtitle">Management Portal</div>

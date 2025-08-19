@@ -112,7 +112,8 @@ const TableBody = styled.tbody`
 `;
 
 const ActionCell = styled.td`
-  position: relative;
+  position: absolute;
+  z-index: 10;
 `;
 
 const ActionButton = styled.button`

@@ -23,6 +23,7 @@ import AdvancePolicies from "./pages/Admin/AdvancePolicies";
 import RefundPolicies from "./pages/Admin/RefundPolicies";
 import PricingRules from "./pages/Admin/PricingRules";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminRouter from "./components/Admin/AdminRouter";
 
 function AppContent() {
   const location = useLocation();
@@ -33,6 +34,7 @@ function AppContent() {
     "/advance-policies",
     "/refund-policies",
     "/pricing-rules",
+    "/templeadmin",
   ].some((route) => location.pathname.startsWith(route));
 
   return (
@@ -45,6 +47,7 @@ function AppContent() {
         <Route path="/book-puja" element={<BookPuja />} />
         <Route path="/book-seva" element={<BookSeva />} />
         <Route path="/live-darshan" element={<LiveDarshan />} />
+        <Route path="/templeadmin/*" element={<AdminRouter />} />
         <Route path="/login" element={<Login />} />
 
         {/* Admin routes with AdminLayout wrapper */}

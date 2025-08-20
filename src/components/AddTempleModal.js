@@ -3,7 +3,10 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { addupdatetempale } from "../services/productServices";
+import {
+  addupdatetempale,
+  uploadTempleImages,
+} from "../services/productServices";
 
 const ModalOverlay = styled(motion.div)`
   position: fixed;
@@ -23,7 +26,7 @@ const ModalContent = styled(motion.div)`
   background: white;
   border-radius: 1rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
@@ -109,6 +112,68 @@ const TextArea = styled.textarea`
   }
 `;
 
+const FileInput = styled.input`
+  padding: 0.75rem 1rem;
+  border: 2px dashed #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background: #f9fafb;
+
+  &:focus {
+    outline: none;
+    border-color: #ea580c;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+  }
+`;
+
+const TimingSection = styled.div`
+  background: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+`;
+
+const TimingRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const AddTimingButton = styled.button`
+  background: #ea580c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #dc2626;
+  }
+`;
+
+const RemoveTimingButton = styled.button`
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #dc2626;
+  }
+`;
+
 const ModalActions = styled.div`
   display: flex;
   gap: 1rem;
@@ -160,13 +225,36 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
     name: "",
     email_id: "",
     mobile_number: "",
+    alternate_contact_number: "",
+    contact_name: "",
     address_line_1: "",
     address_line_2: "",
     address_line_3: "",
     state_code: "",
     pin_code: "",
-    description: "",
+    county_code: "IN",
+    remarks: "",
+    web_page: "",
+    location: "",
+    geo_location_data: "",
+    temple_group: "",
+    temple_sub_group: "",
+    temple_group_id: null,
+    temple_sub_group_id: null,
   });
+
+  const [templeTimings, setTempleTimings] = useState({
+    morning_opening: "",
+    morning_closing: "",
+    evening_opening: "",
+    evening_closing: "",
+  });
+
+  const [templeDataList, setTempleDataList] = useState([
+    { title: "", paragraph: "" },
+  ]);
+
+  const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -176,13 +264,33 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
         name: temple.name || "",
         email_id: temple.email_id || "",
         mobile_number: temple.mobile_number || "",
+        alternate_contact_number: temple.alternate_contact_number || "",
+        contact_name: temple.contact_name || "",
         address_line_1: temple.address_line_1 || "",
         address_line_2: temple.address_line_2 || "",
         address_line_3: temple.address_line_3 || "",
         state_code: temple.state_code || "",
         pin_code: temple.pin_code || "",
-        description: temple.description || "",
+        county_code: temple.county_code || "IN",
+        remarks: temple.remarks || "",
+        web_page: temple.web_page || "",
+        location: temple.location || "",
+        geo_location_data: temple.geo_location_data || "",
+        temple_group: temple.temple_group || "",
+        temple_sub_group: temple.temple_sub_group || "",
+        temple_group_id: temple.temple_group_id || null,
+        temple_sub_group_id: temple.temple_sub_group_id || null,
       });
+
+      if (temple.temple_timings) {
+        setTempleTimings(temple.temple_timings);
+      }
+
+      if (temple.temple_data_list) {
+        setTempleDataList(temple.temple_data_list);
+      } else if (temple.additional_field_list?.temple_data_list) {
+        setTempleDataList(temple.additional_field_list.temple_data_list);
+      }
     }
   }, [temple]);
 
@@ -195,23 +303,65 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
     setError("");
   };
 
+  const handleTimingChange = (e) => {
+    const { name, value } = e.target;
+    setTempleTimings((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleDataListChange = (index, field, value) => {
+    setTempleDataList((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+
+  const addDataListItem = () => {
+    setTempleDataList((prev) => [...prev, { title: "", paragraph: "" }]);
+  };
+
+  const removeDataListItem = (index) => {
+    setTempleDataList((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedImages(files);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const formDataToSend = new FormData();
+      // Prepare temple data with UPDATE call_mode for existing temples
+      const templeData = {
+        call_mode: temple ? "UPDATE" : "CREATE",
+        ...(temple && { temple_id: temple.temple_id }),
+        ...formData,
+        temple_timings: templeTimings,
+        temple_data_list: templeDataList.filter(
+          (item) => item.title && item.paragraph
+        ),
+      };
 
-      Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+      // Submit temple data
+      const response = await addupdatetempale({
+        temple_data: JSON.stringify(templeData),
       });
 
-      if (temple) {
-        formDataToSend.append("temple_id", temple.id);
+      // Upload images if selected
+      if (selectedImages.length > 0 && temple?.temple_id) {
+        await uploadTempleImages({
+          temple_id: temple.temple_id,
+          images: selectedImages,
+        });
       }
 
-      await addupdatetempale(formDataToSend);
       onSuccess();
     } catch (err) {
       setError(err.message || "Failed to save temple");
@@ -284,6 +434,34 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
               </FormGroup>
             </FormRow>
 
+            <FormRow>
+              <FormGroup>
+                <Label htmlFor="alternate_contact_number">
+                  Alternate Contact
+                </Label>
+                <Input
+                  type="tel"
+                  id="alternate_contact_number"
+                  name="alternate_contact_number"
+                  value={formData.alternate_contact_number}
+                  onChange={handleChange}
+                  placeholder="+91 9876543210"
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label htmlFor="contact_name">Contact Person Name</Label>
+                <Input
+                  type="text"
+                  id="contact_name"
+                  name="contact_name"
+                  value={formData.contact_name}
+                  onChange={handleChange}
+                  placeholder="Contact person name"
+                />
+              </FormGroup>
+            </FormRow>
+
             <FormGroup>
               <Label htmlFor="address_line_1">Address Line 1 *</Label>
               <Input
@@ -337,27 +515,209 @@ const AddTempleModal = ({ temple, onClose, onSuccess }) => {
               </FormGroup>
             </FormRow>
 
+            <FormRow>
+              <FormGroup>
+                <Label htmlFor="pin_code">PIN Code *</Label>
+                <Input
+                  type="text"
+                  id="pin_code"
+                  name="pin_code"
+                  value={formData.pin_code}
+                  onChange={handleChange}
+                  required
+                  placeholder="123456"
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label htmlFor="location">Location</Label>
+                <Input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  placeholder="City, State"
+                />
+              </FormGroup>
+            </FormRow>
+
+            <FormRow>
+              <FormGroup>
+                <Label htmlFor="temple_group">Temple Group</Label>
+                <Input
+                  type="text"
+                  id="temple_group"
+                  name="temple_group"
+                  value={formData.temple_group}
+                  onChange={handleChange}
+                  placeholder="Temple group name"
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label htmlFor="temple_sub_group">Temple Sub Group</Label>
+                <Input
+                  type="text"
+                  id="temple_sub_group"
+                  name="temple_sub_group"
+                  value={formData.temple_sub_group}
+                  onChange={handleChange}
+                  placeholder="Temple sub group"
+                />
+              </FormGroup>
+            </FormRow>
+
             <FormGroup>
-              <Label htmlFor="pin_code">PIN Code *</Label>
+              <Label htmlFor="web_page">Website URL</Label>
               <Input
-                type="text"
-                id="pin_code"
-                name="pin_code"
-                value={formData.pin_code}
+                type="url"
+                id="web_page"
+                name="web_page"
+                value={formData.web_page}
                 onChange={handleChange}
-                required
-                placeholder="123456"
+                placeholder="https://www.temple.com"
               />
             </FormGroup>
 
             <FormGroup>
-              <Label htmlFor="description">Description</Label>
-              <TextArea
-                id="description"
-                name="description"
-                value={formData.description}
+              <Label htmlFor="geo_location_data">Geo Location (Lat,Long)</Label>
+              <Input
+                type="text"
+                id="geo_location_data"
+                name="geo_location_data"
+                value={formData.geo_location_data}
                 onChange={handleChange}
-                placeholder="Brief description about the temple"
+                placeholder="13.6288,79.4192"
+              />
+            </FormGroup>
+
+            <TimingSection>
+              <Label>Temple Timings</Label>
+              <FormRow>
+                <FormGroup>
+                  <Label htmlFor="morning_opening">Morning Opening</Label>
+                  <Input
+                    type="time"
+                    id="morning_opening"
+                    name="morning_opening"
+                    value={templeTimings.morning_opening}
+                    onChange={handleTimingChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="morning_closing">Morning Closing</Label>
+                  <Input
+                    type="time"
+                    id="morning_closing"
+                    name="morning_closing"
+                    value={templeTimings.morning_closing}
+                    onChange={handleTimingChange}
+                  />
+                </FormGroup>
+              </FormRow>
+              <FormRow>
+                <FormGroup>
+                  <Label htmlFor="evening_opening">Evening Opening</Label>
+                  <Input
+                    type="time"
+                    id="evening_opening"
+                    name="evening_opening"
+                    value={templeTimings.evening_opening}
+                    onChange={handleTimingChange}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="evening_closing">Evening Closing</Label>
+                  <Input
+                    type="time"
+                    id="evening_closing"
+                    name="evening_closing"
+                    value={templeTimings.evening_closing}
+                    onChange={handleTimingChange}
+                  />
+                </FormGroup>
+              </FormRow>
+            </TimingSection>
+
+            <FormGroup>
+              <Label>Temple Information</Label>
+              {templeDataList.map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    marginBottom: "1rem",
+                    padding: "1rem",
+                    background: "#F9FAFB",
+                    borderRadius: "0.5rem",
+                  }}
+                >
+                  <FormGroup>
+                    <Label>Title</Label>
+                    <Input
+                      type="text"
+                      value={item.title}
+                      onChange={(e) =>
+                        handleDataListChange(index, "title", e.target.value)
+                      }
+                      placeholder="Section title"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label>Content</Label>
+                    <TextArea
+                      value={item.paragraph}
+                      onChange={(e) =>
+                        handleDataListChange(index, "paragraph", e.target.value)
+                      }
+                      placeholder="Section content"
+                    />
+                  </FormGroup>
+                  {templeDataList.length > 1 && (
+                    <RemoveTimingButton
+                      type="button"
+                      onClick={() => removeDataListItem(index)}
+                    >
+                      Remove Section
+                    </RemoveTimingButton>
+                  )}
+                </div>
+              ))}
+              <AddTimingButton type="button" onClick={addDataListItem}>
+                Add Information Section
+              </AddTimingButton>
+            </FormGroup>
+
+            <FormGroup>
+              <Label htmlFor="temple_images">Temple Images</Label>
+              <FileInput
+                type="file"
+                id="temple_images"
+                multiple
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              {selectedImages.length > 0 && (
+                <div
+                  style={{
+                    fontSize: "0.9rem",
+                    color: "#6B7280",
+                    marginTop: "0.5rem",
+                  }}
+                >
+                  {selectedImages.length} image(s) selected
+                </div>
+              )}
+            </FormGroup>
+
+            <FormGroup>
+              <Label htmlFor="remarks">Remarks</Label>
+              <TextArea
+                id="remarks"
+                name="remarks"
+                value={formData.remarks}
+                onChange={handleChange}
+                placeholder="Any additional remarks about the temple"
               />
             </FormGroup>
           </Form>

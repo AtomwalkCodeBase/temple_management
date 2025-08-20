@@ -252,7 +252,7 @@ const AdminSidebar = ({
         {
           path: "/temple-list",
           icon: MdTempleHindu,
-          label: "Temple List",
+          label: "My Temple",
           badge: null,
         },
         {

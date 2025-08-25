@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./styles/GlobalStyles";
 import { theme } from "./styles/theme";
@@ -24,6 +19,7 @@ import RefundPolicies from "./pages/Admin/RefundPolicies";
 import PricingRules from "./pages/Admin/PricingRules";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminRouter from "./components/Admin/AdminRouter";
+import HallsManagement from "./pages/Admin/HallsManagement";
 
 function AppContent() {
   const location = useLocation();
@@ -35,6 +31,8 @@ function AppContent() {
     "/refund-policies",
     "/pricing-rules",
     "/templeadmin",
+    "/halls-management",
+
   ].some((route) => location.pathname.startsWith(route));
 
   return (
@@ -99,6 +97,15 @@ function AppContent() {
             </AdminLayout>
           }
         />
+        <Route
+          path="/halls-management"
+          element={
+            <AdminLayout>
+              <HallsManagement />
+            </AdminLayout>
+          }
+        />
+
       </Routes>
       {!isAdminRoute && <Footer />}
     </>

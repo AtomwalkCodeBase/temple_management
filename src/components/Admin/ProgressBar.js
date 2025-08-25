@@ -24,7 +24,7 @@ const ProgressFill = styled.div`
   top: 20px;
   left: 0;
   height: 2px;
-  background: rgb(184, 22, 22);
+  background: rgb(59, 130, 246);
   z-index: 2;
   transition: width 0.3s ease;
   width: ${props => props.$progress}%;
@@ -49,15 +49,15 @@ const StepCircle = styled.div`
   font-weight: 600;
   font-size: 0.875rem;
   transition: all 0.3s ease;
-  background: ${props => props.$active ? "rgb(184, 22, 22)" : "#fff"};
+  background: ${props => props.$active ? "rgb(59, 130, 246)" : "#fff"};
   color: ${props => props.$active ? "#fff" : "#6b7280"};
-  border: 2px solid ${props => props.$active ? "rgb(184, 22, 22)" : "#d1d5db"};
+  border: 2px solid ${props => props.$active ? "rgb(59, 130, 246)" : "#d1d5db"};
 `;
 
 const StepLabel = styled.span`
   font-size: 0.875rem;
   font-weight: ${props => props.$active ? "600" : "500"};
-  color: ${props => props.$active ? "rgb(184, 22, 22)" : "#6b7280"};
+  color: ${props => props.$active ? "rgb(59, 130, 246)" : "#6b7280"};
   text-align: center;
   white-space: nowrap;
 `;

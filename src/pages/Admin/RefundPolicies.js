@@ -4,10 +4,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiRefreshCw, FiPlus } from "react-icons/fi";
-import {
-  getRefundPolicyList,
-  processRefundPolicyData,
-} from "../../services/templeServices";
+import { getRefundPolicyList, processRefundPolicyData, } from "../../services/templeServices";
 import { getStoredTempleId } from "../../services/authServices";
 import PageContainer from "../../components/Common/PageContainer";
 import DataTable from "../../components/Common/DataTable";

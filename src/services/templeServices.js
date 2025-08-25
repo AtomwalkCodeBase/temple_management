@@ -165,3 +165,39 @@ export const processTempleServiceData = async (serviceData) => {
     throw error.response?.data || error.message;
   }
 };
+export const processTempleServiceImages = async (imageData) => {
+  try {
+    // Create FormData for file uploads
+    const formData = new FormData();
+    
+    // Add service_id
+    formData.append('service_id', imageData.service_id);
+    
+    // Add main image (compulsory)
+    if (imageData.image_file) {
+      formData.append('image_file', imageData.image_file);
+    }
+    
+    // Add optional images
+    for (let i = 1; i <= 5; i++) {
+      const imageKey = `image_file_${i}`;
+      if (imageData[imageKey]) {
+        formData.append(imageKey, imageData[imageKey]);
+      }
+    }
+    
+    const response = await axios.post(
+      `${BASE_URL}/process_service_images/`,
+      formData,
+      {
+        headers: {
+          ...getAuthHeaders(),
+          'Content-Type': 'multipart/form-data', // Important for file uploads
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};

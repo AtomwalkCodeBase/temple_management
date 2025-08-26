@@ -10,18 +10,24 @@ import {
   FiTrash2,
   FiEye,
 } from "react-icons/fi";
+import { GiLotus, TempleGate } from "react-icons/gi";
 
 const TableContainer = styled.div`
-  background: white;
+  background: linear-gradient(135deg, #f8f4eb 0%, #f1e9d9 100%);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #d9a566;
 `;
 
 const TableHeader = styled.div`
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #d9a566;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  background: rgba(44, 26, 10, 0.05);
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -39,7 +45,7 @@ const SearchContainer = styled.div`
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #6b7280;
+    color: #8b5a2b;
     font-size: 1rem;
   }
 `;
@@ -47,19 +53,22 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid #d9a566;
   border-radius: 0.5rem;
   font-size: 0.9rem;
   transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.8);
+  color: #4a2c14;
 
   &:focus {
     outline: none;
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    border-color: #b38742;
+    box-shadow: 0 0 0 3px rgba(217, 165, 102, 0.2);
   }
 
   &::placeholder {
-    color: #9ca3af;
+    color: #8b5a2b;
+    opacity: 0.6;
   }
 `;
 
@@ -69,33 +78,43 @@ const Table = styled.table`
 `;
 
 const TableHead = styled.thead`
-  background: #f8fafc;
+  background: linear-gradient(135deg, #4a2c14 0%, #3a2313 100%);
 
   th {
     padding: 1rem 2rem;
     text-align: left;
     font-weight: 600;
-    color: #374151;
+    color: #f8e6cc;
     font-size: 0.9rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #8b5a2b;
+    position: relative;
+    font-family: "Georgia", serif;
 
-    &:first-child {
-      border-top-left-radius: 0.5rem;
-    }
-
-    &:last-child {
-      border-top-right-radius: 0.5rem;
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, #8b5a2b, transparent);
     }
   }
 `;
 
 const TableBody = styled.tbody`
   tr {
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid rgba(139, 90, 43, 0.2);
     transition: background-color 0.2s;
+    background: rgba(255, 255, 255, 0.7);
+
+    &:nth-child(even) {
+      background: rgba(248, 230, 204, 0.3);
+    }
 
     &:hover {
-      background: #f9fafb;
+      background: rgba(217, 165, 102, 0.1);
     }
 
     &:last-child {
@@ -105,29 +124,33 @@ const TableBody = styled.tbody`
 
   td {
     padding: 1rem 2rem;
-    color: #6b7280;
+    color: #4a2c14;
     font-size: 0.9rem;
     vertical-align: middle;
   }
 `;
 
 const ActionCell = styled.td`
-  position: absolute;
-  z-index: 10;
+  position: relative;
+  text-align: right;
 `;
 
 const ActionButton = styled.button`
-  background: none;
-  border: none;
-  color: #6b7280;
+  background: rgba(139, 90, 43, 0.1);
+  border: 1px solid #d9a566;
+  color: #8b5a2b;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 0.25rem;
+  border-radius: 0.375rem;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
-    background: #f3f4f6;
-    color: #374151;
+    background: rgba(139, 90, 43, 0.3);
+    color: #4a2c14;
+    border-color: #b38742;
   }
 `;
 
@@ -135,11 +158,11 @@ const ActionMenu = styled(motion.div)`
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #f8f4eb 0%, #f1e9d9 100%);
+  border: 1px solid #d9a566;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  min-width: 150px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
   z-index: 100;
   overflow: hidden;
 `;
@@ -151,48 +174,58 @@ const ActionMenuItem = styled.button`
   border: none;
   text-align: left;
   cursor: pointer;
-  color: #374151;
+  color: #4a2c14;
   font-size: 0.9rem;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.1);
 
   &:hover {
-    background: #f9fafb;
+    background: rgba(217, 165, 102, 0.1);
+    color: #2c1a0a;
   }
 
   &.danger {
-    color: #ef4444;
+    color: #c84b31;
 
     &:hover {
-      background: #fef2f2;
+      background: rgba(200, 75, 49, 0.1);
     }
   }
 
   .icon {
     font-size: 0.9rem;
+    color: #8b5a2b;
+  }
+
+  &:last-child {
+    border-bottom: none;
   }
 `;
 
 const EmptyState = styled.div`
   text-align: center;
   padding: 4rem 2rem;
-  color: #6b7280;
+  color: #8b5a2b;
 
   .icon {
     font-size: 4rem;
     margin-bottom: 1rem;
+    color: #d9a566;
   }
 
   h3 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-    color: #374151;
+    color: #4a2c14;
+    font-family: "Georgia", serif;
   }
 
   p {
     margin: 0;
+    opacity: 0.8;
   }
 `;
 
@@ -201,14 +234,21 @@ const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4rem;
+  flex-direction: column;
+  gap: 1rem;
 
   .spinner {
     width: 40px;
     height: 40px;
-    border: 4px solid #f3f4f6;
-    border-top: 4px solid #f59e0b;
+    border: 4px solid rgba(217, 165, 102, 0.2);
+    border-top: 4px solid #d9a566;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+  }
+
+  .loading-text {
+    color: #8b5a2b;
+    font-size: 0.9rem;
   }
 
   @keyframes spin {
@@ -221,6 +261,49 @@ const LoadingContainer = styled.div`
   }
 `;
 
+const TableFooter = styled.div`
+  padding: 1rem 2rem;
+  border-top: 1px solid #d9a566;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(44, 26, 10, 0.05);
+  color: #8b5a2b;
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+`;
+
+const Pagination = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+const PageButton = styled.button`
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d9a566;
+  background: ${(props) => (props.active ? "#d9a566" : "transparent")};
+  color: ${(props) => (props.active ? "#2c1a0a" : "#8b5a2b")};
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #d9a566;
+    color: #2c1a0a;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
 const DataTable = ({
   data = [],
   columns = [],
@@ -228,10 +311,16 @@ const DataTable = ({
   onEdit,
   onDelete,
   onView,
-  emptyIcon = "📄",
+  emptyIcon = <GiLotus />,
   emptyTitle = "No Data Found",
-  emptyDescription = "There are no items to display.",
+  emptyDescription = "There are no items to display at this time.",
   searchable = true,
+  pagination = false,
+  currentPage = 1,
+  totalPages = 1,
+  onPageChange,
+  totalItems = 0,
+  itemsPerPage = 10,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeActionMenu, setActiveActionMenu] = useState(null);
@@ -260,11 +349,24 @@ const DataTable = ({
     if (action === "view" && onView) onView(item);
   };
 
+  // Close action menu when clicking outside
+  useState(() => {
+    const handleClickOutside = () => {
+      setActiveActionMenu(null);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   if (loading) {
     return (
       <TableContainer>
         <LoadingContainer>
           <div className="spinner"></div>
+          <div className="loading-text">Loading sacred records...</div>
         </LoadingContainer>
       </TableContainer>
     );
@@ -278,7 +380,7 @@ const DataTable = ({
             <FiSearch className="search-icon" />
             <SearchInput
               type="text"
-              placeholder="Search..."
+              placeholder="Search sacred records..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -293,79 +395,112 @@ const DataTable = ({
           <p>{emptyDescription}</p>
         </EmptyState>
       ) : (
-        <Table>
-          <TableHead>
-            <tr>
-              {columns.map((column, index) => (
-                <th key={index}>{column.title}</th>
-              ))}
-              {(onEdit || onDelete || onView) && <th>Actions</th>}
-            </tr>
-          </TableHead>
-          <TableBody>
-            {filteredData.map((item, rowIndex) => (
-              <motion.tr
-                key={rowIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: rowIndex * 0.05 }}
-              >
-                {columns.map((column, colIndex) => (
-                  <td key={colIndex}>
-                    {column.render
-                      ? column.render(item[column.key], item, rowIndex)
-                      : item[column.key]}
-                  </td>
+        <>
+          <Table>
+            <TableHead>
+              <tr>
+                {columns.map((column, index) => (
+                  <th key={index}>{column.title}</th>
                 ))}
-                {(onEdit || onDelete || onView) && (
-                  <ActionCell>
-                    <ActionButton
-                      onClick={(e) => handleActionClick(rowIndex, e)}
-                    >
-                      <FiMoreVertical />
-                    </ActionButton>
-
-                    {activeActionMenu === rowIndex && (
-                      <ActionMenu
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
+                {(onEdit || onDelete || onView) && <th>Actions</th>}
+              </tr>
+            </TableHead>
+            <TableBody>
+              {filteredData.map((item, rowIndex) => (
+                <motion.tr
+                  key={rowIndex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: rowIndex * 0.05 }}
+                >
+                  {columns.map((column, colIndex) => (
+                    <td key={colIndex}>
+                      {column.render
+                        ? column.render(item[column.key], item, rowIndex)
+                        : item[column.key]}
+                    </td>
+                  ))}
+                  {(onEdit || onDelete || onView) && (
+                    <ActionCell>
+                      <ActionButton
+                        onClick={(e) => handleActionClick(rowIndex, e)}
                       >
-                        {onView && (
-                          <ActionMenuItem
-                            onClick={() => handleActionItemClick("view", item)}
-                          >
-                            <FiEye className="icon" />
-                            View Details
-                          </ActionMenuItem>
-                        )}
-                        {onEdit && (
-                          <ActionMenuItem
-                            onClick={() => handleActionItemClick("edit", item)}
-                          >
-                            <FiEdit className="icon" />
-                            Edit
-                          </ActionMenuItem>
-                        )}
-                        {onDelete && (
-                          <ActionMenuItem
-                            className="danger"
-                            onClick={() =>
-                              handleActionItemClick("delete", item)
-                            }
-                          >
-                            <FiTrash2 className="icon" />
-                            Delete
-                          </ActionMenuItem>
-                        )}
-                      </ActionMenu>
-                    )}
-                  </ActionCell>
-                )}
-              </motion.tr>
-            ))}
-          </TableBody>
-        </Table>
+                        <FiMoreVertical />
+                      </ActionButton>
+
+                      {activeActionMenu === rowIndex && (
+                        <ActionMenu
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                        >
+                          {onView && (
+                            <ActionMenuItem
+                              onClick={() =>
+                                handleActionItemClick("view", item)
+                              }
+                            >
+                              <FiEye className="icon" />
+                              View Details
+                            </ActionMenuItem>
+                          )}
+                          {onEdit && (
+                            <ActionMenuItem
+                              onClick={() =>
+                                handleActionItemClick("edit", item)
+                              }
+                            >
+                              <FiEdit className="icon" />
+                              Edit
+                            </ActionMenuItem>
+                          )}
+                          {onDelete && (
+                            <ActionMenuItem
+                              className="danger"
+                              onClick={() =>
+                                handleActionItemClick("delete", item)
+                              }
+                            >
+                              <FiTrash2 className="icon" />
+                              Delete
+                            </ActionMenuItem>
+                          )}
+                        </ActionMenu>
+                      )}
+                    </ActionCell>
+                  )}
+                </motion.tr>
+              ))}
+            </TableBody>
+          </Table>
+
+          {pagination && (
+            <TableFooter>
+              <div>
+                Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+                {Math.min(currentPage * itemsPerPage, totalItems)} of{" "}
+                {totalItems} entries
+              </div>
+              <Pagination>
+                <PageButton
+                  disabled={currentPage === 1}
+                  onClick={() => onPageChange(currentPage - 1)}
+                >
+                  Previous
+                </PageButton>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <PageButton
+                  disabled={currentPage === totalPages}
+                  onClick={() => onPageChange(currentPage + 1)}
+                >
+                  Next
+                </PageButton>
+              </Pagination>
+            </TableFooter>
+          )}
+        </>
       )}
     </TableContainer>
   );

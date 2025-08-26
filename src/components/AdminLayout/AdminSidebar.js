@@ -10,8 +10,15 @@ import {
   FiTrendingUp,
   FiChevronLeft,
   FiChevronRight,
+  FiBell,
 } from "react-icons/fi";
 import { MdTempleHindu, MdMiscellaneousServices } from "react-icons/md";
+import {
+  GiLotus,
+  GiTempleGate,
+  IncenseBurner,
+  TempleGate,
+} from "react-icons/gi";
 import { getStoredFirstName } from "../../services/authServices";
 
 const SidebarContainer = styled(motion.div)`
@@ -19,13 +26,14 @@ const SidebarContainer = styled(motion.div)`
   left: 0;
   top: 0;
   height: 100vh;
-  background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
-  color: white;
+  background: linear-gradient(180deg, #2c1a0a 0%, #4a2c14 100%);
+  color: #f8e6cc;
   z-index: 1000;
   overflow: hidden;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
   transition: width 0.3s ease;
   width: ${(props) => (props.collapsed ? "80px" : "280px")};
+  border-right: 1px solid #8b5a2b;
 
   @media (max-width: 768px) {
     transform: translateX(${(props) => (props.mobileOpen ? "0" : "-100%")});
@@ -34,55 +42,78 @@ const SidebarContainer = styled(motion.div)`
   }
 `;
 
+const TemplePatternOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+      circle at 20% 30%,
+      rgba(139, 90, 43, 0.1) 2px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(139, 90, 43, 0.1) 2px,
+      transparent 2px
+    );
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: -1;
+`;
+
 const SidebarHeader = styled.div`
-  padding: 2rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 1.2rem;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.4);
   position: relative;
+  background: rgba(44, 26, 10, 0.7);
 
   @media (max-width: 768px) {
-    padding: 1.5rem;
+    padding: 1.2rem;
   }
 `;
 
 const Logo = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
 
   .om-symbol {
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
+    font-size: 2.2rem;
+    color: #d9a566;
+    filter: drop-shadow(0 0 5px rgba(217, 165, 102, 0.7));
+    position: relative;
   }
 
   .brand-text {
     display: ${(props) => (props.collapsed ? "none" : "block")};
 
     .title {
-      font-size: 1.4rem;
-      font-weight: 800;
+      font-size: 1.3rem;
+      font-weight: 700;
       margin: 0;
-      background: linear-gradient(135deg, #ffffff, #e2e8f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #f8e6cc;
+      font-family: "Georgia", serif;
+      letter-spacing: 0.5px;
     }
 
     .subtitle {
-      font-size: 0.8rem;
-      color: #94a3b8;
+      font-size: 0.75rem;
+      color: #d9a566;
       margin: 0;
       font-weight: 500;
+      letter-spacing: 0.5px;
     }
 
     .admin-name {
       font-size: 0.75rem;
-      color: #f59e0b;
+      color: #d9a566;
       margin-top: 0.25rem;
-      font-weight: 600;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
     }
   }
 `;
@@ -92,22 +123,22 @@ const CollapseButton = styled.button`
   top: 50%;
   right: 6px;
   transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  background: #1e293b;
-  border: 2px solid #334155;
+  width: 26px;
+  height: 26px;
+  background: rgba(139, 90, 43, 0.3);
+  border: 1px solid #8b5a2b;
   border-radius: 50%;
-  color: white;
+  color: #d9a566;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
 
   &:hover {
-    background: #334155;
-    border-color: #475569;
+    background: rgba(139, 90, 43, 0.5);
+    border-color: #d9a566;
   }
 
   @media (max-width: 768px) {
@@ -125,54 +156,72 @@ const SidebarContent = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(139, 90, 43, 0.1);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(217, 165, 102, 0.5);
     border-radius: 2px;
   }
 `;
 
 const MenuSection = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
+  position: relative;
 `;
 
 const SectionTitle = styled.div`
   padding: 0 1.5rem 0.75rem;
   font-size: 0.75rem;
-  font-weight: 700;
-  color: #94a3b8;
+  font-weight: 600;
+  color: #d9a566;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   display: ${(props) => (props.collapsed ? "none" : "block")};
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(217, 165, 102, 0.5),
+      transparent
+    );
+  }
 `;
 
 const MenuItem = styled(Link)`
   display: flex;
   align-items: center;
   padding: 0.875rem 1.5rem;
-  color: ${(props) => (props.active ? "#f59e0b" : "#e2e8f0")};
+  color: ${(props) => (props.active ? "#ffd700" : "#f8e6cc")};
   background: ${(props) =>
-    props.active ? "rgba(245, 158, 11, 0.1)" : "transparent"};
+    props.active ? "rgba(139, 90, 43, 0.3)" : "transparent"};
   text-decoration: none;
   transition: all 0.3s ease;
-  border-right: ${(props) =>
-    props.active ? "3px solid #f59e0b" : "3px solid transparent"};
   position: relative;
+  margin: 0 0.5rem;
+  border-radius: 6px;
 
   &:hover {
-    background: rgba(245, 158, 11, 0.1);
-    color: #f59e0b;
+    background: rgba(139, 90, 43, 0.2);
+    color: #ffd700;
     transform: translateX(4px);
   }
 
   .icon {
-    font-size: 1.25rem;
-    min-width: 20px;
+    font-size: 1.3rem;
+    min-width: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: ${(props) => (props.active ? "#ffd700" : "#d9a566")};
   }
 
   .label {
@@ -184,8 +233,8 @@ const MenuItem = styled(Link)`
 
   .badge {
     margin-left: auto;
-    background: #ef4444;
-    color: white;
+    background: #c84b31;
+    color: #f8e6cc;
     font-size: 0.7rem;
     padding: 0.125rem 0.375rem;
     border-radius: 9999px;
@@ -194,6 +243,21 @@ const MenuItem = styled(Link)`
     display: ${(props) => (props.collapsed ? "none" : "flex")};
     align-items: center;
     justify-content: center;
+    font-weight: 600;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60%;
+    width: 3px;
+    background: ${(props) => (props.active ? "#ffd700" : "transparent")};
+    border-radius: 0 3px 3px 0;
+    box-shadow: ${(props) =>
+      props.active ? "0 0 8px rgba(255, 215, 0, 0.5)" : "none"};
   }
 `;
 
@@ -202,8 +266,8 @@ const Tooltip = styled(motion.div)`
   left: 100%;
   top: 50%;
   transform: translateY(-50%);
-  background: #1f2937;
-  color: white;
+  background: #4a2c14;
+  color: #ffd700;
   padding: 0.5rem 0.75rem;
   border-radius: 0.375rem;
   font-size: 0.8rem;
@@ -212,6 +276,7 @@ const Tooltip = styled(motion.div)`
   margin-left: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   z-index: 1001;
+  border: 1px solid #8b5a2b;
 
   &::before {
     content: "";
@@ -220,8 +285,33 @@ const Tooltip = styled(motion.div)`
     top: 50%;
     transform: translateY(-50%);
     border: 4px solid transparent;
-    border-right-color: #1f2937;
+    border-right-color: #4a2c14;
   }
+`;
+
+const TempleGateDivider = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+  color: #8b5a2b;
+  font-size: 1.2rem;
+  opacity: 0.6;
+`;
+
+const BellIconDecor = styled.div`
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 16px;
+  height: 16px;
+  background: #c84b31;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: bold;
 `;
 
 const AdminSidebar = ({
@@ -259,7 +349,7 @@ const AdminSidebar = ({
           path: "/services",
           icon: MdMiscellaneousServices,
           label: "Temple Services",
-          badge: "12",
+          badge: "",
         },
       ],
     },
@@ -297,30 +387,31 @@ const AdminSidebar = ({
         animate={{ width: collapsed ? 80 : 280 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
+        <TemplePatternOverlay />
+
         <SidebarHeader collapsed={collapsed}>
           <Logo collapsed={collapsed}>
-            {/* <motion.div
+            <motion.div
               className="om-symbol"
               animate={{
-                filter: [
-                  "drop-shadow(0 0 10px rgba(245, 158, 11, 0.5))",
-                  "drop-shadow(0 0 20px rgba(245, 158, 11, 0.8))",
-                  "drop-shadow(0 0 10px rgba(245, 158, 11, 0.5))",
-                ],
+                scale: [1, 1.05, 1],
+                rotate: [0, 5, 0, -5, 0],
               }}
               transition={{
-                duration: 3,
+                duration: 8,
                 repeat: Number.POSITIVE_INFINITY,
                 repeatType: "reverse",
               }}
             >
-              
-            </motion.div> */}
+              <GiLotus />
+            </motion.div>
             <div className="brand-text">
               <div className="title">Temple Admin</div>
-              <div className="subtitle">Management Portal</div>
+              <div className="subtitle">Divine Management Portal</div>
               {firstName && (
-                <div className="admin-name">Welcome, {firstName}</div>
+                <div className="admin-name">
+                  <FiBell size={12} /> Welcome, {firstName}
+                </div>
               )}
             </div>
           </Logo>
@@ -352,6 +443,7 @@ const AdminSidebar = ({
                 >
                   <span className="icon">
                     <item.icon />
+                    {item.badge && <BellIconDecor>{item.badge}</BellIconDecor>}
                   </span>
                   <span className="label">{item.label}</span>
                   {item.badge && <span className="badge">{item.badge}</span>}
@@ -371,6 +463,12 @@ const AdminSidebar = ({
                   </AnimatePresence>
                 </MenuItem>
               ))}
+
+              {/* {sectionIndex < menuItems.length - 1 && !collapsed && (
+                <TempleGateDivider>
+                  <GiTempleGate />
+                </TempleGateDivider>
+              )} */}
             </MenuSection>
           ))}
         </SidebarContent>

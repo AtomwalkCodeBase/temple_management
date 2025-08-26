@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import temple01 from "../assets/img/temple_01.png";
 import temple02 from "../assets/img/temple_02.png";
-import temple03 from "../assets/img/temple_03.png";
-import temple04 from "../assets/img/temple_04.png";
+import temple03 from "../assets/img/GoldenTemple.png";
+import temple04 from "../assets/img/Murudeshwar_Temple.png";
 
 const Section = styled.section`
   position: relative;
@@ -26,7 +26,7 @@ const BackgroundImage = styled.div`
 `;
 
 const TempleImage = styled.div`
-  height: 100vh;
+  height: 120vh;
   min-height: 500px;
   width: 100%;
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
@@ -275,7 +275,7 @@ const Background = () => {
           <LearnMoreButton>LEARN MORE</LearnMoreButton>
         </TempleScienceCard>
       </Section>
-      
+
       <RestorationSection>
         <RestorationContainer>
           <RestorationText>
@@ -304,7 +304,7 @@ const Background = () => {
           <RestorationImage src={temple02} alt="Ancient ruined temple" />
         </RestorationContainer>
       </RestorationSection>
-      
+
       <Section>
         <BackgroundImage>
           <TempleImage imageUrl={temple03} />
@@ -326,7 +326,7 @@ const Background = () => {
           <LearnMoreButton>LEARN MORE</LearnMoreButton>
         </TempleCardLeft>
       </Section>
-      
+
       <Section>
         <BackgroundImage>
           <TempleImage imageUrl={temple04} />

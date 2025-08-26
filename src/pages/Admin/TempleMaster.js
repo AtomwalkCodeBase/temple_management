@@ -138,15 +138,17 @@ function TempleMaster(props) {
     }
   }, []);
   const [activeTab, setActiveTab] = useState("temple-list");
-  const tabs = useMemo(
-    () => [
-      { id: "temple-list", label: "Temple List" },
+  const tabs = useMemo(() => {
+    const baseTabs = [
       { id: "add-temple", label: "Add a Temple" },
       { id: "time-slots", label: "Time Slots" },
       { id: "temple-groups", label: "Temple Groups" },
-    ],
-    []
-  );
+    ];
+    if (!props.templeId) {
+      baseTabs.unshift({ id: "temple-list", label: "Temple List" });
+    }
+    return baseTabs;
+  }, [props.templeId]);
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");

@@ -14,6 +14,7 @@ import {
   FiChevronDown,
   FiBarChart,
 } from "react-icons/fi";
+import { GiLotus, IncenseBurner, TempleGate } from "react-icons/gi";
 import {
   logout,
   getStoredUsername,
@@ -21,18 +22,18 @@ import {
 } from "../../services/authServices";
 
 const HeaderContainer = styled.div`
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(90deg, #2c1a0a 0%, #4a2c14 100%);
+  border-bottom: 1px solid #8b5a2b;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(44, 26, 10, 0.95);
 
   @media (max-width: 768px) {
     padding: 1rem 1.5rem;
@@ -48,17 +49,17 @@ const HeaderLeft = styled.div`
 const MobileMenuButton = styled.button`
   display: none;
   background: none;
-  border: none;
+  border: 1px solid #8b5a2b;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #6b7280;
+  color: #d9a566;
   padding: 0.5rem;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
 
   &:hover {
-    background: #f3f4f6;
-    color: #374151;
+    background: rgba(139, 90, 43, 0.3);
+    color: #ffd700;
   }
 
   @media (max-width: 768px) {
@@ -71,7 +72,7 @@ const MobileMenuButton = styled.button`
 const PageInfo = styled.div`
   .breadcrumb {
     font-size: 0.8rem;
-    color: #6b7280;
+    color: #d9a566;
     margin-bottom: 0.25rem;
     display: flex;
     align-items: center;
@@ -81,7 +82,7 @@ const PageInfo = styled.div`
       &:not(:last-child)::after {
         content: "/";
         margin-left: 0.5rem;
-        color: #d1d5db;
+        color: #8b5a2b;
       }
     }
   }
@@ -89,8 +90,10 @@ const PageInfo = styled.div`
   .page-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1f2937;
+    color: #f8e6cc;
     margin: 0;
+    font-family: "Georgia", serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
     @media (max-width: 768px) {
       font-size: 1.25rem;
@@ -106,26 +109,26 @@ const HeaderRight = styled.div`
 
 const NotificationButton = styled(motion.button)`
   background: none;
-  border: none;
+  border: 1px solid #8b5a2b;
   font-size: 1.25rem;
   cursor: pointer;
-  color: #6b7280;
+  color: #d9a566;
   position: relative;
   padding: 0.75rem;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
 
   &:hover {
-    background: #f3f4f6;
-    color: #374151;
+    background: rgba(139, 90, 43, 0.3);
+    color: #ffd700;
   }
 
   .badge {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    color: white;
+    background: linear-gradient(135deg, #c84b31, #a53a23);
+    color: #f8e6cc;
     font-size: 0.7rem;
     padding: 0.125rem 0.375rem;
     border-radius: 9999px;
@@ -135,7 +138,7 @@ const NotificationButton = styled(motion.button)`
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 2px 4px rgba(200, 75, 49, 0.3);
   }
 `;
 
@@ -150,8 +153,8 @@ const QuickActions = styled.div`
 `;
 
 const QuickActionButton = styled(motion.button)`
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-  color: white;
+  background: linear-gradient(135deg, #d9a566, #b38742);
+  color: #2c1a0a;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -161,10 +164,11 @@ const QuickActionButton = styled(motion.button)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 2px 8px rgba(217, 165, 102, 0.4);
 
   &:hover {
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    box-shadow: 0 4px 12px rgba(217, 165, 102, 0.6);
+    background: linear-gradient(135deg, #e0b574, #c49952);
   }
 `;
 
@@ -176,31 +180,32 @@ const UserButton = styled(motion.button)`
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: none;
-  border: 1px solid #e5e7eb;
+  background: rgba(139, 90, 43, 0.2);
+  border: 1px solid #8b5a2b;
   cursor: pointer;
   padding: 0.5rem 1rem;
   border-radius: 0.75rem;
   transition: all 0.2s ease;
 
   &:hover {
-    background: #f9fafb;
-    border-color: #d1d5db;
+    background: rgba(139, 90, 43, 0.4);
+    border-color: #d9a566;
   }
 `;
 
 const UserAvatar = styled.div`
   width: 2.25rem;
   height: 2.25rem;
-  background: linear-gradient(135deg, #f59e0b, #f97316);
+  background: linear-gradient(135deg, #d9a566, #b38742);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #2c1a0a;
   font-weight: 700;
   font-size: 0.9rem;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 2px 8px rgba(217, 165, 102, 0.4);
+  border: 1px solid #8b5a2b;
 `;
 
 const UserInfo = styled.div`
@@ -208,14 +213,14 @@ const UserInfo = styled.div`
 
   .name {
     font-weight: 600;
-    color: #1f2937;
+    color: #f8e6cc;
     font-size: 0.9rem;
     margin: 0;
   }
 
   .role {
     font-size: 0.75rem;
-    color: #6b7280;
+    color: #d9a566;
     margin: 0;
   }
 
@@ -225,7 +230,7 @@ const UserInfo = styled.div`
 `;
 
 const ChevronIcon = styled(motion.div)`
-  color: #6b7280;
+  color: #d9a566;
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -235,31 +240,32 @@ const DropdownMenu = styled(motion.div)`
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #3a2313, #4a2c14);
+  border: 1px solid #8b5a2b;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   min-width: 220px;
   z-index: 1000;
   overflow: hidden;
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(58, 35, 19, 0.95);
 `;
 
 const DropdownHeader = styled.div`
   padding: 1rem;
-  border-bottom: 1px solid #f3f4f6;
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-bottom: 1px solid #8b5a2b;
+  background: rgba(44, 26, 10, 0.7);
 
   .user-name {
     font-weight: 600;
-    color: #1f2937;
+    color: #f8e6cc;
     margin: 0 0 0.25rem 0;
+    font-family: "Georgia", serif;
   }
 
   .user-email {
     font-size: 0.8rem;
-    color: #6b7280;
+    color: #d9a566;
     margin: 0;
   }
 `;
@@ -271,29 +277,38 @@ const DropdownItem = styled(motion.button)`
   border: none;
   text-align: left;
   cursor: pointer;
-  color: #374151;
+  color: #f8e6cc;
   font-size: 0.9rem;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  border-bottom: 1px solid rgba(139, 90, 43, 0.3);
 
   &:hover {
-    background: #f9fafb;
+    background: rgba(139, 90, 43, 0.3);
+    color: #ffd700;
   }
 
   &.danger {
-    color: #ef4444;
+    color: #e67c73;
 
     &:hover {
-      background: #fef2f2;
+      background: rgba(200, 75, 49, 0.2);
+      color: #ff9d94;
     }
   }
 
   .icon {
     font-size: 1rem;
-    opacity: 0.7;
+    opacity: 0.8;
   }
+`;
+
+const TemplePatternDivider = styled.div`
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #8b5a2b, transparent);
+  margin: 0.25rem 0;
 `;
 
 const AdminHeader = ({ onToggleMobileMenu, currentPage = "Dashboard" }) => {
@@ -414,6 +429,8 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage = "Dashboard" }) => {
                   Profile Settings
                 </DropdownItem>
 
+                <TemplePatternDivider />
+
                 <DropdownItem
                   whileHover={{ x: 4 }}
                   onClick={() => setShowUserMenu(false)}
@@ -421,6 +438,8 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage = "Dashboard" }) => {
                   <FiSettings className="icon" />
                   Account Settings
                 </DropdownItem>
+
+                <TemplePatternDivider />
 
                 <DropdownItem
                   whileHover={{ x: 4 }}
@@ -430,6 +449,8 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage = "Dashboard" }) => {
                   Analytics & Reports
                 </DropdownItem>
 
+                <TemplePatternDivider />
+
                 <DropdownItem
                   whileHover={{ x: 4 }}
                   onClick={() => setShowUserMenu(false)}
@@ -437,6 +458,8 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage = "Dashboard" }) => {
                   <FiHelpCircle className="icon" />
                   Help & Support
                 </DropdownItem>
+
+                <TemplePatternDivider />
 
                 <DropdownItem
                   className="danger"

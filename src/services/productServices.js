@@ -1,12 +1,23 @@
-import { AddupdateTemple, getTempleList, AddTempleImages, AddTempleGroupData, getTempleGroupData } from "../services/ConstantServies";
-import { authAxios, authAxiosFilePost, authAxiosPost } from "./HttpMethod";
+import {
+  AddupdateTemple,
+  getTempleList,
+  AddTempleImages,
+  AddTempleGroupData,
+  getTempleGroupData,
+} from "../services/ConstantServies";
+import {
+  authAxios,
+  authAxiosFilePost,
+  authAxiosget,
+  authAxiosPost,
+} from "./HttpMethod";
 
 export function addupdatetempale(tempale_data) {
   return authAxiosPost(AddupdateTemple, tempale_data);
 }
 
 export function gettemplist() {
-  return authAxios(getTempleList);
+  return authAxiosget(getTempleList);
 }
 
 export function uploadTempleImages(templeId, formData) {
@@ -14,7 +25,7 @@ export function uploadTempleImages(templeId, formData) {
   if (formData instanceof FormData) {
     return authAxiosFilePost(AddTempleImages, formData);
   }
-  
+
   // Legacy support for array of files
   const legacyFormData = new FormData();
   legacyFormData.append("temple_id", templeId);

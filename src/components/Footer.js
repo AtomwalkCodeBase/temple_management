@@ -1,9 +1,9 @@
-"use client"
-import styled from "styled-components"
+"use client";
+import styled from "styled-components";
 // import { motion } from "framer-motion"
-import footerTree from '../assets/img/footer_01.png';
-import footerTemple from '../assets/img/footer_02.png';
-import testimonialBg from '../assets/img/testimonial_01.png';
+import footerTree from "../assets/img/footer_01.png";
+import footerTemple from "../assets/img/footer_02.png";
+import testimonialBg from "../assets/img/testimonial_01.png";
 
 const FooterContainer = styled.footer`
   background-image: url(${testimonialBg});
@@ -11,13 +11,13 @@ const FooterContainer = styled.footer`
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-  color: #EDEDED;
+  color: #ededed;
   padding: 0;
   overflow: hidden;
   min-height: auto;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -71,14 +71,14 @@ const BrandSection = styled.div`
 `;
 
 const Logo = styled.h2`
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-size: 2rem;
-  color: #FFFFFF;
+  color: #ffffff;
   margin: 0;
-  
+
   span {
-    color: #F59E0B;
+    color: #f59e0b;
   }
 
   @media (min-width: 768px) {
@@ -87,10 +87,10 @@ const Logo = styled.h2`
 `;
 
 const Tagline = styled.p`
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-size: 1rem;
-  color: #F3F4F6;
+  color: #f3f4f6;
   max-width: 280px;
   line-height: 1.5;
   margin: 0;
@@ -105,10 +105,10 @@ const NewsletterSection = styled.div`
 `;
 
 const NewsletterTitle = styled.h3`
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 1.2rem;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 15px;
 `;
 
@@ -128,9 +128,9 @@ const NewsletterInput = styled.input`
   border-radius: 30px;
   border: none;
   width: 100%;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1rem;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #333;
 
   &::placeholder {
@@ -139,7 +139,7 @@ const NewsletterInput = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #F59E0B;
+    box-shadow: 0 0 0 2px #f59e0b;
   }
 
   @media (min-width: 576px) {
@@ -152,7 +152,7 @@ const SubmitButton = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FF6A00, #FF8C00);
+  background: linear-gradient(135deg, #ff6a00, #ff8c00);
   border: none;
   color: white;
   font-size: 1.5rem;
@@ -189,10 +189,10 @@ const LinksSection = styled.div`
 const LinksColumn = styled.div``;
 
 const ColumnTitle = styled.h3`
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 15px;
 
   @media (min-width: 768px) {
@@ -203,16 +203,16 @@ const ColumnTitle = styled.h3`
 
 const LinkItem = styled.a`
   display: block;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-size: 0.9rem;
-  color: #F3F4F6;
+  color: #f3f4f6;
   margin-bottom: 10px;
   text-decoration: none;
   transition: color 0.3s ease;
 
   &:hover {
-    color: #F59E0B;
+    color: #f59e0b;
   }
 
   @media (min-width: 768px) {
@@ -231,7 +231,7 @@ const FooterBottomBar = styled.div`
   position: relative;
   z-index: 4;
   width: 100%;
-  border-top: 1px solid rgba(255,255,255,0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 
   @media (min-width: 768px) {
     justify-content: flex-start;
@@ -241,7 +241,7 @@ const FooterBottomBar = styled.div`
 `;
 
 const FooterBottomItem = styled.span`
-  font-family: 'Inter', 'Roboto', 'Poppins', sans-serif;
+  font-family: "Inter", "Roboto", "Poppins", sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: #f3f4f6;
@@ -302,15 +302,21 @@ const Footer = () => {
       <FooterContent>
         <TopSection>
           <BrandSection>
-            <Logo>TEMPLE<span>NAME</span></Logo>
-            <Tagline>Because we take you to the most peaceful and divine places.</Tagline>
+            <Logo>
+              AGA<span>MANDIRA</span>
+            </Logo>
+            <Tagline>
+              Because we take you to the most peaceful and divine places.
+            </Tagline>
           </BrandSection>
 
           <NewsletterSection>
             <NewsletterTitle>Get Updates</NewsletterTitle>
             <NewsletterForm>
               <NewsletterInput type="email" placeholder="Enter your email..." />
-              <SubmitButton type="submit" aria-label="Subscribe">→</SubmitButton>
+              <SubmitButton type="submit" aria-label="Subscribe">
+                →
+              </SubmitButton>
             </NewsletterForm>
           </NewsletterSection>
         </TopSection>
@@ -360,4 +366,4 @@ const Footer = () => {
   );
 };
 
-export default Footer
+export default Footer;

@@ -115,7 +115,7 @@ const TempleCard = styled(motion.div)`
 
   @media (max-width: 768px) {
     border-radius: 12px;
-    
+
     &:hover {
       transform: translateY(-2px);
     }
@@ -299,7 +299,7 @@ const BookSevaButton = styled(motion.button)`
   @media (max-width: 768px) {
     padding: 0.7rem;
     font-size: 0.85rem;
-    
+
     &:hover {
       transform: translateY(-1px);
     }
@@ -343,7 +343,7 @@ const ActionButton = styled.button`
   @media (max-width: 768px) {
     padding: 0.4rem 1rem;
     font-size: 0.9rem;
-    
+
     &.primary:hover,
     &.secondary:hover {
       transform: translateY(-1px);
@@ -360,43 +360,53 @@ const locations = [
   { name: "All", image: IndiaMap },
   {
     name: "Ayodhya",
-    image:"https://imgs.search.brave.com/zS0HKW7iNh0nSlY3OeRWSghw0Vi4GTC9seiFCaXkL9k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTk0/MDkyNjg2Ny9waG90/by9hLWdlbmVyYWwt/dmlldy1vZi1hLXRl/bXBsZS10by1oaW5k/dS1kZWl0eS1yYW0t/b24tdGhlLWV2ZS1v/Zi1pdHMtY29uc2Vj/cmF0aW9uLWNlcmVt/b255LWluLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz0zZU5W/YlNLeTNFUEJRZFdO/T0g0TXE5QlFtVTdy/aVRoMmtsZVNXMDR1/SFhVPQ",
+    image:
+      "https://imgs.search.brave.com/zS0HKW7iNh0nSlY3OeRWSghw0Vi4GTC9seiFCaXkL9k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTk0/MDkyNjg2Ny9waG90/by9hLWdlbmVyYWwt/dmlldy1vZi1hLXRl/bXBsZS10by1oaW5k/dS1kZWl0eS1yYW0t/b24tdGhlLWV2ZS1v/Zi1pdHMtY29uc2Vj/cmF0aW9uLWNlcmVt/b255LWluLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz0zZU5W/YlNLeTNFUEJRZFdO/T0g0TXE5QlFtVTdy/aVRoMmtsZVNXMDR1/SFhVPQ",
   },
   {
     name: "Varanasi",
-    image:"https://imgs.search.brave.com/vtLuEF9ewiI7j5wACfx1hG85Hfd2iMI9uf6Am0t-TOY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvODIz/ODU4MjY4L3Bob3Rv/L21hbmlrYXJuaWth/LWdoYXQtaW4tdmFy/YW5hc2ktaW5kaWEu/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PU40ajg4U2hzS3B1/anNzN1V3dl8ycUVG/ckVOdy1hZ185c2Fl/LTl0cWI0MzQ9",
+    image:
+      "https://imgs.search.brave.com/vtLuEF9ewiI7j5wACfx1hG85Hfd2iMI9uf6Am0t-TOY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvODIz/ODU4MjY4L3Bob3Rv/L21hbmlrYXJuaWth/LWdoYXQtaW4tdmFy/YW5hc2ktaW5kaWEu/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PU40ajg4U2hzS3B1/anNzN1V3dl8ycUVG/ckVOdy1hZ185c2Fl/LTl0cWI0MzQ9",
   },
   {
     name: "Andhra pradesh",
-    image:"https://imgs.search.brave.com/45u5nMGwZQRxHkFDlGaIEogjQe3M86of3p3a3-Q_rKA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMudHJhdmVsdHJp/YW5nbGUuY29tL2Js/b2cvd3AtY29udGVu/dC91cGxvYWRzLzIw/MTkvMTIvVmVua2F0/ZXN3YXJhLVRlbXBs/ZS10aXJ1cGF0aS5q/cGc"
+    image:
+      "https://imgs.search.brave.com/45u5nMGwZQRxHkFDlGaIEogjQe3M86of3p3a3-Q_rKA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMudHJhdmVsdHJp/YW5nbGUuY29tL2Js/b2cvd3AtY29udGVu/dC91cGxvYWRzLzIw/MTkvMTIvVmVua2F0/ZXN3YXJhLVRlbXBs/ZS10aXJ1cGF0aS5q/cGc",
   },
   {
     name: "Mathura",
-    image:"https://imgs.search.brave.com/cjAJYo3sJVI1NA6qdY5oO_vFsDHGPnLtQ6_r3XRjgdg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/dG91cm15aW5kaWEu/Y29tL2Jsb2cvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIxLzA2/L0R3YXJrYWRoaXNo/LVRlbXBsZS1NYXRodXJh/LmpwZw",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/c/cc/Vishram_Ghat.jpg",
   },
   {
     name: "Vrindavan",
-    image:"https://imgs.search.brave.com/B7br7Q6Rj7kjAg_riOnoaCGdBsJBXVJcTGCB11RkGo0/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcm9w/YWNpdHkuY29tL2Js/b2dzL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDI0LzA2L1ByZW0t/TWFuZGlyLTIuanBn",
+    image:
+      "https://imgs.search.brave.com/B7br7Q6Rj7kjAg_riOnoaCGdBsJBXVJcTGCB11RkGo0/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcm9w/YWNpdHkuY29tL2Js/b2dzL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDI0LzA2L1ByZW0t/TWFuZGlyLTIuanBn",
   },
   {
     name: "Odisha",
-    image:"https://imgs.search.brave.com/KdvZBl6XFP-z5-8FMlxDWzjwaFXgd52N4k1N9dLkp8s/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy81/LzU1L0phZ2FubmF0/aF9UZW1wbGUsX1B1/cmkuanBn",
+    image:
+      "https://imgs.search.brave.com/KdvZBl6XFP-z5-8FMlxDWzjwaFXgd52N4k1N9dLkp8s/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy81/LzU1L0phZ2FubmF0/aF9UZW1wbGUsX1B1/cmkuanBn",
   },
   {
     name: "Punjab",
-    image:"https://imgs.search.brave.com/ZH796PCB-gq0b1ozv7bj4gxTPzmkRWA0iXQGlU5Bkng/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdHls/ZXNhdGxpZmUuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDE5/LzAyL0R1cmdpYW5h/LVRlbXBsZS1pbi1B/bXJpdHNhci5qcGc",
+    image:
+      "https://imgs.search.brave.com/ZH796PCB-gq0b1ozv7bj4gxTPzmkRWA0iXQGlU5Bkng/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdHls/ZXNhdGxpZmUuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDE5/LzAyL0R1cmdpYW5h/LVRlbXBsZS1pbi1B/bXJpdHNhci5qcGc",
   },
   {
     name: "Haridwar",
-    image:"https://imgs.search.brave.com/XYNxPCa-qD_sVc20pMRQqbqhuJjxvXYvvd0z6qPor70/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/aGFyaWR3YXJyaXNo/aWtlc2h0b3VyaXNt/LmNvbS9oYXJpZHdh/ci1waG90b3MvMTIu/anBn",
+    image:
+      "https://imgs.search.brave.com/XYNxPCa-qD_sVc20pMRQqbqhuJjxvXYvvd0z6qPor70/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/aGFyaWR3YXJyaXNo/aWtlc2h0b3VyaXNt/LmNvbS9oYXJpZHdh/ci1waG90b3MvMTIu/anBn",
   },
   {
     name: "Uttarakhand",
-    image:"https://imgs.search.brave.com/jQbZOAxouTz0S95i2q3RqmzqLVkxK1wqZjJoWPklQmc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zN2Fw/MS5zY2VuZTcuY29t/L2lzL2ltYWdlL2lu/Y3JlZGlibGVpbmRp/YS90cmF5YW1iYWtl/c2h3YXItdGVtcGxl/LXJpc2hpa2VzaC11/dHRyYWtoYW5kLWF0/dHItbmVhcmJ5P3Fs/dD04MiZ0cz0xNzI2/NjQ2MjcxODc4",
+    image:
+      "https://imgs.search.brave.com/jQbZOAxouTz0S95i2q3RqmzqLVkxK1wqZjJoWPklQmc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zN2Fw/MS5zY2VuZTcuY29t/L2lzL2ltYWdlL2lu/Y3JlZGlibGVpbmRp/YS90cmF5YW1iYWtl/c2h3YXItdGVtcGxl/LXJpc2hpa2VzaC11/dHRyYWtoYW5kLWF0/dHItbmVhcmJ5P3Fs/dD04MiZ0cz0xNzI2/NjQ2MjcxODc4",
   },
   {
     name: "Tamil Nadu",
-    image:"https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg"
+    image:
+      "https://i.natgeofe.com/n/b9e9b8d1-fa08-4b90-96bb-310cace03847/meenakshi-amman-temple-india.jpg",
   },
 ];
 
@@ -453,12 +463,12 @@ const FilterImage = styled.img`
   border-radius: 50%;
   border: 3px solid transparent;
   transition: border 0.2s, box-shadow 0.2s;
-  
+
   &.active {
     border-color: #ab353d;
     box-shadow: 0 0 0 4px #f3e3e5;
   }
-  
+
   &:hover {
     border-color: #e67c1c;
   }
@@ -482,7 +492,7 @@ const FilterLabel = styled.span`
   font-weight: 500;
   transition: color 0.2s, font-weight 0.2s;
   text-align: center;
-  
+
   &.active {
     color: #ab353d;
     font-weight: 700;
@@ -597,9 +607,9 @@ const Bullet = styled.li`
   font-size: 1.25rem;
   color: #888;
   margin-bottom: 1rem;
-  
+
   &::before {
-    content: '✔';
+    content: "✔";
     color: orange;
     font-size: 1.3rem;
     margin-right: 0.8rem;
@@ -613,7 +623,7 @@ const Bullet = styled.li`
   @media (max-width: 768px) {
     font-size: 1rem;
     margin-bottom: 0.6rem;
-    
+
     &::before {
       font-size: 1.2rem;
       margin-right: 0.6rem;
@@ -623,7 +633,7 @@ const Bullet = styled.li`
   @media (max-width: 480px) {
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
-    
+
     &::before {
       font-size: 1.1rem;
       margin-right: 0.5rem;
@@ -669,9 +679,17 @@ const Temples = () => {
         const list = Array.isArray(response?.data) ? response.data : [];
         const mapped = list.map((t) => {
           const timingsObj = t?.additional_field_list?.temple_timings;
-          const timingsText = [timingsObj?.morning_opening, timingsObj?.evening_closing]
-            .filter(Boolean)
-            .join(" - ");
+          let timingsText = "";
+          if (Array.isArray(timingsObj?.selected_time_slots)) {
+            timingsText = timingsObj.selected_time_slots
+              .map(
+                (slot) =>
+                  `${slot.name ? slot.name + ": " : ""}${slot.start || ""} - ${
+                    slot.end || ""
+                  }`
+              )
+              .join(", ");
+          }
 
           return {
             id: t.temple_id || t.id,
@@ -682,7 +700,7 @@ const Temples = () => {
               "",
             image: t.image || DEFAULT_IMAGE,
             // placeholders to preserve current card layout
-            deity: t.deity || null,
+            deity: t.mobile_number || null,
             timings: timingsText || null,
           };
         });
@@ -702,7 +720,7 @@ const Temples = () => {
   };
 
   const handleBookSeva = (templeId) => {
-    navigate('/book-seva', { state: { templeId } });
+    navigate("/book-seva", { state: { templeId } });
   };
 
   // const handleBookSeva = (templeId) => {
@@ -740,23 +758,43 @@ const Temples = () => {
             .toLowerCase()
             .includes(selectedLocation.toLowerCase())
         );
-
   return (
     <TemplesContainer>
-      <HeroSection style={{ background: "linear-gradient(to top, rgb(255, 247, 239) 0%, rgb(247, 226, 186) 100%)" }}>
+      <HeroSection
+        style={{
+          background:
+            "linear-gradient(to top, rgb(255, 247, 239) 0%, rgb(247, 226, 186) 100%)",
+        }}
+      >
         <HeroFlex>
           <HeroLeft>
-            <HeroTitle initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
+            <HeroTitle
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
               Embark on a Sacred Journey through India's Divine Temples
             </HeroTitle>
-            <HeroSubtitle initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }}></HeroSubtitle>
+            <HeroSubtitle
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            ></HeroSubtitle>
             <BulletList>
-              <Bullet>Explore the stories, rituals, and glory of ancient shrines</Bullet>
-              <Bullet>Connect with temples dedicated to your beloved deities</Bullet>
-              <Bullet>Participate in holy festivals and support temple activities</Bullet>
+              <Bullet>
+                Explore the stories, rituals, and glory of ancient shrines
+              </Bullet>
+              <Bullet>
+                Connect with temples dedicated to your beloved deities
+              </Bullet>
+              <Bullet>
+                Participate in holy festivals and support temple activities
+              </Bullet>
             </BulletList>
             <HeroButtons>
-              <ActionButton className="primary">Explore Temples of India</ActionButton>
+              <ActionButton className="primary">
+                Explore Temples of India
+              </ActionButton>
             </HeroButtons>
           </HeroLeft>
           <HeroRight>
@@ -765,73 +803,111 @@ const Temples = () => {
         </HeroFlex>
         <FilterBar>
           {locations.map((loc) => {
-            const isActive = selectedLocation.trim().toLowerCase() === loc.name.trim().toLowerCase();
+            const isActive =
+              selectedLocation.trim().toLowerCase() ===
+              loc.name.trim().toLowerCase();
             return (
-              <FilterItem key={loc.name} onClick={() => setSelectedLocation(loc.name)}>
-                <FilterImage src={loc.image} alt={loc.name} className={isActive ? "active" : ""} />
-                <FilterLabel className={isActive ? "active" : ""}>{loc.name}</FilterLabel>
+              <FilterItem
+                key={loc.name}
+                onClick={() => setSelectedLocation(loc.name)}
+              >
+                <FilterImage
+                  src={loc.image}
+                  alt={loc.name}
+                  className={isActive ? "active" : ""}
+                />
+                <FilterLabel className={isActive ? "active" : ""}>
+                  {loc.name}
+                </FilterLabel>
               </FilterItem>
             );
           })}
         </FilterBar>
       </HeroSection>
       <TemplesGrid>
-        <motion.div variants={containerVariants} initial="hidden" animate="visible">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <GridContainer>
             {loading && (
-              <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "2rem", color: "#888" }}>
+              <div
+                style={{
+                  gridColumn: "1 / -1",
+                  textAlign: "center",
+                  padding: "2rem",
+                  color: "#888",
+                }}
+              >
                 Loading temples...
               </div>
             )}
             {!loading && error && (
-              <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "2rem", color: "#c00" }}>
+              <div
+                style={{
+                  gridColumn: "1 / -1",
+                  textAlign: "center",
+                  padding: "2rem",
+                  color: "#c00",
+                }}
+              >
                 {error}
               </div>
             )}
-            {!loading && !error && filteredTemples.map((temple) => (
-              <TempleCard
-                key={temple.id}
-                variants={cardVariants}
-                whileHover={{ y: -5 }}
-              >
-                <TempleImageContainer>
-                  <TempleImage src={temple.image || DEFAULT_IMAGE} alt={temple.name} />
-                </TempleImageContainer>
+            {!loading &&
+              !error &&
+              filteredTemples.map((temple) => (
+                <TempleCard
+                  key={temple.id}
+                  variants={cardVariants}
+                  whileHover={{ y: -5 }}
+                >
+                  <TempleImageContainer>
+                    <TempleImage
+                      src={temple.image || DEFAULT_IMAGE}
+                      alt={temple.name}
+                    />
+                  </TempleImageContainer>
 
-                <TempleInfo>
-                  <TempleName>{temple.name}</TempleName>
-                  <TempleLocation>📍 {temple.location}</TempleLocation>
-                  
-                  <TempleDetail>
-                    <span role="img" aria-label="Om">🕉️</span>
-                    <DetailLabel>Deity:</DetailLabel>
-                    <DetailValue>{temple.deity || "—"}</DetailValue>
-                  </TempleDetail>
-                  <TempleDetail>
-                    <span role="img" aria-label="Clock">🕒</span>
-                    <DetailLabel>Timings:</DetailLabel>
-                    <DetailValue>{temple.timings || "—"}</DetailValue>
-                  </TempleDetail>
+                  <TempleInfo>
+                    <TempleName>{temple.name}</TempleName>
+                    <TempleLocation>📍 {temple.location}</TempleLocation>
 
-                  <ActionButtons>
-                    <ViewDetailsButton
-                      onClick={() => handleViewDetails(temple.id)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      View Details
-                    </ViewDetailsButton>
-                    <BookSevaButton
-                      onClick={() => handleBookSeva(temple.id)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      Book Seva
-                    </BookSevaButton>
-                  </ActionButtons>
-                </TempleInfo>
-              </TempleCard>
-            ))}
+                    <TempleDetail>
+                      <span role="img" aria-label="Phone">
+                        📞
+                      </span>
+                      <DetailLabel>contact :</DetailLabel>
+                      <DetailValue>{temple.deity || "—"}</DetailValue>
+                    </TempleDetail>
+                    <TempleDetail>
+                      <span role="img" aria-label="Clock">
+                        🕒
+                      </span>
+                      <DetailLabel>Timings:</DetailLabel>
+                      <DetailValue>{temple.timings || "—"}</DetailValue>
+                    </TempleDetail>
+
+                    <ActionButtons>
+                      <ViewDetailsButton
+                        onClick={() => handleViewDetails(temple.id)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        View Details
+                      </ViewDetailsButton>
+                      <BookSevaButton
+                        onClick={() => handleBookSeva(temple.id)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Book Seva
+                      </BookSevaButton>
+                    </ActionButtons>
+                  </TempleInfo>
+                </TempleCard>
+              ))}
           </GridContainer>
         </motion.div>
       </TemplesGrid>

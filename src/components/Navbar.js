@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
@@ -53,7 +53,7 @@ const Logo = styled(motion.div)`
   align-items: center;
   gap: 0.8rem;
   position: relative;
-
+  cursor: pointer;
   &::after {
     content: "";
     position: absolute;
@@ -130,6 +130,53 @@ const NavLink = styled(Link)`
   }
 `;
 
+const LoginContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const LoginDropdown = styled(motion.div)`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  background: rgba(255, 248, 231, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 153, 51, 0.2);
+  overflow: hidden;
+  z-index: 1001;
+`;
+
+const DropdownItem = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  color: ${(props) => props.theme.colors.text};
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 0.25rem;
+
+  &:hover {
+    background: rgba(255, 153, 51, 0.1);
+    color: ${(props) => props.theme.colors.primary};
+    transform: translateX(5px);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  svg {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+  }
+`;
+
 const MobileMenuButton = styled(motion.button)`
   display: none;
   background: ${(props) => props.theme.colors.gradient.primary};
@@ -192,28 +239,95 @@ const MobileNavLink = styled(Link)`
   }
 `;
 
+const MobileDropdownItem = styled(Link)`
+  display: block;
+  padding: 1rem 0 1rem 2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: ${(props) => props.theme.colors.text};
+  border-bottom: 1px solid rgba(255, 153, 51, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover,
+  &.active {
+    color: ${(props) => props.theme.colors.primary};
+    padding-left: 2.5rem;
+  }
+`;
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
   const location = useLocation();
+  const loginRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
 
+    const handleClickOutside = (event) => {
+      if (loginRef.current && !loginRef.current.contains(event.target)) {
+        setLoginDropdownOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/temples", label: "Temples" },
     { path: "/book-puja", label: "Book Puja" },
-    { path: "/live-darshan", label: "Live Darshan" },
-    { path: "/shop", label: "Shop" },
-    { path: "/bhajans", label: "Bhajans" },
-    { path: "/login", label: "Login" },
+  ];
+
+  const loginOptions = [
+    {
+      path: "/login",
+      label: "Login as Admin",
+      icon: (
+        <svg
+          stroke="currentColor"
+          fill="currentColor"
+          strokeWidth="0"
+          viewBox="0 0 16 16"
+          height="1em"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+          <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2Zm12 1a1 1 0 0 1 1 1v5.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 5 9.5V4a1 1 0 0 1 1-1h8ZM2 12v-2h4v2H2Zm5-2v2h5v-2H7Z"></path>
+        </svg>
+      ),
+    },
+    {
+      path: "/customer-login",
+      label: "Login as User",
+      icon: (
+        <svg
+          stroke="currentColor"
+          fill="currentColor"
+          strokeWidth="0"
+          viewBox="0 0 16 16"
+          height="1em"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+          <path
+            fillRule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+          ></path>
+        </svg>
+      ),
+    },
   ];
 
   return (
@@ -224,7 +338,11 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       <NavContent>
-        <Logo whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <Logo
+          onClick={() => (window.location.href = "/")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <OmSymbol
             animate={{
               filter: [
@@ -241,7 +359,7 @@ const Navbar = () => {
           >
             ॐ
           </OmSymbol>
-          DevotionHub
+          Agamandira
         </Logo>
 
         <NavLinks>
@@ -260,6 +378,66 @@ const Navbar = () => {
               </NavLink>
             </motion.div>
           ))}
+
+          <LoginContainer
+            ref={loginRef}
+            onMouseEnter={() => setLoginDropdownOpen(true)}
+            onMouseLeave={() => setLoginDropdownOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <NavLink
+                to="#"
+                className={
+                  loginOptions.some(
+                    (option) => location.pathname === option.path
+                  )
+                    ? "active"
+                    : ""
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLoginDropdownOpen(!loginDropdownOpen);
+                }}
+              >
+                Login
+              </NavLink>
+            </motion.div>
+
+            <AnimatePresence>
+              {loginDropdownOpen && (
+                <LoginDropdown
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {loginOptions.map((option, index) => (
+                    <motion.div
+                      key={option.path}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.1 }}
+                    >
+                      <DropdownItem
+                        to={option.path}
+                        className={
+                          location.pathname === option.path ? "active" : ""
+                        }
+                        onClick={() => setLoginDropdownOpen(false)}
+                      >
+                        {option.icon}
+                        {option.label}
+                      </DropdownItem>
+                    </motion.div>
+                  ))}
+                </LoginDropdown>
+              )}
+            </AnimatePresence>
+          </LoginContainer>
         </NavLinks>
 
         <MobileMenuButton
@@ -295,6 +473,41 @@ const Navbar = () => {
                 </MobileNavLink>
               </motion.div>
             ))}
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.4 }}
+            >
+              <MobileNavLink
+                to="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // For mobile, we'll just show the options directly
+                }}
+              >
+                Login
+              </MobileNavLink>
+
+              {loginOptions.map((option, index) => (
+                <motion.div
+                  key={option.path}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: (index + 1) * 0.1 + 0.4 }}
+                >
+                  <MobileDropdownItem
+                    to={option.path}
+                    className={
+                      location.pathname === option.path ? "active" : ""
+                    }
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {option.label}
+                  </MobileDropdownItem>
+                </motion.div>
+              ))}
+            </motion.div>
           </MobileMenu>
         )}
       </AnimatePresence>

@@ -156,7 +156,7 @@ const AdvancePolicies = () => {
         title="Advance Policies"
         description="Manage advance booking policies for your temple services"
         icon={<FiDollarSign />}
-        gradient="linear-gradient(135deg, #059669 0%, #047857 100%)"
+        gradient="linear-gradient(135deg, #b81616 0%, #047857 100%)"
         actions={
           <AddButton
             onClick={handleAddPolicy}

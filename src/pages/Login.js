@@ -8,21 +8,45 @@ import { loginUser, getUserProfile } from "../services/authServices";
 
 const LoginContainer = styled.div`
   min-height: 100vh;
+  margin-top: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 50%, #fbbf24 100%);
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("https://deshpee.com/wp-content/uploads/2024/01/Shri-Ram-Ft-img.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px);
+    z-index: 0;
+  }
 `;
 
 const LoginCard = styled(motion.div)`
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: rgba(245, 248, 231, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 2rem;
+  box-shadow: 0 25px 50px rgba(225, 80, 32, 0.2);
   padding: 3rem;
   width: 100%;
-  max-width: 400px;
-  border: 2px solid #fed7aa;
+  max-width: 450px;
+  border: 3px solid rgba(227, 98, 24, 0.2);
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+    margin: 1rem;
+  }
 `;
 
 const Logo = styled.div`

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { X, Plus, Edit3, Trash2, Clock, Users, Calendar, IndianRupee } from "lucide-react";
+import { getPricingRuleList } from "../../services/templeServices";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -8,7 +9,7 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,6 +236,38 @@ const FormActions = styled.div`
   border-top: 1px solid #e5e7eb;
 `;
 
+const RuleGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+`;
+
+const RuleCard = styled.button`
+  text-align: left;
+  border: 1px solid ${props => props.$selected ? '#3b82f6' : '#e5e7eb'};
+  background: ${props => props.$selected ? 'rgba(59, 130, 246, 0.05)' : '#ffffff'};
+  color: #111827;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  
+  &:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .title { font-size: 14px; font-weight: 600; color: #111827; }
+  .desc { font-size: 12px; color: #6b7280; }
+  .meta { font-size: 12px; color: #374151; display: flex; gap: 10px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+  .chip { font-size: 11px; color: #1f2937; background: #f3f4f6; border: 1px solid #e5e7eb; padding: 2px 6px; border-radius: 999px; }
+`;
+
 const Button = styled.button`
   padding: 10px 20px;
   border-radius: 8px;
@@ -277,15 +310,17 @@ const PackageModal = ({
   packages = [], 
   onSave,
   onDelete,
-  isSaving 
+  isSaving,
+  initialPackage
 }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [editingPackage, setEditingPackage] = useState(null);
+  const [pricingRules, setPricingRules] = useState([]);
   const [formData, setFormData] = useState({
     price_type: "HOURLY",
     base_price: "",
-    start_time: "09:00",
-    end_time: "11:00",
+    start_time: "",
+    end_time: "",
     no_hours: "",
     max_no_per_day: "",
     max_participant: "",
@@ -297,15 +332,55 @@ const PackageModal = ({
       setIsAdding(false);
       setEditingPackage(null);
       resetForm();
+      return;
     }
-  }, [isOpen]);
+    // Fetch pricing rules when modal opens
+    (async () => {
+      try {
+        const resp = await getPricingRuleList();
+        const list = Array.isArray(resp?.data) ? resp.data : (Array.isArray(resp) ? resp : []);
+        const templeId = hall?.temple_id ?? hall?.templeId ?? null;
+        const filtered = list.filter(service => !templeId || String(service.temple_id) === String(templeId));
+        const normalize = (r) => ({
+          id: r?.id ?? r?.rule_id ?? r?.value ?? r?.code ?? null,
+          name: r?.name ?? r?.title ?? r?.label ?? `Rule ${r?.id ?? ''}`,
+          description: r?.description ?? r?.desc ?? '',
+          // Normalize to required keys
+          start_date: r?.start_date ?? r?.startDate ?? r?.from_date ?? r?.fromDate ?? '',
+          end_date: r?.end_date ?? r?.endDate ?? r?.to_date ?? r?.toDate ?? '',
+          date_price: r?.date_price ?? r?.datePrice ?? r?.special_date_price ?? r?.specialDatePrice ?? null,
+          time_price: r?.time_price ?? r?.timePrice ?? r?.slot_price ?? r?.slotPrice ?? null,
+          week_day_price: r?.week_day_price ?? r?.weekday_price ?? r?.weekDayPrice ?? r?.weekdayPrice ?? null,
+        });
+        setPricingRules(filtered.map(normalize));
+      } catch (e) {
+        setPricingRules([]);
+      }
+    })();
+    // If an initial package is provided, open directly in form mode
+    if (initialPackage !== undefined) {
+      const pkg = initialPackage || {};
+      setIsAdding(true);
+      setEditingPackage(pkg.id ? pkg : null);
+      setFormData({
+        price_type: pkg.price_type || "HOURLY",
+        base_price: pkg.base_price != null ? String(pkg.base_price) : "",
+        start_time: pkg.start_time || "",
+        end_time: pkg.end_time || "",
+        no_hours: pkg.no_hours != null ? String(pkg.no_hours) : "",
+        max_no_per_day: pkg.max_no_per_day != null ? String(pkg.max_no_per_day) : "",
+        max_participant: pkg.max_participant != null ? String(pkg.max_participant) : "",
+        pricing_rule_id: pkg.pricing_rule_id || 1
+      });
+    }
+  }, [isOpen, initialPackage]);
 
   const resetForm = () => {
     setFormData({
       price_type: "HOURLY",
       base_price: "",
-      start_time: "09:00",
-      end_time: "11:00",
+      start_time: "",
+      end_time: "",
       no_hours: "",
       max_no_per_day: "",
       max_participant: "",
@@ -318,8 +393,8 @@ const PackageModal = ({
     setFormData({
       price_type: pkg.price_type || "HOURLY",
       base_price: pkg.base_price || "",
-      start_time: pkg.start_time || "09:00",
-      end_time: pkg.end_time || "11:00",
+      start_time: pkg.start_time || "",
+      end_time: pkg.end_time || "",
       no_hours: pkg.no_hours || "",
       max_no_per_day: pkg.max_no_per_day,
       max_participant: pkg.max_participant,
@@ -372,84 +447,17 @@ const PackageModal = ({
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
+    <ModalOverlay>
+      <ModalContent>
         <ModalHeader>
-          <ModalTitle>Manage Packages - {hall?.name}</ModalTitle>
+          <ModalTitle>{editingPackage ? 'Edit Package' : 'Add Package'}</ModalTitle>
           <CloseButton onClick={onClose}>
             <X size={20} />
           </CloseButton>
         </ModalHeader>
         
         <ModalBody>
-          {!isAdding ? (
-            <>
-              <PackageGrid>
-                {packages.length > 0 ? (
-                  packages.map((pkg) => (
-                    <PackageCard key={pkg.id}>
-                      <PackageHeader>
-                        <PackageTitle>{getPriceTypeLabel(pkg.price_type)} Package</PackageTitle>
-                        <PackageActions>
-                          <ActionButton onClick={() => handleEdit(pkg)}>
-                            <Edit3 size={14} />
-                            Edit
-                          </ActionButton>
-                          <ActionButton 
-                            className="danger"
-                            onClick={() => handleDelete(pkg.id)}
-                          >
-                            <Trash2 size={14} />
-                            Delete
-                          </ActionButton>
-                        </PackageActions>
-                      </PackageHeader>
-                      
-                      <PackageDetails>
-                        <DetailItem>
-                          <IndianRupee size={16} />
-                          <DetailValue>₹{pkg.base_price}</DetailValue>
-                        </DetailItem>
-                        <DetailItem>
-                          <Clock size={16} />
-                          <DetailValue>{pkg.start_time} - {pkg.end_time}</DetailValue>
-                        </DetailItem>
-                        {pkg.no_hours && (
-                          <DetailItem>
-                            <Clock size={16} />
-                            <DetailValue>{pkg.no_hours} hours</DetailValue>
-                          </DetailItem>
-                        )}
-                        <DetailItem>
-                          <Users size={16} />
-                          <DetailValue>Max {pkg.max_participant} participants</DetailValue>
-                        </DetailItem>
-                        <DetailItem>
-                          <Calendar size={16} />
-                          <DetailValue>Max {pkg.max_no_per_day} per day</DetailValue>
-                        </DetailItem>
-                      </PackageDetails>
-                    </PackageCard>
-                  ))
-                ) : (
-                  <EmptyState>
-                    <div style={{ fontSize: '16px', fontWeight: '500', marginBottom: '8px' }}>
-                      No packages defined
-                    </div>
-                    <div style={{ fontSize: '14px', color: '#9ca3af' }}>
-                      Create your first package to get started
-                    </div>
-                  </EmptyState>
-                )}
-              </PackageGrid>
-              
-              <AddButton onClick={() => setIsAdding(true)}>
-                <Plus size={16} />
-                Add New Package
-              </AddButton>
-            </>
-          ) : (
-            <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
               <FormRow>
                 <FormGroup>
                   <Label>Package Type *</Label>
@@ -469,26 +477,15 @@ const PackageModal = ({
                   <Input
                     type="number"
                     value={formData.base_price}
+                    placeholder="Numbers only"
                     onChange={(e) => setFormData({...formData, base_price: e.target.value})}
-                    placeholder="1500"
                     min="0"
                     step="0.01"
                     required
                   />
                 </FormGroup>
                 
-                <FormGroup>
-                  <Label>Pricing Rule *</Label>
-                  <Select
-                    value={formData.pricing_rule_id}
-                    onChange={(e) => setFormData({...formData, pricing_rule_id: e.target.value})}
-                    required
-                  >
-                    <option value="1">Default Pricing Rule</option>
-                    <option value="2">Alternative Pricing Rule</option>
-                    {/* Add other pricing rules here if available */}
-                  </Select>
-                </FormGroup>
+                {/* Pricing rule selection moved to bottom as cards */}
               </FormRow>
               
               <FormRow>
@@ -519,7 +516,6 @@ const PackageModal = ({
                       type="number"
                       value={formData.no_hours}
                       onChange={(e) => setFormData({...formData, no_hours: e.target.value})}
-                      placeholder="2"
                       min="1"
                     />
                   </FormGroup>
@@ -528,29 +524,65 @@ const PackageModal = ({
               
               <FormRow>
                 <FormGroup>
-                  <Label>Max Participants *</Label>
+                  <Label>Maximum Participants *</Label>
                   <Input
                     type="number"
                     value={formData.max_participant}
+                    placeholder="Numbers only"
                     onChange={(e) => setFormData({...formData, max_participant: e.target.value})}
-                    placeholder="10"
                     min="1"
                     required
                   />
                 </FormGroup>
                 
                 <FormGroup>
-                  <Label>Max Per Day *</Label>
+                  <Label>Maximum Bookings Per Day *</Label>
                   <Input
                     type="number"
                     value={formData.max_no_per_day}
+                    placeholder="Numbers only"
                     onChange={(e) => setFormData({...formData, max_no_per_day: e.target.value})}
-                    placeholder="5"
                     min="1"
                     required
                   />
                 </FormGroup>
               </FormRow>
+
+              {/* Pricing Rule selection moved to the bottom */}
+              <div style={{ marginTop: 8 }}>
+                <Label>Pricing Rule *</Label>
+                <RuleGrid>
+                  {(pricingRules || []).map((rule) => {
+                    const id = Number(rule.id ?? 0);
+                    const title = rule.name ?? `Rule ${id}`;
+                    const description = rule.description ?? '';
+                    const metaParts = [];
+                    if (rule?.start_date || rule?.end_date) metaParts.push(`${rule.start_date || ''} → ${rule.end_date || ''}`);
+                    const selected = Number(formData.pricing_rule_id) === id;
+                    return (
+                      <RuleCard
+                        key={id}
+                        type="button"
+                        $selected={selected}
+                        onClick={() => setFormData({ ...formData, pricing_rule_id: id })}
+                        aria-pressed={selected}
+                      >
+                        <div className="title">{title}</div>
+                        {description && <div className="desc">{description}</div>}
+                        {metaParts.length > 0 && <div className="meta">{metaParts.join(' • ')}</div>}
+                        <div className="chips">
+                          {rule?.date_price != null && <span className="chip">Date price ₹{rule.date_price}</span>}
+                          {rule?.time_price != null && <span className="chip">Time price ₹{rule.time_price}</span>}
+                          {rule?.week_day_price != null && <span className="chip">Weekday price ₹{rule.week_day_price}</span>}
+                        </div>
+                      </RuleCard>
+                    );
+                  })}
+                  {(pricingRules || []).length === 0 && (
+                    <div style={{ fontSize: 12, color: '#6b7280' }}>No pricing rules found.</div>
+                  )}
+                </RuleGrid>
+              </div>
               
               <FormActions>
                 <Button 
@@ -560,6 +592,7 @@ const PackageModal = ({
                     setIsAdding(false);
                     setEditingPackage(null);
                     resetForm();
+                    onClose();
                   }}
                 >
                   Cancel
@@ -568,8 +601,7 @@ const PackageModal = ({
                   {editingPackage ? 'Update Package' : 'Add Package'}
                 </Button>
               </FormActions>
-            </Form>
-          )}
+          </Form>
         </ModalBody>
       </ModalContent>
     </ModalOverlay>

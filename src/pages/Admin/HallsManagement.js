@@ -8,15 +8,13 @@ import { getTempleServicesList } from "../../services/templeServices";
 import {
   Building2,
   Calendar,
-  Users,
   TrendingUp,
   Search,
   Download,
   CheckCircle,
   XCircle,
-  LayoutTemplate,
+  X,
   Plus,
-  Filter,
   Edit,
   Eye,
 } from "lucide-react";
@@ -300,10 +298,8 @@ const HallsManagement = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [hallFilter, setHallFilter] = useState("all");
 
-  const [showHallWizard, setShowHallWizard] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("add") === "hall";
-  });
+  const [showHallWizard, setShowHallWizard] = useState(false);
+  const [editService, setEditService] = useState(null);
   const [hallServices, setHallServices] = useState([]);
   const [hallServicesLoading, setHallServicesLoading] = useState(false);
   const [newHallServiceId, setNewHallServiceId] = useState(null);
@@ -359,14 +355,6 @@ const HallsManagement = () => {
   // Ensure tab switches can occur even if the HallWizard is open
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    if (tab !== "halls") {
-      const params = new URLSearchParams(location.search);
-      if (params.get("add") === "hall") {
-        params.delete("add");
-        params.delete("step");
-        navigate({ pathname: location.pathname, search: params.toString() });
-      }
-    }
   };
 
   // Fetch hall services from API and keep only HALL service_type
@@ -406,17 +394,7 @@ const HallsManagement = () => {
     setBookings([]);
   }, [hallServices]);
 
-  // URL-driven open/close for wizard (?add=hall)
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const isAddHall = params.get("add") === "hall";
-    console.log("URL Params:", location.search);
-    console.log("Is Add Hall:", isAddHall);
-    setShowHallWizard(isAddHall);
-    if (isAddHall && activeTab !== "halls") {
-      setActiveTab("halls");
-    }
-  }, [location.search, activeTab]);
+  // Wizard visibility is controlled only by explicit user actions (Add/Edit)
 
   // Stats based on live halls
   const hallStats = useMemo(() => {
@@ -448,11 +426,8 @@ const HallsManagement = () => {
       }
 
       // Open the hall wizard for editing with pre-filled values
-      const params = new URLSearchParams(location.search);
-      params.set("add", "hall");
-      params.set("step", "0");
-      params.set("edit", service.service_id || "");
-      navigate({ pathname: location.pathname, search: params.toString() });
+      setEditService(service || null);
+      setShowHallWizard(true);
     } catch {}
   };
 
@@ -492,16 +467,18 @@ const HallsManagement = () => {
           </TitleSection>
           <HeaderActions>
             <SecondaryButton>
-              <Filter size={16} />
-              Advanced Filters
-            </SecondaryButton>
-            <SecondaryButton>
               <Download size={16} />
               Export Data
             </SecondaryButton>
-            <PrimaryButton>
+            <PrimaryButton
+              onClick={() => {
+                setEditService(null);
+                setShowHallWizard(true);
+              }}
+              disabled={hallServicesLoading}
+            >
               <Plus size={16} />
-              New Booking
+              Add New Hall
             </PrimaryButton>
           </HeaderActions>
         </Header>
@@ -520,20 +497,6 @@ const HallsManagement = () => {
           >
             <Calendar size={18} />
             Bookings
-          </Tab>
-          <Tab
-            $active={activeTab === "halls"}
-            onClick={() => handleTabChange("halls")}
-          >
-            <LayoutTemplate size={18} />
-            Halls
-          </Tab>
-          <Tab
-            $active={activeTab === "customers"}
-            onClick={() => handleTabChange("customers")}
-          >
-            <Users size={18} />
-            Customers
           </Tab>
         </Tabs>
 
@@ -667,122 +630,92 @@ const HallsManagement = () => {
           </ContentCard>
         )}
 
-        {activeTab === "halls" && (
-          <ContentCard>
-            <div className="card-header">
-              <div className="card-title">Hall Configuration</div>
-              <PrimaryButton
-                onClick={() => {
-                  const params = new URLSearchParams(location.search);
-                  params.delete("edit"); // ensure clean slate for new hall
-                  params.set("add", "hall");
-                  params.set("step", "0");
-                  console.log("Setting URL Params:", params.toString());
-                  navigate({
-                    pathname: location.pathname,
-                    search: params.toString(),
-                  });
-                }}
-                disabled={hallServicesLoading}
-              >
-                <Plus size={16} />
-                Add New Hall
-              </PrimaryButton>
-            </div>
-            {console.log("Rendering Hall Wizard:", showHallWizard)}
-            {!showHallWizard ? (
-              <div
-                style={{
-                  padding: "40px",
-                  textAlign: "center",
-                  color: "#64748b",
-                }}
-              >
-                <LayoutTemplate
-                  size={48}
-                  style={{ marginBottom: "16px", opacity: 0.5 }}
-                />
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    marginBottom: "8px",
-                  }}
-                >
-                  Hall Configuration Center
-                </div>
-                <div style={{ fontSize: "14px" }}>
-                  Add or edit hall configurations using the button above
-                </div>
-              </div>
-            ) : (
-              <HallForm
-                onCancel={() => {
-                  const params = new URLSearchParams(location.search);
-                  params.delete("add");
-                  params.delete("step");
-                  navigate({
-                    pathname: location.pathname,
-                    search: params.toString(),
-                  });
-                }}
-                onSuccess={async (serviceId) => {
-                  console.log(
-                    "HallForm onSuccess called with serviceId:",
-                    serviceId
-                  );
-                  const params = new URLSearchParams(location.search);
-                  params.delete("add");
-                  params.delete("step");
-                  if (serviceId) {
-                    params.set("new_hall", serviceId);
-                    params.set("tab", "overview");
-                    console.log("Setting URL params:", params.toString());
-                  } else {
-                    console.warn("No serviceId provided to onSuccess callback");
-                    // Fallback: just navigate to overview without notification
-                    params.set("tab", "overview");
-                  }
-                  navigate({
-                    pathname: location.pathname,
-                    search: params.toString(),
-                  });
-                  try {
-                    await fetchHallServices();
-                  } catch {}
-                }}
-              />
-            )}
-          </ContentCard>
+        {showAddonsNotification && activeTab !== "overview" && (
+          <AddonsNotification
+            serviceId={newHallServiceId}
+            onClose={() => setShowAddonsNotification(false)}
+            onSkip={() => setShowAddonsNotification(false)}
+          />
         )}
 
-        {activeTab === "customers" && (
-          <ContentCard>
-            <div className="card-header">
-              <div className="card-title">Customer Management</div>
-              <PrimaryButton>
-                <Plus size={16} />
-                Add Customer
-              </PrimaryButton>
-            </div>
+        {showHallWizard && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Add or edit hall"
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(15, 23, 42, 0.45)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 1000,
+              padding: "24px",
+            }}
+          >
             <div
-              style={{ padding: "40px", textAlign: "center", color: "#64748b" }}
+              role="document"
+              style={{
+                width: "auto",
+                maxWidth: "unset",
+                background: "transparent",
+                borderRadius: 0,
+                boxShadow: "none",
+                overflow: "visible",
+                height: "auto",
+                display: "flex",
+                flexDirection: "column",
+                position: "relative",
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  setShowHallWizard(false);
+                }
+              }}
             >
-              <Users size={48} style={{ marginBottom: "16px", opacity: 0.5 }} />
-              <div
+              <button
+                onClick={() => {
+                  setShowHallWizard(false);
+                }}
+                aria-label="Close"
                 style={{
-                  fontSize: "18px",
-                  fontWeight: "600",
-                  marginBottom: "8px",
+                  position: "absolute",
+                  top: 12,
+                  right: 12,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 36,
+                  height: 36,
+                  borderRadius: 8,
+                  border: "1px solid #e5e7eb",
+                  background: "#ffffff",
+                  cursor: "pointer",
+                  zIndex: 1,
                 }}
               >
-                Customer Database
-              </div>
-              <div style={{ fontSize: "14px" }}>
-                Customer management interface will be implemented here
+                <X size={18} />
+              </button>
+              <div style={{ flex: 1, minHeight: 0, display: "flex", overflow: "hidden", padding: 0 }}>
+                <HallForm
+                  editService={editService}
+                  onCancel={() => {
+                    setShowHallWizard(false);
+                    setEditService(null);
+                  }}
+                  onSuccess={async (serviceId) => {
+                    console.log("HallForm onSuccess called with serviceId:", serviceId);
+                    setShowHallWizard(false);
+                    setEditService(null);
+                    try {
+                      await fetchHallServices();
+                    } catch {}
+                  }}
+                />
               </div>
             </div>
-          </ContentCard>
+          </div>
         )}
       </Container>
     </PageContainer>

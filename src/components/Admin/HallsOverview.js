@@ -1,6 +1,9 @@
 import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Building2, TrendingUp, IndianRupee, LayoutTemplate, Search, Eye, CheckCircle, Settings, Users, Edit3, ChevronUp, Plus } from "lucide-react";
+import PackagesPanel from "./PackagesPanel";
+import AdvancePanel from "./AdvancePanel";
+import RefundPanel from "./RefundPanel";
 import PackageModal from "./PackageModal";
 import { processTempleServiceData, getAdvancePolicyList, getRefundPolicyList } from "../../services/templeServices";
 
@@ -140,21 +143,29 @@ const SearchInput = styled.div`
 
 const HallGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   position: relative;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const HallCard = styled.div`
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  min-height: 440px;
+  min-height: 340px;
   ${props => props.$expanded ? `
     grid-column: 1 / -1;
     box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.2);
@@ -170,7 +181,7 @@ const HallCard = styled.div`
 const HallImageContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 160px;
   overflow: hidden;
   background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
   flex-shrink: 0;
@@ -230,49 +241,86 @@ const HallMainImage = styled.img`
 const ImageOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.3) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.08) 55%, rgba(0,0,0,0.24) 100%);
 `;
 
 const StatusBadgeNew = styled.div`
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 12px;
+  left: 12px;
   background: ${props => props.$active ? 'rgba(16, 185, 129, 0.9)' : 'rgba(156, 163, 175, 0.9)'};
   backdrop-filter: blur(8px);
   color: #ffffff;
-  padding: 6px 12px;
-  font-size: 12px;
+  padding: 3px 6px;
+  font-size: 9px;
   font-weight: 600;
-  border-radius: 20px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: inline-block;
+  }
 `;
 
 const ImageCounter = styled.div`
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(15, 23, 42, 0.8);
+  top: 12px;
+  right: 12px;
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(8px);
   color: #ffffff;
-  padding: 6px 12px;
-  font-size: 12px;
+  padding: 3px 8px;
+  font-size: 10px;
   font-weight: 500;
-  border-radius: 20px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   gap: 4px;
 `;
 
+const HallHeaderRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+`;
+
+const EditHeaderButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+  }
+`;
+
 const HallBody = styled.div`
-  padding: 20px;
+  padding: 12px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 `;
 
 const HallTitle = styled.h3`
@@ -289,9 +337,9 @@ const HallTitle = styled.h3`
 const HallDescription = styled.p`
   margin: 0;
   color: #64748b;
-  font-size: 13px;
-  line-height: 1.4;
-  height: 36px;
+  font-size: 12px;
+  line-height: 1.3;
+  height: 32px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -307,13 +355,13 @@ const ButtonRow = styled.div`
 
 const ActionButton = styled.button`
   flex: 1;
-  padding: 10px 12px;
+  padding: 8px 12px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   color: #475569;
   border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   text-transform: capitalize;
@@ -323,34 +371,42 @@ const ActionButton = styled.button`
   justify-content: center;
   
   /* Packages button - keep current styling */
+  ${props => props.$type === 'packages' ? `
+    background: #EFF6FF; /* light blue tint */
+    border-color: #BFDBFE;
+    color: #3B82F6; /* base blue */
+  ` : ''}
   ${props => props.$type === 'packages' && props.$active ? `
-    background: #eef2ff;
-    border-color: #c7d2fe;
-    color: #3730a3;
+    background: #DBEAFE; /* darker tint when active */
+    border-color: #93C5FD;
+    color: #2563EB; /* darker blue */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
   ` : ''}
   
   /* Advance button - subtle blue */
   ${props => props.$type === 'advance' ? `
-    background: #f0f9ff;
-    border-color: #bae6fd;
-    color: #0369a1;
+    background: #ECFDF5; /* light green tint */
+    border-color: #A7F3D0;
+    color: #10B981; /* base green */
   ` : ''}
   ${props => props.$type === 'advance' && props.$active ? `
-    background: #a9cdfd;
-    border-color: #93c5fd;
-    color: #1d4ed8;
+    background: #D1FAE5; /* darker tint when active */
+    border-color: #6EE7B7;
+    color: #059669; /* darker green */
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
   ` : ''}
   
   /* Refund button - subtle red */
   ${props => props.$type === 'refund' ? `
-    background: #fef2f2;
-    border-color: #fecaca;
-    color: #dc2626;
+    background: #FEF2F2; /* light red tint */
+    border-color: #FECACA;
+    color: #EF4444; /* base red */
   ` : ''}
   ${props => props.$type === 'refund' && props.$active ? `
-    background: #fee2e2;
-    border-color: #fca5a5;
-    color: #b91c1c;
+    background: #FEE2E2; /* darker tint when active */
+    border-color: #FCA5A5;
+    color: #B91C1C; /* darker red */
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25);
   ` : ''}
   
   /* Default hover states */
@@ -363,25 +419,25 @@ const ActionButton = styled.button`
   /* Type-specific hover states */
   ${props => props.$type === 'packages' && `
     &:hover {
-      background: #eef2ff;
-      border-color: #c7d2fe;
-      color: #3730a3;
+      background: #DBEAFE;
+      border-color: #93C5FD;
+      color: #2563EB;
     }
   `}
   
   ${props => props.$type === 'advance' && `
     &:hover {
-      background: #e0f2fe;
-      border-color: #7dd3fc;
-      color: #0284c7;
+      background: #D1FAE5;
+      border-color: #6EE7B7;
+      color: #059669;
     }
   `}
   
   ${props => props.$type === 'refund' && `
     &:hover {
-      background: #fecaca;
-      border-color: #f87171;
-      color: #b91c1c;
+      background: #FEE2E2;
+      border-color: #FCA5A5;
+      color: #DC2626;
     }
   `}
   
@@ -402,7 +458,7 @@ const FeatureTag = styled.span`
   color: #065f46;
   font-size: 11px;
   font-weight: 600;
-  padding: 6px 10px;
+  padding: 4px 8px;
   border-radius: 12px;
   border: 1px solid #a7f3d0;
   white-space: nowrap;
@@ -417,14 +473,14 @@ const HallActions = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 14px 20px;
+  padding: 8px 12px;
   border-top: 1px solid #eef2f7;
   background: #ffffff;
   flex-shrink: 0;
   position: sticky;
   bottom: 0;
   z-index: 2;
-  box-shadow: 0 -6px 12px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 -3px 8px rgba(15, 23, 42, 0.04);
   gap: 8px;
 `;
 
@@ -456,31 +512,33 @@ const EditButton = styled.button`
 // Collapse button uses IconButton base. Keep base defined first (see below)
 
 const ExpandedContent = styled.div`
-  overflow: hidden;
-  max-height: ${props => props.$expanded ? '720px' : '0'};
+  overflow: visible;
+  max-height: ${props => props.$expanded ? 'none' : '0'};
   opacity: ${props => props.$expanded ? 1 : 0};
-  transform: translateY(${props => props.$expanded ? '0' : '-6px'});
-  transition: max-height 0.45s ease, opacity 0.25s ease, transform 0.35s ease;
+  transform: translateY(${props => props.$expanded ? '0' : '-4px'});
+  transition: ${props => props.$expanded ? 'opacity 0.2s ease, transform 0.25s ease' : 'max-height 0.35s ease, opacity 0.2s ease, transform 0.25s ease'};
   border-top: 1px solid #eef2f7;
-  background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+  background: #ffffff;
+  padding: 0;
 `;
 
 const ExpandedInner = styled.div`
-  padding: 20px;
+  padding: 8px 8px 12px 8px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 8px;
 `;
 
 const Panel = styled.div`
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  margin-bottom: 8px;
 `;
 
 const PanelHeader = styled.div`
-  padding: 14px 16px;
+  padding: 10px 14px;
   border-bottom: 1px solid #f1f5f9;
   display: flex;
   align-items: center;
@@ -490,7 +548,7 @@ const PanelHeader = styled.div`
 `;
 
 const PanelBody = styled.div`
-  padding: 16px;
+  padding: 8px;
   color: #475569;
   font-size: 14px;
 `;
@@ -652,8 +710,8 @@ const HallsOverview = ({
   const [expandedHallId, setExpandedHallId] = useState(null);
   const [expandedTab, setExpandedTab] = useState(null);
   const gridRef = useRef(null);
-  const [packageModalOpen, setPackageModalOpen] = useState(false);
   const [selectedHall, setSelectedHall] = useState(null);
+  const [packageModalOpen, setPackageModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [advancePolicies, setAdvancePolicies] = useState([]);
   const [advLoading, setAdvLoading] = useState(false);
@@ -687,11 +745,15 @@ const HallsOverview = ({
           setAdvLoading(true);
           const data = await getAdvancePolicyList();
           const listRaw = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
-          const list = listRaw.map(p => ({ ...p, id: p?.id != null ? Number(p.id) : p.id }));
-          setAdvancePolicies(list);
-          // Preselect: current hall policy or default policy
+          // Determine active temple id from the expanded hall
           const hallFromList = hallServices.find(h => h.service_id === expandedHallId);
           const hallCandidate = hallFromList || selectedHall;
+          const templeId = hallCandidate?.temple_id;
+          // Filter policies to only the current temple (if id is present)
+          const filtered = listRaw.filter(service => !templeId || String(service.temple_id) === String(templeId));
+          const list = filtered.map(p => ({ ...p, id: p?.id != null ? Number(p.id) : p.id }));
+          setAdvancePolicies(list);
+          // Preselect: current hall policy or default policy
           const currentIdRaw = hallCandidate?.adv_policy_data?.id ?? hallCandidate?.adv_policy_id ?? null;
           const currentId = currentIdRaw != null ? Number(currentIdRaw) : null;
           const defaultPolicy = list.find(p => p.is_default);
@@ -714,12 +776,14 @@ const HallsOverview = ({
           setRefundLoading(true);
           const data = await getRefundPolicyList();
           const raw = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
-          const activeOnly = raw.filter(p => p?.is_active);
+          const hallFromList = hallServices.find(h => h.service_id === expandedHallId);
+          const hallCandidate = hallFromList || selectedHall;
+          const templeId = hallCandidate?.temple_id;
+          const byTemple = raw.filter(service => !templeId || String(service.temple_id) === String(templeId));
+          const activeOnly = byTemple.filter(p => p?.is_active);
           const list = activeOnly.map(p => ({ ...p, id: p?.id != null ? Number(p.id) : p.id }));
           setRefundPolicies(list);
           // Preselect: current hall policy or default policy
-          const hallFromList = hallServices.find(h => h.service_id === expandedHallId);
-          const hallCandidate = hallFromList || selectedHall;
           const currentIdRaw = hallCandidate?.refund_policy_data?.id ?? hallCandidate?.refund_policy_id ?? null;
           const currentId = currentIdRaw != null ? Number(currentIdRaw) : null;
           const defaultPolicy = list.find(p => p.is_default);
@@ -733,8 +797,9 @@ const HallsOverview = ({
     }
   }, [expandedHallId, expandedTab, hallServices, selectedHall]);
 
-  const handleSaveAdvancePolicy = useCallback(async () => {
-    if (!expandedHallId || !selectedAdvPolicyId) return;
+  const handleSaveAdvancePolicy = useCallback(async (policyId) => {
+    const selectedPolicyId = policyId || selectedAdvPolicyId;
+    if (!expandedHallId || !selectedPolicyId) return;
     const hall = hallServices.find(h => h.service_id === expandedHallId) || selectedHall;
     if (!hall) return;
 
@@ -746,7 +811,7 @@ const HallsOverview = ({
         name: hall.name,
         service_type: hall.service_type,
         description: hall.description || "",
-        adv_policy_id: selectedAdvPolicyId,
+        adv_policy_id: selectedPolicyId,
         refund_policy_id: hall.refund_policy_id ?? hall.refund_policy_data?.id ?? 1,
         base_price: typeof hall.base_price === 'string' ? parseFloat(hall.base_price) : hall.base_price,
         capacity: typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity,
@@ -757,17 +822,17 @@ const HallsOverview = ({
 
       const response = await processTempleServiceData(serviceData);
 
-      const chosenPolicy = advancePolicies.find(p => Number(p.id) === Number(selectedAdvPolicyId)) || null;
+      const chosenPolicy = advancePolicies.find(p => Number(p.id) === Number(selectedPolicyId)) || null;
 
       const updatedHall = {
         ...hall,
-        adv_policy_id: selectedAdvPolicyId,
+        adv_policy_id: selectedPolicyId,
         adv_policy_data: response?.service_data?.adv_policy_data || chosenPolicy || hall.adv_policy_data,
         _inlineUpdate: true
       };
 
       // Sync local selection explicitly
-      setSelectedAdvPolicyId(Number(selectedAdvPolicyId));
+      setSelectedAdvPolicyId(Number(selectedPolicyId));
 
       setSuccessMessage("Advance policy saved successfully!");
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -779,8 +844,9 @@ const HallsOverview = ({
     }
   }, [expandedHallId, selectedAdvPolicyId, hallServices, onEditHall, selectedHall, advancePolicies]);
 
-  const handleSaveRefundPolicy = useCallback(async () => {
-    if (!expandedHallId || !selectedRefundPolicyId) return;
+  const handleSaveRefundPolicy = useCallback(async (policyId) => {
+    const selectedPolicyId = policyId || selectedRefundPolicyId;
+    if (!expandedHallId || !selectedPolicyId) return;
     const hall = hallServices.find(h => h.service_id === expandedHallId) || selectedHall;
     if (!hall) return;
 
@@ -793,7 +859,7 @@ const HallsOverview = ({
         service_type: hall.service_type,
         description: hall.description || "",
         adv_policy_id: hall.adv_policy_id ?? hall.adv_policy_data?.id ?? 1,
-        refund_policy_id: selectedRefundPolicyId,
+        refund_policy_id: selectedPolicyId,
         base_price: typeof hall.base_price === 'string' ? parseFloat(hall.base_price) : hall.base_price,
         capacity: typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity,
         duration_minutes: typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes,
@@ -803,16 +869,16 @@ const HallsOverview = ({
 
       const response = await processTempleServiceData(serviceData);
 
-      const chosenPolicy = refundPolicies.find(p => Number(p.id) === Number(selectedRefundPolicyId)) || null;
+      const chosenPolicy = refundPolicies.find(p => Number(p.id) === Number(selectedPolicyId)) || null;
       const updatedHall = {
         ...hall,
-        refund_policy_id: selectedRefundPolicyId,
+        refund_policy_id: selectedPolicyId,
         refund_policy_data: response?.service_data?.refund_policy_data || chosenPolicy || hall.refund_policy_data,
         _inlineUpdate: true
       };
 
       // sync id locally
-      setSelectedRefundPolicyId(Number(selectedRefundPolicyId));
+      setSelectedRefundPolicyId(Number(selectedPolicyId));
 
       setSuccessMessage("Refund policy saved successfully!");
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -821,7 +887,7 @@ const HallsOverview = ({
       if (selectedHall?.service_id === hall.service_id) setSelectedHall(updatedHall);
     } catch (e) {
     }
-  }, [expandedHallId, selectedRefundPolicyId, hallServices, selectedHall, refundPolicies, onEditHall]);
+  }, [expandedHallId, selectedRefundPolicyId, hallServices, onEditHall, selectedHall, refundPolicies]);
 
   const totalVariations = useMemo(() => (
     hallServices.reduce((sum, h) => sum + (Array.isArray(h.service_variation_list) ? h.service_variation_list.length : 0), 0)
@@ -832,8 +898,13 @@ const HallsOverview = ({
       setExpandedHallId(null);
       setExpandedTab(null);
     } else {
+      // reset any inline package editor when switching cards/tabs
+      setIsEditingPackage(false);
+      setEditingPackageId(null);
       setExpandedHallId(hallId);
       setExpandedTab(tab);
+      const hallObj = hallServices.find(h => h.service_id === hallId);
+      if (hallObj) setSelectedHall(hallObj);
       // Compute the vertical offset of the clicked card row to place an overlay
       try {
         const grid = gridRef.current;
@@ -848,16 +919,69 @@ const HallsOverview = ({
     }
   };
 
-  const handlePackageModalOpen = useCallback((hall) => {
-    setSelectedHall(hall);
-    setPackageModalOpen(true);
-  }, []);
+  // Inline package editor state and helpers (used for modal as well)
+  const [isEditingPackage, setIsEditingPackage] = useState(false);
+  const [editingPackageId, setEditingPackageId] = useState(null);
+  const [packageForm, setPackageForm] = useState({
+    price_type: "HOURLY",
+    base_price: "",
+    start_time: "",
+    end_time: "",
+    no_hours: "",
+    max_no_per_day: "",
+    max_participant: "",
+    pricing_rule_id: 1,
+  });
 
-  const handlePackageModalClose = useCallback(() => {
+  const openAddPackage = (hall) => {
+    setSelectedHall(hall);
+    setIsEditingPackage(true);
+    setEditingPackageId(null);
+    setPackageForm({
+      price_type: "HOURLY",
+      base_price: "",
+      start_time: "",
+      end_time: "",
+      no_hours: "",
+      max_no_per_day: "",
+      max_participant: "",
+      pricing_rule_id: hall?.pricing_rule_id || 1,
+    });
+    setPackageModalOpen(true);
+  };
+
+  const openEditPackage = (hall, pkg) => {
+    setSelectedHall(hall);
+    setIsEditingPackage(true);
+    setEditingPackageId(pkg?.id ?? null);
+    setPackageForm({
+      price_type: pkg.price_type || "HOURLY",
+      base_price: String(pkg.base_price ?? ""),
+      start_time: pkg.start_time || "",
+      end_time: pkg.end_time || "",
+      no_hours: pkg.no_hours != null ? String(pkg.no_hours) : "",
+      max_no_per_day: pkg.max_no_per_day != null ? String(pkg.max_no_per_day) : "",
+      max_participant: pkg.max_participant != null ? String(pkg.max_participant) : "",
+      pricing_rule_id: pkg.pricing_rule_id || hall?.pricing_rule_id || 1,
+    });
+    setPackageModalOpen(true);
+  };
+
+  const cancelPackageEdit = () => {
+    setIsEditingPackage(false);
+    setEditingPackageId(null);
+    setPackageForm({
+      price_type: "HOURLY",
+      base_price: "",
+      start_time: "",
+      end_time: "",
+      no_hours: "",
+      max_no_per_day: "",
+      max_participant: "",
+      pricing_rule_id: 1,
+    });
     setPackageModalOpen(false);
-    setSelectedHall(null);
-    setSuccessMessage("");
-  }, []);
+  };
 
   const handlePackageSave = useCallback(async (packageData) => {
     if (!selectedHall || isSavingPackage) return;
@@ -946,7 +1070,7 @@ const HallsOverview = ({
       setSuccessMessage("Package saved successfully!");
       setTimeout(() => setSuccessMessage(""), 3000);
       
-      // Close the modal after success
+      // Close modal/editor
       setPackageModalOpen(false);
       
       // Update the hall in the parent component's state
@@ -1134,7 +1258,12 @@ const HallsOverview = ({
                     </HallImageContainer>
 
                     <HallBody>
-                      <HallTitle>{hall.name}</HallTitle>
+                      <HallHeaderRow>
+                        <HallTitle>{hall.name}</HallTitle>
+                        <EditHeaderButton onClick={() => onEditHall?.(hall)} title="Edit hall">
+                          <Edit3 size={14} /> Edit
+                        </EditHeaderButton>
+                      </HallHeaderRow>
                       <HallDescription>
                         {hall.description || 'Premium sacred hall for ceremonies and gatherings'}
                       </HallDescription>
@@ -1167,420 +1296,42 @@ const HallsOverview = ({
 
                     <ExpandedContent $expanded={isExpanded}>
                       <ExpandedInner>
-                        <Panel>
-                          <PanelHeader>
-                            <div>
-                              {expandedTab === 'packages' && 'Packages'}
-                              {expandedTab === 'advance' && 'Advance Policy'}
-                              {expandedTab === 'refund' && 'Refund Policy'}
-                              <span style={{ color: '#94a3b8', fontWeight: 500, fontSize: 12, marginLeft: 8 }}>for {hall.name}</span>
-                            </div>
-                          </PanelHeader>
-                          <PanelBody>
-                            {expandedTab === 'packages' && (
-                              <div>
-                                {successMessage && (
-                                  <div style={{
-                                    padding: '12px 16px',
-                                    background: '#d1fae5',
-                                    border: '1px solid #a7f3d0',
-                                    borderRadius: '8px',
-                                    color: '#065f46',
-                                    fontSize: '14px',
-                                    fontWeight: '500',
-                                    marginBottom: '16px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                  }}>
-                                    <CheckCircle size={16} />
-                                    {successMessage}
-                                  </div>
-                                )}
-                                
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                  <div>
-                                    <div style={{ fontSize: '16px', fontWeight: '600', marginBottom: '4px' }}>
-                                      {Array.isArray(selectedHall?.service_variation_list) ? selectedHall.service_variation_list.length : 
-                                       Array.isArray(hall.service_variation_list) ? hall.service_variation_list.length : 0} Packages
-                                    </div>
-                                    <div style={{ fontSize: '14px', color: '#6b7280' }}>
-                                      Manage time slots and pricing variations
-                                    </div>
-                                  </div>
-                                  <button
-                                    onClick={() => handlePackageModalOpen(hall)}
-                                    style={{
-                                      padding: '8px 16px',
-                                      background: '#3b82f6',
-                                      color: 'white',
-                                      border: 'none',
-                                      borderRadius: '6px',
-                                      fontSize: '14px',
-                                      fontWeight: '500',
-                                      cursor: 'pointer',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      gap: '6px'
-                                    }}
-                                  >
-                                    <Plus size={14} />
-                                    Manage Packages
-                                  </button>
-                                </div>
-                                
-                                {Array.isArray(selectedHall?.service_variation_list) && selectedHall.service_variation_list.length > 0 ? (
-                                  <div style={{ display: 'grid', gap: '12px' }}>
-                                    {selectedHall.service_variation_list.slice(0, 3).map((pkg, index) => (
-                                      <div key={pkg.id || index} style={{
-                                        padding: '12px',
-                                        border: '1px solid #e5e7eb',
-                                        borderRadius: '8px',
-                                        background: '#fafbfc'
-                                      }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                                          <div style={{ fontWeight: '600', fontSize: '14px' }}>
-                                            {pkg.price_type === 'HOURLY' ? 'Hourly' : 
-                                             pkg.price_type === 'HALF_DAY' ? 'Half Day' : 
-                                             pkg.price_type === 'FULL_DAY' ? 'Full Day' : pkg.price_type} Package
-                                          </div>
-                                          <div style={{ fontWeight: '600', color: '#059669', fontSize: '14px' }}>
-                                            ₹{pkg.base_price}
-                                          </div>
-                                        </div>
-                                        <div style={{ fontSize: '12px', color: '#6b7280' }}>
-                                          {pkg.start_time} - {pkg.end_time} • Max {pkg.max_participant} participants
-                                        </div>
-                                      </div>
-                                    ))}
-                                    {selectedHall.service_variation_list.length > 3 && (
-                                      <div style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center', padding: '8px' }}>
-                                        +{selectedHall.service_variation_list.length - 3} more packages
-                                      </div>
-                                    )}
-                                  </div>
-                                ) : Array.isArray(hall.service_variation_list) && hall.service_variation_list.length > 0 ? (
-                                  <div style={{ display: 'grid', gap: '12px' }}>
-                                    {hall.service_variation_list.slice(0, 3).map((pkg, index) => (
-                                      <div key={pkg.id || index} style={{
-                                        padding: '12px',
-                                        border: '1px solid #e5e7eb',
-                                        borderRadius: '8px',
-                                        background: '#fafbfc'
-                                      }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                                          <div style={{ fontWeight: '600', fontSize: '14px' }}>
-                                            {pkg.price_type === 'HOURLY' ? 'Hourly' : 
-                                             pkg.price_type === 'HALF_DAY' ? 'Half Day' : 
-                                             pkg.price_type === 'FULL_DAY' ? 'Full Day' : pkg.price_type} Package
-                                          </div>
-                                          <div style={{ fontWeight: '600', color: '#059669', fontSize: '14px' }}>
-                                            ₹{pkg.base_price}
-                                          </div>
-                                        </div>
-                                        <div style={{ fontSize: '12px', color: '#6b7280' }}>
-                                          {pkg.start_time} - {pkg.end_time} • Max {pkg.max_participant} participants
-                                        </div>
-                                      </div>
-                                    ))}
-                                    {hall.service_variation_list.length > 3 && (
-                                      <div style={{ fontSize: '12px', color: '#6b7280', textAlign: 'center', padding: '8px' }}>
-                                        +{hall.service_variation_list.length - 3} more packages
-                                      </div>
-                                    )}
-                                  </div>
-                                ) : (
-                                  <div style={{ 
-                                    textAlign: 'center', 
-                                    padding: '20px', 
-                                    color: '#6b7280',
-                                    border: '1px dashed #d1d5db',
-                                    borderRadius: '8px',
-                                    background: '#fafbfc'
-                                  }}>
-                                    <div style={{ fontSize: '14px', marginBottom: '8px' }}>No packages defined</div>
-                                    <div style={{ fontSize: '12px' }}>Create your first package to get started</div>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                            {expandedTab === 'advance' && (
-                              <div>
-                                {successMessage && (
-                                  <div style={{
-                                    padding: '12px 16px',
-                                    background: '#d1fae5',
-                                    border: '1px solid #a7f3d0',
-                                    borderRadius: '8px',
-                                    color: '#065f46',
-                                    fontSize: '14px',
-                                    fontWeight: '500',
-                                    marginBottom: '16px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                  }}>
-                                    <CheckCircle size={16} />
-                                    {successMessage}
-                                  </div>
-                                )}
-
-                                {advLoading ? (
-                                  <div style={{ padding: '20px', color: '#6b7280' }}>Loading advance policies...</div>
-                                ) : (
-                                  <div style={{ display: 'grid', gap: '12px' }}>
-                                    {advancePolicies.length === 0 && (
-                                      <div style={{
-                                        textAlign: 'center',
-                                        padding: '20px',
-                                        color: '#6b7280',
-                                        border: '1px dashed #d1d5db',
-                                        borderRadius: '8px',
-                                        background: '#fafbfc'
-                                      }}>
-                                        No advance policies found
-                                      </div>
-                                    )}
-
-                                    {/* Current selection summary */}
-                                    {advancePolicies.length > 0 && (
-                                      <div style={{
-                                        padding: '10px 12px',
-                                        border: '1px solid #e5e7eb',
-                                        borderRadius: '10px',
-                                        background: '#f8fafc',
-                                        color: '#334155',
-                                        fontSize: 13,
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
-                                      }}>
-                                        <span>Current Advance Policy</span>
-                                        <strong>{(advancePolicies.find(p => p.id === selectedAdvPolicyId)?.name) || '—'}</strong>
-                                      </div>
-                                    )}
-
-                                    {advancePolicies.map((p) => (
-                                      <PolicyOption key={p.id} onClick={() => setSelectedAdvPolicyId(Number(p.id))}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                                          <input
-                                            type="radio"
-                                            id={`adv_policy_${expandedHallId}_${p.id}`}
-                                            name={`adv_policy_${expandedHallId}`}
-                                            value={String(p.id)}
-                                            checked={Number(selectedAdvPolicyId) === Number(p.id)}
-                                            onChange={() => setSelectedAdvPolicyId(Number(p.id))}
-                                          />
-                                          <span className="radio-mark" />
-                                          <div>
-                                            <div style={{ fontWeight: 600, color: '#0f172a' }}>{p.name}</div>
-                                            <div style={{ fontSize: 12, color: '#6b7280' }}>
-                                              {p.percent ? `${p.percent}%` : ''} {p.min_amount ? `• Min ₹${p.min_amount}` : ''} {p.due_mode_str ? `• ${p.due_mode_str}` : ''}
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                          {Number(selectedAdvPolicyId) === Number(p.id) && (
-                                            <span style={{
-                                              background: '#dcfce7',
-                                              color: '#166534',
-                                              border: '1px solid #bbf7d0',
-                                              borderRadius: '999px',
-                                              fontSize: 11,
-                                              fontWeight: 700,
-                                              padding: '4px 8px',
-                                              textTransform: 'uppercase',
-                                              letterSpacing: '0.05em'
-                                            }}>
-                                              Selected
-                                            </span>
-                                          )}
-                                          {p.is_default && (
-                                            <span style={{
-                                              background: '#eef2ff',
-                                              color: '#3730a3',
-                                              border: '1px solid #c7d2fe',
-                                              borderRadius: '999px',
-                                              fontSize: 11,
-                                              fontWeight: 700,
-                                              padding: '4px 8px',
-                                              textTransform: 'uppercase',
-                                              letterSpacing: '0.05em'
-                                            }}>
-                                              Default
-                                            </span>
-                                          )}
-                                        </div>
-                                      </PolicyOption>
-                                    ))}
-
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}>
-                                      <button
-                                        onClick={handleSaveAdvancePolicy}
-                                        disabled={!selectedAdvPolicyId}
-                                        style={{
-                                          padding: '10px 16px',
-                                          background: selectedAdvPolicyId ? '#10b981' : '#94a3b8',
-                                          color: 'white',
-                                          border: 'none',
-                                          borderRadius: '8px',
-                                          fontSize: '14px',
-                                          fontWeight: 600,
-                                          cursor: selectedAdvPolicyId ? 'pointer' : 'not-allowed',
-                                          boxShadow: '0 1px 2px rgba(15, 23, 42, 0.08)'
-                                        }}
-                                      >
-                                        Save Changes
-                                      </button>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                            {expandedTab === 'refund' && (
-                              <div>
-                                {successMessage && (
-                                  <div style={{
-                                    padding: '12px 16px',
-                                    background: '#d1fae5',
-                                    border: '1px solid #a7f3d0',
-                                    borderRadius: '8px',
-                                    color: '#065f46',
-                                    fontSize: '14px',
-                                    fontWeight: '500',
-                                    marginBottom: '16px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                  }}>
-                                    <CheckCircle size={16} />
-                                    {successMessage}
-                                  </div>
-                                )}
-
-                                {refundLoading ? (
-                                  <div style={{ padding: '20px', color: '#6b7280' }}>Loading refund policies...</div>
-                                ) : (
-                                  <div style={{ display: 'grid', gap: '12px' }}>
-                                    {refundPolicies.length === 0 && (
-                                      <div style={{
-                                        textAlign: 'center',
-                                        padding: '20px',
-                                        color: '#6b7280',
-                                        border: '1px dashed #d1d5db',
-                                        borderRadius: '8px',
-                                        background: '#fafbfc'
-                                      }}>
-                                        No active refund policies found
-                                      </div>
-                                    )}
-
-                                    {refundPolicies.length > 0 && (
-                                      <div style={{
-                                        padding: '10px 12px',
-                                        border: '1px solid #e5e7eb',
-                                        borderRadius: '10px',
-                                        background: '#f8fafc',
-                                        color: '#334155',
-                                        fontSize: 13,
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
-                                      }}>
-                                        <span>Current Refund Policy</span>
-                                        <strong>{(refundPolicies.find(p => Number(p.id) === Number(selectedRefundPolicyId))?.name) || '—'}</strong>
-                                      </div>
-                                    )}
-
-                                    {refundPolicies.map((p) => (
-                                      <PolicyOption key={p.id} onClick={() => setSelectedRefundPolicyId(Number(p.id))}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                                          <input
-                                            type="radio"
-                                            id={`refund_policy_${expandedHallId}_${p.id}`}
-                                            name={`refund_policy_${expandedHallId}`}
-                                            value={String(p.id)}
-                                            checked={Number(selectedRefundPolicyId) === Number(p.id)}
-                                            onChange={() => setSelectedRefundPolicyId(Number(p.id))}
-                                          />
-                                          <span className="radio-mark" />
-                                          <div>
-                                            <div style={{ fontWeight: 600, color: '#0f172a' }}>{p.name}</div>
-                                            <div style={{ fontSize: 12, color: '#6b7280' }}>
-                                              {p?.refund_rules?.length || 0} rule{(p?.refund_rules?.length || 0) !== 1 ? 's' : ''}
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                          {Number(selectedRefundPolicyId) === Number(p.id) && (
-                                            <span style={{
-                                              background: '#dcfce7',
-                                              color: '#166534',
-                                              border: '1px solid #bbf7d0',
-                                              borderRadius: '999px',
-                                              fontSize: 11,
-                                              fontWeight: 700,
-                                              padding: '4px 8px',
-                                              textTransform: 'uppercase',
-                                              letterSpacing: '0.05em'
-                                            }}>
-                                              Selected
-                                            </span>
-                                          )}
-                                          {p.is_default && (
-                                            <span style={{
-                                              background: '#eef2ff',
-                                              color: '#3730a3',
-                                              border: '1px solid #c7d2fe',
-                                              borderRadius: '999px',
-                                              fontSize: 11,
-                                              fontWeight: 700,
-                                              padding: '4px 8px',
-                                              textTransform: 'uppercase',
-                                              letterSpacing: '0.05em'
-                                            }}>
-                                              Default
-                                            </span>
-                                          )}
-                                        </div>
-                                      </PolicyOption>
-                                    ))}
-
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}>
-                                      <button
-                                        onClick={handleSaveRefundPolicy}
-                                        disabled={!selectedRefundPolicyId}
-                                        style={{
-                                          padding: '10px 16px',
-                                          background: selectedRefundPolicyId ? '#10b981' : '#94a3b8',
-                                          color: 'white',
-                                          border: 'none',
-                                          borderRadius: '8px',
-                                          fontSize: '14px',
-                                          fontWeight: 600,
-                                          cursor: selectedRefundPolicyId ? 'pointer' : 'not-allowed',
-                                          boxShadow: '0 1px 2px rgba(15, 23, 42, 0.08)'
-                                        }}
-                                      >
-                                        Save Changes
-                                      </button>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </PanelBody>
-                        </Panel>
+                        {expandedTab === 'packages' && (
+                          <PackagesPanel
+                            hall={hall}
+                            selectedHall={selectedHall}
+                            successMessage={successMessage}
+                            onAdd={openAddPackage}
+                            onEdit={openEditPackage}
+                            onDelete={(h, id) => { setSelectedHall(h); handlePackageDelete(id); }}
+                          />
+                        )}
+                        {expandedTab === 'advance' && (
+                          <AdvancePanel
+                            hall={hall}
+                            advancePolicies={advancePolicies}
+                            selectedAdvPolicyId={selectedAdvPolicyId}
+                            onSelect={setSelectedAdvPolicyId}
+                            onSave={handleSaveAdvancePolicy}
+                            successMessage={successMessage}
+                            loading={advLoading}
+                          />
+                        )}
+                        {expandedTab === 'refund' && (
+                          <RefundPanel
+                            hall={hall}
+                            refundPolicies={refundPolicies}
+                            selectedRefundPolicyId={selectedRefundPolicyId}
+                            onSelect={setSelectedRefundPolicyId}
+                            onSave={handleSaveRefundPolicy}
+                            successMessage={successMessage}
+                            loading={refundLoading}
+                          />
+                        )}
                       </ExpandedInner>
                     </ExpandedContent>
 
                     <HallActions>
-                      <EditButton 
-                        onClick={() => onEditHall?.(hall)}
-                      >
-                        <Edit3 size={16} />
-                        Edit
-                      </EditButton>
                       {isExpanded && (
                         <CollapseButton 
                           onClick={() => { setExpandedHallId(null); setExpandedTab(null); }}
@@ -1610,12 +1361,13 @@ const HallsOverview = ({
       {/* Package Management Modal */}
       <PackageModal
         isOpen={packageModalOpen}
-        onClose={handlePackageModalClose}
+        onClose={cancelPackageEdit}
         hall={selectedHall}
         packages={selectedHall?.service_variation_list || []}
-        onSave={handlePackageSave}
-        onDelete={handlePackageDelete}
+        onSave={(pkg)=> handlePackageSave(pkg)}
+        onDelete={(id)=> handlePackageDelete(id)}
         isSaving={isSavingPackage}
+        initialPackage={editingPackageId != null ? (selectedHall?.service_variation_list || []).find(p=>p.id===editingPackageId) : (isEditingPackage ? {} : undefined)}
       />
     </>
   );

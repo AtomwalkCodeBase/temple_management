@@ -6,133 +6,320 @@ import { getServiceTypeList, processTempleServiceData, processTempleServiceImage
 import { gettemplist } from "../../services/productServices";
 import { getStoredTempleId } from "../../services/authServices";
 
-const Card = styled.div`
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1.5rem;
-  max-width: 800px;
+const Container = styled.div`
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  max-width: 760px;
   margin: 0 auto;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  height: 72vh;
+  max-height: 84vh;
+
+  @media (max-width: 768px) {
+    height: 86vh;
+    max-height: 92vh;
+  }
+`;
+
+const Header = styled.div`
+  padding: 16px 24px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+`;
+
+const Content = styled.div`
+  padding: 12px 24px 16px;
+  flex: 1 1 auto;
+  overflow-y: ${props => props.scroll ? 'auto' : 'hidden'};
+`;
+
+const Footer = styled.div`
+  padding: 12px 24px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+`;
+
+const Title = styled.h2`
+  color: #1d1d1f;
+  margin: 0 0 6px 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+`;
+
+const TempleInfo = styled.div`
+  background: linear-gradient(135deg, #007aff, #5856d6);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
-  @media (max-width: 768px) { grid-template-columns: 1fr; }
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;
 
 const FormGroup = styled.div`
-  display: flex; 
-  flex-direction: column; 
-  gap: 0.5rem;
-  &.full { grid-column: 1 / -1; }
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  
+  &.full-width {
+    grid-column: 1 / -1;
+  }
 `;
 
 const Label = styled.label`
-  color: #374151; 
-  font-weight: 600; 
-  font-size: 0.9rem;
+  color: #1d1d1f;
+  font-size: 14px;
+  font-weight: 600;
+  
+  &.required::after {
+    content: " *";
+    color: #ff3b30;
+  }
 `;
 
 const Input = styled.input`
-  padding: 0.75rem 1rem; 
-  border: 2px solid #e5e7eb; 
-  border-radius: 0.5rem; 
-  font-size: 1rem; 
-  transition: all 0.2s;
-  &:focus { 
-    outline: none; 
-    border-color: #7c3aed; 
-    box-shadow: 0 0 0 3px rgba(124,58,237,0.12); 
+  padding: 12px 16px;
+  border: 2px solid #e5e5e7;
+  border-radius: 10px;
+  font-size: 15px;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: #007aff;
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+  }
+  
+  &::placeholder {
+    color: #86868b;
   }
 `;
 
 const TextArea = styled.textarea`
-  padding: 0.75rem 1rem; 
-  border: 2px solid #e5e7eb; 
-  border-radius: 0.5rem; 
-  font-size: 1rem; 
-  min-height: 100px; 
+  padding: 12px 16px;
+  border: 2px solid #e5e5e7;
+  border-radius: 10px;
+  font-size: 15px;
+  background: #ffffff;
+  min-height: 64px;
   resize: vertical;
-  &:focus { 
-    outline: none; 
-    border-color: #7c3aed; 
-    box-shadow: 0 0 0 3px rgba(124,58,237,0.12); 
+  font-family: inherit;
+  transition: all 0.2s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: #007aff;
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+  }
+  
+  &::placeholder {
+    color: #86868b;
   }
 `;
 
-const Row = styled.div`
-  display: flex; 
-  gap: 1rem; 
-  flex-wrap: wrap; 
-  justify-content: flex-end; 
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+const ImageGrid = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+  
+  @media (max-width: 968px) {
+    grid-template-columns: 2fr 1fr 1fr;
+    
+    .image-slot:nth-child(n+4) {
+      grid-column: span 1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    
+    .image-slot:first-child {
+      grid-column: span 2;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ImageSlot = styled.div`
+  position: relative;
+  background: ${props => props.hasFile ? 'linear-gradient(135deg, #e8f5e8, #f0fff0)' : '#f8f9fa'};
+  border: 2px dashed ${props => props.hasFile ? '#34c759' : '#d1d1d6'};
+  border-radius: 12px;
+  aspect-ratio: ${props => props.isPrimary ? '4/3' : '1/1'};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  min-height: ${props => props.isPrimary ? '140px' : '100px'};
+  
+  &:hover {
+    border-color: ${props => props.hasFile ? '#30d158' : '#007aff'};
+    background: ${props => props.hasFile ? 'linear-gradient(135deg, #d4f8d4, #e8ffe8)' : '#f0f8ff'};
+    transform: translateY(-1px);
+  }
+`;
+
+const ImagePreview = styled.div`
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const ImageContent = styled.div`
+  text-align: center;
+  padding: 16px;
+  z-index: 1;
+`;
+
+const ImageIcon = styled.div`
+  font-size: ${props => props.isPrimary ? '28px' : '20px'};
+  margin-bottom: 8px;
+`;
+
+const ImageText = styled.div`
+  color: ${props => props.hasFile ? '#1d6f42' : '#86868b'};
+  font-size: ${props => props.isPrimary ? '13px' : '11px'};
+  font-weight: 500;
+  margin-bottom: 4px;
+  text-align: center;
+  line-height: 1.2;
+`;
+
+const ImageSubtext = styled.div`
+  color: #86868b;
+  font-size: ${props => props.isPrimary ? '11px' : '10px'};
+  text-align: center;
+`;
+
+const RemoveButton = styled.button`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 59, 48, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 2;
+  transition: background 0.2s ease;
+  
+  &:hover {
+    background: #ff3b30;
+  }
 `;
 
 const Button = styled.button`
-  padding: 0.75rem 1.5rem; 
-  border-radius: 8px; 
-  border: 1px solid transparent; 
-  font-weight: 600; 
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  min-width: 100px;
   
-  &[data-variant="primary"] { 
-    background: #7c3aed; 
-    color: #fff; 
-    border-color: #7c3aed; 
-  }
-  &[data-variant="primary"]:hover { 
-    background: #6d28d9; 
-    border-color: #6d28d9; 
-  }
-  &[data-variant="secondary"] { 
-    background: #f3f4f6; 
-    color: #374151; 
-    border-color: #d1d5db; 
-  }
-  &[data-variant="secondary"]:hover { 
-    background: #e5e7eb; 
+  &.primary {
+    background: #007aff;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background: #0056cc;
+      transform: translateY(-1px);
+    }
+    
+    &:disabled {
+      background: #d1d1d6;
+      cursor: not-allowed;
+      transform: none;
+    }
   }
   
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  &.secondary {
+    background: #f2f2f7;
+    color: #007aff;
+    
+    &:hover {
+      background: #e5e5ea;
+    }
   }
 `;
 
-const ErrorBox = styled.div`
-  background: #fef3c7; 
-  color: #92400e; 
-  padding: 0.75rem 1rem; 
-  border: 1px solid #fde68a; 
-  border-radius: 8px; 
-  margin-bottom: 1rem;
-`;
-
-const SuccessBox = styled.div`
-  background: #d1fae5; 
-  color: #065f46; 
-  padding: 0.75rem 1rem; 
-  border: 1px solid #a7f3d0; 
-  border-radius: 8px; 
-  margin-bottom: 1rem;
+const Alert = styled.div`
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  
+  &.error {
+    background: #ffebee;
+    color: #d32f2f;
+    border: 1px solid #ffcdd2;
+  }
+  
+  &.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+  }
 `;
 
 const Info = styled.div`
-  color: #64748b; 
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  color: #86868b;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 20px;
 `;
 
-const Title = styled.h2`
-  color: #1f2937;
-  margin: 0 0 1.5rem 0;
-  font-size: 1.5rem;
-  font-weight: 600;
+const HiddenInput = styled.input`
+  display: none;
 `;
 
 function normalizePairs(list) {
@@ -145,7 +332,7 @@ function normalizePairs(list) {
   return [];
 }
 
-export default function HallForm({ onCancel, onSuccess }) {
+export default function HallForm({ onCancel, onSuccess, editService }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
@@ -163,11 +350,10 @@ export default function HallForm({ onCancel, onSuccess }) {
 
   const [formData, setFormData] = useState({
     name: "",
-    service_type: "",
+    service_type: "Hall",
     description: "",
-    base_price: "",
     capacity: "",
-    duration_minutes: ""
+    duration_minutes: "0"
   });
 
   const [imageFiles, setImageFiles] = useState({
@@ -217,6 +403,21 @@ export default function HallForm({ onCancel, onSuccess }) {
     return Array.from(new Set(urls));
   };
 
+  // Prevent background page from scrolling while modal is open
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+    const scrollbarCompensation = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    if (scrollbarCompensation > 0) {
+      document.body.style.paddingRight = `${scrollbarCompensation}px`;
+    }
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
+    };
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     async function bootstrap() {
@@ -230,60 +431,55 @@ export default function HallForm({ onCancel, onSuccess }) {
         const stPairs = normalizePairs(st?.data ?? st);
         setServiceTypes(stPairs);
         
-        let actualTempleId = "";
-        if (templeList?.data && Array.isArray(templeList.data)) {
+        // Prefer logged-in/stored temple first, then fall back to first in list
+        let actualTempleId = getStoredTempleId() || "";
+        if (!actualTempleId && templeList?.data && Array.isArray(templeList.data)) {
           const firstTemple = templeList.data[0];
           actualTempleId = firstTemple?.temple_id || firstTemple?.id || "";
         }
         
-        if (!actualTempleId) {
-          actualTempleId = getStoredTempleId() || "";
-        }
-        
         setTempleId(actualTempleId);
-        setFormData((prev) => ({ ...prev, service_type: "Hall" }));
+        setFormData((prev) => ({ ...prev, service_type: "Hall", duration_minutes: "0" }));
 
         const params = new URLSearchParams(location.search);
         const editId = params.get("edit");
-        const stepParam = params.get("step");
         
-        if (editId) {
+        // Prefill when editing via prop or URL param
+        if (editService || editId) {
           setIsEditing(true);
           try {
-            const servicesResp = await getTempleServicesList();
-            const list = Array.isArray(servicesResp)
-              ? servicesResp
-              : (Array.isArray(servicesResp?.data)
-                  ? servicesResp.data
-                  : (Array.isArray(servicesResp?.results)
-                      ? servicesResp.results
-                      : []));
-            const svc = list.find(s => (s.service_id || s.id) === editId);
+            let svc = editService;
+            if (!svc) {
+              const servicesResp = await getTempleServicesList();
+              const list = Array.isArray(servicesResp)
+                ? servicesResp
+                : (Array.isArray(servicesResp?.data)
+                    ? servicesResp.data
+                    : (Array.isArray(servicesResp?.results)
+                        ? servicesResp.results
+                        : []));
+              svc = list
+                .filter(s => String(s?.temple_id) === String(actualTempleId))
+                .find(s => (s.service_id || s.id) === editId);
+            }
             if (svc) {
               setServiceId(svc.service_id || editId);
               setFormData(prev => ({
                 ...prev,
                 name: svc.name || "",
                 description: svc.description || "",
-                base_price: svc.base_price != null ? String(svc.base_price) : "",
                 capacity: svc.capacity != null ? String(svc.capacity) : "",
-                duration_minutes: svc.duration_minutes != null ? String(svc.duration_minutes) : "",
+                duration_minutes: svc.duration_minutes != null ? String(svc.duration_minutes) : "0",
                 service_type: "Hall"
               }));
               const imgs = extractImageUrls(svc);
               setExistingImages({ main: imgs[0] || "", others: imgs.slice(1, 6) });
               
-              const n = Number(stepParam);
-              if (!Number.isNaN(n) && n >= 0 && n <= 1) {
-                setCurrentStep(n);
-              }
+              setCurrentStep(0);
             }
           } catch (e) {
             // ignore and proceed as add
           }
-        } else if (stepParam != null) {
-          const n = Number(stepParam);
-          if (!Number.isNaN(n) && n >= 0 && n <= 1) setCurrentStep(n);
         }
 
         const [ptList, prList] = await Promise.all([
@@ -305,31 +501,18 @@ export default function HallForm({ onCancel, onSuccess }) {
     setCurrentStep(n);
     setError("");
     setSuccess("");
-    const params = new URLSearchParams(location.search);
-    params.set("step", String(n));
-    params.set("add", "hall");
-    navigate({ pathname: location.pathname, search: params.toString() });
   };
 
-  const canSubmit = Boolean(
-    formData.name && 
-    formData.base_price && 
-    formData.capacity && 
-    formData.duration_minutes
-  );
+  const canSubmit = Boolean(formData.name && formData.capacity);
 
   const handleImageChange = (field, file) => {
-    setImageFiles(prev => ({
-      ...prev,
-      [field]: file
-    }));
+    if (file) {
+      setImageFiles(prev => ({ ...prev, [field]: file }));
+    }
   };
 
   const removeImage = (field) => {
-    setImageFiles(prev => ({
-      ...prev,
-      [field]: null
-    }));
+    setImageFiles(prev => ({ ...prev, [field]: null }));
   };
 
   const handleChange = (e) => {
@@ -350,8 +533,8 @@ export default function HallForm({ onCancel, onSuccess }) {
       return;
     }
     
-    if (!formData.name || !formData.base_price || !formData.capacity || !formData.duration_minutes) {
-      setError("Please fill in all required fields: Hall Name, Rental Price, Capacity, and Duration");
+    if (!formData.name || !formData.capacity) {
+      setError("Please fill in all required fields: Hall Name and Capacity");
       setSaving(false);
       return;
     }
@@ -365,9 +548,9 @@ export default function HallForm({ onCancel, onSuccess }) {
         name: formData.name.trim(),
         service_type: "Hall",
         description: formData.description.trim() || "",
-        base_price: toNum(formData.base_price),
+        base_price: 0,
         capacity: toNum(formData.capacity),
-        duration_minutes: toNum(formData.duration_minutes),
+        duration_minutes: 0,
         service_variation_list: []
       };
       
@@ -452,9 +635,9 @@ export default function HallForm({ onCancel, onSuccess }) {
         name: formData.name.trim(),
         service_type: "Hall",
         description: formData.description.trim() || "",
-        base_price: toNum(formData.base_price),
+        base_price: 0,
         capacity: toNum(formData.capacity),
-        duration_minutes: toNum(formData.duration_minutes),
+        duration_minutes: 0,
         service_variation_list: []
       };
       await processTempleServiceData(payload);
@@ -516,314 +699,189 @@ export default function HallForm({ onCancel, onSuccess }) {
     }
   };
 
+  const renderImageSlot = (field, index, isPrimary = false) => {
+    const file = imageFiles[field];
+    const inputId = `image-${field}`;
+    
+    return (
+      <ImageSlot
+        key={field}
+        hasFile={!!file}
+        isPrimary={isPrimary}
+        className={`image-slot ${isPrimary ? 'primary' : 'secondary'}`}
+        onClick={() => !file && document.getElementById(inputId).click()}
+      >
+        <HiddenInput
+          id={inputId}
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageChange(field, e.target.files[0])}
+        />
+        
+        {file && (
+          <>
+            <ImagePreview>
+              <img src={URL.createObjectURL(file)} alt="Preview" />
+            </ImagePreview>
+            <RemoveButton onClick={(e) => {
+              e.stopPropagation();
+              removeImage(field);
+            }}>
+              ×
+            </RemoveButton>
+          </>
+        )}
+        
+        <ImageContent>
+          <ImageIcon isPrimary={isPrimary}>
+            {file ? '✓' : (isPrimary ? '📸' : '➕')}
+          </ImageIcon>
+          <ImageText hasFile={!!file} isPrimary={isPrimary}>
+            {file ? (file.name.length > (isPrimary ? 25 : 15) ? file.name.substring(0, isPrimary ? 25 : 15) + '...' : file.name) : 
+             (isPrimary ? 'Main Image' : `Image ${index}`)}
+          </ImageText>
+          <ImageSubtext isPrimary={isPrimary}>
+            {file ? `${(file.size / 1024 / 1024).toFixed(1)}MB` : 
+             (isPrimary ? 'Required' : 'Optional')}
+          </ImageSubtext>
+        </ImageContent>
+      </ImageSlot>
+    );
+  };
+
   if (loading) {
-    return <Card><Info>Loading hall form and temple information…</Info></Card>;
+    return (
+      <Container>
+        <Header>
+          <Title>Loading...</Title>
+        </Header>
+        <Content>
+          <Info>Loading hall form and temple information...</Info>
+        </Content>
+      </Container>
+    );
   }
 
   if (!templeId) {
     return (
-      <Card>
-        <ErrorBox role="alert">
-          No temple found. Please ensure you have access to a temple before creating halls.
-        </ErrorBox>
-      </Card>
+      <Container>
+        <Header>
+          <Title>Error</Title>
+        </Header>
+        <Content>
+          <Alert className="error">
+            No temple found. Please ensure you have access to a temple before creating halls.
+          </Alert>
+        </Content>
+      </Container>
     );
   }
 
   return (
-    <Card>
-      <Title>{isEditing ? "Edit Hall" : "Add New Hall"}</Title>
-      <ProgressBar steps={steps} currentStep={currentStep} />
+    <Container>
+      <Header>
+        <Title>{isEditing ? "Edit Hall" : "Add New Hall"}</Title>
+        <ProgressBar steps={steps} currentStep={currentStep} />
+      </Header>
 
-      {templeId && (
-        <div style={{ 
-          background: '#f0f9ff', 
-          border: '1px solid #0ea5e9', 
-          borderRadius: '8px', 
-          padding: '0.75rem 1rem', 
-          marginBottom: '1.5rem',
-          color: '#0369a1',
-          fontSize: '0.9rem'
-        }}>
-          🏛️ Creating hall for Temple ID: <strong>{templeId}</strong>
-        </div>
-      )}
+      <Content scroll={currentStep === 1}>
 
-      {currentStep === 0 && (
-        <Info>
-          Create a new hall for temple bookings. Fill in the basic information below to get started.
-        </Info>
-      )}
+        {error && <Alert className="error">{error}</Alert>}
+        {success && <Alert className="success">{success}</Alert>}
 
-      {error && <ErrorBox role="alert">{error}</ErrorBox>}
-      {success && <SuccessBox role="alert">{success}</SuccessBox>}
-
-      <Grid>
         {currentStep === 0 && (
           <>
-            <FormGroup>
-              <Label>Hall Name *</Label>
-              <Input 
-                name="name" 
-                value={formData.name} 
-                onChange={handleChange} 
-                placeholder="Enter hall name (e.g., Wedding Hall, Prayer Hall)" 
-                required
-              />
-            </FormGroup>
-              
-            <FormGroup>
-              <Label>Hall Type *</Label>
-              <Input 
-                name="service_type" 
-                value="Hall" 
-                disabled
-                style={{ background: '#f9fafb', color: '#6b7280' }}
-              />
-              <Info style={{ margin: '0.25rem 0 0 0', fontSize: '0.8rem' }}>
-                Service type is automatically set to "Hall" as required by the API
-              </Info>
-            </FormGroup>
-              
-            <FormGroup>
-              <Label>Rental Price (₹) *</Label>
-              <Input 
-                name="base_price" 
-                type="number" 
-                min="0" 
-                step="0.01" 
-                value={formData.base_price} 
-                onChange={handleChange} 
-                placeholder="Enter rental price per booking" 
-                required
-              />
-            </FormGroup>
-              
-            <FormGroup>
-              <Label>Maximum Capacity *</Label>
-              <Input 
-                name="capacity" 
-                type="number" 
-                min="1" 
-                value={formData.capacity} 
-                onChange={handleChange} 
-                placeholder="Maximum number of people" 
-                required
-              />
-            </FormGroup>
-              
-            <FormGroup>
-              <Label>Event Duration (minutes) *</Label>
-              <Input 
-                name="duration_minutes" 
-                type="number" 
-                min="1" 
-                value={formData.duration_minutes} 
-                onChange={handleChange} 
-                placeholder="Standard duration for events" 
-                required
-              />
-            </FormGroup>
-              
-            <FormGroup className="full">
-              <Label>Hall Description</Label>
-              <TextArea 
-                name="description" 
-                value={formData.description} 
-                onChange={handleChange} 
-                placeholder="Describe the hall, its features, and suitable event types" 
-              />
-            </FormGroup>
+            <Info>
+              Create a new hall for temple bookings. Fill in the basic information below to get started.
+            </Info>
+            
+            <Grid>
+              <FormGroup>
+                <Label className="required">Hall Name</Label>
+                <Input 
+                  name="name" 
+                  value={formData.name} 
+                  onChange={handleChange} 
+                  placeholder="Wedding Hall, Prayer Hall..." 
+                  required
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label className="required">Maximum Capacity</Label>
+                <Input 
+                  name="capacity" 
+                  type="number" 
+                  min="1" 
+                  value={formData.capacity} 
+                  onChange={handleChange} 
+                  placeholder="e.g. 200" 
+                  required
+                />
+              </FormGroup>
+
+              <FormGroup className="full-width">
+                <Label>Description</Label>
+                <TextArea 
+                  name="description" 
+                  value={formData.description} 
+                  onChange={handleChange} 
+                  placeholder="Describe the hall features and suitable event types..." 
+                />
+              </FormGroup>
+            </Grid>
           </>
         )}
 
         {currentStep === 1 && (
-          <FormGroup className="full">
-            {isEditing && (existingImages.main || existingImages.others.length > 0) && (
-              <div style={{ marginBottom: '1rem' }}>
-                <Label>Existing Images</Label>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '8px' }}>
-                  <div style={{ border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
-                    <img src={existingImages.main} alt="current main" style={{ width: '100%', height: 180, objectFit: 'cover' }} />
-                  </div>
-                  {existingImages.others.map((u, i) => (
-                    <div key={i} style={{ border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
-                      <img src={u} alt={`current ${i+1}`} style={{ width: '100%', height: 180, objectFit: 'cover' }} />
+          <>
+            {isEditing && (existingImages.main || (existingImages.others || []).length > 0) && (
+              <div style={{ marginBottom: '8px' }}>
+                <Label>Current Photos</Label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'nowrap' }}>
+                  {existingImages.main && (
+                    <div style={{ borderRadius: '10px', overflow: 'hidden', border: '1px solid #e5e5ea', flex: '0 0 auto' }}>
+                      <img src={existingImages.main} alt="current main" style={{ height: 90, width: 160, objectFit: 'cover', display: 'block' }} />
+                    </div>
+                  )}
+                  {(existingImages.others || []).slice(0, 3).map((u, i) => (
+                    <div key={i} style={{ borderRadius: '10px', overflow: 'hidden', border: '1px solid #e5e5ea', flex: '0 0 auto' }}>
+                      <img src={u} alt={`current ${i+1}`} style={{ height: 90, width: 120, objectFit: 'cover', display: 'block' }} />
                     </div>
                   ))}
+                  {((existingImages.others || []).length > 3) && (
+                    <div style={{
+                      borderRadius: '10px',
+                      border: '1px dashed #e5e5ea',
+                      height: 90,
+                      width: 120,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#6b7280',
+                      fontWeight: 600,
+                      flex: '0 0 auto'
+                    }}>
+                      +{(existingImages.others || []).length - 3}
+                    </div>
+                  )}
                 </div>
-                <Info style={{ marginTop: '6px' }}>Uploading new files will add to or replace images as per backend rules.</Info>
               </div>
             )}
-
-            <Label style={{ color: '#dc2626', fontWeight: '600' }}>
-              Main Image * (Required)
-            </Label>
-            <div style={{ 
-              border: '2px dashed #d1d5db', 
-              borderRadius: '8px', 
-              padding: '2rem', 
-              textAlign: 'center',
-              background: imageFiles.image_file ? '#f0f9ff' : '#f9fafb',
-              transition: 'all 0.2s ease'
-            }}>
-              {imageFiles.image_file ? (
-                <div>
-                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🖼️</div>
-                  <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>
-                    {imageFiles.image_file.name}
-                  </div>
-                  <div style={{ fontSize: '0.9rem', color: '#6b7280', marginBottom: '1rem' }}>
-                    {(imageFiles.image_file.size / 1024 / 1024).toFixed(2)} MB
-                  </div>
-                  <Button 
-                    data-variant="secondary" 
-                    onClick={() => removeImage('image_file')}
-                    style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
-                  >
-                    Remove Image
-                  </Button>
-                </div>
-              ) : (
-                <div>
-                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>📁</div>
-                  <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>
-                    Drop your main image here
-                  </div>
-                  <div style={{ fontSize: '0.9rem', color: '#6b7280', marginBottom: '1rem' }}>
-                    or click to browse files
-                  </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleImageChange('image_file', e.target.files[0])}
-                    style={{ display: 'none' }}
-                    id="main-image-upload"
-                  />
-                  <label 
-                    htmlFor="main-image-upload" 
-                    style={{ 
-                      cursor: 'pointer',
-                      display: 'inline-block',
-                      padding: '0.5rem 1rem',
-                      background: '#7c3aed',
-                      color: 'white',
-                      border: '1px solid #7c3aed',
-                      borderRadius: '8px',
-                      fontWeight: '600',
-                      fontSize: '0.9rem',
-                      transition: 'all 0.2s'
-                    }}
-                    onMouseOver={(e) => {
-                      e.target.style.background = '#6d28d9';
-                      e.target.style.borderColor = '#6d28d9';
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.background = '#7c3aed';
-                      e.target.style.borderColor = '#7c3aed';
-                    }}
-                  >
-                    Choose Image
-                  </label>
-                </div>
+            
+            <ImageGrid>
+              {renderImageSlot('image_file', 0, true)}
+              {[1, 2, 3, 4, 5].map(num => 
+                renderImageSlot(`image_file_${num}`, num, false)
               )}
-            </div>
-
-            <div style={{ marginTop: '1rem' }}>
-              <Label style={{ color: '#6b7280', fontWeight: '600' }}>
-                Additional Images (Optional)
-              </Label>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-                gap: '1rem',
-                marginTop: '0.5rem'
-              }}>
-                {[1, 2, 3, 4, 5].map((num) => {
-                  const field = `image_file_${num}`;
-                  const file = imageFiles[field];
-                  
-                  return (
-                    <div key={num} style={{ 
-                      border: '2px dashed #d1d5db', 
-                      borderRadius: '8px', 
-                      padding: '1.5rem', 
-                      textAlign: 'center',
-                      background: file ? '#f0f9ff' : '#f9fafb',
-                      transition: 'all 0.2s ease',
-                      minHeight: '150px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center'
-                    }}>
-                      {file ? (
-                        <div>
-                          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🖼️</div>
-                          <div style={{ fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.5rem' }}>
-                            {file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name}
-                          </div>
-                          <div style={{ fontSize: '0.8rem', color: '#6b7280', marginBottom: '0.5rem' }}>
-                            {(file.size / 1024 / 1024).toFixed(2)} MB
-                          </div>
-                          <Button 
-                            data-variant="secondary" 
-                            onClick={() => removeImage(field)}
-                            style={{ padding: '0.25rem 0.75rem', fontSize: '0.8rem' }}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      ) : (
-                        <div>
-                          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>➕</div>
-                          <div style={{ fontSize: '0.8rem', color: '#6b7280', marginBottom: '0.5rem' }}>
-                            Add Image {num}
-                          </div>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageChange(field, e.target.files[0])}
-                            style={{ display: 'none' }}
-                            id={`image-upload-${num}`}
-                          />
-                          <label 
-                            htmlFor={`image-upload-${num}`} 
-                            style={{ 
-                              cursor: 'pointer',
-                              display: 'inline-block',
-                              padding: '0.25rem 0.75rem',
-                              background: '#f3f4f6',
-                              color: '#374151',
-                              border: '1px solid #d1d5db',
-                              borderRadius: '6px',
-                              fontWeight: '600',
-                              fontSize: '0.8rem',
-                              transition: 'all 0.2s'
-                            }}
-                            onMouseOver={(e) => {
-                              e.target.style.background = '#e5e7eb';
-                            }}
-                            onMouseOut={(e) => {
-                              e.target.style.background = '#f3f4f6';
-                            }}
-                          >
-                            Choose
-                          </label>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </FormGroup>
+            </ImageGrid>
+          </>
         )}
-      </Grid>
+      </Content>
 
-      <Row>
+      <Footer>
         <Button 
-          type="button"
-          data-variant="secondary"
+          className="secondary"
           onClick={() => {
             if (currentStep === 0) {
               const params = new URLSearchParams(location.search);
@@ -840,36 +898,28 @@ export default function HallForm({ onCancel, onSuccess }) {
           {currentStep === 0 ? "Cancel" : "Back"}
         </Button>
         
-        {currentStep === 0 ? (
+        <div style={{ display: 'flex', gap: '12px' }}>
+          {currentStep === 0 && (
+            <Button 
+              className="secondary"
+              onClick={() => setStepAndSync(1)}
+            >
+              Next
+            </Button>
+          )}
+          
           <Button 
-            type="button" 
-            data-variant="primary" 
-            onClick={isEditing ? handleUpdate : handleSubmit} 
-            disabled={saving || !canSubmit}
+            className="primary"
+            onClick={currentStep === 0 ? (isEditing ? handleUpdate : handleSubmit) : handleImageUpload} 
+            disabled={saving || (currentStep === 0 ? !canSubmit : !imageFiles.image_file)}
           >
-            {isEditing ? (saving ? "Saving…" : "Save Changes") : (saving ? "Creating Hall…" : "Create Hall")}
+            {currentStep === 0 
+              ? (isEditing ? (saving ? "Saving..." : "Save Changes") : (saving ? "Creating..." : "Create Hall"))
+              : (saving ? "Uploading..." : "Complete")
+            }
           </Button>
-        ) : (
-          <Button 
-            type="button" 
-            data-variant="primary"
-            onClick={handleImageUpload} 
-            disabled={saving || !imageFiles.image_file}
-          >
-            {saving ? "Uploading Images…" : "Upload Images & Complete"}
-          </Button>
-        )}
-
-        {currentStep === 0 && (
-          <Button 
-            type="button"
-            data-variant="secondary"
-            onClick={() => setStepAndSync(1)}
-          >
-            Next
-          </Button>
-        )}
-      </Row>
-    </Card>
+        </div>
+      </Footer>
+    </Container>
   );
 }

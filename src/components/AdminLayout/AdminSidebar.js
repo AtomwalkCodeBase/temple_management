@@ -13,12 +13,7 @@ import {
   FiBell,
 } from "react-icons/fi";
 import { MdTempleHindu, MdMiscellaneousServices } from "react-icons/md";
-import {
-  GiLotus,
-  GiTempleGate,
-  IncenseBurner,
-  TempleGate,
-} from "react-icons/gi";
+import { GiLotus } from "react-icons/gi";
 import { getStoredFirstName } from "../../services/authServices";
 
 const SidebarContainer = styled(motion.div)`
@@ -26,14 +21,14 @@ const SidebarContainer = styled(motion.div)`
   left: 0;
   top: 0;
   height: 100vh;
-  background: linear-gradient(180deg, #2c1a0a 0%, #4a2c14 100%);
-  color: #f8e6cc;
+  background: linear-gradient(180deg, #0056d6 0%, #005ad1 100%);
+  color: #eaf2ff;
   z-index: 1000;
   overflow: hidden;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
   transition: width 0.3s ease;
   width: ${(props) => (props.collapsed ? "80px" : "280px")};
-  border-right: 1px solid #8b5a2b;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 
   @media (max-width: 768px) {
     transform: translateX(${(props) => (props.mobileOpen ? "0" : "-100%")});
@@ -42,32 +37,13 @@ const SidebarContainer = styled(motion.div)`
   }
 `;
 
-const TemplePatternOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(
-      circle at 20% 30%,
-      rgba(139, 90, 43, 0.1) 2px,
-      transparent 2px
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(139, 90, 43, 0.1) 2px,
-      transparent 2px
-    );
-  background-size: 30px 30px;
-  pointer-events: none;
-  z-index: -1;
-`;
+// Removed dotted overlay for cleaner look
 
 const SidebarHeader = styled.div`
   padding: 1.5rem 1.2rem;
-  border-bottom: 1px solid rgba(139, 90, 43, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   position: relative;
-  background: rgba(44, 26, 10, 0.7);
+  background: rgba(0, 0, 0, 0.08);
 
   @media (max-width: 768px) {
     padding: 1.2rem;
@@ -81,8 +57,8 @@ const Logo = styled.div`
 
   .om-symbol {
     font-size: 2.2rem;
-    color: #d9a566;
-    filter: drop-shadow(0 0 5px rgba(217, 165, 102, 0.7));
+    color: #ffffff;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
     position: relative;
   }
 
@@ -93,14 +69,14 @@ const Logo = styled.div`
       font-size: 1.3rem;
       font-weight: 700;
       margin: 0;
-      color: #f8e6cc;
-      font-family: "Georgia", serif;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
       letter-spacing: 0.5px;
     }
 
     .subtitle {
       font-size: 0.75rem;
-      color: #d9a566;
+      color: #dbeafe;
       margin: 0;
       font-weight: 500;
       letter-spacing: 0.5px;
@@ -108,7 +84,7 @@ const Logo = styled.div`
 
     .admin-name {
       font-size: 0.75rem;
-      color: #d9a566;
+      color: #eaf2ff;
       margin-top: 0.25rem;
       font-weight: 500;
       display: flex;
@@ -125,10 +101,10 @@ const CollapseButton = styled.button`
   transform: translateY(-50%);
   width: 26px;
   height: 26px;
-  background: rgba(139, 90, 43, 0.3);
-  border: 1px solid #8b5a2b;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  color: #d9a566;
+  color: #ffffff;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -137,8 +113,8 @@ const CollapseButton = styled.button`
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(139, 90, 43, 0.5);
-    border-color: #d9a566;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
   @media (max-width: 768px) {
@@ -156,11 +132,11 @@ const SidebarContent = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(139, 90, 43, 0.1);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(217, 165, 102, 0.5);
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
   }
 `;
@@ -172,9 +148,12 @@ const MenuSection = styled.div`
 
 const SectionTitle = styled.div`
   padding: 0 1.5rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #d9a566;
+  font-size: 0.85rem;
+  font-weight: 850 ;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #bfdbfe;
   text-transform: uppercase;
   letter-spacing: 1px;
   display: ${(props) => (props.collapsed ? "none" : "block")};
@@ -190,7 +169,7 @@ const SectionTitle = styled.div`
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(217, 165, 102, 0.5),
+      rgba(255, 255, 255, 0.25),
       transparent
     );
   }
@@ -200,9 +179,9 @@ const MenuItem = styled(Link)`
   display: flex;
   align-items: center;
   padding: 0.875rem 1.5rem;
-  color: ${(props) => (props.active ? "#ffd700" : "#f8e6cc")};
+  color: ${(props) => (props.active ? "#0f172a" : "#eaf2ff")};
   background: ${(props) =>
-    props.active ? "rgba(139, 90, 43, 0.3)" : "transparent"};
+    props.active ? "rgba(255, 255, 255, 0.92)" : "transparent"};
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
@@ -210,8 +189,8 @@ const MenuItem = styled(Link)`
   border-radius: 6px;
 
   &:hover {
-    background: rgba(139, 90, 43, 0.2);
-    color: #ffd700;
+    background: ${(props) => (props.active ? "rgba(255, 255, 255, 0.92)" : "rgba(255, 255, 255, 0.12)")};
+    color: ${(props) => (props.active ? "#0f172a" : "#ffffff")};
     transform: translateX(4px);
   }
 
@@ -221,20 +200,20 @@ const MenuItem = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${(props) => (props.active ? "#ffd700" : "#d9a566")};
+    color: ${(props) => (props.active ? "#0f172a" : "#dbeafe")};
   }
 
   .label {
     margin-left: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9rem;
     display: ${(props) => (props.collapsed ? "none" : "block")};
   }
 
   .badge {
     margin-left: auto;
-    background: #c84b31;
-    color: #f8e6cc;
+    background: #ef4444;
+    color: #ffffff;
     font-size: 0.7rem;
     padding: 0.125rem 0.375rem;
     border-radius: 9999px;
@@ -254,10 +233,10 @@ const MenuItem = styled(Link)`
     transform: translateY(-50%);
     height: 60%;
     width: 3px;
-    background: ${(props) => (props.active ? "#ffd700" : "transparent")};
+    background: ${(props) => (props.active ? "#0077ff" : "transparent")};
     border-radius: 0 3px 3px 0;
     box-shadow: ${(props) =>
-      props.active ? "0 0 8px rgba(255, 215, 0, 0.5)" : "none"};
+      props.active ? "0 0 10px rgba(0, 119, 255, 0.45)" : "none"};
   }
 `;
 
@@ -266,17 +245,17 @@ const Tooltip = styled(motion.div)`
   left: 100%;
   top: 50%;
   transform: translateY(-50%);
-  background: #4a2c14;
-  color: #ffd700;
+  background: rgba(17, 24, 39, 0.95);
+  color: #ffffff;
   padding: 0.5rem 0.75rem;
   border-radius: 0.375rem;
   font-size: 0.8rem;
   font-weight: 500;
   white-space: nowrap;
   margin-left: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   z-index: 1001;
-  border: 1px solid #8b5a2b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 
   &::before {
     content: "";
@@ -285,18 +264,11 @@ const Tooltip = styled(motion.div)`
     top: 50%;
     transform: translateY(-50%);
     border: 4px solid transparent;
-    border-right-color: #4a2c14;
+    border-right-color: rgba(17, 24, 39, 0.95);
   }
 `;
 
-const TempleGateDivider = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 0.5rem 0;
-  color: #8b5a2b;
-  font-size: 1.2rem;
-  opacity: 0.6;
-`;
+// Removed unused TempleGateDivider
 
 const BellIconDecor = styled.div`
   position: absolute;
@@ -304,7 +276,7 @@ const BellIconDecor = styled.div`
   right: -5px;
   width: 16px;
   height: 16px;
-  background: #c84b31;
+  background: #ef4444;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -387,7 +359,6 @@ const AdminSidebar = ({
         animate={{ width: collapsed ? 80 : 280 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        <TemplePatternOverlay />
 
         <SidebarHeader collapsed={collapsed}>
           <Logo collapsed={collapsed}>

@@ -160,7 +160,7 @@ const RefundPolicies = () => {
         title="Refund Policies"
         description="Manage refund policies and cancellation rules for your temple services"
         icon={<FiRefreshCw />}
-        gradient="linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)"
+        gradient="linear-gradient(135deg, #0056d6 0%, #0a4db4 100%)"
         actions={
           <AddButton
             onClick={handleAddPolicy}

@@ -6,15 +6,12 @@ import AddonsNotification from "../../components/Admin/AddonsNotification";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getTempleServicesList } from "../../services/templeServices";
 import {
-  Building2,
   Calendar,
   TrendingUp,
   Search,
-  Download,
   CheckCircle,
   XCircle,
   X,
-  Plus,
   Edit,
   Eye,
 } from "lucide-react";
@@ -23,7 +20,7 @@ import {
 const PageContainer = styled.div`
   background: #f8fafc;
   min-height: 100vh;
-  padding: 24px;
+  padding: 8px 16px 16px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     sans-serif;
 `;
@@ -33,100 +30,23 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const Header = styled.header`
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 32px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-`;
-
-const TitleSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  h1 {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.025em;
-  }
-
-  p {
-    margin: 8px 0 0;
-    color: #64748b;
-    font-size: 16px;
-    font-weight: 400;
-  }
-`;
-
-const HeaderActions = styled.div`
-  display: flex;
-  gap: 16px;
-`;
-
-const PrimaryButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-  }
-`;
-
-const SecondaryButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: #ffffff;
-  color: #374151;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #f9fafb;
-    border-color: #9ca3af;
-  }
-`;
-
 const Tabs = styled.div`
   display: flex;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  margin-bottom: 24px;
+  border-radius: 10px;
+  margin: 0 0 10px 0;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  max-width: 360px;
 `;
 
 const Tab = styled.button`
-  padding: 16px 24px;
+  flex: 1;
+  padding: 12px 18px;
   background: ${(props) =>
     props.$active
-      ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      ? "#0056d6"
       : "transparent"};
   color: ${(props) => (props.$active ? "#ffffff" : "#64748b")};
   border: none;
@@ -136,14 +56,26 @@ const Tab = styled.button`
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
 
   &:hover {
     background: ${(props) =>
       props.$active
-        ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+        ? "#0056d6"
         : "#f8fafc"};
     color: ${(props) => (props.$active ? "#ffffff" : "#374151")};
+  }
+
+  &:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 `;
 
@@ -151,15 +83,15 @@ const ContentCard = styled.div`
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 32px;
+  padding: 20px;
+  margin-bottom: 20px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
   }
 
   .card-title {
@@ -293,7 +225,7 @@ const HallsManagement = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("overview");
-  const [bookings, setBookings] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [hallFilter, setHallFilter] = useState("all");
@@ -389,10 +321,18 @@ const HallsManagement = () => {
     fetchHallServices();
   }, []);
 
-  // Remove mock bookings; rely on live hall services
+  // Set up global handler for Add New Hall button in header
   useEffect(() => {
-    setBookings([]);
-  }, [hallServices]);
+    window.addNewHallHandler = () => {
+      setEditService(null);
+      setShowHallWizard(true);
+    };
+
+    // Cleanup when component unmounts
+    return () => {
+      delete window.addNewHallHandler;
+    };
+  }, []);
 
   // Wizard visibility is controlled only by explicit user actions (Add/Edit)
 
@@ -438,10 +378,23 @@ const HallsManagement = () => {
           <div
             style={{ padding: "60px", textAlign: "center", color: "#64748b" }}
           >
-            <Building2
-              size={48}
-              style={{ marginBottom: "16px", opacity: 0.5 }}
-            />
+            <div
+              style={{
+                width: "48px",
+                height: "48px",
+                margin: "0 auto 16px",
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                fontSize: "24px",
+                fontWeight: "bold"
+              }}
+            >
+              H
+            </div>
             <div style={{ fontSize: "18px", fontWeight: "500" }}>
               Loading halls...
             </div>
@@ -454,35 +407,6 @@ const HallsManagement = () => {
   return (
     <PageContainer>
       <Container>
-        <Header>
-          <TitleSection>
-            <Building2 size={36} color="#667eea" />
-            <div>
-              <h1>Sacred Halls Management</h1>
-              <p>
-                Manage hall bookings, availability, and configurations with
-                enterprise-grade tools
-              </p>
-            </div>
-          </TitleSection>
-          <HeaderActions>
-            <SecondaryButton>
-              <Download size={16} />
-              Export Data
-            </SecondaryButton>
-            <PrimaryButton
-              onClick={() => {
-                setEditService(null);
-                setShowHallWizard(true);
-              }}
-              disabled={hallServicesLoading}
-            >
-              <Plus size={16} />
-              Add New Hall
-            </PrimaryButton>
-          </HeaderActions>
-        </Header>
-
         <Tabs>
           <Tab
             $active={activeTab === "overview"}
@@ -659,14 +583,15 @@ const HallsManagement = () => {
               style={{
                 width: "auto",
                 maxWidth: "unset",
-                background: "transparent",
-                borderRadius: 0,
-                boxShadow: "none",
+                background: "#ffffff",
+                borderRadius: 14,
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)",
                 overflow: "visible",
                 height: "auto",
                 display: "flex",
                 flexDirection: "column",
                 position: "relative",
+                overflow: "hidden",
               }}
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
@@ -703,6 +628,11 @@ const HallsManagement = () => {
                   onCancel={() => {
                     setShowHallWizard(false);
                     setEditService(null);
+                  }}
+                  onInlineUpdate={async (serviceId) => {
+                    try {
+                      await fetchHallServices();
+                    } catch {}
                   }}
                   onSuccess={async (serviceId) => {
                     console.log("HallForm onSuccess called with serviceId:", serviceId);

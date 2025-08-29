@@ -1,80 +1,13 @@
-import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { Building2, TrendingUp, IndianRupee, LayoutTemplate, Search, Eye, CheckCircle, Settings, Users, Edit3, ChevronUp, Plus } from "lucide-react";
+import { LayoutTemplate, Search, Eye, Users, Edit3, ChevronUp } from "lucide-react";
 import PackagesPanel from "./PackagesPanel";
 import AdvancePanel from "./AdvancePanel";
 import RefundPanel from "./RefundPanel";
 import PackageModal from "./PackageModal";
 import { processTempleServiceData, getAdvancePolicyList, getRefundPolicyList } from "../../services/templeServices";
 
-// Local styled components (scoped to Overview)
-const DashboardGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  margin-bottom: 32px;
-  
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
 
-const StatCard = styled.div`
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.15);
-  }
-  
-  .stat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .stat-title {
-    color: #64748b;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  .stat-value {
-    color: #0f172a;
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    line-height: 1.2;
-  }
-  
-  .stat-trend {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    
-    &.positive {
-      color: #10b981;
-    }
-    
-    &.negative {
-      color: #ef4444;
-    }
-  }
-`;
 
 const ContentCard = styled.div`
   background: #ffffff;
@@ -236,12 +169,34 @@ const HallMainImage = styled.img`
   ${HallCard}:hover & {
     transform: scale(1.05);
   }
+  
+  &.error {
+    opacity: 0.5;
+  }
 `;
 
 const ImageOverlay = styled.div`
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.08) 55%, rgba(0,0,0,0.24) 100%);
+`;
+
+const ImageLoadingIndicator = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
 `;
 
 const StatusBadgeNew = styled.div`
@@ -372,40 +327,40 @@ const ActionButton = styled.button`
   
   /* Packages button - keep current styling */
   ${props => props.$type === 'packages' ? `
-    background: #EFF6FF; /* light blue tint */
-    border-color: #BFDBFE;
-    color: #3B82F6; /* base blue */
+    background: #E0ECFF; /* darker blue tint */
+    border-color: #93C5FD;
+    color: #1D4ED8; /* darker blue */
   ` : ''}
   ${props => props.$type === 'packages' && props.$active ? `
-    background: #DBEAFE; /* darker tint when active */
-    border-color: #93C5FD;
-    color: #2563EB; /* darker blue */
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    background: #C7DAFF; /* active */
+    border-color: #60A5FA;
+    color: #1E40AF; /* deepest blue */
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
   ` : ''}
   
   /* Advance button - subtle blue */
   ${props => props.$type === 'advance' ? `
-    background: #ECFDF5; /* light green tint */
-    border-color: #A7F3D0;
-    color: #10B981; /* base green */
+    background: #DCFCE7; /* darker green tint */
+    border-color: #86EFAC;
+    color: #047857; /* darker green */
   ` : ''}
   ${props => props.$type === 'advance' && props.$active ? `
-    background: #D1FAE5; /* darker tint when active */
-    border-color: #6EE7B7;
-    color: #059669; /* darker green */
+    background: #BBF7D0; /* active */
+    border-color: #4ADE80;
+    color: #065F46; /* deepest green */
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
   ` : ''}
   
   /* Refund button - subtle red */
   ${props => props.$type === 'refund' ? `
-    background: #FEF2F2; /* light red tint */
-    border-color: #FECACA;
-    color: #EF4444; /* base red */
+    background: #FEE2E2; /* darker red tint */
+    border-color: #FCA5A5;
+    color: #DC2626; /* darker red */
   ` : ''}
   ${props => props.$type === 'refund' && props.$active ? `
-    background: #FEE2E2; /* darker tint when active */
-    border-color: #FCA5A5;
-    color: #B91C1C; /* darker red */
+    background: #FECACA; /* active */
+    border-color: #F87171;
+    color: #B91C1C; /* deepest red */
     box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25);
   ` : ''}
   
@@ -419,25 +374,25 @@ const ActionButton = styled.button`
   /* Type-specific hover states */
   ${props => props.$type === 'packages' && `
     &:hover {
-      background: #DBEAFE;
-      border-color: #93C5FD;
-      color: #2563EB;
+      background: #C7DAFF;
+      border-color: #60A5FA;
+      color: #1E40AF;
     }
   `}
   
   ${props => props.$type === 'advance' && `
     &:hover {
-      background: #D1FAE5;
-      border-color: #6EE7B7;
-      color: #059669;
+      background: #BBF7D0;
+      border-color: #4ADE80;
+      color: #065F46;
     }
   `}
   
   ${props => props.$type === 'refund' && `
     &:hover {
-      background: #FEE2E2;
-      border-color: #FCA5A5;
-      color: #DC2626;
+      background: #FECACA;
+      border-color: #F87171;
+      color: #B91C1C;
     }
   `}
   
@@ -454,13 +409,13 @@ const HallFeatures = styled.div`
 `;
 
 const FeatureTag = styled.span`
-  background: #d1fae5;
-  color: #065f46;
+  background: #f1f5f9;
+  color: #334155;
   font-size: 11px;
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 12px;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #e2e8f0;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -484,30 +439,7 @@ const HallActions = styled.div`
   gap: 8px;
 `;
 
-const EditButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
-  color: #6b7280;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    background: #f9fafb;
-    color: #374151;
-    border-color: #d1d5db;
-  }
-  
-  &:active {
-    background: #f3f4f6;
-  }
-`;
+
 
 // Collapse button uses IconButton base. Keep base defined first (see below)
 
@@ -529,29 +461,7 @@ const ExpandedInner = styled.div`
   gap: 8px;
 `;
 
-const Panel = styled.div`
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  margin-bottom: 8px;
-`;
 
-const PanelHeader = styled.div`
-  padding: 10px 14px;
-  border-bottom: 1px solid #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 600;
-  color: #0f172a;
-`;
-
-const PanelBody = styled.div`
-  padding: 8px;
-  color: #475569;
-  font-size: 14px;
-`;
 
 const IconButton = styled.button`
   width: 28px;
@@ -583,82 +493,66 @@ const CollapseButton = styled(IconButton)`
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
 `;
 
-const PolicyOption = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 12px 14px;
-  background: #ffffff;
-  cursor: pointer;
 
-  input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .radio-mark {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid #e5e7eb;
-    display: inline-block;
-    position: relative;
-    transition: border-color 0.15s ease;
-  }
-
-  .radio-mark::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    background: #10b981; /* subtle green */
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.12s ease-in-out;
-  }
-
-  input[type="radio"]:checked + .radio-mark {
-    border-color: #10b981; /* subtle green outline */
-  }
-
-  input[type="radio"]:checked + .radio-mark::after {
-    transform: translate(-50%, -50%) scale(1);
-  }
-`;
 
 // Helpers scoped to Overview
 const extractImageUrls = (hall) => {
   const urls = [];
+  
+  // Helper function to add valid image URLs
   const pushIfUrl = (val) => {
-    if (typeof val === 'string' && /^(https?:)?\/\//.test(val)) urls.push(val);
+    if (typeof val === 'string' && val && /^(https?:)?\/\//.test(val)) {
+      urls.push(val);
+    }
   };
-  pushIfUrl(hall?.image_url);
+  
+  // Primary image field
   pushIfUrl(hall?.image);
+  
+  // Sequential image fields (image_1, image_2, image_3, etc.)
+  for (let i = 1; i <= 10; i++) {
+    const imageKey = `image_${i}`;
+    if (hall?.[imageKey]) {
+      pushIfUrl(hall[imageKey]);
+    }
+  }
+  
+  // Fallback fields (for backward compatibility)
+  pushIfUrl(hall?.image_url);
   pushIfUrl(hall?.main_image);
+  
+  // Check for any other image-related fields
   Object.entries(hall || {}).forEach(([k, v]) => {
     if (typeof v === 'string' && /(image|img)/i.test(k) && /^(https?:)?\/\//.test(v)) {
-      urls.push(v);
+      // Avoid duplicates
+      if (!urls.includes(v)) {
+        urls.push(v);
+      }
     }
   });
+  
+  // Check for image arrays
   const candidates = [hall?.image_list, hall?.images, hall?.photos, hall?.gallery];
   candidates.forEach((arr) => {
-    if (Array.isArray(arr)) arr.forEach(pushIfUrl);
+    if (Array.isArray(arr)) {
+      arr.forEach(pushIfUrl);
+    }
   });
+  
+  // Check additional field list
   const afl = hall?.additional_field_list;
   if (afl) {
     Object.values(afl).forEach((val) => {
-      if (Array.isArray(val)) val.forEach(pushIfUrl);
-      if (typeof val === 'string') pushIfUrl(val);
+      if (Array.isArray(val)) {
+        val.forEach(pushIfUrl);
+      } else if (typeof val === 'string') {
+        pushIfUrl(val);
+      }
     });
   }
-  return urls;
+  
+  // Remove duplicates and return
+  return [...new Set(urls)];
 };
 
 // Helper function to clean package data for API
@@ -721,6 +615,7 @@ const HallsOverview = ({
   const [selectedRefundPolicyId, setSelectedRefundPolicyId] = useState(null);
   const [isSavingPackage, setIsSavingPackage] = useState(false);
   const lastPackageSubmitRef = useRef({ key: null, at: 0 });
+  const [imageLoadStates, setImageLoadStates] = useState({});
 
   const dedupePackages = (packages) => {
     const seen = new Set();
@@ -735,6 +630,21 @@ const HallsOverview = ({
       }
     }
     return result;
+  };
+
+  // Handle image loading states
+  const handleImageLoad = (hallId, imageIndex) => {
+    setImageLoadStates(prev => ({
+      ...prev,
+      [`${hallId}-${imageIndex}`]: 'loaded'
+    }));
+  };
+
+  const handleImageError = (hallId, imageIndex) => {
+    setImageLoadStates(prev => ({
+      ...prev,
+      [`${hallId}-${imageIndex}`]: 'error'
+    }));
   };
 
   // Fetch advance policies when the Advance tab is opened for a hall
@@ -889,9 +799,7 @@ const HallsOverview = ({
     }
   }, [expandedHallId, selectedRefundPolicyId, hallServices, onEditHall, selectedHall, refundPolicies]);
 
-  const totalVariations = useMemo(() => (
-    hallServices.reduce((sum, h) => sum + (Array.isArray(h.service_variation_list) ? h.service_variation_list.length : 0), 0)
-  ), [hallServices]);
+
 
   const handleExpand = (hallId, tab) => {
     if (expandedHallId === hallId && expandedTab === tab) {
@@ -922,31 +830,11 @@ const HallsOverview = ({
   // Inline package editor state and helpers (used for modal as well)
   const [isEditingPackage, setIsEditingPackage] = useState(false);
   const [editingPackageId, setEditingPackageId] = useState(null);
-  const [packageForm, setPackageForm] = useState({
-    price_type: "HOURLY",
-    base_price: "",
-    start_time: "",
-    end_time: "",
-    no_hours: "",
-    max_no_per_day: "",
-    max_participant: "",
-    pricing_rule_id: 1,
-  });
 
   const openAddPackage = (hall) => {
     setSelectedHall(hall);
     setIsEditingPackage(true);
     setEditingPackageId(null);
-    setPackageForm({
-      price_type: "HOURLY",
-      base_price: "",
-      start_time: "",
-      end_time: "",
-      no_hours: "",
-      max_no_per_day: "",
-      max_participant: "",
-      pricing_rule_id: hall?.pricing_rule_id || 1,
-    });
     setPackageModalOpen(true);
   };
 
@@ -954,34 +842,10 @@ const HallsOverview = ({
     setSelectedHall(hall);
     setIsEditingPackage(true);
     setEditingPackageId(pkg?.id ?? null);
-    setPackageForm({
-      price_type: pkg.price_type || "HOURLY",
-      base_price: String(pkg.base_price ?? ""),
-      start_time: pkg.start_time || "",
-      end_time: pkg.end_time || "",
-      no_hours: pkg.no_hours != null ? String(pkg.no_hours) : "",
-      max_no_per_day: pkg.max_no_per_day != null ? String(pkg.max_no_per_day) : "",
-      max_participant: pkg.max_participant != null ? String(pkg.max_participant) : "",
-      pricing_rule_id: pkg.pricing_rule_id || hall?.pricing_rule_id || 1,
-    });
     setPackageModalOpen(true);
   };
 
-  const cancelPackageEdit = () => {
-    setIsEditingPackage(false);
-    setEditingPackageId(null);
-    setPackageForm({
-      price_type: "HOURLY",
-      base_price: "",
-      start_time: "",
-      end_time: "",
-      no_hours: "",
-      max_no_per_day: "",
-      max_participant: "",
-      pricing_rule_id: 1,
-    });
-    setPackageModalOpen(false);
-  };
+
 
   const handlePackageSave = useCallback(async (packageData) => {
     if (!selectedHall || isSavingPackage) return;
@@ -1142,55 +1006,7 @@ const HallsOverview = ({
 
   return (
     <>
-      <DashboardGrid>
-        <StatCard>
-          <div className="stat-header">
-            <div className="stat-title">Total Halls</div>
-            <Building2 size={20} color="#667eea" />
-          </div>
-          <div className="stat-value">{hallStats.total}</div>
-          <div className="stat-trend positive">
-            <TrendingUp size={14} />
-            Live from API
-          </div>
-        </StatCard>
 
-        <StatCard>
-          <div className="stat-header">
-            <div className="stat-title">Active Halls</div>
-            <CheckCircle size={20} color="#10b981" />
-          </div>
-          <div className="stat-value">{hallStats.active}</div>
-          <div className="stat-trend positive">
-            <TrendingUp size={14} />
-            Currently Available
-          </div>
-        </StatCard>
-
-        <StatCard>
-          <div className="stat-header">
-            <div className="stat-title">Average Base Price</div>
-            <IndianRupee size={20} color="#f59e0b" />
-          </div>
-          <div className="stat-value">₹{hallStats.avgBase.toLocaleString()}</div>
-          <div className="stat-trend positive">
-            <TrendingUp size={14} />
-            Across All Halls
-          </div>
-        </StatCard>
-
-        <StatCard>
-          <div className="stat-header">
-            <div className="stat-title">Total Variations</div>
-            <Settings size={20} color="#8b5cf6" />
-          </div>
-          <div className="stat-value">{totalVariations}</div>
-          <div className="stat-trend positive">
-            <TrendingUp size={14} />
-            Service Options
-          </div>
-        </StatCard>
-      </DashboardGrid>
 
       <ContentCard>
         <HallGalleryHeader>
@@ -1219,7 +1035,8 @@ const HallsOverview = ({
               .filter(h => (h.name || '').toLowerCase().includes((searchQuery || '').toLowerCase()))
               .map((hall) => {
                 const imageUrls = extractImageUrls(hall);
-                const mainImage = imageUrls[0] || getPlaceholderImage();
+                const hasImages = imageUrls.length > 0;
+                const mainImage = hasImages ? imageUrls[0] : getPlaceholderImage();
                 const imageCount = imageUrls.length;
                 const isExpanded = expandedHallId === hall.service_id;
                 return (
@@ -1227,32 +1044,80 @@ const HallsOverview = ({
                     <HallImageContainer>
                       <ImageGallery>
                         <MainImageSection>
-                          <HallMainImage src={mainImage} alt={hall.name} />
+                          <HallMainImage 
+                            src={mainImage} 
+                            alt={hall.name}
+                            onLoad={() => handleImageLoad(hall.service_id, 0)}
+                            onError={(e) => {
+                              e.target.src = getPlaceholderImage();
+                              e.target.classList.add('error');
+                              handleImageError(hall.service_id, 0);
+                            }}
+                          />
+                          {imageLoadStates[`${hall.service_id}-0`] !== 'loaded' && 
+                           imageLoadStates[`${hall.service_id}-0`] !== 'error' && (
+                            <ImageLoadingIndicator />
+                          )}
                           <ImageOverlay />
                         </MainImageSection>
-                        {imageUrls.length > 1 && (
-                          <ThumbnailGrid>
-                            {imageUrls.slice(1, 3).map((url, index) => (
-                              <ThumbnailImage key={index}>
-                                <img src={url} alt={`${hall.name} view ${index + 2}`} />
+                        <ThumbnailGrid>
+                            {/* Show additional images if available, otherwise show main image repeated */}
+                            {imageUrls.length > 1 ? (
+                              imageUrls.slice(1, 3).map((url, index) => (
+                                <ThumbnailImage key={index}>
+                                  <img 
+                                    src={url} 
+                                    alt={`${hall.name} view ${index + 2}`}
+                                    onLoad={() => handleImageLoad(hall.service_id, index + 1)}
+                                    onError={(e) => {
+                                      e.target.src = getPlaceholderImage();
+                                      handleImageError(hall.service_id, index + 1);
+                                    }}
+                                  />
+                                </ThumbnailImage>
+                              ))
+                            ) : (
+                              // If only one image, show it in thumbnails too
+                              Array.from({ length: 2 }).map((_, index) => (
+                                <ThumbnailImage key={`main-${index}`}>
+                                  <img 
+                                    src={mainImage} 
+                                    alt={`${hall.name} view ${index + 2}`}
+                                    onLoad={() => handleImageLoad(hall.service_id, `main-${index}`)}
+                                    onError={(e) => {
+                                      e.target.src = getPlaceholderImage();
+                                      handleImageError(hall.service_id, `main-${index}`);
+                                    }}
+                                  />
+                                </ThumbnailImage>
+                              ))
+                            )}
+                            {/* Fill remaining thumbnail slots with placeholder if needed */}
+                            {Array.from({ length: Math.max(0, 3 - Math.min(imageUrls.length, 3)) }).map((_, index) => (
+                              <ThumbnailImage key={`placeholder-${index}`}>
+                                <img 
+                                  src={getPlaceholderImage()} 
+                                  alt="placeholder"
+                                  onLoad={() => handleImageLoad(hall.service_id, `placeholder-${index}`)}
+                                  onError={(e) => {
+                                    // If even placeholder fails, show a simple colored div
+                                    e.target.style.display = 'none';
+                                    e.target.parentElement.style.background = '#e2e8f0';
+                                    handleImageError(hall.service_id, `placeholder-${index}`);
+                                  }}
+                                />
                               </ThumbnailImage>
                             ))}
-                            {imageUrls.length === 2 && (
-                              <ThumbnailImage>
-                                <img src={getPlaceholderImage()} alt="placeholder" />
-                              </ThumbnailImage>
-                            )}
                           </ThumbnailGrid>
-                        )}
                       </ImageGallery>
                       <StatusBadgeNew $active={hall.is_active}>
                         <div style={{ width: 8, height: 8, background: hall.is_active ? '#ffffff' : '#e5e7eb', borderRadius: '50%' }} />
                         {hall.is_active ? 'Active' : 'Inactive'}
                       </StatusBadgeNew>
-                      {imageCount > 1 && (
+                      {imageCount > 0 && (
                         <ImageCounter>
                           <Eye size={12} />
-                          {imageCount} photos
+                          {imageCount} photo{imageCount !== 1 ? 's' : ''}
                         </ImageCounter>
                       )}
                     </HallImageContainer>
@@ -1349,7 +1214,23 @@ const HallsOverview = ({
             
             {hallServices.length === 0 && (
               <div style={{ gridColumn: '1 / -1', padding: '60px', textAlign: 'center', color: '#64748b' }}>
-                <Building2 size={48} style={{ marginBottom: '16px', opacity: 0.5 }} />
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    margin: "0 auto 16px",
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontSize: "24px",
+                    fontWeight: "bold"
+                  }}
+                >
+                  H
+                </div>
                 <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>No halls found</div>
                 <div style={{ fontSize: '14px' }}>Create your first hall to get started</div>
               </div>
@@ -1361,7 +1242,11 @@ const HallsOverview = ({
       {/* Package Management Modal */}
       <PackageModal
         isOpen={packageModalOpen}
-        onClose={cancelPackageEdit}
+        onClose={() => {
+          setIsEditingPackage(false);
+          setEditingPackageId(null);
+          setPackageModalOpen(false);
+        }}
         hall={selectedHall}
         packages={selectedHall?.service_variation_list || []}
         onSave={(pkg)=> handlePackageSave(pkg)}

@@ -332,7 +332,7 @@ function normalizePairs(list) {
   return [];
 }
 
-export default function HallForm({ onCancel, onSuccess, editService }) {
+export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editService }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
@@ -642,6 +642,13 @@ export default function HallForm({ onCancel, onSuccess, editService }) {
       };
       await processTempleServiceData(payload);
       setSuccess("Hall details updated.");
+      // Refresh parent list without closing and advance to image upload
+      try {
+        if (onInlineUpdate && serviceId) {
+          onInlineUpdate(serviceId);
+        }
+      } catch {}
+      setStepAndSync(1);
     } catch (err) {
       setError(err?.response?.data?.message || err?.message || "Failed to update hall");
     } finally {

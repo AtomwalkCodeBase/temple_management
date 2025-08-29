@@ -4,17 +4,17 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 const Container = styled.div`
-  background: linear-gradient(135deg, #f8f4eb 0%, #f1e9d9 100%);
+  background: #ffffff;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 28px rgba(0, 86, 214, 0.08);
   overflow: hidden;
-  border: 1px solid #d9a566;
+  border: 1px solid #cfe0ff;
 `;
 
 const Header = styled.div`
   background: ${(props) =>
-    props.gradient || "linear-gradient(135deg, #4a2c14 0%, #3a2313 100%)"};
-  color: #f8e6cc;
+    props.gradient || "linear-gradient(135deg, #0056d6 0%, #0a4db4 100%)"};
+  color: #ffffff;
   padding: 2rem;
   display: flex;
   justify-content: space-between;
@@ -22,26 +22,7 @@ const Header = styled.div`
   position: relative;
   overflow: hidden;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(
-        circle at 20% 30%,
-        rgba(217, 165, 102, 0.1) 2px,
-        transparent 2px
-      ),
-      radial-gradient(
-        circle at 80% 70%,
-        rgba(217, 165, 102, 0.1) 2px,
-        transparent 2px
-      );
-    background-size: 30px 30px;
-    pointer-events: none;
-  }
+  /* Removed dotted overlay for a clean, modern header */
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -60,30 +41,30 @@ const HeaderContent = styled.div`
 
   .icon {
     font-size: 2.5rem;
-    color: #d9a566;
-    background: rgba(44, 26, 10, 0.3);
+    color: #eaf2ff;
+    background: rgba(255, 255, 255, 0.15);
     padding: 0.75rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(217, 165, 102, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.25);
   }
 
   .text {
     h1 {
       font-size: 2rem;
-      font-weight: bold;
+      font-weight: 800;
       margin: 0 0 0.5rem 0;
-      font-family: "Georgia", serif;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      color: #f8e6cc;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      color: #ffffff;
     }
 
     p {
-      opacity: 0.9;
+      opacity: 0.95;
       margin: 0;
-      color: #d9a566;
+      color: #e0edff;
       font-size: 1rem;
       max-width: 600px;
     }
@@ -119,7 +100,7 @@ const ActionsContainer = styled.div`
 
 const Content = styled.div`
   padding: 0;
-  background: linear-gradient(135deg, #f8f4eb 0%, #f1e9d9 100%);
+  background: #ffffff;
 `;
 
 const DecorativeBorder = styled.div`
@@ -127,9 +108,9 @@ const DecorativeBorder = styled.div`
   background: linear-gradient(
     90deg,
     transparent,
-    #d9a566,
-    #b38742,
-    #d9a566,
+    #a8c6ff,
+    #0056d6,
+    #a8c6ff,
     transparent
   );
   margin: 0 1rem;

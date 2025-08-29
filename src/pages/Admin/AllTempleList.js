@@ -15,16 +15,16 @@ import {
 } from "react-icons/gi";
 
 const PageContainer = styled.div`
-  background: linear-gradient(135deg, #f8f4eb 0%, #f1e9d9 100%);
+  background: #ffffff;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 28px rgba(0, 86, 214, 0.08);
   overflow: hidden;
-  border: 1px solid #d9a566;
+  border: 1px solid #cfe0ff;
 `;
 
 const PageHeader = styled.div`
-  background: linear-gradient(135deg, #4a2c14 0%, #3a2313 100%);
-  color: #f8e6cc;
+  background: linear-gradient(135deg, #0056d6 0%, #0a4db4 100%);
+  color: #ffffff;
   padding: 2rem;
   display: flex;
   justify-content: space-between;
@@ -32,26 +32,7 @@ const PageHeader = styled.div`
   position: relative;
   overflow: hidden;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(
-        circle at 20% 30%,
-        rgba(217, 165, 102, 0.1) 2px,
-        transparent 2px
-      ),
-      radial-gradient(
-        circle at 80% 70%,
-        rgba(217, 165, 102, 0.1) 2px,
-        transparent 2px
-      );
-    background-size: 30px 30px;
-    pointer-events: none;
-  }
+  /* Clean header without dotted overlay for a modern look */
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -64,27 +45,28 @@ const PageHeader = styled.div`
 const HeaderContent = styled.div`
   h1 {
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 800;
     margin: 0 0 0.5rem 0;
-    font-family: "Georgia", serif;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    color: #ffffff;
   }
 
   p {
-    opacity: 0.9;
+    opacity: 0.95;
     margin: 0;
-    color: #d9a566;
+    color: #e0edff;
     font-size: 1.1rem;
   }
 `;
 
 const AddButton = styled(motion.button)`
-  background: rgba(217, 165, 102, 0.2);
-  color: #f8e6cc;
-  border: 2px solid rgba(217, 165, 102, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.35);
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -93,21 +75,21 @@ const AddButton = styled(motion.button)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: "Georgia", serif;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
   &:hover {
-    background: rgba(217, 165, 102, 0.3);
-    border-color: rgba(217, 165, 102, 0.6);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
   }
 `;
 
 const TempleCard = styled(motion.div)`
-  background: linear-gradient(135deg, #ffffff 0%, #faf7f2 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
   border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 22px rgba(0, 86, 214, 0.08);
   margin: 2rem;
-  border: 1px solid #d9a566;
+  border: 1px solid #e6efff;
   transition: all 0.3s ease;
   position: relative;
 
@@ -118,11 +100,11 @@ const TempleCard = styled(motion.div)`
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #d9a566, #b38742, #d9a566);
+    background: linear-gradient(90deg, #a8c6ff, #0056d6, #a8c6ff);
   }
 
   &:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 86, 214, 0.18);
     transform: translateY(-2px);
   }
 `;
@@ -132,7 +114,7 @@ const TempleImage = styled.div`
   background: ${(props) =>
     props.image
       ? `url(${props.image})`
-      : "linear-gradient(135deg, #4a2c14 0%, #3a2313 100%)"};
+      : "linear-gradient(135deg, #0056d6 0%, #0a4db4 100%)"};
   background-size: cover;
   background-position: center;
   position: relative;
@@ -153,9 +135,9 @@ const TempleImage = styled.div`
 
   .placeholder-icon {
     font-size: 4rem;
-    color: #d9a566;
+    color: #a8c6ff;
     z-index: 2;
-    opacity: 0.8;
+    opacity: 0.9;
   }
 `;
 
@@ -165,19 +147,19 @@ const TempleContent = styled.div`
 
 const TempleTitle = styled.h2`
   font-size: 1.75rem;
-  font-weight: bold;
-  color: #4a2c14;
+  font-weight: 800;
+  color: #0f172a;
   margin: 0 0 1rem 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: "Georgia", serif;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
   .temple-id {
     font-size: 0.9rem;
-    color: #8b5a2b;
-    font-weight: normal;
-    background: rgba(217, 165, 102, 0.2);
+    color: #0a4db4;
+    font-weight: 600;
+    background: #eaf2ff;
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
     margin-left: 0.5rem;
@@ -202,8 +184,8 @@ const DetailItem = styled.div`
 
   .label {
     font-size: 0.85rem;
-    color: #8b5a2b;
-    font-weight: 600;
+    color: #6b7280;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: flex;
@@ -213,22 +195,22 @@ const DetailItem = styled.div`
 
   .value {
     font-size: 1.1rem;
-    color: #4a2c14;
+    color: #0f172a;
     font-weight: 500;
   }
 `;
 
 const TempleDescription = styled.div`
-  background: rgba(248, 230, 204, 0.3);
+  background: #f6faff;
   padding: 1.25rem;
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
-  border: 1px solid rgba(217, 165, 102, 0.2);
+  border: 1px solid #e6efff;
 
   .label {
     font-size: 0.85rem;
-    color: #8b5a2b;
-    font-weight: 600;
+    color: #0a4db4;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.75rem;
@@ -238,23 +220,23 @@ const TempleDescription = styled.div`
   }
 
   .content {
-    color: #4a2c14;
+    color: #0f172a;
     line-height: 1.6;
     font-size: 1rem;
   }
 `;
 
 const TempleTimings = styled.div`
-  background: rgba(254, 243, 199, 0.4);
+  background: #f3f8ff;
   padding: 1.25rem;
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
-  border: 1px solid rgba(217, 165, 102, 0.3);
+  border: 1px solid #e6efff;
 
   .label {
     font-size: 0.85rem;
-    color: #92400e;
-    font-weight: 600;
+    color: #0a4db4;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.75rem;
@@ -270,13 +252,13 @@ const TempleTimings = styled.div`
   }
 
   .timing-slot {
-    background: rgba(255, 255, 255, 0.8);
+    background: #ffffff;
     padding: 0.75rem 1rem;
     border-radius: 0.375rem;
     font-size: 0.95rem;
-    color: #92400e;
-    font-weight: 500;
-    border: 1px solid rgba(217, 165, 102, 0.3);
+    color: #0a4db4;
+    font-weight: 600;
+    border: 1px solid #e6efff;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -306,24 +288,24 @@ const ActionButton = styled(motion.button)`
   transition: all 0.3s ease;
 
   &.primary {
-    background: linear-gradient(135deg, #d9a566 0%, #b38742 100%);
-    color: #2c1a0a;
-    border: 1px solid #b38742;
+    background: #0056d6;
+    color: #ffffff;
+    border: 1px solid #0050c6;
 
     &:hover {
-      background: linear-gradient(135deg, #e0b574 0%, #c49952 100%);
-      box-shadow: 0 4px 12px rgba(217, 165, 102, 0.4);
+      background: #0a4db4;
+      box-shadow: 0 6px 18px rgba(0, 86, 214, 0.35);
     }
   }
 
   &.secondary {
-    background: rgba(248, 230, 204, 0.5);
-    color: #4a2c14;
-    border: 1px solid #d9a566;
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #e6efff;
 
     &:hover {
-      background: rgba(248, 230, 204, 0.8);
-      box-shadow: 0 4px 12px rgba(139, 90, 43, 0.2);
+      background: #f6faff;
+      box-shadow: 0 4px 12px rgba(0, 86, 214, 0.15);
     }
   }
 `;
@@ -339,16 +321,16 @@ const LoadingContainer = styled.div`
   .spinner {
     width: 50px;
     height: 50px;
-    border: 4px solid rgba(217, 165, 102, 0.2);
-    border-top: 4px solid #d9a566;
+    border: 4px solid rgba(0, 86, 214, 0.15);
+    border-top: 4px solid #0056d6;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
 
   .loading-text {
-    color: #8b5a2b;
+    color: #3b82f6;
     font-size: 1.1rem;
-    font-family: "Georgia", serif;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   }
 
   @keyframes spin {
@@ -364,20 +346,20 @@ const LoadingContainer = styled.div`
 const EmptyState = styled.div`
   text-align: center;
   padding: 4rem 2rem;
-  color: #8b5a2b;
+  color: #3b82f6;
 
   .icon {
     font-size: 5rem;
     margin-bottom: 1.5rem;
-    color: #d9a566;
-    opacity: 0.8;
+    color: #a8c6ff;
+    opacity: 0.9;
   }
 
   h3 {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
-    color: #4a2c14;
-    font-family: "Georgia", serif;
+    color: #0f172a;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   }
 
   p {
@@ -394,9 +376,9 @@ const DecorativeDivider = styled.div`
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(217, 165, 102, 0.5),
-    rgba(179, 135, 66, 0.7),
-    rgba(217, 165, 102, 0.5),
+    #a8c6ff,
+    #0056d6,
+    #a8c6ff,
     transparent
   );
   margin: 1.5rem 0;
@@ -622,13 +604,6 @@ const AllTempleList = () => {
                   )}
 
                   <ActionButtons>
-                    <ActionButton
-                      className="secondary"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      👁️ View Details
-                    </ActionButton>
                     <ActionButton
                       className="primary"
                       onClick={() => handleEditTemple(temple)}

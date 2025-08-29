@@ -163,7 +163,7 @@ const PricingRules = () => {
         title="Pricing Rules"
         description="Manage dynamic pricing rules for different times, dates, and days"
         icon={<FiTrendingUp />}
-        gradient="linear-gradient(135deg, #b81616 0%, #6d28d9 100%)"
+        gradient="linear-gradient(135deg, #0056d6 0%, #0a4db4 100%)"
         actions={
           <AddButton
             onClick={handleAddRule}

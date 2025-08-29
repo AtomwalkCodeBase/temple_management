@@ -13,21 +13,21 @@ import {
 import { GiLotus, TempleGate } from "react-icons/gi";
 
 const TableContainer = styled.div`
-  background: linear-gradient(135deg, #f8f4eb 0%, #f1e9d9 100%);
+  background: #ffffff;
   border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid #d9a566;
+  box-shadow: 0 6px 24px rgba(0, 86, 214, 0.08);
+  border: 1px solid #cfe0ff;
 `;
 
 const TableHeader = styled.div`
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #d9a566;
+  border-bottom: 1px solid #cfe0ff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  background: rgba(44, 26, 10, 0.05);
+  background: #f3f8ff;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -45,7 +45,7 @@ const SearchContainer = styled.div`
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #8b5a2b;
+    color: #6b7280;
     font-size: 1rem;
   }
 `;
@@ -53,21 +53,21 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
-  border: 1px solid #d9a566;
+  border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   font-size: 0.9rem;
   transition: all 0.2s ease;
-  background: rgba(255, 255, 255, 0.8);
-  color: #4a2c14;
+  background: #ffffff;
+  color: #111827;
 
   &:focus {
     outline: none;
-    border-color: #b38742;
-    box-shadow: 0 0 0 3px rgba(217, 165, 102, 0.2);
+    border-color: #374151;
+    box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
   }
 
   &::placeholder {
-    color: #8b5a2b;
+    color: #9ca3af;
     opacity: 0.6;
   }
 `;
@@ -78,17 +78,17 @@ const Table = styled.table`
 `;
 
 const TableHead = styled.thead`
-  background: linear-gradient(135deg, #4a2c14 0%, #3a2313 100%);
+  background: linear-gradient(180deg, #f6faff 0%, #eaf2ff 100%);
 
   th {
     padding: 1rem 2rem;
     text-align: left;
     font-weight: 600;
-    color: #f8e6cc;
+    color: #0a4db4;
     font-size: 0.9rem;
-    border-bottom: 1px solid #8b5a2b;
+    border-bottom: 1px solid #d7e4ff;
     position: relative;
-    font-family: "Georgia", serif;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
     &:not(:last-child)::after {
       content: "";
@@ -98,23 +98,23 @@ const TableHead = styled.thead`
       transform: translateY(-50%);
       height: 60%;
       width: 1px;
-      background: linear-gradient(to bottom, transparent, #8b5a2b, transparent);
+      background: linear-gradient(to bottom, transparent, #d7e4ff, transparent);
     }
   }
 `;
 
 const TableBody = styled.tbody`
   tr {
-    border-bottom: 1px solid rgba(139, 90, 43, 0.2);
+    border-bottom: 1px solid #e6efff;
     transition: background-color 0.2s;
-    background: rgba(255, 255, 255, 0.7);
+    background: #ffffff;
 
     &:nth-child(even) {
-      background: rgba(248, 230, 204, 0.3);
+      background: #f6faff;
     }
 
     &:hover {
-      background: rgba(217, 165, 102, 0.1);
+      background: #eaf2ff;
     }
 
     &:last-child {
@@ -124,7 +124,7 @@ const TableBody = styled.tbody`
 
   td {
     padding: 1rem 2rem;
-    color: #4a2c14;
+    color: #0f172a;
     font-size: 0.9rem;
     vertical-align: middle;
   }
@@ -136,9 +136,9 @@ const ActionCell = styled.td`
 `;
 
 const ActionButton = styled.button`
-  background: rgba(139, 90, 43, 0.1);
-  border: 1px solid #d9a566;
-  color: #8b5a2b;
+  background: #ffffff;
+  border: 1px solid #cfe0ff;
+  color: #0056d6;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.375rem;
@@ -148,9 +148,9 @@ const ActionButton = styled.button`
   justify-content: center;
 
   &:hover {
-    background: rgba(139, 90, 43, 0.3);
-    color: #4a2c14;
-    border-color: #b38742;
+    background: #eaf2ff;
+    color: #0a4db4;
+    border-color: #a8c6ff;
   }
 `;
 
@@ -158,10 +158,10 @@ const ActionMenu = styled(motion.div)`
   position: absolute;
   top: 100%;
   right: 0;
-  background: linear-gradient(135deg, #f8f4eb 0%, #f1e9d9 100%);
-  border: 1px solid #d9a566;
+  background: #ffffff;
+  border: 1px solid #cfe0ff;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 25px rgba(0, 86, 214, 0.15);
   min-width: 160px;
   z-index: 100;
   overflow: hidden;
@@ -174,30 +174,30 @@ const ActionMenuItem = styled.button`
   border: none;
   text-align: left;
   cursor: pointer;
-  color: #4a2c14;
+  color: #0f172a;
   font-size: 0.9rem;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  border-bottom: 1px solid rgba(139, 90, 43, 0.1);
+  border-bottom: 1px solid #e6efff;
 
   &:hover {
-    background: rgba(217, 165, 102, 0.1);
-    color: #2c1a0a;
+    background: #eaf2ff;
+    color: #0a4db4;
   }
 
   &.danger {
-    color: #c84b31;
+    color: #d64545;
 
     &:hover {
-      background: rgba(200, 75, 49, 0.1);
+      background: #ffecec;
     }
   }
 
   .icon {
     font-size: 0.9rem;
-    color: #8b5a2b;
+    color: #0056d6;
   }
 
   &:last-child {
@@ -208,19 +208,19 @@ const ActionMenuItem = styled.button`
 const EmptyState = styled.div`
   text-align: center;
   padding: 4rem 2rem;
-  color: #8b5a2b;
+  color: #3b82f6;
 
   .icon {
     font-size: 4rem;
     margin-bottom: 1rem;
-    color: #d9a566;
+    color: #a8c6ff;
   }
 
   h3 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-    color: #4a2c14;
-    font-family: "Georgia", serif;
+    color: #0f172a;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   }
 
   p {
@@ -240,14 +240,14 @@ const LoadingContainer = styled.div`
   .spinner {
     width: 40px;
     height: 40px;
-    border: 4px solid rgba(217, 165, 102, 0.2);
-    border-top: 4px solid #d9a566;
+    border: 4px solid rgba(0, 86, 214, 0.15);
+    border-top: 4px solid #0056d6;
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
 
   .loading-text {
-    color: #8b5a2b;
+    color: #3b82f6;
     font-size: 0.9rem;
   }
 
@@ -263,12 +263,12 @@ const LoadingContainer = styled.div`
 
 const TableFooter = styled.div`
   padding: 1rem 2rem;
-  border-top: 1px solid #d9a566;
+  border-top: 1px solid #cfe0ff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(44, 26, 10, 0.05);
-  color: #8b5a2b;
+  background: #f3f8ff;
+  color: #3b82f6;
   font-size: 0.9rem;
 
   @media (max-width: 768px) {
@@ -286,16 +286,16 @@ const Pagination = styled.div`
 
 const PageButton = styled.button`
   padding: 0.5rem 0.75rem;
-  border: 1px solid #d9a566;
-  background: ${(props) => (props.active ? "#d9a566" : "transparent")};
-  color: ${(props) => (props.active ? "#2c1a0a" : "#8b5a2b")};
+  border: 1px solid #cfe0ff;
+  background: ${(props) => (props.active ? "#0056d6" : "#ffffff")};
+  color: ${(props) => (props.active ? "#ffffff" : "#0056d6")};
   border-radius: 0.375rem;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background: #d9a566;
-    color: #2c1a0a;
+    background: #eaf2ff;
+    color: #0a4db4;
   }
 
   &:disabled {

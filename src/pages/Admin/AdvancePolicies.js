@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiDollarSign, FiPlus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
+import { LuIndianRupee } from "react-icons/lu";
 import {
   getAdvancePolicyList,
   processAdvancePolicyData,
@@ -155,8 +156,8 @@ const AdvancePolicies = () => {
       <PageContainer
         title="Advance Policies"
         description="Manage advance booking policies for your temple services"
-        icon={<FiDollarSign />}
-        gradient="linear-gradient(135deg, #b81616 0%, #047857 100%)"
+        icon={<LuIndianRupee />}
+        gradient="linear-gradient(135deg, #0056d6 0%, #0a4db4 100%)"
         actions={
           <AddButton
             onClick={handleAddPolicy}

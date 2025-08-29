@@ -228,7 +228,7 @@ const HallsManagement = () => {
 
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [hallFilter, setHallFilter] = useState("all");
+  // Removed hall filter dropdown per request
 
   const [showHallWizard, setShowHallWizard] = useState(false);
   const [editService, setEditService] = useState(null);
@@ -460,52 +460,26 @@ const HallsManagement = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </SearchInput>
-              <FilterSelect
-                value={hallFilter}
-                onChange={(e) => setHallFilter(e.target.value)}
-              >
-                <option value="all">All Halls</option>
-                {hallServices.map((h) => (
-                  <option key={h.service_id} value={h.name}>
-                    {h.name}
-                  </option>
-                ))}
-              </FilterSelect>
             </Toolbar>
             <Table>
               <thead>
                 <tr>
                   <th>Hall Name</th>
-                  <th>Service Type</th>
-                  <th>Base Price</th>
                   <th>Capacity</th>
-                  <th>Variations</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {hallServices
-                  .filter((h) => hallFilter === "all" || h.name === hallFilter)
                   .filter((h) =>
                     h.name.toLowerCase().includes(searchQuery.toLowerCase())
                   )
                   .map((h) => (
                     <tr key={h.service_id}>
                       <td style={{ fontWeight: "600" }}>{h.name}</td>
-                      <td>{h.service_type_str || h.service_type}</td>
-                      <td style={{ fontWeight: "600", color: "#059669" }}>
-                        {h.base_price != null
-                          ? `₹${Number(h.base_price).toLocaleString()}`
-                          : "—"}
-                      </td>
                       <td>
                         {h.capacity != null ? `${h.capacity} people` : "—"}
-                      </td>
-                      <td>
-                        {Array.isArray(h.service_variation_list)
-                          ? h.service_variation_list.length
-                          : 0}
                       </td>
                       <td>
                         <ActiveBadge $active={!!h.is_active}>

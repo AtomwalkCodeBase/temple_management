@@ -44,7 +44,7 @@ const StatCard = styled.div`
 `;
 
 const WelcomeSection = styled.div`
-  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  background: linear-gradient(135deg, #0b5df5ff 0%, #1680f9ff 100%);
   color: white;
   padding: 3rem 2rem;
   border-radius: 1rem;

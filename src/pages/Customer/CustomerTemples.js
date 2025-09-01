@@ -455,7 +455,7 @@ const CustomerTemples = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="title">🕉️ Sacred Temples</div>
+          <div className="title">Sacred Temples</div>
           <div className="subtitle">
             Discover divine temples and book your spiritual journey with us
           </div>

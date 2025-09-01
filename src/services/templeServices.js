@@ -3,7 +3,8 @@ import axios from "axios";
 const BASE_URL = "https://temple.atomwalk.com/temple/api";
 
 const getAuthHeaders = () => {
-  const token = localStorage.getItem("userToken");
+  const token =
+    localStorage.getItem("userToken") || localStorage.getItem("customerToken");
   return {
     Authorization: `Token ${token}`,
     "Content-Type": "application/json",
@@ -169,15 +170,15 @@ export const processTempleServiceImages = async (imageData) => {
   try {
     // Create FormData for file uploads
     const formData = new FormData();
-    
+
     // Add service_id
-    formData.append('service_id', imageData.service_id);
-    
+    formData.append("service_id", imageData.service_id);
+
     // Add main image (compulsory)
     if (imageData.image_file) {
-      formData.append('image_file', imageData.image_file);
+      formData.append("image_file", imageData.image_file);
     }
-    
+
     // Add optional images
     for (let i = 1; i <= 5; i++) {
       const imageKey = `image_file_${i}`;
@@ -185,14 +186,14 @@ export const processTempleServiceImages = async (imageData) => {
         formData.append(imageKey, imageData[imageKey]);
       }
     }
-    
+
     const response = await axios.post(
       `${BASE_URL}/process_service_images/`,
       formData,
       {
         headers: {
           ...getAuthHeaders(),
-          'Content-Type': 'multipart/form-data', // Important for file uploads
+          "Content-Type": "multipart/form-data", // Important for file uploads
         },
       }
     );

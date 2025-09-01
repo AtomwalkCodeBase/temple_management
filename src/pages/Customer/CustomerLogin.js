@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -300,7 +300,16 @@ const CustomerLogin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useCustomerAuth();
-
+  const adminId = localStorage.getItem("userToken");
+  const userId = localStorage.getItem("customerToken");
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (userId && currentPath !== "/customer-dashboard") {
+      window.location.href = "/customer-dashboard";
+    } else if (!adminId && !userId && currentPath !== "/customer-login") {
+      window.location.href = "/customer-login";
+    }
+  }, []);
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
@@ -324,7 +333,7 @@ const CustomerLogin = () => {
       login(response);
 
       // Navigate to customer dashboard
-      navigate("/customer-dashboard");
+      window.location.href = "/customer-dashboard";
     } catch (err) {
       setError(err.message || "Login failed. Please check your credentials.");
     } finally {

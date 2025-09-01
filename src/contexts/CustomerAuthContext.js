@@ -53,7 +53,6 @@ export const CustomerAuthProvider = ({ children }) => {
     setCustomerData(null);
     setIsAuthenticated(false);
   };
-
   const value = {
     customerData,
     isAuthenticated,

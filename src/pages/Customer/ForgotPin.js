@@ -9,10 +9,10 @@ import { forgotPin } from "../../services/customerServices";
 
 const ForgotPinContainer = styled.div`
   min-height: 100vh;
+  margin-top: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 2rem;
   position: relative;
   overflow: hidden;
@@ -20,11 +20,15 @@ const ForgotPinContainer = styled.div`
   &::before {
     content: "";
     position: absolute;
-    top: 0;
+    top: 20px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background: url("https://deshpee.com/wp-content/uploads/2024/01/Shri-Ram-Ft-img.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px);
+    z-index: 0;
   }
 `;
 
@@ -98,7 +102,8 @@ const Label = styled.label`
   gap: 0.5rem;
 
   .icon {
-    color: #667eea;
+    color: #e16417ff;
+    font-size: 1.2rem;
   }
 `;
 
@@ -125,7 +130,7 @@ const Input = styled.input`
 `;
 
 const SubmitButton = styled(motion.button)`
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #dfea66ff 0%, #dd3320ff 100%);
   color: white;
   font-weight: 700;
   padding: 1.25rem 2rem;
@@ -228,7 +233,7 @@ const BackLink = styled.div`
   border-top: 1px solid #e5e7eb;
 
   a {
-    color: #667eea;
+    color: #f39552ff;
     text-decoration: none;
     font-weight: 700;
     font-size: 1.05rem;
@@ -238,7 +243,7 @@ const BackLink = styled.div`
     gap: 0.5rem;
 
     &:hover {
-      color: #764ba2;
+      color: #eb3b1cff;
       text-decoration: underline;
     }
   }
@@ -327,19 +332,6 @@ const ForgotPin = () => {
         transition={{ duration: 0.6 }}
       >
         <Logo>
-          <motion.div
-            className="om-symbol"
-            animate={{
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-            }}
-          >
-            🕉️
-          </motion.div>
           <div className="title">Reset PIN</div>
           <div className="subtitle">Get a new PIN via email</div>
         </Logo>

@@ -380,7 +380,7 @@ const CustomerDashboard = () => {
 
   useEffect(() => {
     loadRecentBookings();
-  }, []);
+  }, [customerData]);
 
   const loadRecentBookings = async () => {
     try {
@@ -565,7 +565,9 @@ const CustomerDashboard = () => {
                     <MdTempleHindu />
                   </div>
                   <div className="booking-details">
-                    <div className="service-name">{booking.service}</div>
+                    <div className="service-name">
+                      {booking.service_data?.name || "Service"}
+                    </div>
                     <div className="booking-info">
                       <div className="info-item">
                         <FiCalendar />
@@ -573,7 +575,7 @@ const CustomerDashboard = () => {
                       </div>
                       <div className="info-item">
                         <FiMapPin />
-                        {booking.booking_ref_code}
+                        {booking.service_data?.temple_name}
                       </div>
                     </div>
                   </div>

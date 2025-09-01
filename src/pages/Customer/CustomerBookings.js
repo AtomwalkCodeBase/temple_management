@@ -4,7 +4,24 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCalendar, FiMapPin, FiCheck, FiX, FiFilter } from "react-icons/fi";
+import {
+  FiCalendar,
+  FiMapPin,
+  FiCheck,
+  FiX,
+  FiFilter,
+  FiUser,
+  FiClock,
+  FiDollarSign,
+  FiPhone,
+  FiMail,
+  FiHome,
+  FiInfo,
+  FiCreditCard,
+  FiRefreshCw,
+  FiPieChart,
+  FiImage,
+} from "react-icons/fi";
 import { MdTempleHindu } from "react-icons/md";
 import {
   getBookingList,
@@ -16,6 +33,7 @@ import CustomerLayout from "../../components/Customer/CustomerLayout";
 const BookingsContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+  padding: 1rem;
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -144,8 +162,8 @@ const FilterSection = styled(motion.div)`
 `;
 
 const BookingsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  /* display: grid; */
+  /* grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); */
   gap: 1.5rem;
 
   @media (max-width: 768px) {
@@ -162,7 +180,7 @@ const BookingCard = styled(motion.div)`
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-
+  margin-bottom: 1rem;
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
@@ -228,6 +246,26 @@ const StatusBadge = styled.span`
   }
 `;
 
+const ServiceImage = styled(motion.div)`
+  width: 100%;
+  height: 200px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+`;
+
 const ServiceInfo = styled.div`
   margin-bottom: 1.5rem;
 
@@ -245,34 +283,130 @@ const ServiceInfo = styled.div`
       font-size: 1.4rem;
     }
   }
+
+  .service-description {
+    color: #6b7280;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
 `;
 
 const BookingDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+`;
 
-  .detail {
+const DetailCard = styled.div`
+  background: #f8fafc;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+
+  .detail-title {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     font-size: 0.9rem;
 
     .icon {
       color: #667eea;
-      font-size: 1rem;
+    }
+  }
+
+  .detail-content {
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+
+  .detail-value {
+    font-weight: 600;
+    color: #1f2937;
+    margin-top: 0.25rem;
+  }
+`;
+
+const CustomerInfo = styled.div`
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #bae6fd;
+
+  .customer-header {
+    font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .customer-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .customer-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+
+    .icon {
+      color: #0369a1;
       min-width: 16px;
     }
 
     .label {
       color: #6b7280;
       font-weight: 500;
-      min-width: 80px;
     }
 
     .value {
       color: #1f2937;
+      font-weight: 600;
+    }
+  }
+`;
+
+const PolicySection = styled.div`
+  margin-bottom: 1.5rem;
+
+  .policy-header {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .policy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .policy-item {
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.85rem;
+
+    .policy-label {
+      color: #6b7280;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .policy-value {
+      color: #059669;
       font-weight: 600;
     }
   }
@@ -449,10 +583,11 @@ const CustomerBookings = () => {
   }, [bookings, filters]);
 
   const loadBookings = async () => {
+    const data = customerData?.custRefCode;
     try {
       setLoading(true);
-      const response = await getBookingList(customerData.custRefCode);
-      setBookings(response || []);
+      const response = await getBookingList(data);
+      setBookings(response);
     } catch (err) {
       setError("Failed to load bookings. Please try again.");
       console.error("Error loading bookings:", err);
@@ -467,10 +602,13 @@ const CustomerBookings = () => {
     if (filters.search) {
       filtered = filtered.filter(
         (booking) =>
-          booking.service
+          booking.service_data?.name
             ?.toLowerCase()
             .includes(filters.search.toLowerCase()) ||
-          booking.booking_ref_code
+          booking.ref_code
+            ?.toLowerCase()
+            .includes(filters.search.toLowerCase()) ||
+          booking.customer_data?.name
             ?.toLowerCase()
             .includes(filters.search.toLowerCase())
       );
@@ -553,6 +691,14 @@ const CustomerBookings = () => {
     }
   };
 
+  const formatPrice = (price) => {
+    return `₹${parseFloat(price).toFixed(2)}`;
+  };
+
+  const calculateTotal = (booking) => {
+    return parseFloat(booking.unit_price) * booking.quantity;
+  };
+
   if (loading) {
     return (
       <CustomerLayout>
@@ -619,7 +765,7 @@ const CustomerBookings = () => {
               <label>Search</label>
               <input
                 type="text"
-                placeholder="Search by service or booking ID..."
+                placeholder="Search by service, booking ID, or name..."
                 value={filters.search}
                 onChange={(e) => handleFilterChange("search", e.target.value)}
               />
@@ -681,71 +827,228 @@ const CustomerBookings = () => {
           <BookingsGrid>
             {filteredBookings.map((booking, index) => (
               <BookingCard
-                key={booking.booking_ref_code}
+                key={booking.ref_code}
                 status={booking.status}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <BookingHeader>
-                  <BookingRef>{booking.booking_ref_code}</BookingRef>
+                  <BookingRef>{booking.ref_code}</BookingRef>
                   <StatusBadge className={getStatusClass(booking.status)}>
                     {getStatusText(booking.status)}
                   </StatusBadge>
                 </BookingHeader>
 
+                {booking.service_data?.image && (
+                  <ServiceImage>
+                    <img
+                      src={booking.service_data.image}
+                      alt={booking.service_data.name}
+                      onClick={() =>
+                        window.open(booking.service_data.image, "_blank")
+                      }
+                    />
+                  </ServiceImage>
+                )}
+
                 <ServiceInfo>
                   <div className="service-name">
                     <MdTempleHindu className="icon" />
-                    {booking.service}
+                    {booking.service_data?.name || "Service"}
                   </div>
+                  {booking.service_data?.description && (
+                    <div className="service-description">
+                      {booking.service_data.description}
+                    </div>
+                  )}
                 </ServiceInfo>
 
                 <BookingDetails>
-                  <div className="detail">
-                    <FiCalendar className="icon" />
-                    <span className="label">Date:</span>
-                    <span className="value">{booking.booking_date}</span>
-                  </div>
-                  <div className="detail">
-                    <FiMapPin className="icon" />
-                    <span className="label">Booking ID:</span>
-                    <span className="value">{booking.booking_ref_code}</span>
-                  </div>
+                  <DetailCard>
+                    <div className="detail-title">
+                      <FiCalendar className="icon" />
+                      Booking Details
+                    </div>
+                    <div className="detail-content">
+                      <div>
+                        Date:{" "}
+                        <span className="detail-value">
+                          {booking.booking_date}
+                        </span>
+                      </div>
+                      <div>
+                        Time:{" "}
+                        <span className="detail-value">
+                          {booking.start_time} - {booking.end_time}
+                        </span>
+                      </div>
+                      <div>
+                        Quantity:{" "}
+                        <span className="detail-value">{booking.quantity}</span>
+                      </div>
+                    </div>
+                  </DetailCard>
+
+                  <DetailCard>
+                    <div className="detail-title">
+                      <FiDollarSign className="icon" />
+                      Pricing
+                    </div>
+                    <div className="detail-content">
+                      <div>
+                        Unit Price:{" "}
+                        <span className="detail-value">
+                          {formatPrice(booking.unit_price)}
+                        </span>
+                      </div>
+                      <div>
+                        Total:{" "}
+                        <span className="detail-value">
+                          {formatPrice(calculateTotal(booking))}
+                        </span>
+                      </div>
+                      {booking.service_variation_data && (
+                        <div>
+                          Variation:{" "}
+                          <span className="detail-value">
+                            {booking.service_variation_data.pricing_type_str}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </DetailCard>
+
+                  <DetailCard>
+                    <div className="detail-title">
+                      <FiHome className="icon" />
+                      Temple Info
+                    </div>
+                    <div className="detail-content">
+                      <div>
+                        Name:{" "}
+                        <span className="detail-value">
+                          {booking.service_data?.temple_name}
+                        </span>
+                      </div>
+                      <div>
+                        Capacity:{" "}
+                        <span className="detail-value">
+                          {booking.service_data?.capacity} people
+                        </span>
+                      </div>
+                      <div>
+                        Duration:{" "}
+                        <span className="detail-value">
+                          {booking.service_data?.duration_minutes} mins
+                        </span>
+                      </div>
+                    </div>
+                  </DetailCard>
                 </BookingDetails>
+
+                <CustomerInfo>
+                  <div className="customer-header">
+                    <FiUser />
+                    Customer Information
+                  </div>
+                  <div className="customer-details">
+                    <div className="customer-detail">
+                      <FiUser className="icon" />
+                      <span className="label">Name:</span>
+                      <span className="value">
+                        {booking.customer_data?.name}
+                      </span>
+                    </div>
+                    <div className="customer-detail">
+                      <FiMail className="icon" />
+                      <span className="label">Email:</span>
+                      <span className="value">
+                        {booking.customer_data?.email_id}
+                      </span>
+                    </div>
+                    <div className="customer-detail">
+                      <FiPhone className="icon" />
+                      <span className="label">Phone:</span>
+                      <span className="value">
+                        {booking.customer_data?.mobile_number}
+                      </span>
+                    </div>
+                    <div className="customer-detail">
+                      <FiPhone className="icon" />
+                      <span className="label">Alt Phone:</span>
+                      <span className="value">
+                        {booking.customer_data?.alternate_contact_number}
+                      </span>
+                    </div>
+                  </div>
+                </CustomerInfo>
+
+                {booking.service_data && (
+                  <PolicySection>
+                    <div className="policy-header">
+                      <FiInfo className="icon" />
+                      Booking Policies
+                    </div>
+                    <div className="policy-grid">
+                      {booking.service_data.adv_policy_data && (
+                        <div className="policy-item">
+                          <div className="policy-label">Advance Payment:</div>
+                          <div className="policy-value">
+                            {booking.service_data.adv_policy_data.percent}% (Min
+                            ₹{booking.service_data.adv_policy_data.min_amount})
+                          </div>
+                        </div>
+                      )}
+                      {booking.service_data.refund_policy_data && (
+                        <div className="policy-item">
+                          <div className="policy-label">Refund Policy:</div>
+                          <div className="policy-value">
+                            {booking.service_data.refund_policy_data.name}
+                          </div>
+                        </div>
+                      )}
+                      {booking.service_data.pricing_rule_data && (
+                        <div className="policy-item">
+                          <div className="policy-label">Pricing Rule:</div>
+                          <div className="policy-value">
+                            {booking.service_data.pricing_rule_data.name}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </PolicySection>
+                )}
 
                 {booking.status?.toUpperCase() === "B" && (
                   <BookingActions>
                     <ActionButton
                       className="cancel"
                       onClick={() =>
-                        handleBookingAction(booking.booking_ref_code, "cancel")
+                        handleBookingAction(booking.ref_code, "cancel")
                       }
-                      disabled={actionLoading === booking.booking_ref_code}
+                      disabled={actionLoading === booking.ref_code}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       <FiX />
-                      {actionLoading === booking.booking_ref_code
+                      {actionLoading === booking.ref_code
                         ? "..."
-                        : "Cancel"}
+                        : "Cancel Booking"}
                     </ActionButton>
                     <ActionButton
                       className="complete"
                       onClick={() =>
-                        handleBookingAction(
-                          booking.booking_ref_code,
-                          "complete"
-                        )
+                        handleBookingAction(booking.ref_code, "complete")
                       }
-                      disabled={actionLoading === booking.booking_ref_code}
+                      disabled={actionLoading === booking.ref_code}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       <FiCheck />
-                      {actionLoading === booking.booking_ref_code
+                      {actionLoading === booking.ref_code
                         ? "..."
-                        : "Complete"}
+                        : "Mark Complete"}
                     </ActionButton>
                   </BookingActions>
                 )}

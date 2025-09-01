@@ -52,10 +52,16 @@ export const forgotPin = async (mobileNumber) => {
 
 // Process Booking
 export const processBooking = async (bookingData) => {
+  const token = localStorage.getItem("customerToken");
   try {
     const response = await axios.post(
       `${BASE_URL}/process_booking_data/`,
-      bookingData
+      bookingData,
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -64,7 +70,8 @@ export const processBooking = async (bookingData) => {
 };
 
 // Get Booking List
-export const getBookingList = async (custRefCode) => {
+export const getBookingList = async () => {
+  const custRefCode = localStorage.getItem("customerRefCode");
   const token = localStorage.getItem("customerToken");
   try {
     const response = await axios.get(

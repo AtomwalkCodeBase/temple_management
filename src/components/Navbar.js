@@ -261,7 +261,6 @@ const Navbar = () => {
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
   const location = useLocation();
   const loginRef = useRef(null);
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -137,7 +137,16 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const adminId = localStorage.getItem("userToken");
+  const userId = localStorage.getItem("customerToken");
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (adminId && currentPath !== "/dashboard") {
+      window.location.href = "/dashboard";
+    } else if (!adminId && !userId && currentPath !== "/login") {
+      window.location.href = "/login";
+    }
+  }, []);
   const handleChange = (e) => {
     setCredentials({
       ...credentials,

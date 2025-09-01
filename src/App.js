@@ -34,6 +34,7 @@ import CustomerTemples from "./pages/Customer/CustomerTemples";
 import CustomerBookSeva from "./pages/Customer/BookSeva";
 import CustomerBookings from "./pages/Customer/CustomerBookings";
 import CustomerDashboard from "./pages/Customer/CustomerDashboard";
+import { useEffect } from "react";
 
 function AppContent() {
   const location = useLocation();

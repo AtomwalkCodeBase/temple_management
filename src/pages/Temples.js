@@ -720,7 +720,7 @@ const Temples = () => {
   };
 
   const handleBookSeva = (templeId) => {
-    navigate("/book-seva", { state: { templeId } });
+    navigate("/customer-login", { state: { templeId } });
   };
 
   // const handleBookSeva = (templeId) => {

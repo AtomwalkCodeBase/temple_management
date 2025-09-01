@@ -550,9 +550,8 @@ const TempleServicesHomepage = () => {
   };
 
   const handleBookService = (service) => {
-    // Implement booking logic here
+    window.location.href = `/customer-login`;
     console.log("Booking service:", service);
-    alert(`Booking ${service.name}. This will redirect to booking page.`);
   };
 
   const formatCurrency = (amount) => {

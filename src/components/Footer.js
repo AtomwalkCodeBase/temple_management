@@ -71,7 +71,6 @@ const BrandSection = styled.div`
 `;
 
 const Logo = styled.h2`
-  font-family: "Poppins", sans-serif;
   font-weight: 700;
   font-size: 2rem;
   color: #ffffff;
@@ -87,7 +86,6 @@ const Logo = styled.h2`
 `;
 
 const Tagline = styled.p`
-  font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-size: 1rem;
   color: #f3f4f6;
@@ -105,7 +103,6 @@ const NewsletterSection = styled.div`
 `;
 
 const NewsletterTitle = styled.h3`
-  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 1.2rem;
   color: #ffffff;
@@ -128,7 +125,6 @@ const NewsletterInput = styled.input`
   border-radius: 30px;
   border: none;
   width: 100%;
-  font-family: "Poppins", sans-serif;
   font-size: 1rem;
   background-color: #ffffff;
   color: #333;
@@ -189,7 +185,6 @@ const LinksSection = styled.div`
 const LinksColumn = styled.div``;
 
 const ColumnTitle = styled.h3`
-  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
   color: #ffffff;
@@ -203,7 +198,6 @@ const ColumnTitle = styled.h3`
 
 const LinkItem = styled.a`
   display: block;
-  font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-size: 0.9rem;
   color: #f3f4f6;
@@ -241,7 +235,6 @@ const FooterBottomBar = styled.div`
 `;
 
 const FooterBottomItem = styled.span`
-  font-family: "Inter", "Roboto", "Poppins", sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: #f3f4f6;

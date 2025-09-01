@@ -27,7 +27,6 @@ const PageTitle = styled.h1`
   font-weight: 700;
   color: #1e293b;
   margin: 0;
-  font-family: 'Inter', sans-serif;
 `;
 
 const PageSubtitle = styled.p`
@@ -92,58 +91,58 @@ const LogoutButton = styled(Button)`
 
 // Page title mapping
 const getPageInfo = (pathname) => {
-  const path = pathname.split('/').pop();
-  
+  const path = pathname.split("/").pop();
+
   switch (path) {
-    case 'dashboard':
+    case "dashboard":
       return {
-        title: 'Dashboard',
-        subtitle: 'Overview of temple management system'
+        title: "Dashboard",
+        subtitle: "Overview of temple management system",
       };
-    case 'puja-master':
+    case "puja-master":
       return {
-        title: 'Puja Master',
-        subtitle: 'Manage puja configurations, time slots, and categories'
+        title: "Puja Master",
+        subtitle: "Manage puja configurations, time slots, and categories",
       };
-    case 'hall-master':
+    case "hall-master":
       return {
-        title: 'Hall Master',
-        subtitle: 'Manage temple halls and facilities'
+        title: "Hall Master",
+        subtitle: "Manage temple halls and facilities",
       };
-    case 'puja-bookings':
+    case "puja-bookings":
       return {
-        title: 'Puja Bookings',
-        subtitle: 'View and manage puja reservations'
+        title: "Puja Bookings",
+        subtitle: "View and manage puja reservations",
       };
-    case 'hall-bookings':
+    case "hall-bookings":
       return {
-        title: 'Hall Bookings',
-        subtitle: 'View and manage hall reservations'
+        title: "Hall Bookings",
+        subtitle: "View and manage hall reservations",
       };
-    case 'calendar':
+    case "calendar":
       return {
-        title: 'Calendar',
-        subtitle: 'Temple events and schedule management'
+        title: "Calendar",
+        subtitle: "Temple events and schedule management",
       };
-    case 'manual-booking':
+    case "manual-booking":
       return {
-        title: 'Manual Booking',
-        subtitle: 'Create and manage bookings manually'
+        title: "Manual Booking",
+        subtitle: "Create and manage bookings manually",
       };
-    case 'reports':
+    case "reports":
       return {
-        title: 'Reports',
-        subtitle: 'Analytics and reporting dashboard'
+        title: "Reports",
+        subtitle: "Analytics and reporting dashboard",
       };
-    case 'temple-master':
+    case "temple-master":
       return {
-        title: 'Temple Master',
-        subtitle: 'Manage temple details and images'
+        title: "Temple Master",
+        subtitle: "Manage temple details and images",
       };
     default:
       return {
-        title: 'Admin Panel',
-        subtitle: 'Temple Management System'
+        title: "Admin Panel",
+        subtitle: "Temple Management System",
       };
   }
 };
@@ -157,7 +156,7 @@ const AdminHeader = () => {
     // Clear authentication
     localStorage.removeItem("userToken");
     localStorage.removeItem("customerToken");
-    
+
     // Redirect to login
     navigate("/login");
   };
@@ -168,7 +167,7 @@ const AdminHeader = () => {
         <PageTitle>{pageInfo.title}</PageTitle>
         <PageSubtitle>{pageInfo.subtitle}</PageSubtitle>
       </TitleSection>
-      
+
       <RightSection>
         <UserInfo>
           <UserAvatar>R</UserAvatar>
@@ -177,12 +176,8 @@ const AdminHeader = () => {
             <UserRole>Admin</UserRole>
           </UserDetails>
         </UserInfo>
-        
-        <LogoutButton 
-          color="red" 
-          variant="outline" 
-          onClick={handleLogout}
-        >
+
+        <LogoutButton color="red" variant="outline" onClick={handleLogout}>
           <MdLogout />
           Logout
         </LogoutButton>

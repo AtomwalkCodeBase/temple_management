@@ -128,7 +128,6 @@ const TextArea = styled.textarea`
   background: #ffffff;
   min-height: 64px;
   resize: vertical;
-  font-family: inherit;
   transition: all 0.2s ease;
   
   &:focus {

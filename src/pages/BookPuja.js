@@ -49,7 +49,6 @@ const Title = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
-  font-family: "Georgia", serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,7 +135,6 @@ const ServiceTypeName = styled.h3`
   font-size: 1.4rem;
   color: #5a4b41;
   margin-bottom: 0.5rem;
-  font-family: "Georgia", serif;
 `;
 
 const ServiceTypeCount = styled.p`
@@ -226,7 +224,7 @@ const ServiceName = styled.h2`
   font-size: 1.6rem;
   color: #5a4b41;
   margin: 0 0 0.5rem 0;
-  font-family: "Georgia", serif;
+
   line-height: 1.3;
 `;
 
@@ -269,7 +267,6 @@ const PriceAmount = styled.div`
   color: #5a4b41;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  font-family: "Georgia", serif;
 `;
 
 const PriceLabel = styled.div`
@@ -297,7 +294,6 @@ const ActionButton = styled(motion.button)`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-family: inherit;
 
   &.primary {
     background: linear-gradient(135deg, #8b5a2b, #7a6a5a);
@@ -335,7 +331,7 @@ const DetailSection = styled.div`
     font-size: 1.2rem;
     color: #5a4b41;
     margin-bottom: 1rem;
-    font-family: "Georgia", serif;
+
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -445,7 +441,6 @@ const Spinner = styled.div`
 const LoadingText = styled.div`
   color: #7a6a5a;
   font-size: 1.2rem;
-  font-family: "Georgia", serif;
   text-align: center;
 `;
 
@@ -464,7 +459,6 @@ const ErrorContainer = styled.div`
     font-size: 1.8rem;
     margin-bottom: 1rem;
     color: #5a4b41;
-    font-family: "Georgia", serif;
   }
 
   p {

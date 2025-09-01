@@ -70,7 +70,6 @@ const Logo = styled.div`
       font-weight: 700;
       margin: 0;
       color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
       letter-spacing: 0.5px;
     }
 
@@ -149,8 +148,7 @@ const MenuSection = styled.div`
 const SectionTitle = styled.div`
   padding: 0 1.5rem 0.75rem;
   font-size: 0.85rem;
-  font-weight: 850 ;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  font-weight: 850;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #bfdbfe;
@@ -189,7 +187,8 @@ const MenuItem = styled(Link)`
   border-radius: 6px;
 
   &:hover {
-    background: ${(props) => (props.active ? "rgba(255, 255, 255, 0.92)" : "rgba(255, 255, 255, 0.12)")};
+    background: ${(props) =>
+      props.active ? "rgba(255, 255, 255, 0.92)" : "rgba(255, 255, 255, 0.12)"};
     color: ${(props) => (props.active ? "#0f172a" : "#ffffff")};
     transform: translateX(4px);
   }
@@ -359,7 +358,6 @@ const AdminSidebar = ({
         animate={{ width: collapsed ? 80 : 280 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-
         <SidebarHeader collapsed={collapsed}>
           <Logo collapsed={collapsed}>
             <motion.div

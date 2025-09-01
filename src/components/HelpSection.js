@@ -13,7 +13,6 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
-  font-family: 'Lora', serif;
   font-weight: 500;
   font-size: 44px;
   line-height: 54px;
@@ -40,11 +39,10 @@ const Card = styled.div`
   align-items: center;
   text-align: center;
   min-height: 340px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 `;
 
 const StepTitle = styled.h3`
-  font-family: 'Lora', serif;
   font-weight: 500;
   font-size: 36px;
   line-height: 44px;
@@ -53,7 +51,6 @@ const StepTitle = styled.h3`
 `;
 
 const CardDescription = styled.p`
-  font-family: 'Lora', serif;
   font-weight: 400;
   font-size: 22px;
   line-height: 32px;
@@ -72,7 +69,7 @@ const CTAButton = styled.button`
   cursor: pointer;
   margin-top: auto;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 10px rgba(235, 207, 137, 0.10);
+  box-shadow: 0 2px 10px rgba(235, 207, 137, 0.1);
   &:hover {
     background: #ffe7a0;
     box-shadow: 0 4px 18px rgba(235, 207, 137, 0.18);
@@ -82,19 +79,22 @@ const CTAButton = styled.button`
 const helpSteps = [
   {
     title: "Donate",
-    description: "Help us directly restore ancient temples by contributing to verified projects rooted in dharma and tradition.",
-    buttonText: "Donate Now"
+    description:
+      "Help us directly restore ancient temples by contributing to verified projects rooted in dharma and tradition.",
+    buttonText: "Donate Now",
   },
   {
     title: "Volunteer",
-    description: "Join hands on-site or remotely—assist with temple events, education, documentation, and outreach.",
-    buttonText: "Volunteer"
+    description:
+      "Join hands on-site or remotely—assist with temple events, education, documentation, and outreach.",
+    buttonText: "Volunteer",
   },
   {
     title: "Share",
-    description: "Amplify our mission. Share stories, spread awareness, and inspire others to reconnect with Sanatan Dharma.",
-    buttonText: "Share"
-  }
+    description:
+      "Amplify our mission. Share stories, spread awareness, and inspire others to reconnect with Sanatan Dharma.",
+    buttonText: "Share",
+  },
 ];
 
 const HelpSection = () => {
@@ -116,4 +116,4 @@ const HelpSection = () => {
   );
 };
 
-export default HelpSection; 
+export default HelpSection;

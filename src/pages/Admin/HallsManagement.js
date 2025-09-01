@@ -21,8 +21,6 @@ const PageContainer = styled.div`
   background: #f8fafc;
   min-height: 100vh;
   padding: 8px 16px 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    sans-serif;
 `;
 
 const Container = styled.div`
@@ -44,10 +42,7 @@ const Tabs = styled.div`
 const Tab = styled.button`
   flex: 1;
   padding: 12px 18px;
-  background: ${(props) =>
-    props.$active
-      ? "#0056d6"
-      : "transparent"};
+  background: ${(props) => (props.$active ? "#0056d6" : "transparent")};
   color: ${(props) => (props.$active ? "#ffffff" : "#64748b")};
   border: none;
   font-weight: 600;
@@ -61,10 +56,7 @@ const Tab = styled.button`
   position: relative;
 
   &:hover {
-    background: ${(props) =>
-      props.$active
-        ? "#0056d6"
-        : "#f8fafc"};
+    background: ${(props) => (props.$active ? "#0056d6" : "#f8fafc")};
     color: ${(props) => (props.$active ? "#ffffff" : "#374151")};
   }
 
@@ -390,7 +382,7 @@ const HallsManagement = () => {
                 justifyContent: "center",
                 color: "white",
                 fontSize: "24px",
-                fontWeight: "bold"
+                fontWeight: "bold",
               }}
             >
               H
@@ -596,7 +588,15 @@ const HallsManagement = () => {
               >
                 <X size={18} />
               </button>
-              <div style={{ flex: 1, minHeight: 0, display: "flex", overflow: "hidden", padding: 0 }}>
+              <div
+                style={{
+                  flex: 1,
+                  minHeight: 0,
+                  display: "flex",
+                  overflow: "hidden",
+                  padding: 0,
+                }}
+              >
                 <HallForm
                   editService={editService}
                   onCancel={() => {
@@ -609,7 +609,10 @@ const HallsManagement = () => {
                     } catch {}
                   }}
                   onSuccess={async (serviceId) => {
-                    console.log("HallForm onSuccess called with serviceId:", serviceId);
+                    console.log(
+                      "HallForm onSuccess called with serviceId:",
+                      serviceId
+                    );
                     setShowHallWizard(false);
                     setEditService(null);
                     try {

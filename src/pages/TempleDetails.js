@@ -8,7 +8,6 @@ import { gettemplist } from "../services/productServices";
 const TempleContainer = styled.div`
   min-height: 100vh;
   background: linear-gradient(135deg, #fef7e0 0%, #fff8dc 50%, #f5f5dc 100%);
-  font-family: 'Georgia', serif;
   padding-top: 80px;
 `;
 
@@ -20,7 +19,7 @@ const HeaderSection = styled.div`
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -39,8 +38,7 @@ const TempleTitle = styled(motion.h1)`
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  font-family: 'Cinzel', serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -71,7 +69,7 @@ const MainImage = styled(motion.div)`
   position: relative;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   border: 4px solid #daa520;
 `;
 
@@ -98,7 +96,7 @@ const Indicator = styled.button`
   height: 12px;
   border-radius: 50%;
   border: none;
-  background: ${props => props.active ? '#daa520' : '#ccc'};
+  background: ${(props) => (props.active ? "#daa520" : "#ccc")};
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -141,7 +139,7 @@ const Section = styled(motion.section)`
   padding: 30px;
   margin-top: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   border-left: 5px solid #daa520;
 `;
 
@@ -155,7 +153,7 @@ const SectionTitle = styled.h2`
   gap: 10px;
 
   &::before {
-    content: '🕉️';
+    content: "🕉️";
     font-size: 1.2rem;
   }
 `;
@@ -172,7 +170,7 @@ const InfoCard = styled(motion.div)`
   padding: 25px;
   margin-top: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   border: 1px solid #e0e0e0;
 `;
 
@@ -206,7 +204,6 @@ const TimingLabel = styled.span`
 
 const TimingValue = styled.span`
   color: #444;
-  font-family: monospace;
 `;
 
 const OfferingsContainer = styled.div`
@@ -223,7 +220,7 @@ const OfferingTag = styled.span`
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
 const BookSevaButton = styled(motion.button)`
@@ -309,7 +306,8 @@ const RetryButton = styled.button`
   }
 `;
 
-const DEFAULT_IMAGE = "https://www.poojn.in/wp-content/uploads/2025/02/Govindaraja-Temple-History-Architecture-and-Significance.jpeg.jpg";
+const DEFAULT_IMAGE =
+  "https://www.poojn.in/wp-content/uploads/2025/02/Govindaraja-Temple-History-Architecture-and-Significance.jpeg.jpg";
 
 const TempleDetails = () => {
   const { templeId } = useParams();
@@ -324,44 +322,55 @@ const TempleDetails = () => {
       try {
         setLoading(true);
         setError("");
-        
+
         console.log("Fetching temple details for ID:", templeId);
-        
+
         // Use the existing working API to get all temples
         const response = await gettemplist();
-        
+
         console.log("API Response:", response);
         console.log("Response data:", response?.data);
-        
+
         if (response?.data && Array.isArray(response.data)) {
           console.log("Temple list length:", response.data.length);
-          
+
           // Find the specific temple by ID
-          const temple = response.data.find(t => {
+          const temple = response.data.find((t) => {
             const templeIdNum = t.temple_id || t.id;
-            console.log(`Checking temple: ${t.name}, ID: ${templeIdNum}, Looking for: ${templeId}`);
+            console.log(
+              `Checking temple: ${t.name}, ID: ${templeIdNum}, Looking for: ${templeId}`
+            );
             return templeIdNum == templeId;
           });
-          
+
           console.log("Found temple:", temple);
-          
+
           if (temple) {
             // Transform API data to match our component structure
             const transformedData = {
               id: temple.temple_id || temple.id,
               name: temple.name || "Unnamed Temple",
-              location: temple.location || 
-                       [temple.address_line_3, temple.state_code].filter(Boolean).join(", ") ||
-                       "Location not specified",
+              location:
+                temple.location ||
+                [temple.address_line_3, temple.state_code]
+                  .filter(Boolean)
+                  .join(", ") ||
+                "Location not specified",
               deity: temple.deity || "Deity not specified",
-              timingsText: getTimingsText(temple.additional_field_list?.temple_timings),
+              timingsText: getTimingsText(
+                temple.additional_field_list?.temple_timings
+              ),
               // Use temple_data_list for dynamic sections
-              sections: getTempleSections(temple.additional_field_list?.temple_data_list),
-              timings: getDetailedTimings(temple.additional_field_list?.temple_timings),
+              sections: getTempleSections(
+                temple.additional_field_list?.temple_data_list
+              ),
+              timings: getDetailedTimings(
+                temple.additional_field_list?.temple_timings
+              ),
               // Collect all available images
-              images: getAllTempleImages(temple)
+              images: getAllTempleImages(temple),
             };
-            
+
             console.log("Transformed data:", transformedData);
             setTempleData(transformedData);
           } else {
@@ -386,16 +395,16 @@ const TempleDetails = () => {
   // Helper function to get all temple images
   const getAllTempleImages = (temple) => {
     const images = [];
-    
+
     console.log("Processing images for temple:", temple.name);
     console.log("Main image:", temple.image);
-    
+
     // Add main image if exists
     if (temple.image) {
       images.push(temple.image);
       console.log("Added main image:", temple.image);
     }
-    
+
     // Add additional images (image_1, image_2, etc.)
     for (let i = 1; i <= 9; i++) {
       const imageKey = `image_${i}`;
@@ -404,38 +413,38 @@ const TempleDetails = () => {
         console.log(`Added ${imageKey}:`, temple[imageKey]);
       }
     }
-    
+
     console.log("Total images collected:", images.length);
     console.log("All images:", images);
-    
+
     // If no images found, use default
     if (images.length === 0) {
       images.push(DEFAULT_IMAGE);
       console.log("No images found, using default");
     }
-    
+
     return images;
   };
 
   // Helper function to create dynamic sections from temple_data_list
   const getTempleSections = (templeDataList) => {
     console.log("Processing temple_data_list:", templeDataList);
-    
+
     if (!templeDataList || !Array.isArray(templeDataList)) {
       console.log("No temple_data_list found, using fallback");
       return [
         {
           title: "Information",
-          content: "Temple information not available."
-        }
+          content: "Temple information not available.",
+        },
       ];
     }
-    
-    const sections = templeDataList.map(item => ({
+
+    const sections = templeDataList.map((item) => ({
       title: item.title || "Section",
-      content: item.paragraph || "Content not available."
+      content: item.paragraph || "Content not available.",
     }));
-    
+
     console.log("Processed sections:", sections);
     return sections;
   };
@@ -443,26 +452,32 @@ const TempleDetails = () => {
   // Helper function to format timings text from selected_time_slots
   const getTimingsText = (timingsObj) => {
     console.log("Processing timings object:", timingsObj);
-    
-    if (!timingsObj || !timingsObj.selected_time_slots || !Array.isArray(timingsObj.selected_time_slots)) {
+
+    if (
+      !timingsObj ||
+      !timingsObj.selected_time_slots ||
+      !Array.isArray(timingsObj.selected_time_slots)
+    ) {
       console.log("No selected_time_slots found");
       return "Timings not available";
     }
-    
+
     const timeSlots = timingsObj.selected_time_slots;
     console.log("Time slots found:", timeSlots);
-    
+
     if (timeSlots.length === 0) {
       return "Timings not available";
     }
-    
+
     // Format as "6:30 AM - 11:30 AM, 2:30 PM - 8:30 PM"
-    const formattedTimings = timeSlots.map(slot => {
-      const start = slot.start || "";
-      const end = slot.end || "";
-      return `${start} - ${end}`;
-    }).join(", ");
-    
+    const formattedTimings = timeSlots
+      .map((slot) => {
+        const start = slot.start || "";
+        const end = slot.end || "";
+        return `${start} - ${end}`;
+      })
+      .join(", ");
+
     console.log("Formatted timings:", formattedTimings);
     return formattedTimings;
   };
@@ -470,29 +485,29 @@ const TempleDetails = () => {
   // Helper function to create detailed timings from selected_time_slots
   const getDetailedTimings = (timingsObj) => {
     console.log("Processing detailed timings:", timingsObj);
-    
-    if (!timingsObj || !timingsObj.selected_time_slots || !Array.isArray(timingsObj.selected_time_slots)) {
+
+    if (
+      !timingsObj ||
+      !timingsObj.selected_time_slots ||
+      !Array.isArray(timingsObj.selected_time_slots)
+    ) {
       console.log("No selected_time_slots for detailed timings");
-      return [
-        { title: "General Timings", time: "Information not available" }
-      ];
+      return [{ title: "General Timings", time: "Information not available" }];
     }
 
     const timeSlots = timingsObj.selected_time_slots;
     console.log("Time slots for detailed timings:", timeSlots);
-    
+
     if (timeSlots.length === 0) {
-      return [
-        { title: "General Timings", time: "Information not available" }
-      ];
+      return [{ title: "General Timings", time: "Information not available" }];
     }
 
     // Convert selected_time_slots to our timing format
-    const detailedTimings = timeSlots.map(slot => ({
+    const detailedTimings = timeSlots.map((slot) => ({
       title: slot.name || "Time Slot",
-      time: `${slot.start || ""} - ${slot.end || ""}`
+      time: `${slot.start || ""} - ${slot.end || ""}`,
     }));
-    
+
     console.log("Detailed timings created:", detailedTimings);
     return detailedTimings;
   };
@@ -550,11 +565,7 @@ const TempleDetails = () => {
   return (
     <TempleContainer>
       <HeaderSection>
-        <TempleTitle
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <TempleTitle variants={itemVariants} initial="hidden" animate="visible">
           {templeData.name}
         </TempleTitle>
         <TempleLocation
@@ -583,7 +594,11 @@ const TempleDetails = () => {
           transition={{ delay: 0.3 }}
         >
           <CarouselImage
-            src={templeData.images && templeData.images.length > 0 ? templeData.images[currentImage] : DEFAULT_IMAGE}
+            src={
+              templeData.images && templeData.images.length > 0
+                ? templeData.images[currentImage]
+                : DEFAULT_IMAGE
+            }
             alt={`${templeData.name} Image ${currentImage + 1}`}
             onError={(e) => {
               console.log("Image failed to load, using default");
@@ -606,7 +621,11 @@ const TempleDetails = () => {
 
       <ContentContainer>
         <MainContent>
-          <motion.div variants={containerVariants} initial="hidden" animate="visible">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {templeData.sections && templeData.sections.length > 0 ? (
               templeData.sections.map((section, index) => (
                 <Section key={index} variants={itemVariants}>
@@ -618,16 +637,20 @@ const TempleDetails = () => {
               <Section variants={itemVariants}>
                 <SectionTitle>About This Temple</SectionTitle>
                 <SectionContent>
-                  Welcome to {templeData.name}. This sacred place offers spiritual solace and divine blessings to all devotees. 
-                  The temple is located in {templeData.location} and is dedicated to {templeData.deity}.
+                  Welcome to {templeData.name}. This sacred place offers
+                  spiritual solace and divine blessings to all devotees. The
+                  temple is located in {templeData.location} and is dedicated to{" "}
+                  {templeData.deity}.
                 </SectionContent>
               </Section>
             )}
-            
+
             <BookSevaButton
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => navigate('/book-seva', { state: { templeId: templeData.id } })}
+              onClick={() =>
+                navigate("/book-seva", { state: { templeId: templeData.id } })
+              }
             >
               🙏 Book Seva
             </BookSevaButton>
@@ -635,7 +658,11 @@ const TempleDetails = () => {
         </MainContent>
 
         <Sidebar>
-          <motion.div variants={containerVariants} initial="hidden" animate="visible">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <InfoCard variants={itemVariants}>
               <QuickInfo>
                 <QuickInfoItem>
@@ -663,7 +690,9 @@ const TempleDetails = () => {
 
             <InfoCard variants={itemVariants}>
               <InfoCardTitle>🙏 Sacred Offerings</InfoCardTitle>
-              <div style={{ textAlign: 'center', color: '#888', padding: '20px' }}>
+              <div
+                style={{ textAlign: "center", color: "#888", padding: "20px" }}
+              >
                 Offerings information not available
               </div>
             </InfoCard>

@@ -42,7 +42,6 @@ const TempleImage = styled.div`
 `;
 
 const CardTitle = styled.h2`
-  font-family: "Playfair Display", serif;
   font-weight: 700;
   font-size: 36px;
   line-height: 44px;
@@ -61,9 +60,6 @@ const LearnMoreButton = styled.button`
   border: none;
   border-radius: 9999px;
   padding: 12px 28px;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -121,9 +117,6 @@ const RestorationText = styled.div`
 `;
 
 const RestorationTitle = styled.h2`
-  font-family: "Lora", serif;
-  font-weight: 500;
-  font-size: 40px;
   line-height: 48px;
   color: #2d253f;
   margin-bottom: 2rem;
@@ -136,7 +129,6 @@ const RestorationTitle = styled.h2`
 `;
 
 const RestorationParagraph = styled.p`
-  font-family: "Lora", serif;
   font-weight: 400;
   font-size: 22px;
   line-height: 34px;
@@ -239,7 +231,6 @@ const TempleCardRight = styled(TempleCardBase)`
 `;
 
 const CardSubtitle = styled.p`
-  font-family: "Lora", serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;

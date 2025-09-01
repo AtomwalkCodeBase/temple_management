@@ -30,7 +30,6 @@ const Title = styled.h1`
   font-weight: 700;
   margin-bottom: 0.25rem;
   color: #1e293b;
-  font-family: "Inter", sans-serif;
 
   @media (max-width: 768px) {
     font-size: 1.5rem;

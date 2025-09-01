@@ -56,7 +56,6 @@ const HeaderContent = styled.div`
       font-size: 2rem;
       font-weight: 800;
       margin: 0 0 0.5rem 0;
-      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
       color: #ffffff;
     }

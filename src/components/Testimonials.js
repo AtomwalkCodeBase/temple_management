@@ -1,8 +1,8 @@
-"use client"
-import styled from "styled-components"
-import { motion, AnimatePresence } from "framer-motion"
-import { useState, useEffect } from "react"
-import testimonialImage from "../assets/img/testimonial_01.png"
+"use client";
+import styled from "styled-components";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import testimonialImage from "../assets/img/testimonial_01.png";
 
 const Section = styled.section`
   width: 100%;
@@ -19,15 +19,19 @@ const Section = styled.section`
   background-position: center;
   background-repeat: no-repeat;
   padding: 4rem 0;
-  
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 153, 51, 0.3), rgba(255, 193, 7, 0.2));
+    background: linear-gradient(
+      135deg,
+      rgba(255, 153, 51, 0.3),
+      rgba(255, 193, 7, 0.2)
+    );
     z-index: 1;
   }
 
@@ -36,7 +40,7 @@ const Section = styled.section`
     min-height: auto;
     height: auto;
   }
-`
+`;
 
 const Content = styled.div`
   position: relative;
@@ -49,35 +53,33 @@ const Content = styled.div`
   @media (max-width: 768px) {
     padding: 0 15px;
   }
-`
+`;
 
 const Title = styled(motion.h2)`
-  font-family: 'Lora', serif;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: bold;
   color: white;
   margin-bottom: 0.5rem;
   text-align: center;
-  
+
   &::after {
-    content: '';
+    content: "";
     display: block;
     width: 100px;
     height: 2px;
     background: white;
     margin: 1rem auto;
   }
-  
+
   @media (max-width: 480px) {
     &::after {
       width: 70px;
       margin: 0.8rem auto;
     }
   }
-`
+`;
 
 const Subtitle = styled(motion.p)`
-  font-family: 'Inter', sans-serif;
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   color: white;
   margin-bottom: 3rem;
@@ -92,7 +94,7 @@ const Subtitle = styled(motion.p)`
     margin-bottom: 2rem;
     padding: 0;
   }
-`
+`;
 
 const CardContainer = styled.div`
   position: relative;
@@ -113,7 +115,7 @@ const CardContainer = styled.div`
   @media (max-width: 480px) {
     min-height: 400px;
   }
-`
+`;
 
 const TestimonialCard = styled(motion.div)`
   width: 100%;
@@ -131,7 +133,7 @@ const TestimonialCard = styled(motion.div)`
   align-items: center;
   text-align: center;
   overflow: hidden;
-  
+
   @media (max-width: 768px) {
     padding: 1.5rem;
     min-height: 320px;
@@ -141,7 +143,7 @@ const TestimonialCard = styled(motion.div)`
     min-height: 400px;
     padding: 1.2rem;
   }
-`
+`;
 
 const CardContent = styled.div`
   width: 100%;
@@ -150,14 +152,14 @@ const CardContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const ProfileSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
-`
+`;
 
 const ProfileImage = styled.div`
   width: 80px;
@@ -171,7 +173,7 @@ const ProfileImage = styled.div`
   font-size: 2rem;
   font-weight: bold;
   color: white;
-  
+
   @media (max-width: 768px) {
     width: 70px;
     height: 70px;
@@ -183,45 +185,41 @@ const ProfileImage = styled.div`
     height: 60px;
     font-size: 1.5rem;
   }
-`
+`;
 
 const ProfileName = styled.h4`
-  font-family: 'Inter', sans-serif;
   font-weight: bold;
   font-size: clamp(1.1rem, 1.5vw, 1.3rem);
   margin-bottom: 0.25rem;
-`
+`;
 
 const ProfileLocation = styled.p`
-  font-family: 'Inter', sans-serif;
   font-size: clamp(0.8rem, 1vw, 0.9rem);
   opacity: 0.7;
-`
+`;
 
 const RatingSection = styled.div`
   display: flex;
   justify-content: center;
   margin: 0.5rem 0;
-`
+`;
 
 const Rating = styled.div`
   text-align: center;
-  
+
   .stars {
     color: white;
     font-size: clamp(1.2rem, 2vw, 1.5rem);
     margin-bottom: 0.25rem;
   }
-  
+
   .label {
-    font-family: 'Inter', sans-serif;
     font-size: clamp(0.75rem, 1vw, 0.85rem);
     opacity: 0.8;
   }
-`
+`;
 
 const ReviewText = styled.p`
-  font-family: 'Inter', sans-serif;
   line-height: 1.7;
   font-size: clamp(0.9rem, 1.2vw, 1rem);
   font-style: italic;
@@ -232,13 +230,13 @@ const ReviewText = styled.p`
   align-items: center;
   justify-content: center;
   padding: 0 1rem;
-  
+
   @media (max-width: 768px) {
     line-height: 1.6;
     padding: 0;
     margin: 0.5rem 0 1rem;
   }
-`
+`;
 
 const NavigationContainer = styled.div`
   position: absolute;
@@ -251,7 +249,7 @@ const NavigationContainer = styled.div`
   align-items: center;
   pointer-events: none;
   z-index: 10;
-  
+
   @media (min-width: 768px) {
     width: calc(100% - 100px);
     left: 50px;
@@ -268,7 +266,7 @@ const NavigationContainer = styled.div`
     justify-content: center;
     gap: 2rem;
   }
-`
+`;
 
 const NavigationButton = styled.button`
   width: 70px;
@@ -287,17 +285,17 @@ const NavigationButton = styled.button`
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  
+
   &:hover {
     background: #ff8c1a;
     transform: scale(1.1);
   }
-  
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-  
+
   @media (max-width: 768px) {
     width: 60px;
     height: 60px;
@@ -310,7 +308,7 @@ const NavigationButton = styled.button`
     height: 50px;
     font-size: 1.2rem;
   }
-`
+`;
 
 const DotsContainer = styled.div`
   display: flex;
@@ -323,13 +321,14 @@ const DotsContainer = styled.div`
   @media (min-width: 769px) {
     display: none;
   }
-`
+`;
 
 const Dot = styled.div`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: ${({ active }) => active ? '#ff9933' : 'rgba(255, 255, 255, 0.5)'};
+  background: ${({ active }) =>
+    active ? "#ff9933" : "rgba(255, 255, 255, 0.5)"};
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -341,12 +340,12 @@ const Dot = styled.div`
     width: 10px;
     height: 10px;
   }
-`
+`;
 
 const Testimonials = () => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
-  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
   const testimonials = [
     {
       id: 1,
@@ -390,58 +389,60 @@ const Testimonials = () => {
       text: "The spiritual blogs section is very informative. I've learned so much about different festivals and their significance. The content is well-researched and beautifully written.",
       avatar: "AG",
     },
-  ]
+  ];
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 4000)
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
 
-    return () => clearInterval(interval)
-  }, [testimonials.length])
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-  }
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
+    setCurrentIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
+  };
 
   const goToSlide = (index) => {
-    setCurrentIndex(index)
-  }
+    setCurrentIndex(index);
+  };
 
   const renderStars = () => {
-    return "★★★★★"
-  }
+    return "★★★★★";
+  };
 
   const cardVariants = {
     enter: {
       x: 300,
-      opacity: 0
+      opacity: 0,
     },
     center: {
       zIndex: 1,
       x: 0,
-      opacity: 1
+      opacity: 1,
     },
     exit: {
       zIndex: 0,
       x: -300,
-      opacity: 0
-    }
-  }
+      opacity: 0,
+    },
+  };
 
   return (
     <Section>
@@ -454,14 +455,15 @@ const Testimonials = () => {
         >
           What Our Devotees Say
         </Title>
-        
+
         <Subtitle
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          Hear from our users about their spiritual experiences and how our platform has enriched their lives
+          Hear from our users about their spiritual experiences and how our
+          platform has enriched their lives
         </Subtitle>
 
         <CardContainer>
@@ -474,23 +476,27 @@ const Testimonials = () => {
               exit="exit"
               transition={{
                 x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 }
+                opacity: { duration: 0.2 },
               }}
             >
               <CardContent>
                 <ProfileSection>
-                  <ProfileImage>{testimonials[currentIndex].avatar}</ProfileImage>
+                  <ProfileImage>
+                    {testimonials[currentIndex].avatar}
+                  </ProfileImage>
                   <ProfileName>{testimonials[currentIndex].name}</ProfileName>
-                  <ProfileLocation>{testimonials[currentIndex].location}</ProfileLocation>
+                  <ProfileLocation>
+                    {testimonials[currentIndex].location}
+                  </ProfileLocation>
                 </ProfileSection>
-                
+
                 <RatingSection>
                   <Rating>
                     <div className="stars">{renderStars()}</div>
                     <div className="label">Rating</div>
                   </Rating>
                 </RatingSection>
-                
+
                 <ReviewText>{testimonials[currentIndex].text}</ReviewText>
               </CardContent>
             </TestimonialCard>
@@ -498,30 +504,33 @@ const Testimonials = () => {
         </CardContainer>
 
         <NavigationContainer>
-          <NavigationButton onClick={prevSlide} aria-label="Previous testimonial">
+          <NavigationButton
+            onClick={prevSlide}
+            aria-label="Previous testimonial"
+          >
             ←
           </NavigationButton>
-          
+
           {isMobile && (
             <DotsContainer>
               {testimonials.map((_, index) => (
-                <Dot 
-                  key={index} 
-                  active={index === currentIndex} 
+                <Dot
+                  key={index}
+                  active={index === currentIndex}
                   onClick={() => goToSlide(index)}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />
               ))}
             </DotsContainer>
           )}
-          
+
           <NavigationButton onClick={nextSlide} aria-label="Next testimonial">
             →
           </NavigationButton>
         </NavigationContainer>
       </Content>
     </Section>
-  )
-}
+  );
+};
 
-export default Testimonials
+export default Testimonials;

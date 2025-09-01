@@ -88,7 +88,6 @@ const TableHead = styled.thead`
     font-size: 0.9rem;
     border-bottom: 1px solid #d7e4ff;
     position: relative;
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
     &:not(:last-child)::after {
       content: "";
@@ -220,7 +219,6 @@ const EmptyState = styled.div`
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: #0f172a;
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   }
 
   p {

@@ -8,7 +8,6 @@ const ChatbotContainer = styled.div`
   bottom: 2rem;
   right: 2rem;
   z-index: 1000;
-  font-family: 'Poppins', sans-serif;
 `;
 
 const ChatButton = styled(motion.button)`

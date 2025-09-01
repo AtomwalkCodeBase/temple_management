@@ -95,7 +95,6 @@ const PageInfo = styled.div`
     font-weight: 700;
     color: #0f172a;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     letter-spacing: -0.025em;
 
     @media (max-width: 768px) {
@@ -273,7 +272,6 @@ const DropdownHeader = styled.div`
     font-weight: 600;
     color: #0f172a;
     margin: 0 0 0.25rem 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
   }
 
   .user-email {
@@ -338,7 +336,8 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
 
   const getPageDescription = () => {
     const path = window.location.pathname;
-    if (path.includes("/halls-management")) return "Manage hall bookings, availability, and configurations with enterprise-grade tools";
+    if (path.includes("/halls-management"))
+      return "Manage hall bookings, availability, and configurations with enterprise-grade tools";
     return "";
   };
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -395,7 +394,14 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
           </div>
           <h1 className="page-title">{getCurrentPage()}</h1>
           {getPageDescription() && (
-            <p style={{ margin: "8px 0 0", color: "#64748b", fontSize: "14px", fontStyle: "italic" }}>
+            <p
+              style={{
+                margin: "8px 0 0",
+                color: "#64748b",
+                fontSize: "14px",
+                fontStyle: "italic",
+              }}
+            >
               {getPageDescription()}
             </p>
           )}
@@ -406,10 +412,10 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
         <QuickActions>
           {window.location.pathname.includes("/halls-management") ? (
             <QuickActionButton
-              whileHover={{ 
+              whileHover={{
                 scale: 1.03,
                 y: -2,
-                transition: { duration: 0.2 }
+                transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.97 }}
               onClick={() => {
@@ -428,21 +434,31 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
                 minWidth: "160px",
                 justifyContent: "center",
                 position: "relative",
-                overflow: "hidden"
+                overflow: "hidden",
               }}
             >
-              <div style={{ 
-                width: "20px", 
-                height: "20px", 
-                background: "rgba(255, 255, 255, 0.2)", 
-                borderRadius: "50%", 
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center",
-                marginRight: "8px",
-                backdropFilter: "blur(4px)"
-              }}>
-                <span style={{ color: "white", fontSize: "16px", fontWeight: "bold" }}>+</span>
+              <div
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: "8px",
+                  backdropFilter: "blur(4px)",
+                }}
+              >
+                <span
+                  style={{
+                    color: "white",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  +
+                </span>
               </div>
               Add New Hall
             </QuickActionButton>

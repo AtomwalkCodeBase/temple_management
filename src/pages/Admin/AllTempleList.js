@@ -47,7 +47,6 @@ const HeaderContent = styled.div`
     font-size: 2rem;
     font-weight: 800;
     margin: 0 0 0.5rem 0;
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
@@ -75,7 +74,6 @@ const AddButton = styled(motion.button)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
   &:hover {
     background: rgba(255, 255, 255, 0.25);
@@ -153,7 +151,6 @@ const TempleTitle = styled.h2`
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
   .temple-id {
     font-size: 0.9rem;
@@ -330,7 +327,6 @@ const LoadingContainer = styled.div`
   .loading-text {
     color: #3b82f6;
     font-size: 1.1rem;
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   }
 
   @keyframes spin {
@@ -359,7 +355,6 @@ const EmptyState = styled.div`
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
     color: #0f172a;
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   }
 
   p {

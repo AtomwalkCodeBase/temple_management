@@ -12,17 +12,17 @@ import {
   MdBarChart,
   MdChevronLeft,
   MdChevronRight,
-  MdLogout
+  MdLogout,
 } from "react-icons/md";
 
 export const SIDEBAR_WIDTH = 260;
 export const SIDEBAR_COLLAPSED_WIDTH = 80;
 
-const SIDEBAR_MAIN_COLOR = '#800000';
-const SIDEBAR_TEXT_COLOR = '#fff';
-const SIDEBAR_HOVER_BG = 'rgba(128,0,0,0.08)';
-const SIDEBAR_ACTIVE_BG = '#fff';
-const SIDEBAR_ACTIVE_TEXT = '#800000';
+const SIDEBAR_MAIN_COLOR = "#800000";
+const SIDEBAR_TEXT_COLOR = "#fff";
+const SIDEBAR_HOVER_BG = "rgba(128,0,0,0.08)";
+const SIDEBAR_ACTIVE_BG = "#fff";
+const SIDEBAR_ACTIVE_TEXT = "#800000";
 // Removed unused SIDEBAR_ICON_BG
 
 const SidebarContainer = styled.aside`
@@ -38,9 +38,11 @@ const SidebarContainer = styled.aside`
   width: ${SIDEBAR_WIDTH}px;
   box-shadow: 8px 0 15px rgba(0, 0, 0, 0.05);
   overflow: hidden;
-  ${props => props.$collapsed && css`
-    width: ${SIDEBAR_COLLAPSED_WIDTH}px;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      width: ${SIDEBAR_COLLAPSED_WIDTH}px;
+    `}
 `;
 
 const TopSection = styled.div`
@@ -53,22 +55,25 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  ${props => props.$collapsed && css`
-    justify-content: center;
-    padding: 1.5rem 0 1rem 0;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      justify-content: center;
+      padding: 1.5rem 0 1rem 0;
+    `}
 `;
 
 const LogoText = styled.div`
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
   color: ${SIDEBAR_TEXT_COLOR};
   transition: opacity 0.3s ease;
-  ${props => props.$collapsed && css`
-    opacity: 0;
-    width: 0;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      opacity: 0;
+      width: 0;
+    `}
 `;
 
 const ToggleButton = styled.button`
@@ -99,13 +104,15 @@ const SearchContainer = styled.div`
   padding: 0 1.5rem 0 1.5rem;
   transition: all 0.3s ease;
   flex-shrink: 0;
-  ${props => props.$collapsed && css`
-    opacity: 0;
-    height: 0;
-    padding: 0;
-    margin-top: 0;
-    overflow: hidden;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      opacity: 0;
+      height: 0;
+      padding: 0;
+      margin-top: 0;
+      overflow: hidden;
+    `}
 `;
 
 const SearchInput = styled.input`
@@ -154,37 +161,43 @@ const NavLink = styled(Link)`
   align-items: center;
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  font-family: 'Inter', sans-serif;
   font-weight: ${({ $isActive }) => ($isActive ? "600" : "500")};
   font-size: 0.95rem;
-  color: ${({ $isActive }) => ($isActive ? SIDEBAR_ACTIVE_TEXT : SIDEBAR_TEXT_COLOR)};
-  background: ${({ $isActive }) => ($isActive ? SIDEBAR_ACTIVE_BG : "transparent")};
+  color: ${({ $isActive }) =>
+    $isActive ? SIDEBAR_ACTIVE_TEXT : SIDEBAR_TEXT_COLOR};
+  background: ${({ $isActive }) =>
+    $isActive ? SIDEBAR_ACTIVE_BG : "transparent"};
   text-decoration: none;
   transition: all 0.2s ease;
   position: relative;
   &:hover {
-    background: ${({ $isActive }) => ($isActive ? SIDEBAR_ACTIVE_BG : SIDEBAR_HOVER_BG)};
+    background: ${({ $isActive }) =>
+      $isActive ? SIDEBAR_ACTIVE_BG : SIDEBAR_HOVER_BG};
   }
-  ${props => props.$collapsed && css`
-    justify-content: center;
-    padding: 0.75rem 0;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      justify-content: center;
+      padding: 0.75rem 0;
+    `}
 `;
 
 const IconWrapper = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: ${props => props.$collapsed ? '0' : '0.75rem'};
+  margin-right: ${(props) => (props.$collapsed ? "0" : "0.75rem")};
   font-size: 1.2rem;
 `;
 
 const Label = styled.span`
   transition: opacity 0.3s ease;
-  ${props => props.$collapsed && css`
-    opacity: 0;
-    width: 0;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      opacity: 0;
+      width: 0;
+    `}
 `;
 
 const UserContainer = styled.div`
@@ -194,10 +207,12 @@ const UserContainer = styled.div`
   align-items: center;
   transition: all 0.3s ease;
   flex-shrink: 0;
-  ${props => props.$collapsed && css`
-    justify-content: center;
-    padding: 1rem 0;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      justify-content: center;
+      padding: 1rem 0;
+    `}
 `;
 
 const UserAvatar = styled.div`
@@ -210,16 +225,18 @@ const UserAvatar = styled.div`
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  margin-right: ${props => props.$collapsed ? '0' : '0.75rem'};
+  margin-right: ${(props) => (props.$collapsed ? "0" : "0.75rem")};
   border: 2px solid #800000;
 `;
 
 const UserInfo = styled.div`
   transition: opacity 0.3s ease;
-  ${props => props.$collapsed && css`
-    opacity: 0;
-    width: 0;
-  `}
+  ${(props) =>
+    props.$collapsed &&
+    css`
+      opacity: 0;
+      width: 0;
+    `}
 `;
 
 const UserName = styled.div`
@@ -244,20 +261,44 @@ const LogoutIconWrapper = styled(IconWrapper)`
   border-radius: 50%;
   padding: 4px;
   &:hover {
-    background: rgba(255,255,255,0.12);
+    background: rgba(255, 255, 255, 0.12);
     color: #800000 !important;
   }
 `;
 
 const sidebarLinks = [
   { label: "Dashboard", icon: <MdDashboard />, to: "/templeadmin/dashboard" },
-  { label: "Temple Master", icon: <MdOutlineTempleBuddhist />, to: "/templeadmin/temple-master" },
-  { label: "Puja Master", icon: <MdEditNote />, to: "/templeadmin/puja-master" },
-  { label: "Hall Master", icon: <MdMeetingRoom />, to: "/templeadmin/hall-master" },
-  { label: "Puja Bookings", icon: <MdEventAvailable />, to: "/templeadmin/puja-bookings" },
-  { label: "Hall Bookings", icon: <MdEventSeat />, to: "/templeadmin/hall-bookings" },
+  {
+    label: "Temple Master",
+    icon: <MdOutlineTempleBuddhist />,
+    to: "/templeadmin/temple-master",
+  },
+  {
+    label: "Puja Master",
+    icon: <MdEditNote />,
+    to: "/templeadmin/puja-master",
+  },
+  {
+    label: "Hall Master",
+    icon: <MdMeetingRoom />,
+    to: "/templeadmin/hall-master",
+  },
+  {
+    label: "Puja Bookings",
+    icon: <MdEventAvailable />,
+    to: "/templeadmin/puja-bookings",
+  },
+  {
+    label: "Hall Bookings",
+    icon: <MdEventSeat />,
+    to: "/templeadmin/hall-bookings",
+  },
   { label: "Calendar", icon: <MdCalendarMonth />, to: "/templeadmin/calendar" },
-  { label: "Manual Booking", icon: <MdEditNote />, to: "/templeadmin/manual-booking" },
+  {
+    label: "Manual Booking",
+    icon: <MdEditNote />,
+    to: "/templeadmin/manual-booking",
+  },
   { label: "Reports", icon: <MdBarChart />, to: "/templeadmin/reports" },
 ];
 
@@ -275,8 +316,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       e.stopPropagation();
       nav.scrollTop += e.deltaY;
     }
-    nav.addEventListener('wheel', wheelHandler, { passive: false });
-    return () => nav.removeEventListener('wheel', wheelHandler);
+    nav.addEventListener("wheel", wheelHandler, { passive: false });
+    return () => nav.removeEventListener("wheel", wheelHandler);
   }, []);
 
   return (
@@ -306,9 +347,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                   $isActive={location.pathname === link.to}
                   $collapsed={collapsed}
                 >
-                  <IconWrapper $collapsed={collapsed}>
-                    {link.icon}
-                  </IconWrapper>
+                  <IconWrapper $collapsed={collapsed}>{link.icon}</IconWrapper>
                   {!collapsed && <Label>{link.label}</Label>}
                 </NavLink>
               </NavItem>
@@ -325,7 +364,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           </UserInfo>
         )}
         {!collapsed && (
-          <LogoutIconWrapper style={{ marginLeft: 'auto' }}>
+          <LogoutIconWrapper style={{ marginLeft: "auto" }}>
             <MdLogout />
           </LogoutIconWrapper>
         )}

@@ -640,7 +640,7 @@ const CustomerLayout = ({ children }) => {
           path: "/customer-bookings",
           icon: FaCalendarAlt,
           label: "My Bookings",
-          badge: "3",
+          badge: null,
         },
       ],
     },
@@ -770,13 +770,13 @@ const CustomerLayout = ({ children }) => {
           </NavLeft>
 
           <NavRight>
-            <NotificationButton
+            {/* <NotificationButton
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <FiBell />
               <span className="badge">2</span>
-            </NotificationButton>
+            </NotificationButton> */}
 
             <UserMenu>
               <UserButton

@@ -11,8 +11,6 @@ import { CustomerAuthProvider } from "./contexts/CustomerAuthContext";
 import Navbar from "./components/Navbar";
 import Temples from "./pages/Temples";
 import BookPuja from "./pages/BookPuja";
-import BookSeva from "./pages/BookSeva";
-import LiveDarshan from "./pages/LiveDarshan";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import TempleDetails from "./pages/TempleDetails";
@@ -65,8 +63,6 @@ function AppContent() {
         <Route path="/temples" element={<Temples />} />
         <Route path="/templeDetails/:templeId" element={<TempleDetails />} />
         <Route path="/book-puja" element={<BookPuja />} />
-        <Route path="/book-seva" element={<BookSeva />} />
-        <Route path="/live-darshan" element={<LiveDarshan />} />
         <Route path="/login" element={<Login />} />
 
         {/* Customer routes */}

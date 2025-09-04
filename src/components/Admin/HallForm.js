@@ -331,7 +331,7 @@ function normalizePairs(list) {
   return [];
 }
 
-export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editService }) {
+export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editService, serviceType = 'HALL' }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
@@ -349,10 +349,10 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
 
   const [formData, setFormData] = useState({
     name: "",
-    service_type: "Hall",
+    service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall',
     description: "",
-    capacity: "",
-    duration_minutes: "0"
+    capacity: serviceType === 'PUJA' ? "" : "",
+    duration_minutes: serviceType === 'PUJA' ? "" : "0"
   });
 
   const [imageFiles, setImageFiles] = useState({
@@ -368,7 +368,7 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
   const [pricingRules, setPricingRules] = useState([]);
 
   const steps = [
-    { id: 0, label: "Hall Information", icon: "🏛️" },
+    { id: 0, label: serviceType === 'PUJA' ? "Puja Information" : "Hall Information", icon: "🏛️" },
     { id: 1, label: "Upload Images", icon: "📸" }
   ];
 
@@ -438,7 +438,7 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
         }
         
         setTempleId(actualTempleId);
-        setFormData((prev) => ({ ...prev, service_type: "Hall", duration_minutes: "0" }));
+        setFormData((prev) => ({ ...prev, service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall', duration_minutes: serviceType === 'PUJA' ? "" : "0" }));
 
         const params = new URLSearchParams(location.search);
         const editId = params.get("edit");
@@ -468,8 +468,8 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
                 name: svc.name || "",
                 description: svc.description || "",
                 capacity: svc.capacity != null ? String(svc.capacity) : "",
-                duration_minutes: svc.duration_minutes != null ? String(svc.duration_minutes) : "0",
-                service_type: "Hall"
+                duration_minutes: (serviceType === 'PUJA') ? "" : (svc.duration_minutes != null ? String(svc.duration_minutes) : "0"),
+                service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall'
               }));
               const imgs = extractImageUrls(svc);
               setExistingImages({ main: imgs[0] || "", others: imgs.slice(1, 6) });
@@ -502,7 +502,7 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
     setSuccess("");
   };
 
-  const canSubmit = Boolean(formData.name && formData.capacity);
+  const canSubmit = serviceType === 'PUJA' ? Boolean(formData.name) : Boolean(formData.name && formData.capacity);
 
   const handleImageChange = (field, file) => {
     if (file) {
@@ -532,10 +532,18 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
       return;
     }
     
-    if (!formData.name || !formData.capacity) {
-      setError("Please fill in all required fields: Hall Name and Capacity");
-      setSaving(false);
-      return;
+    if (serviceType === 'PUJA') {
+      if (!formData.name) {
+        setError("Please enter Puja Name");
+        setSaving(false);
+        return;
+      }
+    } else {
+      if (!formData.name || !formData.capacity) {
+        setError("Please fill in all required fields: Hall Name and Capacity");
+        setSaving(false);
+        return;
+      }
     }
     
     try {
@@ -545,23 +553,27 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
         call_mode: "ADD",
         temple_id: templeId,
         name: formData.name.trim(),
-        service_type: "Hall",
+        service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall',
         description: formData.description.trim() || "",
         base_price: 0,
-        capacity: toNum(formData.capacity),
-        duration_minutes: 0,
+        capacity: serviceType === 'PUJA' ? 0 : toNum(formData.capacity),
+        duration_minutes: serviceType === 'PUJA' ? 0 : 0,
         service_variation_list: []
       };
       
       const response = await processTempleServiceData(payload);
       setCreatedHall(response);
-      
-      const respSvcId = response?.service_id || response?.data?.service_id || response?.result?.service_id;
+      // Normalize nested API response shapes
+      const respSvcId = response?.service_id 
+        || response?.data?.service_id 
+        || response?.result?.service_id 
+        || response?.service_data?.service_id 
+        || response?.data?.service_data?.service_id;
       if (respSvcId) {
         setServiceId(respSvcId);
       }
       
-      setSuccess("Hall created successfully! Now you can upload images.");
+      setSuccess(serviceType === 'PUJA' ? "Puja created successfully! Now you can upload images." : "Hall created successfully! Now you can upload images.");
       
       try {
         if (!respSvcId) {
@@ -578,8 +590,8 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
           
           const newHall = services.find(service => {
             const sType = String(service.service_type || service.service_type_str || "");
-            const isHall = /hall/i.test(sType);
-            return isHall && service.name === formData.name && String(service.temple_id) === String(templeId);
+            const isMatch = serviceType === 'PUJA' ? /puja/i.test(sType) : /hall/i.test(sType);
+            return isMatch && service.name === formData.name && String(service.temple_id) === String(templeId);
           });
           
           if (newHall && (newHall.service_id || newHall.id)) {
@@ -632,11 +644,11 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
         temple_id: templeId,
         service_id: serviceId,
         name: formData.name.trim(),
-        service_type: "Hall",
+        service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall',
         description: formData.description.trim() || "",
         base_price: 0,
-        capacity: toNum(formData.capacity),
-        duration_minutes: 0,
+        capacity: serviceType === 'PUJA' ? 0 : toNum(formData.capacity),
+        duration_minutes: serviceType === 'PUJA' ? 0 : 0,
         service_variation_list: []
       };
       await processTempleServiceData(payload);
@@ -786,7 +798,7 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
   return (
     <Container>
       <Header>
-        <Title>{isEditing ? "Edit Hall" : "Add New Hall"}</Title>
+        <Title>{isEditing ? (serviceType === 'PUJA' ? "Edit Puja" : "Edit Hall") : (serviceType === 'PUJA' ? "Add New Puja" : "Add New Hall")}</Title>
         <ProgressBar steps={steps} currentStep={currentStep} />
       </Header>
 
@@ -798,33 +810,35 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
         {currentStep === 0 && (
           <>
             <Info>
-              Create a new hall for temple bookings. Fill in the basic information below to get started.
+              {serviceType === 'PUJA' ? 'Create a new puja service for temple bookings. Fill in the basic information below to get started.' : 'Create a new hall for temple bookings. Fill in the basic information below to get started.'}
             </Info>
             
             <Grid>
               <FormGroup>
-                <Label className="required">Hall Name</Label>
+                <Label className="required">{serviceType === 'PUJA' ? 'Puja Name' : 'Hall Name'}</Label>
                 <Input 
                   name="name" 
                   value={formData.name} 
                   onChange={handleChange} 
-                  placeholder="Wedding Hall, Prayer Hall..." 
+                  placeholder={serviceType === 'PUJA' ? 'Hanuman Puja, Lakshmi Puja...' : 'Wedding Hall, Prayer Hall...'} 
                   required
                 />
               </FormGroup>
 
-              <FormGroup>
-                <Label className="required">Maximum Capacity</Label>
-                <Input 
-                  name="capacity" 
-                  type="number" 
-                  min="1" 
-                  value={formData.capacity} 
-                  onChange={handleChange} 
-                  placeholder="e.g. 200" 
-                  required
-                />
-              </FormGroup>
+              {serviceType !== 'PUJA' && (
+                <FormGroup>
+                  <Label className="required">Maximum Capacity</Label>
+                  <Input 
+                    name="capacity" 
+                    type="number" 
+                    min="1" 
+                    value={formData.capacity} 
+                    onChange={handleChange} 
+                    placeholder="e.g. 200" 
+                    required
+                  />
+                </FormGroup>
+              )}
 
               <FormGroup className="full-width">
                 <Label>Description</Label>
@@ -832,7 +846,7 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
                   name="description" 
                   value={formData.description} 
                   onChange={handleChange} 
-                  placeholder="Describe the hall features and suitable event types..." 
+                  placeholder={serviceType === 'PUJA' ? 'Describe the puja details, priests, rituals...' : 'Describe the hall features and suitable event types...'} 
                 />
               </FormGroup>
             </Grid>
@@ -920,7 +934,7 @@ export default function HallForm({ onCancel, onSuccess, onInlineUpdate, editServ
             disabled={saving || (currentStep === 0 ? !canSubmit : !imageFiles.image_file)}
           >
             {currentStep === 0 
-              ? (isEditing ? (saving ? "Saving..." : "Save Changes") : (saving ? "Creating..." : "Create Hall"))
+              ? (isEditing ? (saving ? "Saving..." : "Save Changes") : (saving ? "Creating..." : (serviceType === 'PUJA' ? "Create Puja" : "Create Hall")))
               : (saving ? "Uploading..." : "Complete")
             }
           </Button>

@@ -4,19 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { 
-  Building2, 
-  Bookmark, 
-  Calendar, 
-  Hotel, 
-  Home,
-  TrendingUp,
-  Users,
-  IndianRupee,
-  Activity,
-  CheckCircle,
-  Settings
-} from "lucide-react";
+import { Building2, Bookmark, Calendar, Hotel, Home, TrendingUp, Users, IndianRupee, Activity, CheckCircle, Settings } from "lucide-react";
 
 const PageContainer = styled.div`
   background: #f8fafc;
@@ -403,8 +391,8 @@ const TempleServices = () => {
 
   const handleManageService = (service) => {
     const routeMap = {
-      "Sacred Halls Management": "/halls-management",
-      "Divine Puja Services": "/templeadmin/puja-master",
+      "Sacred Halls Management": "/halls-management?service=HALL",
+      "Divine Puja Services": "/halls-management?service=PUJA",
       "Temple Events": "/templeadmin/calendar",
       "Accommodation Services": "/templeadmin/hall-bookings",
       "Home Puja Services": "/templeadmin/puja-bookings",

@@ -477,15 +477,14 @@ const RefundPanel = ({
     setTempSelectedPolicyId(selectedRefundPolicyId);
   }, [hall?.service_id, selectedRefundPolicyId]);
 
-  // Get current policy (selected or default)
+  // Get current policy (selected only; no cross-temple defaults)
   const getCurrentPolicy = () => {
     if (selectedRefundPolicyId) {
       return refundPolicies.find(
         (p) => Number(p.id) === Number(selectedRefundPolicyId)
       );
     }
-    // Fallback to default policy
-    return refundPolicies.find((p) => p.is_default);
+    return undefined;
   };
 
   const currentPolicy = getCurrentPolicy();
@@ -565,9 +564,8 @@ const RefundPanel = ({
             <div className="policy-header">
               <div className="policy-title-section">
                 <h2 className="policy-title">Refund Policy for {hall?.name}</h2>
-                <p className="policy-subtitle">Current Policy</p>
+                <p className="policy-subtitle">{currentPolicy ? 'Current Policy' : 'No policy selected'}</p>
               </div>
-
               <button className="edit-button" onClick={handleEditClick}>
                 <svg
                   className="edit-icon"
@@ -577,11 +575,11 @@ const RefundPanel = ({
                 >
                   <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                 </svg>
-                Edit Policy
+                {currentPolicy ? 'Edit Policy' : 'Add Policy'}
               </button>
             </div>
 
-            {currentPolicy && (
+            {currentPolicy ? (
               <div className="policy-details">
                 <div className="policy-name-section">
                   <div className="policy-name-container">
@@ -599,6 +597,14 @@ const RefundPanel = ({
                         })()}
                       </span>
                     </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="policy-details">
+                <div className="policy-name-section">
+                  <div className="policy-name-container">
+                    <h3 className="policy-name">No Refund Policy defined</h3>
                   </div>
                 </div>
               </div>

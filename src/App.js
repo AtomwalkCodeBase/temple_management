@@ -16,6 +16,7 @@ import Home from "./pages/Home";
 import TempleDetails from "./pages/TempleDetails";
 import Login from "./pages/Login";
 import AdminLayout from "./components/AdminLayout/AdminLayout";
+import AdminRouter from "./components/Admin/AdminRouter";
 import AllTempleList from "./pages/Admin/AllTempleList";
 import TempleServices from "./pages/Admin/TempleServices";
 import AdvancePolicies from "./pages/Admin/AdvancePolicies";
@@ -43,6 +44,7 @@ function AppContent() {
     "/advance-policies",
     "/refund-policies",
     "/pricing-rules",
+    "/templeadmin",
   ].some((route) => location.pathname.startsWith(route));
 
   const isCustomerRoute = [
@@ -74,6 +76,9 @@ function AppContent() {
         <Route path="/book-seva/:templeId" element={<CustomerBookSeva />} />
         <Route path="/customer-bookings" element={<CustomerBookings />} />
         <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+
+        {/* Admin nested router */}
+        <Route path="/templeadmin/*" element={<AdminRouter />} />
 
         {/* Admin routes with AdminLayout wrapper */}
         <Route

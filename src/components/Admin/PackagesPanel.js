@@ -345,13 +345,68 @@ const PackagesPanel = ({
   onEdit,
   onDelete,
 }) => {
-  const list = Array.isArray(selectedHall?.service_variation_list)
+  const rawList = Array.isArray(selectedHall?.service_variation_list)
     ? selectedHall.service_variation_list
     : Array.isArray(hall?.service_variation_list)
     ? hall.service_variation_list
     : [];
 
-  const formatPackageType = (priceType) => {
+  const serviceType = String((selectedHall || hall)?.service_type || '').toUpperCase();
+  const isPuja = serviceType === 'PUJA';
+
+  // Dedupe by normalized logical signature
+  const normalizeSignature = (pkg) => {
+    const typeKey = isPuja
+      ? String(pkg.slot_name || pkg.price_type || '').trim().toUpperCase()
+      : String(pkg.price_type || '').trim().toUpperCase();
+    const normalizeTime = (t) => {
+      if (!t) return '';
+      const [h, m] = String(t).split(':');
+      const hh = String(h ?? '').padStart(2, '0');
+      const mm = String(m ?? '00').padStart(2, '0');
+      return `${hh}:${mm}`;
+    };
+    const start = normalizeTime(pkg.start_time);
+    const end = normalizeTime(pkg.end_time);
+    const hours = pkg.no_hours == null || pkg.no_hours === '' ? '' : String(parseInt(pkg.no_hours));
+    const maxPerDay = pkg.max_no_per_day == null ? '' : String(parseInt(pkg.max_no_per_day));
+    const maxParticipant = pkg.max_participant == null ? '' : String(parseInt(pkg.max_participant));
+    const base = (() => {
+      const n = Number(pkg.base_price);
+      return Number.isFinite(n) ? n.toFixed(2) : String(pkg.base_price || '');
+    })();
+    const ruleId = pkg.pricing_rule_id ?? pkg.pricing_rule_data?.id ?? '';
+    return `${typeKey}|${start}|${end}|${hours}|${maxPerDay}|${maxParticipant}|${base}|${ruleId}`;
+  };
+
+  const seen = new Set();
+  const list = rawList.filter((pkg) => {
+    const sig = normalizeSignature(pkg);
+    if (seen.has(sig)) return false;
+    seen.add(sig);
+    return true;
+  });
+
+  const formatPackageType = (priceType, slotName) => {
+    if (isPuja) {
+      // For PUJA, prioritize slotName (full name) over priceType (short name)
+      if (slotName && slotName.trim()) {
+        return slotName.trim();
+      }
+      // Fallback to mapping short price_type to full names
+      switch (priceType) {
+        case "Individual-1":
+          return "Individual Puja (1 person)";
+        case "Partner-2":
+          return "Partner Puja (2 person)";
+        case "Family-5":
+          return "Family Puja (5 person)";
+        case "Joint-10":
+          return "Joint Family Puja (10 person)";
+        default:
+          return priceType || 'Puja Slot';
+      }
+    }
     switch (priceType) {
       case "HOURLY":
         return "Hourly Package";
@@ -409,7 +464,7 @@ const PackagesPanel = ({
               {list.slice(0, 6).map((pkg, index) => (
                 <PackageCard key={pkg.id || index}>
                   <PackageTitle>
-                    {formatPackageType(pkg.price_type)}
+                    {formatPackageType(pkg.price_type, pkg.slot_name)}
                   </PackageTitle>
 
                   <PackagePrice>₹{formatPrice(pkg.base_price)}</PackagePrice>

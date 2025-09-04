@@ -325,7 +325,11 @@ const TemplePatternDivider = styled.div`
 const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
   const getCurrentPage = () => {
     const path = window.location.pathname;
-    if (path.includes("/halls-management")) return "Sacred Halls Management";
+    if (path.includes("/halls-management")) {
+      const params = new URLSearchParams(window.location.search);
+      const svc = (params.get('service') || 'HALL').toUpperCase();
+      return svc === 'PUJA' ? "Divine Puja Services" : "Sacred Halls Management";
+    }
     if (path.includes("/temple-list")) return "Temple List";
     if (path.includes("/services")) return "Temple Services";
     if (path.includes("/advance-policies")) return "Advance Policies";
@@ -336,8 +340,13 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
 
   const getPageDescription = () => {
     const path = window.location.pathname;
-    if (path.includes("/halls-management"))
-      return "Manage hall bookings, availability, and configurations with enterprise-grade tools";
+    if (path.includes("/halls-management")) {
+      const params = new URLSearchParams(window.location.search);
+      const svc = (params.get('service') || 'HALL').toUpperCase();
+      return svc === 'PUJA'
+        ? "Manage puja offerings, schedules, and configurations with enterprise-grade tools"
+        : "Manage hall bookings, availability, and configurations with enterprise-grade tools";
+    }
     return "";
   };
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -368,8 +377,11 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
       return ["Temple Management", "Temple List"];
     if (path.includes("/services"))
       return ["Service Management", "Temple Services"];
-    if (path.includes("/halls-management"))
-      return ["Hall Management", "Sacred Halls"];
+    if (path.includes("/halls-management")) {
+      const params = new URLSearchParams(window.location.search);
+      const svc = (params.get('service') || 'HALL').toUpperCase();
+      return svc === 'PUJA' ? ["Puja Management", "Divine Pujas"] : ["Hall Management", "Sacred Halls"];
+    }
     if (path.includes("/advance-policies"))
       return ["Policy Management", "Advance Policies"];
     if (path.includes("/refund-policies"))
@@ -419,9 +431,11 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
               }}
               whileTap={{ scale: 0.97 }}
               onClick={() => {
-                // This will be handled by the parent component
-                if (window.addNewHallHandler) {
-                  window.addNewHallHandler();
+                const svc = (new URLSearchParams(window.location.search).get('service') || 'HALL').toUpperCase();
+                if (svc === 'HALL') {
+                  if (window.addNewHallHandler) window.addNewHallHandler();
+                } else if (svc === 'PUJA') {
+                  if (window.addNewPujaHandler) window.addNewPujaHandler();
                 }
               }}
               style={{
@@ -460,7 +474,7 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
                   +
                 </span>
               </div>
-              Add New Hall
+              {new URLSearchParams(window.location.search).get('service')?.toUpperCase() === 'PUJA' ? 'Add New Puja' : 'Add New Hall'}
             </QuickActionButton>
           ) : (
             <QuickActionButton

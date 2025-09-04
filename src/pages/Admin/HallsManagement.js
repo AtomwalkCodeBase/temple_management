@@ -5,16 +5,7 @@ import HallsOverview from "../../components/Admin/HallsOverview";
 import AddonsNotification from "../../components/Admin/AddonsNotification";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getTempleServicesList } from "../../services/templeServices";
-import {
-  Calendar,
-  TrendingUp,
-  Search,
-  CheckCircle,
-  XCircle,
-  X,
-  Edit,
-  Eye,
-} from "lucide-react";
+import { Calendar, TrendingUp, Search, CheckCircle, XCircle, X, Edit, Eye, } from "lucide-react";
 
 // Styled Components
 const PageContainer = styled.div`
@@ -130,22 +121,6 @@ const SearchInput = styled.div`
   }
 `;
 
-const FilterSelect = styled.select`
-  padding: 12px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 14px;
-  background: #f9fafb;
-  transition: all 0.2s;
-
-  &:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    background: #ffffff;
-  }
-`;
-
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -173,10 +148,6 @@ const Table = styled.table`
     background: #f8fafc;
   }
 `;
-
-// Enhanced Hall Gallery Components
-// const HallGalleryHeader = styled.div``; /* moved to HallsOverview */
-// const GalleryControls = styled.div``; /* moved to HallsOverview */
 
 const ActionButton = styled.button`
   display: inline-flex;
@@ -220,27 +191,25 @@ const HallsManagement = () => {
 
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  // Removed hall filter dropdown per request
 
   const [showHallWizard, setShowHallWizard] = useState(false);
+  const [showPujaWizard, setShowPujaWizard] = useState(false);
   const [editService, setEditService] = useState(null);
   const [hallServices, setHallServices] = useState([]);
   const [hallServicesLoading, setHallServicesLoading] = useState(false);
   const [newHallServiceId, setNewHallServiceId] = useState(null);
   const [showAddonsNotification, setShowAddonsNotification] = useState(false);
   const templeId = localStorage.getItem("templeId") || null;
+  // Determine which service type to manage based on query param; default to HALL
+  const queryParams = new URLSearchParams(location.search);
+  const serviceType = (queryParams.get("service") || "HALL").toUpperCase();
   useEffect(() => {
     // Check for new hall creation and tab changes
     const params = new URLSearchParams(location.search);
     const newHallId = params.get("new_hall");
     const tabParam = params.get("tab");
 
-    console.log("URL Params:", location.search);
-    console.log("New Hall ID:", newHallId);
-    console.log("Tab Param:", tabParam);
-
     if (newHallId) {
-      console.log("Setting new hall notification for ID:", newHallId);
       setNewHallServiceId(newHallId);
       setShowAddonsNotification(true);
       // Clean up the URL parameter
@@ -257,7 +226,6 @@ const HallsManagement = () => {
       tabParam &&
       ["overview", "bookings", "halls", "customers"].includes(tabParam)
     ) {
-      console.log("Setting active tab to:", tabParam);
       setActiveTab(tabParam);
 
       // If switching to overview tab, scroll to top
@@ -281,7 +249,7 @@ const HallsManagement = () => {
     setActiveTab(tab);
   };
 
-  // Fetch hall services from API and keep only HALL service_type
+  // Fetch services from API and keep only selected service_type
   const fetchHallServices = async () => {
     setHallServicesLoading(true);
     try {
@@ -297,7 +265,7 @@ const HallsManagement = () => {
         : [];
       const hallsOnly = list
         .filter(
-          (s) => (s?.service_type || "").toString().toUpperCase() === "HALL"
+          (s) => (s?.service_type || "").toString().toUpperCase() === serviceType
         )
         .filter((service) => !templeId || service.temple_id === templeId);
       setHallServices(hallsOnly);
@@ -311,7 +279,7 @@ const HallsManagement = () => {
 
   useEffect(() => {
     fetchHallServices();
-  }, []);
+  }, [serviceType]);
 
   // Set up global handler for Add New Hall button in header
   useEffect(() => {
@@ -319,10 +287,15 @@ const HallsManagement = () => {
       setEditService(null);
       setShowHallWizard(true);
     };
+    window.addNewPujaHandler = () => {
+      setEditService(null);
+      setShowPujaWizard(true);
+    };
 
     // Cleanup when component unmounts
     return () => {
       delete window.addNewHallHandler;
+      delete window.addNewPujaHandler;
     };
   }, []);
 
@@ -433,6 +406,7 @@ const HallsManagement = () => {
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               onEditHall={handleEdit}
+              serviceType={serviceType}
             />
           </>
         )}
@@ -440,14 +414,14 @@ const HallsManagement = () => {
         {activeTab === "bookings" && (
           <ContentCard>
             <div className="card-header">
-              <div className="card-title">Hall Services Overview</div>
+              <div className="card-title">{serviceType === 'PUJA' ? 'Puja Services Overview' : 'Hall Services Overview'}</div>
             </div>
             <Toolbar>
               <SearchInput>
                 <Search size={16} />
                 <input
                   type="text"
-                  placeholder="Search halls by name..."
+                  placeholder={serviceType === 'PUJA' ? 'Search pujas by name...' : 'Search halls by name...'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -456,8 +430,8 @@ const HallsManagement = () => {
             <Table>
               <thead>
                 <tr>
-                  <th>Hall Name</th>
-                  <th>Capacity</th>
+                  <th>{serviceType === 'PUJA' ? 'Puja Name' : 'Hall Name'}</th>
+                  <th>{serviceType === 'PUJA' ? 'Max Participants' : 'Capacity'}</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -528,11 +502,11 @@ const HallsManagement = () => {
           />
         )}
 
-        {showHallWizard && (
+        {(showHallWizard || showPujaWizard) && (
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Add or edit hall"
+            aria-label={serviceType === 'PUJA' ? 'Add or edit puja' : 'Add or edit hall'}
             style={{
               position: "fixed",
               inset: 0,
@@ -562,12 +536,14 @@ const HallsManagement = () => {
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
                   setShowHallWizard(false);
+                  setShowPujaWizard(false);
                 }
               }}
             >
               <button
                 onClick={() => {
                   setShowHallWizard(false);
+                  setShowPujaWizard(false);
                 }}
                 aria-label="Close"
                 style={{
@@ -601,19 +577,18 @@ const HallsManagement = () => {
                   editService={editService}
                   onCancel={() => {
                     setShowHallWizard(false);
+                    setShowPujaWizard(false);
                     setEditService(null);
                   }}
+                  serviceType={serviceType}
                   onInlineUpdate={async (serviceId) => {
                     try {
                       await fetchHallServices();
                     } catch {}
                   }}
                   onSuccess={async (serviceId) => {
-                    console.log(
-                      "HallForm onSuccess called with serviceId:",
-                      serviceId
-                    );
                     setShowHallWizard(false);
+                    setShowPujaWizard(false);
                     setEditService(null);
                     try {
                       await fetchHallServices();

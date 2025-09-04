@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { X, Plus, Edit3, Trash2, Clock, Users, Calendar, IndianRupee } from "lucide-react";
+import { X } from "lucide-react";
 import { getPricingRuleList } from "../../services/templeServices";
 
 const ModalOverlay = styled.div`
@@ -9,7 +9,7 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,115 +66,7 @@ const ModalBody = styled.div`
   flex: 1;
 `;
 
-const PackageGrid = styled.div`
-  display: grid;
-  gap: 16px;
-  margin-bottom: 24px;
-`;
 
-const PackageCard = styled.div`
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 20px;
-  background: #ffffff;
-  transition: all 0.2s;
-  
-  &:hover {
-    border-color: #d1d5db;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-`;
-
-const PackageHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-`;
-
-const PackageTitle = styled.h3`
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
-`;
-
-const PackageActions = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
-const ActionButton = styled.button`
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #e5e7eb;
-  background: white;
-  color: #6b7280;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  
-  &:hover {
-    background: #f9fafb;
-    color: #374151;
-  }
-  
-  &.danger {
-    color: #dc2626;
-    border-color: #fecaca;
-    
-    &:hover {
-      background: #fef2f2;
-      color: #dc2626;
-    }
-  }
-`;
-
-const PackageDetails = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-`;
-
-const DetailItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #6b7280;
-  font-size: 14px;
-`;
-
-const DetailValue = styled.span`
-  color: #111827;
-  font-weight: 500;
-`;
-
-const AddButton = styled.button`
-  width: 100%;
-  padding: 16px;
-  border: 2px dashed #d1d5db;
-  border-radius: 12px;
-  background: #fafbfc;
-  color: #6b7280;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  
-  &:hover {
-    border-color: #9ca3af;
-    background: #f3f4f6;
-    color: #374151;
-  }
-`;
 
 const Form = styled.form`
   display: grid;
@@ -297,39 +189,47 @@ const Button = styled.button`
   }
 `;
 
-const EmptyState = styled.div`
-  text-align: center;
-  padding: 40px 20px;
-  color: #6b7280;
-`;
+
 
 const PackageModal = ({ 
   isOpen, 
   onClose, 
   hall, 
-  packages = [], 
   onSave,
   onDelete,
   isSaving,
-  initialPackage
+  initialPackage,
+  isEditing
 }) => {
-  const [isAdding, setIsAdding] = useState(false);
   const [editingPackage, setEditingPackage] = useState(null);
   const [pricingRules, setPricingRules] = useState([]);
+  const serviceType = String(hall?.service_type || '').toUpperCase();
+  const isPuja = serviceType === 'PUJA';
+
+  const mapPriceTypeToFullLabel = (priceType) => {
+    switch (String(priceType || '').trim()) {
+      case 'Individual-1': return 'Individual Puja (1 person)';
+      case 'Partner-2': return 'Partner Puja (2 person)';
+      case 'Family-5': return 'Family Puja (5 person)';
+      case 'Joint-10': return 'Joint Family Puja (10 person)';
+      default: return '';
+    }
+  };
+
   const [formData, setFormData] = useState({
-    price_type: "HOURLY",
-    base_price: "",
-    start_time: "",
-    end_time: "",
-    no_hours: "",
-    max_no_per_day: "",
-    max_participant: "",
-    pricing_rule_id: 1
+    price_type: 'HOURLY',
+    slot_name: '',
+    base_price: '',
+    start_time: '',
+    end_time: '',
+    no_hours: '',
+    max_no_per_day: '',
+    max_participant: '',
+    pricing_rule_id: null
   });
 
   useEffect(() => {
     if (!isOpen) {
-      setIsAdding(false);
       setEditingPackage(null);
       resetForm();
       return;
@@ -360,17 +260,21 @@ const PackageModal = ({
     // If an initial package is provided, open directly in form mode
     if (initialPackage !== undefined) {
       const pkg = initialPackage || {};
-      setIsAdding(true);
-      setEditingPackage(pkg.id ? pkg : null);
+      setEditingPackage(pkg.id ? pkg : (isEditing ? pkg : null));
+      const resolvedSlotName = isPuja 
+        ? (pkg.slot_name || mapPriceTypeToFullLabel(pkg.price_type)) 
+        : '';
+      const resolvedPricingRuleId = (pkg.pricing_rule_id != null ? pkg.pricing_rule_id : (pkg.pricing_rule_data?.id != null ? pkg.pricing_rule_data.id : null));
       setFormData({
-        price_type: pkg.price_type || "HOURLY",
-        base_price: pkg.base_price != null ? String(pkg.base_price) : "",
-        start_time: pkg.start_time || "",
-        end_time: pkg.end_time || "",
-        no_hours: pkg.no_hours != null ? String(pkg.no_hours) : "",
-        max_no_per_day: pkg.max_no_per_day != null ? String(pkg.max_no_per_day) : "",
-        max_participant: pkg.max_participant != null ? String(pkg.max_participant) : "",
-        pricing_rule_id: pkg.pricing_rule_id || 1
+        price_type: pkg.price_type || 'HOURLY',
+        slot_name: resolvedSlotName || '',
+        base_price: pkg.base_price != null ? String(pkg.base_price) : '',
+        start_time: pkg.start_time || '',
+        end_time: pkg.end_time || '',
+        no_hours: pkg.no_hours != null ? String(pkg.no_hours) : '',
+        max_no_per_day: pkg.max_no_per_day != null ? String(pkg.max_no_per_day) : '',
+        max_participant: pkg.max_participant != null ? String(pkg.max_participant) : '',
+        pricing_rule_id: resolvedPricingRuleId != null ? Number(resolvedPricingRuleId) : null
       });
     }
   }, [isOpen, initialPackage]);
@@ -378,39 +282,55 @@ const PackageModal = ({
   const resetForm = () => {
     setFormData({
       price_type: "HOURLY",
+      slot_name: "",
       base_price: "",
       start_time: "",
       end_time: "",
       no_hours: "",
       max_no_per_day: "",
       max_participant: "",
-      pricing_rule_id: 1
+      pricing_rule_id: null
     });
   };
 
-  const handleEdit = (pkg) => {
-    setEditingPackage(pkg);
-    setFormData({
-      price_type: pkg.price_type || "HOURLY",
-      base_price: pkg.base_price || "",
-      start_time: pkg.start_time || "",
-      end_time: pkg.end_time || "",
-      no_hours: pkg.no_hours || "",
-      max_no_per_day: pkg.max_no_per_day,
-      max_participant: pkg.max_participant,
-      pricing_rule_id: pkg.pricing_rule_id || 1
-    });
-    setIsAdding(true);
-  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const packageData = {
+    const packageData = isPuja ? {
+      id: editingPackage?.id || null,
+      slot_name: formData.slot_name || formData.price_type,
+      price_type: (() => {
+        const slotName = formData.slot_name || formData.price_type || '';
+        if (slotName.includes("Joint")) return "Joint-10";
+        if (slotName.includes("Individual")) return "Individual-1";
+        if (slotName.includes("Partner")) return "Partner-2";
+        if (slotName.includes("Family")) return "Family-5";
+        return "FIXED";
+      })(),
+      base_price: parseFloat(formData.base_price),
+      pricing_rule_id: formData.pricing_rule_id != null ? parseInt(formData.pricing_rule_id) : null,
+      start_time: formData.start_time,
+      end_time: formData.end_time,
+      max_no_per_day: 1,
+      max_participant: parseInt(formData.max_participant),
+      no_hours: null,
+      duration_minutes: (() => {
+        if (formData.start_time && formData.end_time) {
+          const startTime = new Date(`2000-01-01T${formData.start_time}:00`);
+          const endTime = new Date(`2000-01-01T${formData.end_time}:00`);
+          if (endTime > startTime) {
+            return Math.round((endTime - startTime) / (1000 * 60));
+          }
+        }
+        return 0;
+      })()
+    } : {
       id: editingPackage?.id || null, // Use existing ID for updates, null for new packages
       price_type: formData.price_type,
       base_price: parseFloat(formData.base_price),
-      pricing_rule_id: parseInt(formData.pricing_rule_id),
+      pricing_rule_id: formData.pricing_rule_id != null ? parseInt(formData.pricing_rule_id) : null,
       start_time: formData.start_time,
       end_time: formData.end_time,
       no_hours: formData.no_hours ? parseInt(formData.no_hours) : null,
@@ -418,31 +338,15 @@ const PackageModal = ({
       max_participant: parseInt(formData.max_participant)
     };
     
+
+    
     onSave(packageData);
     // Optimistically reset and hide form for snappy UX; parent will close modal on success
-    setIsAdding(false);
     setEditingPackage(null);
     resetForm();
   };
 
-  const handleDelete = async (packageId) => {
-    if (window.confirm("Are you sure you want to delete this package?")) {
-      try {
-        await onDelete(packageId);
-      } catch (error) {
-        console.error("Error deleting package:", error);
-      }
-    }
-  };
 
-  const getPriceTypeLabel = (type) => {
-    const labels = {
-      HOURLY: "Hourly",
-      FULL_DAY: "Full Day",
-      HALF_DAY: "Half Day"
-    };
-    return labels[type] || type;
-  };
 
   if (!isOpen) return null;
 
@@ -450,7 +354,7 @@ const PackageModal = ({
     <ModalOverlay>
       <ModalContent>
         <ModalHeader>
-          <ModalTitle>{editingPackage ? 'Edit Package' : 'Add Package'}</ModalTitle>
+          <ModalTitle>{editingPackage || isEditing ? 'Edit Package' : 'Add Package'}</ModalTitle>
           <CloseButton onClick={onClose}>
             <X size={20} />
           </CloseButton>
@@ -459,18 +363,36 @@ const PackageModal = ({
         <ModalBody>
           <Form onSubmit={handleSubmit}>
               <FormRow>
-                <FormGroup>
-                  <Label>Package Type *</Label>
-                  <Select
-                    value={formData.price_type}
-                    onChange={(e) => setFormData({...formData, price_type: e.target.value})}
-                    required
-                  >
-                    <option value="HOURLY">Hourly</option>
-                    <option value="HALF_DAY">Half Day</option>
-                    <option value="FULL_DAY">Full Day</option>
-                  </Select>
-                </FormGroup>
+                {!isPuja && (
+                  <FormGroup>
+                    <Label>Package Type *</Label>
+                    <Select
+                      value={formData.price_type}
+                      onChange={(e) => setFormData({...formData, price_type: e.target.value})}
+                      required
+                    >
+                      <option value="HOURLY">Hourly</option>
+                      <option value="HALF_DAY">Half Day</option>
+                      <option value="FULL_DAY">Full Day</option>
+                    </Select>
+                  </FormGroup>
+                )}
+                {isPuja && (
+                  <FormGroup>
+                    <Label>Package Name *</Label>
+                    <Select
+                      value={formData.slot_name}
+                      onChange={(e) => setFormData({ ...formData, slot_name: e.target.value })}
+                      required
+                    >
+                      <option value="">Select package</option>
+                      <option value="Individual Puja (1 person)">Individual Puja (1 person)</option>
+                      <option value="Partner Puja (2 person)">Partner Puja (2 person)</option>
+                      <option value="Family Puja (5 person)">Family Puja (5 person)</option>
+                      <option value="Joint Family Puja (10 person)">Joint Family Puja (10 person)</option>
+                    </Select>
+                  </FormGroup>
+                )}
                 
                 <FormGroup>
                   <Label>Base Price (₹) *</Label>
@@ -509,7 +431,7 @@ const PackageModal = ({
                   />
                 </FormGroup>
                 
-                {formData.price_type === "HOURLY" && (
+                {!isPuja && formData.price_type === "HOURLY" && (
                   <FormGroup>
                     <Label>Number of Hours</Label>
                     <Input
@@ -535,17 +457,19 @@ const PackageModal = ({
                   />
                 </FormGroup>
                 
-                <FormGroup>
-                  <Label>Maximum Bookings Per Day *</Label>
-                  <Input
-                    type="number"
-                    value={formData.max_no_per_day}
-                    placeholder="Numbers only"
-                    onChange={(e) => setFormData({...formData, max_no_per_day: e.target.value})}
-                    min="1"
-                    required
-                  />
-                </FormGroup>
+                {!isPuja && (
+                  <FormGroup>
+                    <Label>Maximum Bookings Per Day *</Label>
+                    <Input
+                      type="number"
+                      value={formData.max_no_per_day}
+                      placeholder="Numbers only"
+                      onChange={(e) => setFormData({...formData, max_no_per_day: e.target.value})}
+                      min="1"
+                      required
+                    />
+                  </FormGroup>
+                )}
               </FormRow>
 
               {/* Pricing Rule selection moved to the bottom */}
@@ -589,7 +513,6 @@ const PackageModal = ({
                   type="button" 
                   className="secondary"
                   onClick={() => {
-                    setIsAdding(false);
                     setEditingPackage(null);
                     resetForm();
                     onClose();
@@ -597,7 +520,7 @@ const PackageModal = ({
                 >
                   Cancel
                 </Button>
-                <Button type="submit" className="primary" disabled={isSaving}>
+                <Button type="submit" className="primary" disabled={isSaving || formData.pricing_rule_id == null}>
                   {editingPackage ? 'Update Package' : 'Add Package'}
                 </Button>
               </FormActions>

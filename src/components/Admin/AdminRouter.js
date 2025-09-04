@@ -64,17 +64,17 @@ const AdminRouter = () => {
     <AdminLayout>
       <AdminHeader />
       <Routes>
-        <Route path="/" element={<Navigate to="/templeadmin/dashboard" replace />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/temple-master" element={<TempleMaster />} />
-        <Route path="/puja-master" element={<PujaMaster />} />
-        <Route path="/hall-master" element={<HallMaster />} />
-        <Route path="/puja-bookings" element={<PujaBookings />} />
-        <Route path="/hall-bookings" element={<HallBookings />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/manual-booking" element={<ManualBooking />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="*" element={<Navigate to="/templeadmin/dashboard" replace />} />
+        <Route path="/" element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="temple-master" element={<TempleMaster />} />
+        <Route path="puja-master" element={<PujaMaster />} />
+        <Route path="hall-master" element={<HallMaster />} />
+        <Route path="puja-bookings" element={<PujaBookings />} />
+        <Route path="hall-bookings" element={<HallBookings />} />
+        <Route path="calendar" element={<Calendar />} />
+        <Route path="manual-booking" element={<ManualBooking />} />
+        <Route path="reports" element={<Reports />} />
+        <Route path="*" element={<Navigate to="dashboard" replace />} />
       </Routes>
     </AdminLayout>
   );

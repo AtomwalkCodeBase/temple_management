@@ -7,8 +7,6 @@ import RefundPanel from "./RefundPanel";
 import PackageModal from "./PackageModal";
 import { processTempleServiceData, getAdvancePolicyList, getRefundPolicyList } from "../../services/templeServices";
 
-
-
 const ContentCard = styled.div`
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -555,23 +553,106 @@ const extractImageUrls = (hall) => {
   return [...new Set(urls)];
 };
 
-// Helper function to clean package data for API
-const cleanPackageForAPI = (pkg, fallbackPricingRuleId) => {
+// Helper function to clean package/variation data for API
+const cleanPackageForAPI = (pkg, fallbackPricingRuleId, isPuja = false) => {
   const resolvedPricingRuleId = pkg.pricing_rule_id
     ?? pkg.pricing_rule_data?.id
     ?? fallbackPricingRuleId
-    ?? 1;
+    ?? null;
+  const base = typeof pkg.base_price === 'string' ? parseFloat(pkg.base_price) : pkg.base_price;
+  const maxPerDay = typeof pkg.max_no_per_day === 'string' ? parseInt(pkg.max_no_per_day) : pkg.max_no_per_day;
+  const maxParticipant = typeof pkg.max_participant === 'string' ? parseInt(pkg.max_participant) : pkg.max_participant;
+  if (isPuja) {
+    // For PUJA, use short price_type for database but keep full name in slot_name for UI
+    const slotName = pkg.slot_name ?? pkg.price_type ?? '';
+    
+    // Create short price_type with number format: Individual-1, Partner-2, Family-5, Joint-10
+    let shortPriceType = "FIXED";
+    if (slotName) {
+      if (slotName.includes("Joint")) shortPriceType = "Joint-10";
+      else if (slotName.includes("Individual")) shortPriceType = "Individual-1";
+      else if (slotName.includes("Partner")) shortPriceType = "Partner-2";
+      else if (slotName.includes("Family")) shortPriceType = "Family-5";
+      else shortPriceType = slotName.substring(0, 20);
+    }
+    
+    // Calculate duration_minutes from start_time and end_time
+    let durationMinutes = 0;
+    if (pkg.start_time && pkg.end_time) {
+      const startTime = new Date(`2000-01-01T${pkg.start_time}:00`);
+      const endTime = new Date(`2000-01-01T${pkg.end_time}:00`);
+      if (endTime > startTime) {
+        durationMinutes = Math.round((endTime - startTime) / (1000 * 60));
+      }
+    }
+    
+    const out = {
+      id: pkg.id ?? null,
+      slot_name: slotName, // Keep full name in slot_name for UI
+      price_type: shortPriceType, // Use short name with number for database
+      base_price: base,
+      pricing_rule_id: resolvedPricingRuleId,
+      start_time: pkg.start_time,
+      end_time: pkg.end_time,
+      max_no_per_day: maxPerDay ?? 1,
+      max_participant: maxParticipant,
+      no_hours: null,
+      duration_minutes: durationMinutes
+    };
+    if (Array.isArray(pkg.available_priests)) {
+      out.available_priests = pkg.available_priests;
+    }
+
+    return out;
+  }
   return {
     id: pkg.id ?? null,
     price_type: pkg.price_type,
-    base_price: typeof pkg.base_price === 'string' ? parseFloat(pkg.base_price) : pkg.base_price,
+    base_price: base,
     pricing_rule_id: resolvedPricingRuleId,
     start_time: pkg.start_time,
     end_time: pkg.end_time,
     no_hours: pkg.no_hours ?? null,
-    max_no_per_day: typeof pkg.max_no_per_day === 'string' ? parseInt(pkg.max_no_per_day) : pkg.max_no_per_day,
-    max_participant: typeof pkg.max_participant === 'string' ? parseInt(pkg.max_participant) : pkg.max_participant
+    max_no_per_day: maxPerDay,
+    max_participant: maxParticipant
   };
+};
+
+// Remove keys whose values are null or undefined before API call
+const pruneNulls = (obj) => {
+  const out = { ...obj };
+  Object.keys(out).forEach((k) => {
+    if (out[k] == null) delete out[k];
+  });
+  return out;
+};
+
+// Create a normalized signature for reliable duplicate detection
+const normalizeSignature = (pkg, isPuja = false) => {
+  const typeKey = isPuja
+    ? String(pkg.slot_name || pkg.price_type || '').trim().toUpperCase()
+    : String(pkg.price_type || '').trim().toUpperCase();
+  const normalizeTime = (t) => {
+    if (!t) return '';
+    const [h, m] = String(t).split(':');
+    const hh = String(h ?? '').padStart(2, '0');
+    const mm = String(m ?? '00').padStart(2, '0');
+    return `${hh}:${mm}`;
+  };
+  const start = normalizeTime(pkg.start_time);
+  const end = normalizeTime(pkg.end_time);
+  const hours = pkg.no_hours == null || pkg.no_hours === '' ? '' : String(parseInt(pkg.no_hours));
+  const maxPerDay = pkg.max_no_per_day == null ? '' : String(parseInt(pkg.max_no_per_day));
+  const maxParticipant = pkg.max_participant == null ? '' : String(parseInt(pkg.max_participant));
+  const base = (() => {
+    const n = Number(pkg.base_price);
+    return Number.isFinite(n) ? n.toFixed(2) : String(pkg.base_price || '');
+  })();
+  const ruleId = pkg.pricing_rule_id ?? pkg.pricing_rule_data?.id ?? '';
+  // For PUJA, include pricing_rule_id in signature to prevent duplicates with same slot but different pricing
+  return isPuja 
+    ? `${typeKey}|${start}|${end}|${hours}|${maxPerDay}|${maxParticipant}|${base}|${ruleId}`
+    : `${typeKey}|${start}|${end}|${hours}|${maxPerDay}|${maxParticipant}|${base}|${ruleId}`;
 };
 
 const getPlaceholderImage = () => {
@@ -594,12 +675,12 @@ const getPlaceholderImage = () => {
 };
 
 const HallsOverview = ({
-  hallStats,
   hallServices,
   hallServicesLoading,
   searchQuery,
   onSearchChange,
-  onEditHall
+  onEditHall,
+  serviceType = 'HALL'
 }) => {
   const [expandedHallId, setExpandedHallId] = useState(null);
   const [expandedTab, setExpandedTab] = useState(null);
@@ -616,14 +697,14 @@ const HallsOverview = ({
   const [isSavingPackage, setIsSavingPackage] = useState(false);
   const lastPackageSubmitRef = useRef({ key: null, at: 0 });
   const [imageLoadStates, setImageLoadStates] = useState({});
+  const [error, setError] = useState("");
 
   const dedupePackages = (packages) => {
     const seen = new Set();
     const result = [];
     for (const pkg of packages) {
-      const key = pkg.id != null
-        ? `id:${pkg.id}`
-        : `new:${pkg.price_type}|${pkg.start_time}|${pkg.end_time}|${pkg.no_hours ?? ''}|${pkg.max_no_per_day}|${pkg.max_participant}|${pkg.base_price}`;
+      const isPuja = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
+      const key = normalizeSignature(pkg, isPuja);
       if (!seen.has(key)) {
         seen.add(key);
         result.push(pkg);
@@ -666,8 +747,8 @@ const HallsOverview = ({
           // Preselect: current hall policy or default policy
           const currentIdRaw = hallCandidate?.adv_policy_data?.id ?? hallCandidate?.adv_policy_id ?? null;
           const currentId = currentIdRaw != null ? Number(currentIdRaw) : null;
-          const defaultPolicy = list.find(p => p.is_default);
-          setSelectedAdvPolicyId(currentId ?? (defaultPolicy ? Number(defaultPolicy.id) : null));
+          // Do not auto-select default policy from another temple
+          setSelectedAdvPolicyId(currentId ?? null);
         } catch (e) {
           // silent fail for now
         } finally {
@@ -696,8 +777,8 @@ const HallsOverview = ({
           // Preselect: current hall policy or default policy
           const currentIdRaw = hallCandidate?.refund_policy_data?.id ?? hallCandidate?.refund_policy_id ?? null;
           const currentId = currentIdRaw != null ? Number(currentIdRaw) : null;
-          const defaultPolicy = list.find(p => p.is_default);
-          setSelectedRefundPolicyId(currentId ?? (defaultPolicy ? Number(defaultPolicy.id) : null));
+          // Do not auto-select default policy from another temple
+          setSelectedRefundPolicyId(currentId ?? null);
         } catch (e) {
         } finally {
           setRefundLoading(false);
@@ -714,6 +795,18 @@ const HallsOverview = ({
     if (!hall) return;
 
     try {
+      // For policy-only updates, avoid sending variations to prevent backend duplication
+      const isPujaAdv = String(hall?.service_type || '').toUpperCase() === 'PUJA';
+      
+      // For PUJA, set capacity to max_participant of the first variation (for policy updates)
+      let serviceCapacity = hall.capacity;
+      if (isPujaAdv && hall.service_variation_list && hall.service_variation_list.length > 0) {
+        const firstVariation = hall.service_variation_list[0];
+        serviceCapacity = typeof firstVariation.max_participant === 'string' 
+          ? parseInt(firstVariation.max_participant) 
+          : firstVariation.max_participant || 0;
+      }
+      
       const serviceData = {
         call_mode: "UPDATE",
         temple_id: hall.temple_id,
@@ -722,15 +815,20 @@ const HallsOverview = ({
         service_type: hall.service_type,
         description: hall.description || "",
         adv_policy_id: selectedPolicyId,
-        refund_policy_id: hall.refund_policy_id ?? hall.refund_policy_data?.id ?? 1,
+        // Keep existing refund policy when updating advance policy - ensure it's always included
+        refund_policy_id: hall.refund_policy_id ?? hall.refund_policy_data?.id,
         base_price: typeof hall.base_price === 'string' ? parseFloat(hall.base_price) : hall.base_price,
-        capacity: typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity,
-        duration_minutes: typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes,
-        pricing_rule_id: hall.pricing_rule_id ?? 1,
-        service_variation_list: (hall.service_variation_list || []).map(pkg => cleanPackageForAPI(pkg, hall.pricing_rule_id))
+        capacity: isPujaAdv ? serviceCapacity : (typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity),
+        duration_minutes: isPujaAdv ? 0 : (typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes),
+        // Never default pricing rule to a global id
+        pricing_rule_id: hall.pricing_rule_id ?? hall.pricing_rule_data?.id,
+        // Include empty service_variation_list to satisfy backend requirements
+        service_variation_list: []
       };
 
-      const response = await processTempleServiceData(serviceData);
+      console.log('Advance Policy Update Payload:', serviceData);
+      const response = await processTempleServiceData(pruneNulls(serviceData));
+      console.log('Advance Policy Update Response:', response);
 
       const chosenPolicy = advancePolicies.find(p => Number(p.id) === Number(selectedPolicyId)) || null;
 
@@ -750,7 +848,9 @@ const HallsOverview = ({
       if (onEditHall) onEditHall(updatedHall);
       if (selectedHall?.service_id === hall.service_id) setSelectedHall(updatedHall);
     } catch (e) {
-      // could show error message
+      console.error('Advance Policy Update Error:', e);
+      setError("Failed to update advance policy: " + (e?.response?.data?.message || e?.message || "Unknown error"));
+      setTimeout(() => setError(""), 5000);
     }
   }, [expandedHallId, selectedAdvPolicyId, hallServices, onEditHall, selectedHall, advancePolicies]);
 
@@ -761,6 +861,18 @@ const HallsOverview = ({
     if (!hall) return;
 
     try {
+      // For policy-only updates, avoid sending variations to prevent backend duplication
+      const isPujaRef = String(hall?.service_type || '').toUpperCase() === 'PUJA';
+      
+      // For PUJA, set capacity to max_participant of the first variation (for policy updates)
+      let serviceCapacity = hall.capacity;
+      if (isPujaRef && hall.service_variation_list && hall.service_variation_list.length > 0) {
+        const firstVariation = hall.service_variation_list[0];
+        serviceCapacity = typeof firstVariation.max_participant === 'string' 
+          ? parseInt(firstVariation.max_participant) 
+          : firstVariation.max_participant || 0;
+      }
+      
       const serviceData = {
         call_mode: "UPDATE",
         temple_id: hall.temple_id,
@@ -768,16 +880,21 @@ const HallsOverview = ({
         name: hall.name,
         service_type: hall.service_type,
         description: hall.description || "",
-        adv_policy_id: hall.adv_policy_id ?? hall.adv_policy_data?.id ?? 1,
+        // Keep existing advance policy when updating refund policy - ensure it's always included
+        adv_policy_id: hall.adv_policy_id ?? hall.adv_policy_data?.id,
         refund_policy_id: selectedPolicyId,
         base_price: typeof hall.base_price === 'string' ? parseFloat(hall.base_price) : hall.base_price,
-        capacity: typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity,
-        duration_minutes: typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes,
-        pricing_rule_id: hall.pricing_rule_id ?? 1,
-        service_variation_list: (hall.service_variation_list || []).map(pkg => cleanPackageForAPI(pkg, hall.pricing_rule_id))
+        capacity: isPujaRef ? serviceCapacity : (typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity),
+        duration_minutes: isPujaRef ? 0 : (typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes),
+        // Never default pricing rule to a global id
+        pricing_rule_id: hall.pricing_rule_id ?? hall.pricing_rule_data?.id,
+        // Include empty service_variation_list to satisfy backend requirements
+        service_variation_list: []
       };
 
-      const response = await processTempleServiceData(serviceData);
+      console.log('Refund Policy Update Payload:', serviceData);
+      const response = await processTempleServiceData(pruneNulls(serviceData));
+      console.log('Refund Policy Update Response:', response);
 
       const chosenPolicy = refundPolicies.find(p => Number(p.id) === Number(selectedPolicyId)) || null;
       const updatedHall = {
@@ -796,6 +913,9 @@ const HallsOverview = ({
       if (onEditHall) onEditHall(updatedHall);
       if (selectedHall?.service_id === hall.service_id) setSelectedHall(updatedHall);
     } catch (e) {
+      console.error('Refund Policy Update Error:', e);
+      setError("Failed to update refund policy: " + (e?.response?.data?.message || e?.message || "Unknown error"));
+      setTimeout(() => setError(""), 5000);
     }
   }, [expandedHallId, selectedRefundPolicyId, hallServices, onEditHall, selectedHall, refundPolicies]);
 
@@ -830,6 +950,7 @@ const HallsOverview = ({
   // Inline package editor state and helpers (used for modal as well)
   const [isEditingPackage, setIsEditingPackage] = useState(false);
   const [editingPackageId, setEditingPackageId] = useState(null);
+  const [editingPackageObj, setEditingPackageObj] = useState(null);
 
   const openAddPackage = (hall) => {
     setSelectedHall(hall);
@@ -842,6 +963,7 @@ const HallsOverview = ({
     setSelectedHall(hall);
     setIsEditingPackage(true);
     setEditingPackageId(pkg?.id ?? null);
+    setEditingPackageObj(pkg || null);
     setPackageModalOpen(true);
   };
 
@@ -850,10 +972,15 @@ const HallsOverview = ({
   const handlePackageSave = useCallback(async (packageData) => {
     if (!selectedHall || isSavingPackage) return;
 
+    console.log('Package Save - packageData:', packageData);
+    console.log('Package Save - packageData.id:', packageData.id);
+    console.log('Package Save - isUpdate:', packageData.id != null);
+
     // Idempotency key per new/update payload
+    const isPuja = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
     const key = packageData.id != null
       ? `upd:${packageData.id}`
-      : `add:${packageData.price_type}|${packageData.start_time}|${packageData.end_time}|${packageData.no_hours ?? ''}|${packageData.max_no_per_day}|${packageData.max_participant}|${packageData.base_price}`;
+      : `add:${(isPuja ? (packageData.slot_name || packageData.price_type) : packageData.price_type)}|${packageData.start_time}|${packageData.end_time}|${packageData.no_hours ?? ''}|${packageData.max_no_per_day}|${packageData.max_participant}|${packageData.base_price}`;
     const now = Date.now();
     if (lastPackageSubmitRef.current.key === key && now - lastPackageSubmitRef.current.at < 1500) {
       return; // ignore duplicate rapid submissions
@@ -862,7 +989,7 @@ const HallsOverview = ({
     
     try {
       setIsSavingPackage(true);
-      const currentPackages = selectedHall.service_variation_list || [];
+      const currentPackages = dedupePackages(selectedHall.service_variation_list || []);
       let updatedPackages;
       
       if (packageData.id) {
@@ -879,8 +1006,28 @@ const HallsOverview = ({
         });
       } else {
         // Add new package - ensure it has the correct structure
-        const newPackage = {
-          id: null, // Will be assigned by the API
+        // Short-circuit if a logically identical package already exists
+        const newSig = normalizeSignature({ ...packageData, pricing_rule_id: packageData.pricing_rule_id ?? selectedHall.pricing_rule_id }, isPuja);
+        const exists = (currentPackages || []).some(p => normalizeSignature(p, isPuja) === newSig);
+        if (exists) {
+          setPackageModalOpen(false);
+          setIsSavingPackage(false);
+          return;
+        }
+        const newPackage = isPuja ? {
+          id: null,
+          slot_name: packageData.slot_name ?? packageData.price_type,
+          price_type: "FIXED", // Use fixed short value for backend compatibility
+          base_price: packageData.base_price,
+          pricing_rule_id: packageData.pricing_rule_id,
+          start_time: packageData.start_time,
+          end_time: packageData.end_time,
+          max_no_per_day: packageData.max_no_per_day,
+          max_participant: packageData.max_participant,
+          no_hours: null,
+          available_priests: Array.isArray(packageData.available_priests) ? packageData.available_priests : undefined
+        } : {
+          id: null,
           price_type: packageData.price_type,
           base_price: packageData.base_price,
           pricing_rule_id: packageData.pricing_rule_id,
@@ -897,33 +1044,80 @@ const HallsOverview = ({
       // De-duplicate potential duplicate entries
       updatedPackages = dedupePackages(updatedPackages);
       
-      // Clean packages for API - remove extra fields that API doesn't expect and ensure numeric types
-      const cleanedPackages = updatedPackages.map(pkg => cleanPackageForAPI(pkg, selectedHall.pricing_rule_id));
-      
       // Prepare the service data for API call
+      // Send ONLY the new/updated variation to avoid backend duplicating existing rows
+      const targetPkg = packageData.id
+        ? (updatedPackages.find(p => p.id === packageData.id) || { ...packageData })
+        : updatedPackages[updatedPackages.length - 1];
+      // Ensure ID is preserved for updates so backend updates instead of inserting
+      if (packageData.id != null) {
+        targetPkg.id = packageData.id;
+      }
+      const cleanedSingle = cleanPackageForAPI(targetPkg, selectedHall.pricing_rule_id, isPuja);
+      
+      // For PUJA, set capacity to max_participant of the current package being added/updated
+      let serviceCapacity = selectedHall.capacity;
+      let serviceDurationMinutes = selectedHall.duration_minutes;
+      if (isPuja) {
+        serviceCapacity = typeof packageData.max_participant === 'string' 
+          ? parseInt(packageData.max_participant) 
+          : packageData.max_participant || 0;
+        serviceDurationMinutes = packageData.duration_minutes || 0;
+      }
+      
+      // Always use UPDATE to avoid creating duplicate services when adding variations
+      const callMode = "UPDATE";
+      console.log('Final call_mode:', callMode, 'for package ID:', packageData.id);
+      
       const serviceData = {
-        call_mode: "UPDATE",
+        call_mode: callMode,
         temple_id: selectedHall.temple_id,
         service_id: selectedHall.service_id,
         name: selectedHall.name,
         service_type: selectedHall.service_type,
         description: selectedHall.description || "",
-        adv_policy_id: selectedHall.adv_policy_id ?? 1,
-        refund_policy_id: selectedHall.refund_policy_id ?? 1,
+        // Do not auto-assign cross-temple defaults
+        adv_policy_id: selectedHall.adv_policy_id ?? selectedHall.adv_policy_data?.id ?? null,
+        refund_policy_id: selectedHall.refund_policy_id ?? selectedHall.refund_policy_data?.id ?? null,
         base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : selectedHall.base_price,
-        capacity: typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity,
-        duration_minutes: typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes,
-        pricing_rule_id: selectedHall.pricing_rule_id ?? 1,
-        service_variation_list: cleanedPackages
+        capacity: isPuja ? serviceCapacity : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
+        // For PUJA, send calculated duration_minutes
+        duration_minutes: isPuja ? serviceDurationMinutes : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
+        pricing_rule_id: selectedHall.pricing_rule_id ?? selectedHall.pricing_rule_data?.id ?? null,
+        service_variation_list: [cleanedSingle]
       };
       
+
+      
       // Call the API to update the hall with new packages
-      const response = await processTempleServiceData(serviceData);
+      const response = await processTempleServiceData(pruneNulls(serviceData));
       
       // Update the local state with the response data to get the updated packages with IDs
+      // 1) Merge by id first (if id exists), keeping the latest occurrence
+      // 2) Then de-duplicate by logical signature to avoid true duplicates
+      const responsePackages = response?.service_data?.service_variation_list || updatedPackages;
+      const byId = new Map();
+      const noIdList = [];
+      for (const p of responsePackages) {
+        if (p && p.id != null) {
+          byId.set(p.id, p);
+        } else {
+          noIdList.push(p);
+        }
+      }
+      const mergedList = [...byId.values(), ...noIdList];
+      const uniqueBySignature = [];
+      const sigSeen = new Set();
+      for (const p of mergedList) {
+        const sig = normalizeSignature(p, isPuja);
+        if (!sigSeen.has(sig)) {
+          sigSeen.add(sig);
+          uniqueBySignature.push(p);
+        }
+      }
       const updatedHall = {
         ...selectedHall,
-        service_variation_list: response?.service_data?.service_variation_list || updatedPackages,
+        service_variation_list: uniqueBySignature,
         _inlineUpdate: true
       };
       
@@ -954,11 +1148,12 @@ const HallsOverview = ({
     if (!selectedHall) return;
     
     try {
-      const currentPackages = selectedHall.service_variation_list || [];
-      const updatedPackages = currentPackages.filter(pkg => pkg.id !== packageId);
+      const currentPackages = dedupePackages(selectedHall.service_variation_list || []);
+      const updatedPackages = dedupePackages(currentPackages.filter(pkg => pkg.id !== packageId));
       
       // Clean packages for API - remove extra fields that API doesn't expect and ensure numeric types
-      const cleanedPackages = updatedPackages.map(pkg => cleanPackageForAPI(pkg, selectedHall.pricing_rule_id));
+      const isPuja = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
+      const cleanedPackages = dedupePackages(updatedPackages).map(pkg => cleanPackageForAPI(pkg, selectedHall.pricing_rule_id, isPuja));
       
       // Prepare the service data for API call
       const serviceData = {
@@ -968,22 +1163,32 @@ const HallsOverview = ({
         name: selectedHall.name,
         service_type: selectedHall.service_type,
         description: selectedHall.description || "",
-        adv_policy_id: selectedHall.adv_policy_id ?? 1,
-        refund_policy_id: selectedHall.refund_policy_id ?? 1,
+        adv_policy_id: selectedHall.adv_policy_id ?? selectedHall.adv_policy_data?.id ?? null,
+        refund_policy_id: selectedHall.refund_policy_id ?? selectedHall.refund_policy_data?.id ?? null,
         base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : selectedHall.base_price,
-        capacity: typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity,
-        duration_minutes: typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes,
-        pricing_rule_id: selectedHall.pricing_rule_id ?? 1,
+        capacity: isPuja ? 0 : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
+        duration_minutes: isPuja ? 0 : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
+        pricing_rule_id: selectedHall.pricing_rule_id ?? selectedHall.pricing_rule_data?.id ?? null,
         service_variation_list: cleanedPackages
       };
       
       // Call the API to update the hall with removed package
-      const response = await processTempleServiceData(serviceData);
+      const response = await processTempleServiceData(pruneNulls(serviceData));
       
       // Update the local state with the response data
+      const respPkgs = response?.service_data?.service_variation_list || updatedPackages;
+      const uniq = [];
+      const seen = new Set();
+      for (const p of respPkgs) {
+        const sig = normalizeSignature(p, isPuja);
+        if (!seen.has(sig)) {
+          seen.add(sig);
+          uniq.push(p);
+        }
+      }
       const updatedHall = {
         ...selectedHall,
-        service_variation_list: response?.service_data?.service_variation_list || updatedPackages
+        service_variation_list: uniq
       };
       
       // Update the selectedHall state immediately for UI feedback
@@ -1010,13 +1215,13 @@ const HallsOverview = ({
 
       <ContentCard>
         <HallGalleryHeader>
-          <div className="card-title">Hall Gallery</div>
+          <div className="card-title">{serviceType === 'PUJA' ? 'Puja Gallery' : 'Hall Gallery'}</div>
           <GalleryControls>
             <SearchInput>
               <Search size={16} />
               <input 
                 type="text" 
-                placeholder="Search halls..." 
+                placeholder={serviceType === 'PUJA' ? 'Search pujas...' : 'Search halls...'} 
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
               />
@@ -1179,6 +1384,7 @@ const HallsOverview = ({
                             onSelect={setSelectedAdvPolicyId}
                             onSave={handleSaveAdvancePolicy}
                             successMessage={successMessage}
+                            errorMessage={error}
                             loading={advLoading}
                           />
                         )}
@@ -1190,6 +1396,7 @@ const HallsOverview = ({
                             onSelect={setSelectedRefundPolicyId}
                             onSave={handleSaveRefundPolicy}
                             successMessage={successMessage}
+                            errorMessage={error}
                             loading={refundLoading}
                           />
                         )}
@@ -1229,10 +1436,10 @@ const HallsOverview = ({
                     fontWeight: "bold"
                   }}
                 >
-                  H
+                  {serviceType === 'PUJA' ? 'P' : 'H'}
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>No halls found</div>
-                <div style={{ fontSize: '14px' }}>Create your first hall to get started</div>
+                <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>{serviceType === 'PUJA' ? 'No pujas found' : 'No halls found'}</div>
+                <div style={{ fontSize: '14px' }}>{serviceType === 'PUJA' ? 'Create your first puja to get started' : 'Create your first hall to get started'}</div>
               </div>
             )}
           </HallGrid>
@@ -1245,14 +1452,15 @@ const HallsOverview = ({
         onClose={() => {
           setIsEditingPackage(false);
           setEditingPackageId(null);
+          setEditingPackageObj(null);
           setPackageModalOpen(false);
         }}
         hall={selectedHall}
-        packages={selectedHall?.service_variation_list || []}
         onSave={(pkg)=> handlePackageSave(pkg)}
         onDelete={(id)=> handlePackageDelete(id)}
         isSaving={isSavingPackage}
-        initialPackage={editingPackageId != null ? (selectedHall?.service_variation_list || []).find(p=>p.id===editingPackageId) : (isEditingPackage ? {} : undefined)}
+        isEditing={!!(editingPackageObj || editingPackageId != null)}
+        initialPackage={editingPackageObj != null ? editingPackageObj : (editingPackageId != null ? (selectedHall?.service_variation_list || []).find(p=>p.id===editingPackageId) : (isEditingPackage ? {} : undefined))}
       />
     </>
   );

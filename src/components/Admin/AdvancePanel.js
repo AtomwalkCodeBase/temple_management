@@ -474,15 +474,14 @@ const AdvancePanel = ({
     setTempSelectedPolicyId(selectedAdvPolicyId);
   }, [hall?.service_id, selectedAdvPolicyId]);
 
-  // Get current policy (selected or default)
+  // Get current policy (selected only; no cross-temple defaults)
   const getCurrentPolicy = () => {
     if (selectedAdvPolicyId) {
       return advancePolicies.find(
         (p) => Number(p.id) === Number(selectedAdvPolicyId)
       );
     }
-    // Fallback to default policy
-    return advancePolicies.find((p) => p.is_default);
+    return undefined;
   };
 
   const currentPolicy = getCurrentPolicy();
@@ -564,7 +563,7 @@ const AdvancePanel = ({
                 <h2 className="policy-title">
                   Advance Policy for {hall?.name}
                 </h2>
-                <p className="policy-subtitle">Current Policy</p>
+                <p className="policy-subtitle">{currentPolicy ? 'Current Policy' : 'No policy selected'}</p>
               </div>
               <div className="header-right">
                 <button className="edit-button" onClick={handleEditClick}>
@@ -576,12 +575,11 @@ const AdvancePanel = ({
                   >
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                   </svg>
-                  Edit Policy
+                  {currentPolicy ? 'Edit Policy' : 'Add Policy'}
                 </button>
               </div>
             </div>
-
-            {currentPolicy && (
+            {currentPolicy ? (
               <div className="policy-content">
                 <div className="policy-name-section">
                   <h3 className="policy-name">{currentPolicy.name}</h3>
@@ -595,6 +593,12 @@ const AdvancePanel = ({
                       currentPolicy.min_amount ?? 0
                     ).toFixed(2)}`}</span>
                   </div>
+                </div>
+              </div>
+            ) : (
+              <div className="policy-content">
+                <div className="policy-name-section">
+                  <h3 className="policy-name">No Advance Policy defined</h3>
                 </div>
               </div>
             )}

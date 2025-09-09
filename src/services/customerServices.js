@@ -145,16 +145,31 @@ export const toDateKey = (d) => {
   return `${y}-${m}-${day}`;
 };
 
-export const extractDisabledDatesFromBookings = (bookings) => {
+export const extractDisabledDatesFromBookings = (
+  bookings,
+  start_time,
+  end_time
+) => {
   function toDateKey(date) {
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, "0");
     const d = String(date.getDate()).padStart(2, "0");
     return `${y}-${m}-${d}`;
   }
+
+  // Helper to convert "HH:mm:ss" → minutes since midnight
+  function timeToMinutes(timeStr) {
+    if (!timeStr) return null;
+    const [h, m, s] = timeStr.split(":").map((n) => parseInt(n, 10));
+    return h * 60 + m + (s ? s / 60 : 0);
+  }
+
+  const requestedStart = timeToMinutes(start_time);
+  const requestedEnd = timeToMinutes(end_time);
+
   const keySet = new Set();
+
   (bookings || []).forEach((b) => {
-    // Try common field names for booking date
     const rawDate =
       b.booking_date ||
       b.book_date ||
@@ -163,39 +178,47 @@ export const extractDisabledDatesFromBookings = (bookings) => {
 
     if (!rawDate) return;
 
-    // Parse DD-MM-YYYY format (e.g., "16-08-2025")
+    // Parse DD-MM-YYYY (e.g., "16-08-2025")
     const dateParts = String(rawDate).split("-");
+    if (dateParts.length !== 3) return;
 
-    if (dateParts.length === 3) {
-      const day = parseInt(dateParts[0], 10);
-      const month = parseInt(dateParts[1], 10) - 1; // Months are 0-indexed in JS
-      const year = parseInt(dateParts[2], 10);
+    const day = parseInt(dateParts[0], 10);
+    const month = parseInt(dateParts[1], 10) - 1;
+    const year = parseInt(dateParts[2], 10);
 
-      // Validate the date parts
-      if (
-        !isNaN(day) &&
-        !isNaN(month) &&
-        !isNaN(year) &&
-        month >= 0 &&
-        month <= 11 &&
-        day >= 1 &&
-        day <= 31
-      ) {
-        const date = new Date(year, month, day);
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return;
 
-        // Double-check if the date is valid
-        if (
-          !isNaN(date.getTime()) &&
-          date.getDate() === day &&
-          date.getMonth() === month &&
-          date.getFullYear() === year
-        ) {
-          const key = toDateKey(date);
-          keySet.add(key);
-        }
-      }
+    const date = new Date(year, month, day);
+    if (
+      isNaN(date.getTime()) ||
+      date.getDate() !== day ||
+      date.getMonth() !== month ||
+      date.getFullYear() !== year
+    ) {
+      return;
+    }
+
+    const bookingStart = timeToMinutes(b.start_time);
+    const bookingEnd = timeToMinutes(b.end_time);
+
+    let conflict = false;
+    if (
+      requestedStart !== null &&
+      requestedEnd !== null &&
+      bookingStart !== null &&
+      bookingEnd !== null
+    ) {
+      // Check if time overlaps
+      conflict = requestedStart < bookingEnd && requestedEnd > bookingStart;
+    }
+
+    // Only disable the date if there’s a conflict
+    if (conflict) {
+      const key = toDateKey(date);
+      keySet.add(key);
     }
   });
+
   return keySet;
 };
 

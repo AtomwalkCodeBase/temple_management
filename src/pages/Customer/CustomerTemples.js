@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { FiMapPin, FiPhone, FiMail, FiStar } from "react-icons/fi";
+import { FiMapPin, FiPhone, FiMail, FiStar, FiClock } from "react-icons/fi";
 import { MdTempleHindu } from "react-icons/md";
 import { fetchTemples } from "../../services/templeServices";
 import { useCustomerAuth } from "../../contexts/CustomerAuthContext";
@@ -14,31 +14,50 @@ import { gettemplist } from "../../services/productServices";
 const TemplesContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 1rem;
 `;
 
 const HeaderSection = styled(motion.div)`
-  text-align: center;
-  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  color: white;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 1;
+  }
 
   .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   .subtitle {
     font-size: 1.2rem;
-    color: #6b7280;
+    opacity: 0.9;
     font-weight: 500;
-    max-width: 600px;
-    margin: 0 auto;
   }
 
   @media (max-width: 768px) {
+    padding: 1.5rem;
+
     .title {
       font-size: 2rem;
     }
@@ -123,39 +142,82 @@ const TempleCard = styled(motion.div)`
   }
 `;
 
-const TempleImage = styled.div`
+const ImageCarousel = styled.div`
   height: 220px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  color: white;
   position: relative;
   overflow: hidden;
 
-  &::before {
-    content: "";
+  .carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+  }
+
+  .carousel-item {
+    min-width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .carousel-controls {
     position: absolute;
-    top: 0;
+    bottom: 10px;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fillOpacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z'/%3E%3C/g%3E%3C/svg%3E");
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 2;
   }
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: relative;
-    z-index: 1;
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.active {
+      background: white;
+      transform: scale(1.2);
+    }
   }
 
-  .temple-icon {
-    position: relative;
-    z-index: 1;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    &.prev {
+      left: 10px;
+    }
+
+    &.next {
+      right: 10px;
+    }
   }
 `;
 
@@ -198,7 +260,7 @@ const TempleDetails = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 
   .detail {
     display: flex;
@@ -220,31 +282,43 @@ const TempleDetails = styled.div`
   }
 `;
 
-const TempleStats = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
+const TempleTimings = styled.div`
   background: #f8fafc;
   border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
 
-  .stat {
-    text-align: center;
+  .timings-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-    .number {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
+  .timing-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .timing-slot {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+
+    .time {
+      color: #667eea;
+      font-weight: 600;
     }
 
-    .label {
-      font-size: 0.7rem;
+    .name {
       color: #6b7280;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
   }
 `;
@@ -372,6 +446,7 @@ const CustomerTemples = () => {
     location: "",
     rating: "",
   });
+  const [carouselIndices, setCarouselIndices] = useState({});
   const navigate = useNavigate();
   const { customerData } = useCustomerAuth();
 
@@ -389,6 +464,13 @@ const CustomerTemples = () => {
       const response = await gettemplist();
       const templesData = response.data || [];
       setTemples(templesData);
+
+      // Initialize carousel indices
+      const initialIndices = {};
+      templesData.forEach((temple) => {
+        initialIndices[temple.temple_id] = 0;
+      });
+      setCarouselIndices(initialIndices);
     } catch (err) {
       setError("Failed to load temples. Please try again.");
       console.error("Error loading temples:", err);
@@ -404,14 +486,33 @@ const CustomerTemples = () => {
       filtered = filtered.filter(
         (temple) =>
           temple.name?.toLowerCase().includes(filters.search.toLowerCase()) ||
-          temple.location?.toLowerCase().includes(filters.search.toLowerCase())
+          temple.location
+            ?.toLowerCase()
+            .includes(filters.search.toLowerCase()) ||
+          temple.address_line_1
+            ?.toLowerCase()
+            .includes(filters.search.toLowerCase())
       );
     }
 
     if (filters.location) {
-      filtered = filtered.filter((temple) =>
-        temple.location?.toLowerCase().includes(filters.location.toLowerCase())
+      filtered = filtered.filter(
+        (temple) =>
+          temple.location
+            ?.toLowerCase()
+            .includes(filters.location.toLowerCase()) ||
+          temple.address_line_1
+            ?.toLowerCase()
+            .includes(filters.location.toLowerCase())
       );
+    }
+
+    if (filters.rating) {
+      filtered = filtered.filter((temple) => {
+        // This is a placeholder - you might need to adjust based on your actual rating data
+        const rating = 4.8; // Default rating for now
+        return rating >= parseFloat(filters.rating);
+      });
     }
 
     setFilteredTemples(filtered);
@@ -426,6 +527,44 @@ const CustomerTemples = () => {
 
   const handleBookSeva = (temple) => {
     navigate(`/book-seva/${temple.temple_id}`, { state: { temple } });
+  };
+
+  const nextImage = (templeId, totalImages) => {
+    setCarouselIndices((prev) => ({
+      ...prev,
+      [templeId]: (prev[templeId] + 1) % totalImages,
+    }));
+  };
+
+  const prevImage = (templeId, totalImages) => {
+    setCarouselIndices((prev) => ({
+      ...prev,
+      [templeId]: (prev[templeId] - 1 + totalImages) % totalImages,
+    }));
+  };
+
+  const goToImage = (templeId, index) => {
+    setCarouselIndices((prev) => ({
+      ...prev,
+      [templeId]: index,
+    }));
+  };
+
+  const getTempleImages = (temple) => {
+    const images = [];
+    if (temple.image) images.push(temple.image);
+    if (temple.image_1) images.push(temple.image_1);
+    if (temple.image_2) images.push(temple.image_2);
+    if (temple.image_3) images.push(temple.image_3);
+    if (temple.image_4) images.push(temple.image_4);
+    if (temple.image_5) images.push(temple.image_5);
+
+    // If no images, use a placeholder with the temple icon
+    if (images.length === 0) {
+      return [null];
+    }
+
+    return images;
   };
 
   if (loading) {
@@ -455,7 +594,7 @@ const CustomerTemples = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="title">Sacred Temples</div>
+          <div className="title">🛕 Sacred Temples</div>
           <div className="subtitle">
             Discover divine temples and book your spiritual journey with us
           </div>
@@ -513,77 +652,147 @@ const CustomerTemples = () => {
           </EmptyState>
         ) : (
           <TemplesGrid>
-            {filteredTemples.map((temple, index) => (
-              <TempleCard
-                key={temple.temple_id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-              >
-                <TempleImage>
-                  {temple.image ? (
-                    <img
-                      src={temple.image || "/placeholder.svg"}
-                      alt={temple.name}
-                    />
-                  ) : (
-                    <div className="temple-icon">
+            {filteredTemples.map((temple, index) => {
+              const images = getTempleImages(temple);
+              const currentIndex = carouselIndices[temple.temple_id] || 0;
+
+              return (
+                <TempleCard
+                  key={temple.temple_id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -8 }}
+                >
+                  <ImageCarousel>
+                    <div
+                      className="carousel-inner"
+                      style={{
+                        transform: `translateX(-${currentIndex * 100}%)`,
+                      }}
+                    >
+                      {images[0] ? (
+                        images.map((img, idx) => (
+                          <div key={idx} className="carousel-item">
+                            <img
+                              src={img || "/placeholder.svg"}
+                              alt={`${temple.name} - Image ${idx + 1}`}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <div
+                          className="carousel-item"
+                          style={{
+                            background:
+                              "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "white",
+                            fontSize: "4rem",
+                          }}
+                        >
+                          <MdTempleHindu />
+                        </div>
+                      )}
+                    </div>
+
+                    {images.length > 1 && (
+                      <>
+                        <button
+                          className="carousel-nav prev"
+                          onClick={() =>
+                            prevImage(temple.temple_id, images.length)
+                          }
+                        >
+                          &#8249;
+                        </button>
+                        <button
+                          className="carousel-nav next"
+                          onClick={() =>
+                            nextImage(temple.temple_id, images.length)
+                          }
+                        >
+                          &#8250;
+                        </button>
+                        <div className="carousel-controls">
+                          {images.map((_, idx) => (
+                            <div
+                              key={idx}
+                              className={`carousel-dot ${
+                                currentIndex === idx ? "active" : ""
+                              }`}
+                              onClick={() => goToImage(temple.temple_id, idx)}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </ImageCarousel>
+
+                  <TempleContent>
+                    <TempleHeader>
+                      <TempleName>{temple.name}</TempleName>
+                      <TempleRating>
+                        <FiStar className="star" />
+                        4.8
+                      </TempleRating>
+                    </TempleHeader>
+
+                    <TempleDetails>
+                      <div className="detail">
+                        <FiMapPin className="icon" />
+                        <span className="value">
+                          {temple.address_line_1 || temple.location}
+                          {temple.address_line_2 &&
+                            `, ${temple.address_line_2}`}
+                          {temple.pin_code && `, ${temple.pin_code}`}
+                        </span>
+                      </div>
+                      <div className="detail">
+                        <FiPhone className="icon" />
+                        <span className="value">{temple.mobile_number}</span>
+                      </div>
+                      <div className="detail">
+                        <FiMail className="icon" />
+                        <span className="value">{temple.email_id}</span>
+                      </div>
+                    </TempleDetails>
+
+                    {temple.additional_field_list?.temple_timings
+                      ?.selected_time_slots && (
+                      <TempleTimings>
+                        <div className="timings-title">
+                          <FiClock className="icon" />
+                          Temple Timings
+                        </div>
+                        <div className="timing-slots">
+                          {temple.additional_field_list.temple_timings.selected_time_slots.map(
+                            (slot, idx) => (
+                              <div key={idx} className="timing-slot">
+                                <div className="time">
+                                  {slot.start} - {slot.end}
+                                </div>
+                                <div className="name">{slot.name}</div>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </TempleTimings>
+                    )}
+                    <BookSevaButton
+                      onClick={() => handleBookSeva(temple)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
                       <MdTempleHindu />
-                    </div>
-                  )}
-                </TempleImage>
-
-                <TempleContent>
-                  <TempleHeader>
-                    <TempleName>{temple.name}</TempleName>
-                    <TempleRating>
-                      <FiStar className="star" />
-                      4.8
-                    </TempleRating>
-                  </TempleHeader>
-
-                  <TempleDetails>
-                    <div className="detail">
-                      <FiMapPin className="icon" />
-                      <span className="value">{temple.location}</span>
-                    </div>
-                    <div className="detail">
-                      <FiPhone className="icon" />
-                      <span className="value">{temple.mobile_number}</span>
-                    </div>
-                    <div className="detail">
-                      <FiMail className="icon" />
-                      <span className="value">{temple.email_id}</span>
-                    </div>
-                  </TempleDetails>
-
-                  <TempleStats>
-                    <div className="stat">
-                      <div className="number">150+</div>
-                      <div className="label">Sevas</div>
-                    </div>
-                    <div className="stat">
-                      <div className="number">24/7</div>
-                      <div className="label">Open</div>
-                    </div>
-                    <div className="stat">
-                      <div className="number">5K+</div>
-                      <div className="label">Devotees</div>
-                    </div>
-                  </TempleStats>
-
-                  <BookSevaButton
-                    onClick={() => handleBookSeva(temple)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <MdTempleHindu />
-                    Book Seva
-                  </BookSevaButton>
-                </TempleContent>
-              </TempleCard>
-            ))}
+                      Book Seva
+                    </BookSevaButton>
+                  </TempleContent>
+                </TempleCard>
+              );
+            })}
           </TemplesGrid>
         )}
       </TemplesContainer>

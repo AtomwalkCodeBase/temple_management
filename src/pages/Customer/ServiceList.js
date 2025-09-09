@@ -1059,8 +1059,17 @@ export default function ServiceList({ services, onBook }) {
                           </div>
                           <div className="price">
                             <IndianRupee size={20} />
-                            {parseFloat(
-                              variation.base_price || 0
+                            {(
+                              (parseFloat(variation.base_price) || 0) +
+                              (parseFloat(
+                                variation.pricing_rule_data?.week_day_price
+                              ) || 0) +
+                              (parseFloat(
+                                variation.pricing_rule_data?.time_price
+                              ) || 0) +
+                              (parseFloat(
+                                variation.pricing_rule_data?.date_price
+                              ) || 0)
                             ).toLocaleString()}
                           </div>
                         </div>
@@ -1099,7 +1108,7 @@ export default function ServiceList({ services, onBook }) {
                             </div>
                           )}
                         </div>
-
+                        {/* 
                         {variation.pricing_rule_data && (
                           <div className="pricing-info">
                             <div className="pricing-title">
@@ -1148,7 +1157,7 @@ export default function ServiceList({ services, onBook }) {
                               )}
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </VariationCard>
                     ))}
                   </VariationGrid>

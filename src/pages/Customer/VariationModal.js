@@ -8,19 +8,33 @@ import { IndianRupee } from "lucide-react";
 const Overlay = styled(motion.div)`
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 0.5);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
   display: grid;
   place-items: center;
   z-index: 1000;
+  padding: 1rem;
 `;
 
 const Modal = styled(motion.div)`
   background: white;
-  width: min(680px, 94vw);
-  border-radius: 1rem;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  width: min(750px, 100%);
+  max-height: 85vh;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
   overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+  }
 `;
 
 const Header = styled.div`
@@ -148,7 +162,12 @@ export default function VariationModal({ open, service, onClose, onSelect }) {
                     </div>
                     <div className="price">
                       <IndianRupee size={14} />{" "}
-                      {Number.parseFloat(v.base_price || 0).toFixed(2)}
+                      {(
+                        (parseFloat(v.base_price) || 0) +
+                        (parseFloat(v.pricing_rule_data?.week_day_price) || 0) +
+                        (parseFloat(v.pricing_rule_data?.time_price) || 0) +
+                        (parseFloat(v.pricing_rule_data?.date_price) || 0)
+                      ).toLocaleString()}
                     </div>
                   </VariationCard>
                 ))

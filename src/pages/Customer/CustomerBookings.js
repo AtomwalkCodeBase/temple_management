@@ -247,16 +247,13 @@ const StatusBadge = styled.span`
 `;
 
 const ServiceImage = styled(motion.div)`
-  width: 100%;
-  height: 200px;
+  height: 400px;
   border-radius: 0.75rem;
   overflow: hidden;
   margin-bottom: 1.5rem;
   cursor: pointer;
 
   img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
@@ -839,115 +836,169 @@ const CustomerBookings = () => {
                     {getStatusText(booking.status)}
                   </StatusBadge>
                 </BookingHeader>
-
-                {booking.service_data?.image && (
-                  <ServiceImage>
-                    <img
-                      src={booking.service_data.image}
-                      alt={booking.service_data.name}
-                      onClick={() =>
-                        window.open(booking.service_data.image, "_blank")
-                      }
-                    />
-                  </ServiceImage>
-                )}
-
-                <ServiceInfo>
-                  <div className="service-name">
-                    <MdTempleHindu className="icon" />
-                    {booking.service_data?.name || "Service"}
-                  </div>
-                  {booking.service_data?.description && (
-                    <div className="service-description">
-                      {booking.service_data.description}
-                    </div>
-                  )}
-                </ServiceInfo>
-
-                <BookingDetails>
-                  <DetailCard>
-                    <div className="detail-title">
-                      <FiCalendar className="icon" />
-                      Booking Details
-                    </div>
-                    <div className="detail-content">
-                      <div>
-                        Date:{" "}
-                        <span className="detail-value">
-                          {booking.booking_date}
-                        </span>
-                      </div>
-                      <div>
-                        Time:{" "}
-                        <span className="detail-value">
-                          {booking.start_time} - {booking.end_time}
-                        </span>
-                      </div>
-                      <div>
-                        Quantity:{" "}
-                        <span className="detail-value">{booking.quantity}</span>
-                      </div>
-                    </div>
-                  </DetailCard>
-
-                  <DetailCard>
-                    <div className="detail-title">
-                      <FiDollarSign className="icon" />
-                      Pricing
-                    </div>
-                    <div className="detail-content">
-                      <div>
-                        Unit Price:{" "}
-                        <span className="detail-value">
-                          {formatPrice(booking.unit_price)}
-                        </span>
-                      </div>
-                      <div>
-                        Total:{" "}
-                        <span className="detail-value">
-                          {formatPrice(calculateTotal(booking))}
-                        </span>
-                      </div>
-                      {booking.service_variation_data && (
-                        <div>
-                          Variation:{" "}
-                          <span className="detail-value">
-                            {booking.service_variation_data.pricing_type_str}
-                          </span>
-                        </div>
+                <div style={{ display: "flex", gap: "2rem" }}>
+                  {booking.service_data?.image && (
+                    <div>
+                      <ServiceImage>
+                        <img
+                          src={booking.service_data.image}
+                          alt={booking.service_data.name}
+                          onClick={() =>
+                            window.open(booking.service_data.image, "_blank")
+                          }
+                        />
+                      </ServiceImage>
+                      {booking.service_data && (
+                        <PolicySection>
+                          <div className="policy-header">
+                            <FiInfo className="icon" />
+                            Booking Policies
+                          </div>
+                          <div className="policy-grid">
+                            {booking.service_data.adv_policy_data && (
+                              <div className="policy-item">
+                                <div className="policy-label">
+                                  Advance Payment:
+                                </div>
+                                <div className="policy-value">
+                                  {booking.service_data.adv_policy_data.percent}
+                                  % (Min ₹
+                                  {
+                                    booking.service_data.adv_policy_data
+                                      .min_amount
+                                  }
+                                  )
+                                </div>
+                              </div>
+                            )}
+                            {booking.service_data.refund_policy_data && (
+                              <div className="policy-item">
+                                <div className="policy-label">
+                                  Refund Policy:
+                                </div>
+                                <div className="policy-value">
+                                  {booking.service_data.refund_policy_data.name}
+                                </div>
+                              </div>
+                            )}
+                            {booking.service_data.pricing_rule_data && (
+                              <div className="policy-item">
+                                <div className="policy-label">
+                                  Pricing Rule:
+                                </div>
+                                <div className="policy-value">
+                                  {booking.service_data.pricing_rule_data.name}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </PolicySection>
                       )}
                     </div>
-                  </DetailCard>
+                  )}
+                  <div>
+                    <ServiceInfo>
+                      <div className="service-name">
+                        <MdTempleHindu className="icon" />
+                        {booking.service_data?.name || "Service"}
+                      </div>
+                      {booking.service_data?.description && (
+                        <div className="service-description">
+                          {booking.service_data.description}
+                        </div>
+                      )}
+                    </ServiceInfo>
 
-                  <DetailCard>
-                    <div className="detail-title">
-                      <FiHome className="icon" />
-                      Temple Info
-                    </div>
-                    <div className="detail-content">
-                      <div>
-                        Name:{" "}
-                        <span className="detail-value">
-                          {booking.service_data?.temple_name}
-                        </span>
-                      </div>
-                      <div>
-                        Capacity:{" "}
-                        <span className="detail-value">
-                          {booking.service_data?.capacity} people
-                        </span>
-                      </div>
-                      <div>
-                        Duration:{" "}
-                        <span className="detail-value">
-                          {booking.service_data?.duration_minutes} mins
-                        </span>
-                      </div>
-                    </div>
-                  </DetailCard>
-                </BookingDetails>
+                    <BookingDetails>
+                      <DetailCard>
+                        <div className="detail-title">
+                          <FiCalendar className="icon" />
+                          Booking Details
+                        </div>
+                        <div className="detail-content">
+                          <div>
+                            Date:{" "}
+                            <span className="detail-value">
+                              {booking.booking_date}
+                            </span>
+                          </div>
+                          <div>
+                            Time:{" "}
+                            <span className="detail-value">
+                              {booking.start_time} - {booking.end_time}
+                            </span>
+                          </div>
+                          <div>
+                            Quantity:{" "}
+                            <span className="detail-value">
+                              {booking.quantity}
+                            </span>
+                          </div>
+                        </div>
+                      </DetailCard>
 
-                <CustomerInfo>
+                      <DetailCard>
+                        <div className="detail-title">
+                          <FiDollarSign className="icon" />
+                          Pricing
+                        </div>
+                        <div className="detail-content">
+                          <div>
+                            Unit Price:{" "}
+                            <span className="detail-value">
+                              {formatPrice(booking.unit_price)}
+                            </span>
+                          </div>
+                          <div>
+                            Total:{" "}
+                            <span className="detail-value">
+                              {formatPrice(calculateTotal(booking))}
+                            </span>
+                          </div>
+                          {booking.service_variation_data && (
+                            <div>
+                              Variation:{" "}
+                              <span className="detail-value">
+                                {
+                                  booking.service_variation_data
+                                    .pricing_type_str
+                                }
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </DetailCard>
+
+                      <DetailCard>
+                        <div className="detail-title">
+                          <FiHome className="icon" />
+                          Temple Info
+                        </div>
+                        <div className="detail-content">
+                          <div>
+                            Name:{" "}
+                            <span className="detail-value">
+                              {booking.service_data?.temple_name}
+                            </span>
+                          </div>
+                          <div>
+                            Capacity:{" "}
+                            <span className="detail-value">
+                              {booking.service_data?.capacity} people
+                            </span>
+                          </div>
+                          <div>
+                            Duration:{" "}
+                            <span className="detail-value">
+                              {booking.service_data?.duration_minutes} mins
+                            </span>
+                          </div>
+                        </div>
+                      </DetailCard>
+                    </BookingDetails>
+                  </div>
+                </div>
+                {/* <CustomerInfo>
                   <div className="customer-header">
                     <FiUser />
                     Customer Information
@@ -1018,8 +1069,7 @@ const CustomerBookings = () => {
                       )}
                     </div>
                   </PolicySection>
-                )}
-
+                )} */}
                 {booking.status?.toUpperCase() === "B" && (
                   <BookingActions>
                     <ActionButton

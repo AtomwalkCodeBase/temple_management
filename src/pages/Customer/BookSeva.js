@@ -245,11 +245,13 @@ export default function BookSeva() {
     setVariationOpen(false);
     setChosenVariation(variationOrNull || null);
     if (!chosenService) return;
-    await loadDisabledDates(chosenService.service_id);
+    await loadDisabledDates(chosenService.service_id, variationOrNull);
     setCalendarOpen(true);
   };
 
-  const loadDisabledDates = async (serviceId) => {
+  const loadDisabledDates = async (serviceId, variationOrNull) => {
+    const starttime = variationOrNull?.start_time;
+    const endtime = variationOrNull?.end_time;
     try {
       const bookings = await getServiceBookings(serviceId);
       console.log(bookings, "bookings");
@@ -257,7 +259,13 @@ export default function BookSeva() {
         (service) =>
           !serviceId || service?.service_data?.service_id === serviceId
       );
-      setDisabledDateKeys(extractDisabledDatesFromBookings(filteredServices));
+      setDisabledDateKeys(
+        extractDisabledDatesFromBookings(
+          selectedCategory === "PUJA" ? [] : filteredServices,
+          starttime,
+          endtime
+        )
+      );
     } catch (e) {
       console.warn(
         "Could not fetch booked dates, proceeding without disabled dates."
@@ -289,10 +297,12 @@ export default function BookSeva() {
             10
           ),
           unit_price: Number.parseFloat(
-            chosenVariation?.base_price ||
-              chosenService.base_price ||
-              chosenService.price ||
-              0
+            (parseFloat(chosenVariation?.base_price) || 0) +
+              (parseFloat(chosenVariation?.pricing_rule_data?.week_day_price) ||
+                0) +
+              (parseFloat(chosenVariation?.pricing_rule_data?.time_price) ||
+                0) +
+              (parseFloat(chosenVariation?.pricing_rule_data?.date_price) || 0)
           ),
         },
       };

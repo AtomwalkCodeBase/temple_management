@@ -54,24 +54,57 @@ const CardTitle = styled.h2`
   }
 `;
 
-const LearnMoreButton = styled.button`
-  background: #ebcf89;
-  color: #333333;
-  border: none;
-  border-radius: 9999px;
-  padding: 12px 28px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+const IconCircle = styled.div`
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ebcf89, #ffe7a0);
+  color: #232136;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 16px rgba(235, 207, 137, 0.25);
+`;
 
-  &:hover {
-    background: #d4b876;
-    transform: scale(1.02);
-  }
+const BulletList = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+`;
 
-  @media (max-width: 768px) {
-    padding: 10px 24px;
-    font-size: 16px;
+const BulletItem = styled.li`
+  font-size: 16px;
+  line-height: 26px;
+  color: #55525a;
+  position: relative;
+  padding-left: 22px;
+  text-align: left;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ebcf89;
+    box-shadow: 0 0 0 3px rgba(235, 207, 137, 0.18);
   }
+`;
+
+const Quote = styled.blockquote`
+  margin: 12px 0 0 0;
+  padding-left: 16px;
+  border-left: 3px solid #ebcf89;
+  color: #6a6670;
+  font-size: 16px;
+  line-height: 24px;
 `;
 
 const RestorationSection = styled.section`
@@ -258,12 +291,17 @@ const Background = () => {
           <TempleImage imageUrl={temple01} />
         </BackgroundImage>
         <TempleScienceCard>
+          <IconCircle>🛕</IconCircle>
           <CardTitle>Science Behind Hindu Temples</CardTitle>
           <CardSubtitle>
-            Discover the Ancient Science of Temple Architecture and Vaastu
-            Shastras.
+            How temples use design, sound, and sunlight to lift the mind and heart.
           </CardSubtitle>
-          <LearnMoreButton>LEARN MORE</LearnMoreButton>
+          <BulletList>
+            <BulletItem>Balanced layouts that feel calm and welcoming</BulletItem>
+            <BulletItem>Stone walls that carry chants like gentle echoes</BulletItem>
+            <BulletItem>Simple rituals that help you feel centered</BulletItem>
+          </BulletList>
+          <Quote>“A temple is like a tuning fork for peace—step in, and you feel it.”</Quote>
         </TempleScienceCard>
       </Section>
 
@@ -287,10 +325,7 @@ const Background = () => {
               renovation of these ancient temples so that the subtle energies do
               not get disturbed or ruined.
             </RestorationParagraph>
-            <RestorationParagraph>
-              Behind Every Temple only utilizes these highly trained individuals
-              to ensure 100% authentic renovations are done.
-            </RestorationParagraph>
+            
           </RestorationText>
           <RestorationImage src={temple02} alt="Ancient ruined temple" />
         </RestorationContainer>
@@ -302,19 +337,29 @@ const Background = () => {
         </BackgroundImage>
         <MobileCardContainer>
           <TempleCardLeft>
-            <CardTitle>Completed Temple Renovations</CardTitle>
+            <IconCircle>🎶</IconCircle>
+            <CardTitle>Sound That Soothes</CardTitle>
             <CardSubtitle>
-              Explore some of the completed temple renovation projects!
+              Spaces shaped so sound feels soft, soothing, and clear.
             </CardSubtitle>
-            <LearnMoreButton>LEARN MORE</LearnMoreButton>
+            <BulletList>
+              <BulletItem>Stone halls gently echo chants and bells</BulletItem>
+              <BulletItem>Rhythmic chanting helps the body relax</BulletItem>
+              <BulletItem>Bells refocus attention before you pray</BulletItem>
+            </BulletList>
           </TempleCardLeft>
         </MobileCardContainer>
         <TempleCardLeft>
-          <CardTitle>Completed Temple Renovations</CardTitle>
+          <IconCircle>🎶</IconCircle>
+          <CardTitle>Sound That Soothes</CardTitle>
           <CardSubtitle>
-            Explore some of the completed temple renovation projects!
+            Spaces shaped so sound feels soft, soothing, and clear.
           </CardSubtitle>
-          <LearnMoreButton>LEARN MORE</LearnMoreButton>
+          <BulletList>
+            <BulletItem>Stone halls gently echo chants and bells</BulletItem>
+            <BulletItem>Rhythmic chanting helps the body relax</BulletItem>
+            <BulletItem>Bells refocus attention before you pray</BulletItem>
+          </BulletList>
         </TempleCardLeft>
       </Section>
 
@@ -324,21 +369,29 @@ const Background = () => {
         </BackgroundImage>
         <MobileCardContainer>
           <TempleCardRight>
-            <CardTitle>Upcoming Temple Projects</CardTitle>
+            <IconCircle>🪐</IconCircle>
+            <CardTitle>Sunlight, Seasons & Stars</CardTitle>
             <CardSubtitle>
-              Discover temples that are currently under restoration and how you
-              can contribute!
+              Many temples line up with the sun and seasons in simple, beautiful ways.
             </CardSubtitle>
-            <LearnMoreButton>LEARN MORE</LearnMoreButton>
+            <BulletList>
+              <BulletItem>Special days when sunlight touches the sanctum</BulletItem>
+              <BulletItem>Entrances facing east to welcome the morning light</BulletItem>
+              <BulletItem>Festivals timed with the moon and seasons</BulletItem>
+            </BulletList>
           </TempleCardRight>
         </MobileCardContainer>
         <TempleCardRight>
-          <CardTitle>Upcoming Temple Projects</CardTitle>
+          <IconCircle>🪐</IconCircle>
+          <CardTitle>Sunlight, Seasons & Stars</CardTitle>
           <CardSubtitle>
-            Discover temples that are currently under restoration and how you
-            can contribute!
+            Many temples line up with the sun and seasons in simple, beautiful ways.
           </CardSubtitle>
-          <LearnMoreButton>LEARN MORE</LearnMoreButton>
+          <BulletList>
+            <BulletItem>Special days when sunlight touches the sanctum</BulletItem>
+            <BulletItem>Entrances facing east to welcome the morning light</BulletItem>
+            <BulletItem>Festivals timed with the moon and seasons</BulletItem>
+          </BulletList>
         </TempleCardRight>
       </Section>
     </>

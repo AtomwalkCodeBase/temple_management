@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Section = styled.section`
   padding: 5rem 0 5rem 0;
@@ -78,22 +79,25 @@ const CTAButton = styled.button`
 
 const helpSteps = [
   {
-    title: "Donate",
+    title: "Discover & Book",
     description:
-      "Help us directly restore ancient temples by contributing to verified projects rooted in dharma and tradition.",
-    buttonText: "Donate Now",
+      "Find temples, compare offerings, and book sevas and halls with real-time availability and instant confirmations.",
+    buttonText: "Explore Temples",
+    to: "/temples",
   },
   {
-    title: "Volunteer",
+    title: "Manage Time & Priests",
     description:
-      "Join hands on-site or remotely—assist with temple events, education, documentation, and outreach.",
-    buttonText: "Volunteer",
+      "Smart time-slot management and priest coordination ensure every ritual is conducted smoothly and on time.",
+    buttonText: "Book a Puja",
+    to: "/book-puja",
   },
   {
-    title: "Share",
+    title: "Clear Policies & Pricing",
     description:
-      "Amplify our mission. Share stories, spread awareness, and inspire others to reconnect with Sanatan Dharma.",
-    buttonText: "Share",
+      "Transparent pricing, advance and refund policies, and package support—clarity and peace of mind for devotees.",
+    buttonText: "Learn More",
+    to: "/about-us",
   },
 ];
 
@@ -101,13 +105,13 @@ const HelpSection = () => {
   return (
     <Section>
       <Container>
-        <Title>3 Ways You Can Help Restore Temples & Protect Dharma</Title>
+        <Title>How Agamandira Simplifies Temple Experiences</Title>
         <CardsGrid>
           {helpSteps.map((step, idx) => (
             <Card key={step.title}>
               <StepTitle>{step.title}</StepTitle>
               <CardDescription>{step.description}</CardDescription>
-              <CTAButton>{step.buttonText}</CTAButton>
+              <CTAButton as={Link} to={step.to}>{step.buttonText}</CTAButton>
             </Card>
           ))}
         </CardsGrid>

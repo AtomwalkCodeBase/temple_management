@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import TempleDetails from "./pages/TempleDetails";
 import Login from "./pages/Login";
+import AboutUs from "./pages/AboutUs";
 import AdminLayout from "./components/AdminLayout/AdminLayout";
 import AdminRouter from "./components/Admin/AdminRouter";
 import AllTempleList from "./pages/Admin/AllTempleList";
@@ -37,6 +38,9 @@ import { useEffect } from "react";
 
 function AppContent() {
   const location = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location.pathname]);
   const isAdminRoute = [
     "/dashboard",
     "/temple-list",
@@ -65,6 +69,7 @@ function AppContent() {
         <Route path="/temples" element={<Temples />} />
         <Route path="/templeDetails/:templeId" element={<TempleDetails />} />
         <Route path="/book-puja" element={<BookPuja />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="/login" element={<Login />} />
 
         {/* Customer routes */}

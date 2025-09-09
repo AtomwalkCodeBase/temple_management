@@ -7,7 +7,6 @@ import DevotionalFeatures from "../components/DevotionalFeatures";
 import Information from "../components/Information";
 import Background from "../components/Background";
 import HelpSection from "../components/HelpSection";
-import Chatbot from "../components/Chatbot";
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -26,7 +25,6 @@ const Home = () => {
       <Testimonials />
       <Information />
       {/* <NewsletterSection /> */}
-      <Chatbot />
     </HomeContainer>
   );
 };

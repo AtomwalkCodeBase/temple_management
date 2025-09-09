@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import blogLocal from "../../src/assets/img/blog.png";
 
 const Section = styled.section`
   padding: 4rem 0;
@@ -46,6 +47,55 @@ const ReadAllLink = styled.a`
   &:hover {
     color: #E55A2B;
   }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+`;
+
+const ModalCard = styled.div`
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem;
+  width: 90%;
+  max-width: 520px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255, 153, 51, 0.2);
+`;
+
+const ModalTitle = styled.h3`
+  margin: 0 0 0.5rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #111;
+`;
+
+const ModalMessage = styled.p`
+  margin: 0.5rem 0 1.25rem 0;
+  color: #444;
+  line-height: 1.6;
+`;
+
+const ModalActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+`;
+
+const ModalButton = styled.button`
+  background: linear-gradient(135deg, #ff9933, #daa520);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
 `;
 
 const CardsGrid = styled.div`
@@ -160,13 +210,21 @@ const categories = [
     id: 4,
     title: "Blogs",
     description: "Read inspiring devotional blogs on fasting tips, festivals, Vedic stories, and spiritual journeys.",
-    imageUrl: "https://img.freepik.com/premium-vector/blog-icons-design_18591-34330.jpg",
+    imageUrl: blogLocal,
     bgColor: "#6C5CE7",
     link: "/blogs"
   }
 ];
 
 const Information = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const openComingSoon = (e) => {
+    e.preventDefault();
+    setShowModal(true);
+  };
+
+  const closeModal = () => setShowModal(false);
   return (
     <Section>
       <Container>
@@ -175,7 +233,7 @@ const Information = () => {
           <Subtitle>
           Explore enlightening articles on festivals, fasts, mantras, rituals, and holistic living — rooted in the timeless teachings of Sanatan Dharma.
           </Subtitle>
-          <ReadAllLink href="/blogs">
+          <ReadAllLink href="/blogs" onClick={openComingSoon}>
           Explore All Articles →
           </ReadAllLink>
         </Header>
@@ -188,13 +246,27 @@ const Information = () => {
               <CardContent>
                 <CardTitle>{category.title}</CardTitle>
                 <CardDescription>{category.description}</CardDescription>
-                <CardReadAll href={category.link}>
+                <CardReadAll href={category.link} onClick={openComingSoon}>
                   Read All →
                 </CardReadAll>
               </CardContent>
             </Card>
           ))}
         </CardsGrid>
+
+        {showModal && (
+          <ModalOverlay onClick={closeModal}>
+            <ModalCard onClick={(e) => e.stopPropagation()}>
+              <ModalTitle>Coming Soon 🙏</ModalTitle>
+              <ModalMessage>
+                This seva/feature is not yet active. Our temple team is working to make it available for devotees very soon. We appreciate your patience and blessings.
+              </ModalMessage>
+              <ModalActions>
+                <ModalButton onClick={closeModal}>Okay</ModalButton>
+              </ModalActions>
+            </ModalCard>
+          </ModalOverlay>
+        )}
       </Container>
     </Section>
   );

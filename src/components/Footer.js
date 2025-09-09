@@ -316,36 +316,19 @@ const Footer = () => {
 
         <LinksSection>
           <LinksColumn>
-            <ColumnTitle>Resources</ColumnTitle>
-            <LinkItem href="#">Why Temple?</LinkItem>
-            <LinkItem href="#">Articles</LinkItem>
-            <LinkItem href="#">Shop</LinkItem>
-            <LinkItem href="#">Bookings</LinkItem>
+            <ColumnTitle>Quick Links</ColumnTitle>
+            <LinkItem href="/">Home</LinkItem>
+            <LinkItem href="/temples">Temples</LinkItem>
+            <LinkItem href="/book-puja">Book Puja</LinkItem>
+            <LinkItem href="/about-us">About Us</LinkItem>
           </LinksColumn>
 
           <LinksColumn>
-            <ColumnTitle>Company</ColumnTitle>
-            <LinkItem href="#">About us</LinkItem>
-            <LinkItem href="#">Gallery</LinkItem>
-            <LinkItem href="#">Temple List</LinkItem>
-            <LinkItem href="#">Contact Us</LinkItem>
+            <ColumnTitle>Contact</ColumnTitle>
+            <LinkItem href="mailto:support@agamandira.com">support@agamandira.com</LinkItem>
+            <LinkItem href="tel:+910000000000">+91 08028476770</LinkItem>
           </LinksColumn>
-
-          <LinksColumn>
-            <ColumnTitle>Get latens</ColumnTitle>
-            <LinkItem href="#">Facebook</LinkItem>
-            <LinkItem href="#">Twitter</LinkItem>
-            <LinkItem href="#">LinkedIn</LinkItem>
-            <LinkItem href="#">YouTube</LinkItem>
-          </LinksColumn>
-
-          <LinksColumn>
-            <ColumnTitle>Social</ColumnTitle>
-            <LinkItem href="#">Facebook</LinkItem>
-            <LinkItem href="#">Twitter</LinkItem>
-            <LinkItem href="#">LinkedIn</LinkItem>
-            <LinkItem href="#">YouTube</LinkItem>
-          </LinksColumn>
+          
         </LinksSection>
         <FooterBottomBar>
           <FooterBottomItem>© 2024 Temple</FooterBottomItem>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
 import { ChevronLeft, ChevronRight, Play, ArrowRight } from "lucide-react";
 import durgaMaa from '../../src/assets/img/durgaMaa.png';
@@ -292,7 +293,7 @@ const slides = [
       "She rises with strength, protects with grace, The divine energy in every time and space.",
     gradient: "linear-gradient(135deg, #DC143C 0%, #FF8C00 100%)",
     cta1: "Get Started",
-    cta2: "Watch Demo",
+    // cta2: "Watch Demo",
     img: durgaMaa,
   },
   {
@@ -302,7 +303,7 @@ const slides = [
       "Seek blessings under the sacred shade,Where wisdom and new journeys are made.",
     gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     cta1: "Explore",
-    cta2: "More",
+    // cta2: "More",
     img: ganesh
   },
   {
@@ -312,7 +313,7 @@ const slides = [
       "In the heart of nature, Bappa arrives with grace,Let wisdom and joy fill every sacred space.",
     gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     cta1: "Start Free Trial",
-    cta2: "View Pricing",
+    // cta2: "View Pricing",
     img: Shiva
   },
 ];
@@ -321,6 +322,16 @@ export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const navigate = useNavigate();
+
+  const handlePrimaryCta = () => {
+    const customerToken = localStorage.getItem("customerToken");
+    if (customerToken) {
+      navigate("/customer-dashboard");
+    } else {
+      navigate("/customer-login");
+    }
+  };
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -372,14 +383,14 @@ export default function HeroCarousel() {
                 {slide.subtitle}
               </Subtitle>
               <CTAContainer active={index === currentSlide}>
-                <PrimaryButton>
+                <PrimaryButton onClick={handlePrimaryCta}>
                   {slide.cta1}
                   <ArrowRight size={20} />
                 </PrimaryButton>
-                <SecondaryButton>
+                {/* <SecondaryButton>
                   <Play size={20} />
                   {slide.cta2}
-                </SecondaryButton>
+                </SecondaryButton> */}
               </CTAContainer>
             </TextContent>
 

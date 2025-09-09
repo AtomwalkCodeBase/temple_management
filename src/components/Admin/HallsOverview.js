@@ -4,6 +4,7 @@ import { LayoutTemplate, Search, Eye, Users, Edit3, ChevronUp } from "lucide-rea
 import PackagesPanel from "./PackagesPanel";
 import AdvancePanel from "./AdvancePanel";
 import RefundPanel from "./RefundPanel";
+import { cleanPackageForAPI, normalizeSignature, pruneNulls } from "../../services/serviceUtils";
 import PackageModal from "./PackageModal";
 import { processTempleServiceData, getAdvancePolicyList, getRefundPolicyList } from "../../services/templeServices";
 
@@ -553,107 +554,6 @@ const extractImageUrls = (hall) => {
   return [...new Set(urls)];
 };
 
-// Helper function to clean package/variation data for API
-const cleanPackageForAPI = (pkg, fallbackPricingRuleId, isPuja = false) => {
-  const resolvedPricingRuleId = pkg.pricing_rule_id
-    ?? pkg.pricing_rule_data?.id
-    ?? fallbackPricingRuleId
-    ?? null;
-  const base = typeof pkg.base_price === 'string' ? parseFloat(pkg.base_price) : pkg.base_price;
-  const maxPerDay = typeof pkg.max_no_per_day === 'string' ? parseInt(pkg.max_no_per_day) : pkg.max_no_per_day;
-  const maxParticipant = typeof pkg.max_participant === 'string' ? parseInt(pkg.max_participant) : pkg.max_participant;
-  if (isPuja) {
-    // For PUJA, use short price_type for database but keep full name in slot_name for UI
-    const slotName = pkg.slot_name ?? pkg.price_type ?? '';
-    
-    // Create short price_type with number format: Individual-1, Partner-2, Family-5, Joint-10
-    let shortPriceType = "FIXED";
-    if (slotName) {
-      if (slotName.includes("Joint")) shortPriceType = "Joint-10";
-      else if (slotName.includes("Individual")) shortPriceType = "Individual-1";
-      else if (slotName.includes("Partner")) shortPriceType = "Partner-2";
-      else if (slotName.includes("Family")) shortPriceType = "Family-5";
-      else shortPriceType = slotName.substring(0, 20);
-    }
-    
-    // Calculate duration_minutes from start_time and end_time
-    let durationMinutes = 0;
-    if (pkg.start_time && pkg.end_time) {
-      const startTime = new Date(`2000-01-01T${pkg.start_time}:00`);
-      const endTime = new Date(`2000-01-01T${pkg.end_time}:00`);
-      if (endTime > startTime) {
-        durationMinutes = Math.round((endTime - startTime) / (1000 * 60));
-      }
-    }
-    
-    const out = {
-      id: pkg.id ?? null,
-      slot_name: slotName, // Keep full name in slot_name for UI
-      price_type: shortPriceType, // Use short name with number for database
-      base_price: base,
-      pricing_rule_id: resolvedPricingRuleId,
-      start_time: pkg.start_time,
-      end_time: pkg.end_time,
-      max_no_per_day: maxPerDay ?? 1,
-      max_participant: maxParticipant,
-      no_hours: null,
-      duration_minutes: durationMinutes
-    };
-    if (Array.isArray(pkg.available_priests)) {
-      out.available_priests = pkg.available_priests;
-    }
-
-    return out;
-  }
-  return {
-    id: pkg.id ?? null,
-    price_type: pkg.price_type,
-    base_price: base,
-    pricing_rule_id: resolvedPricingRuleId,
-    start_time: pkg.start_time,
-    end_time: pkg.end_time,
-    no_hours: pkg.no_hours ?? null,
-    max_no_per_day: maxPerDay,
-    max_participant: maxParticipant
-  };
-};
-
-// Remove keys whose values are null or undefined before API call
-const pruneNulls = (obj) => {
-  const out = { ...obj };
-  Object.keys(out).forEach((k) => {
-    if (out[k] == null) delete out[k];
-  });
-  return out;
-};
-
-// Create a normalized signature for reliable duplicate detection
-const normalizeSignature = (pkg, isPuja = false) => {
-  const typeKey = isPuja
-    ? String(pkg.slot_name || pkg.price_type || '').trim().toUpperCase()
-    : String(pkg.price_type || '').trim().toUpperCase();
-  const normalizeTime = (t) => {
-    if (!t) return '';
-    const [h, m] = String(t).split(':');
-    const hh = String(h ?? '').padStart(2, '0');
-    const mm = String(m ?? '00').padStart(2, '0');
-    return `${hh}:${mm}`;
-  };
-  const start = normalizeTime(pkg.start_time);
-  const end = normalizeTime(pkg.end_time);
-  const hours = pkg.no_hours == null || pkg.no_hours === '' ? '' : String(parseInt(pkg.no_hours));
-  const maxPerDay = pkg.max_no_per_day == null ? '' : String(parseInt(pkg.max_no_per_day));
-  const maxParticipant = pkg.max_participant == null ? '' : String(parseInt(pkg.max_participant));
-  const base = (() => {
-    const n = Number(pkg.base_price);
-    return Number.isFinite(n) ? n.toFixed(2) : String(pkg.base_price || '');
-  })();
-  const ruleId = pkg.pricing_rule_id ?? pkg.pricing_rule_data?.id ?? '';
-  // For PUJA, include pricing_rule_id in signature to prevent duplicates with same slot but different pricing
-  return isPuja 
-    ? `${typeKey}|${start}|${end}|${hours}|${maxPerDay}|${maxParticipant}|${base}|${ruleId}`
-    : `${typeKey}|${start}|${end}|${hours}|${maxPerDay}|${maxParticipant}|${base}|${ruleId}`;
-};
 
 const getPlaceholderImage = () => {
   return 'data:image/svg+xml;utf8,' +
@@ -991,19 +891,30 @@ const HallsOverview = ({
       setIsSavingPackage(true);
       const currentPackages = dedupePackages(selectedHall.service_variation_list || []);
       let updatedPackages;
-      
+
       if (packageData.id) {
         // Update existing package - preserve existing fields and update with new data
-        updatedPackages = currentPackages.map(pkg => {
-          if (pkg.id === packageData.id) {
-            return {
-              ...pkg, // Keep existing fields like pricing_type_str, pricing_rule_data
-              ...packageData, // Update with new data
-              id: pkg.id // Ensure ID is preserved
-            };
-          }
-          return pkg;
-        });
+        const isPujaUpdate = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
+        // Build a tentative merged package to compute signature
+        const mergedCandidate = (() => {
+          const existing = currentPackages.find(p => p.id === packageData.id) || {};
+          return { ...existing, ...packageData, id: packageData.id };
+        })();
+        const newSig = normalizeSignature(mergedCandidate, isPujaUpdate);
+        updatedPackages = currentPackages
+          // First, remove any other package that would collide with the updated signature
+          .filter(pkg => pkg.id === packageData.id || normalizeSignature(pkg, isPujaUpdate) !== newSig)
+          // Then, map to apply the update
+          .map(pkg => {
+            if (pkg.id === packageData.id) {
+              return {
+                ...pkg,
+                ...packageData,
+                id: pkg.id
+              };
+            }
+            return pkg;
+          });
       } else {
         // Add new package - ensure it has the correct structure
         // Short-circuit if a logically identical package already exists
@@ -1047,8 +958,8 @@ const HallsOverview = ({
       // Prepare the service data for API call
       // Send ONLY the new/updated variation to avoid backend duplicating existing rows
       const targetPkg = packageData.id
-        ? (updatedPackages.find(p => p.id === packageData.id) || { ...packageData })
-        : updatedPackages[updatedPackages.length - 1];
+        ? (updatedPackages.find(p => p.id === packageData.id) || { ...packageData, id: packageData.id })
+        : { ...updatedPackages[updatedPackages.length - 1], id: null };
       // Ensure ID is preserved for updates so backend updates instead of inserting
       if (packageData.id != null) {
         targetPkg.id = packageData.id;
@@ -1096,25 +1007,20 @@ const HallsOverview = ({
       // 1) Merge by id first (if id exists), keeping the latest occurrence
       // 2) Then de-duplicate by logical signature to avoid true duplicates
       const responsePackages = response?.service_data?.service_variation_list || updatedPackages;
-      const byId = new Map();
-      const noIdList = [];
+      // Prefer items with ids when duplicates by signature exist
+      const buckets = new Map();
       for (const p of responsePackages) {
-        if (p && p.id != null) {
-          byId.set(p.id, p);
-        } else {
-          noIdList.push(p);
-        }
-      }
-      const mergedList = [...byId.values(), ...noIdList];
-      const uniqueBySignature = [];
-      const sigSeen = new Set();
-      for (const p of mergedList) {
         const sig = normalizeSignature(p, isPuja);
-        if (!sigSeen.has(sig)) {
-          sigSeen.add(sig);
-          uniqueBySignature.push(p);
+        const existing = buckets.get(sig);
+        if (!existing) {
+          buckets.set(sig, p);
+        } else {
+          // Prefer the one that has an id (persisted), otherwise keep the latest
+          const pick = (existing?.id != null) ? existing : p?.id != null ? p : p;
+          buckets.set(sig, pick);
         }
       }
+      const uniqueBySignature = Array.from(buckets.values());
       const updatedHall = {
         ...selectedHall,
         service_variation_list: uniqueBySignature,

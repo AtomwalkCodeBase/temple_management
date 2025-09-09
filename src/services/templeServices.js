@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "https://temple.atomwalk.com/temple/api";
+const CUSTOMER_BASE_URL = "https://temple.atomwalk.com/customer/api";
 
 const getAuthHeaders = () => {
   const token =
@@ -197,6 +198,20 @@ export const processTempleServiceImages = async (imageData) => {
         },
       }
     );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+// Admin: Get booking list (supports optional filters)
+// params example: { temple_id, service_type, status, date_from, date_to, search, page, page_size, ordering }
+export const getAdminBookingList = async (params = {}) => {
+  try {
+    const response = await axios.get(`${CUSTOMER_BASE_URL}/get_booking_list/`, {
+      headers: getAuthHeaders(),
+      params,
+    });
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;

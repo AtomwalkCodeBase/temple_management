@@ -5,304 +5,331 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { gettemplist } from "../../services/productServices";
 import { getStoredTempleId } from "../../services/authServices";
-import AddTempleModal from "../../components/AddTempleModal";
-import TempleMaster from "./TempleMaster";
-import {
-  GiLotus,
-  TempleGate,
-  IncenseBurner,
-  GiTempleGate,
-} from "react-icons/gi";
+import ManageTemple from "./../Admin/ManageTemple";
+import { GiLotus, GiTempleGate } from "react-icons/gi";
+import { FiMapPin, FiPhone, FiMail, FiClock, FiEdit } from "react-icons/fi";
 
 const PageContainer = styled.div`
-  background: #ffffff;
-  border-radius: 0.75rem;
-  box-shadow: 0 8px 28px rgba(0, 86, 214, 0.08);
-  overflow: hidden;
-  border: 1px solid #cfe0ff;
-`;
-
-const PageHeader = styled.div`
-  background: linear-gradient(135deg, #0056d6 0%, #0a4db4 100%);
-  color: #ffffff;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   padding: 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-
-  /* Clean header without dotted overlay for a modern look */
-
+  
   @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1.5rem;
-    text-align: center;
-    padding: 1.5rem;
+    padding: 1rem;
   }
 `;
 
-const HeaderContent = styled.div`
+const Header = styled.div`
+  text-align: center;
+  margin-bottom: 3rem;
+  
   h1 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin: 0 0 0.5rem 0;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #ffffff;
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.5px;
+    
+    @media (max-width: 768px) {
+      font-size: 2.25rem;
+    }
   }
-
+  
   p {
-    opacity: 0.95;
-    margin: 0;
-    color: #e0edff;
-    font-size: 1.1rem;
+    font-size: 1.125rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
   }
 `;
 
-const AddButton = styled(motion.button)`
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.6);
+const TemplesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 `;
 
 const TempleCard = styled(motion.div)`
-  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
-  border-radius: 0.75rem;
+  background: #ffffff;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 6px 22px rgba(0, 86, 214, 0.08);
-  margin: 2rem;
-  border: 1px solid #e6efff;
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
   position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #a8c6ff, #0056d6, #a8c6ff);
-  }
-
+  transition: all 0.3s ease;
+  
   &:hover {
-    box-shadow: 0 10px 30px rgba(0, 86, 214, 0.18);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   }
 `;
 
+const TempleImageContainer = styled.div`
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+`;
+
 const TempleImage = styled.div`
-  height: 220px;
+  height: 100%;
   background: ${(props) =>
     props.image
       ? `url(${props.image})`
-      : "linear-gradient(135deg, #0056d6 0%, #0a4db4 100%)"};
+      : "linear-gradient(135deg, #0056d6 0%, #0077ff 100%)"};
   background-size: cover;
   background-position: center;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.5s ease;
+  
+  ${TempleCard}:hover & {
+    transform: scale(1.03);
+  }
 
   &::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: ${(props) =>
-      props.image ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.6)"};
+      props.image 
+        ? "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%)" 
+        : "rgba(0, 0, 0, 0.1)"};
   }
+`;
 
-  .placeholder-icon {
-    font-size: 4rem;
-    color: #a8c6ff;
-    z-index: 2;
-    opacity: 0.9;
+const PlaceholderIcon = styled.div`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  
+  svg {
+    font-size: 5rem;
+    color: rgba(255, 255, 255, 0.9);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  }
+`;
+
+const StatusBadge = styled.div`
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #059669;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  z-index: 3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
   }
 `;
 
 const TempleContent = styled.div`
-  padding: 2rem;
+  padding: 2.25rem;
+`;
+
+const TempleHeader = styled.div`
+  margin-bottom: 2rem;
+  position: relative;
 `;
 
 const TempleTitle = styled.h2`
   font-size: 1.75rem;
-  font-weight: 800;
+  font-weight: 700;
   color: #0f172a;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.75rem 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  line-height: 1.3;
+  letter-spacing: -0.25px;
 
-  .temple-id {
-    font-size: 0.9rem;
-    color: #0a4db4;
-    font-weight: 600;
-    background: #eaf2ff;
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    margin-left: 0.5rem;
+  svg {
+    color: #0056d6;
+    font-size: 1.75rem;
   }
 `;
 
-const TempleDetails = styled.div`
+const TempleId = styled.span`
+  display: inline-flex;
+  align-items: center;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  letter-spacing: 0.25px;
+`;
+
+const DetailsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-
-  @media (max-width: 768px) {
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
-  }
-`;
-
-const DetailItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  .label {
-    font-size: 0.85rem;
-    color: #6b7280;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .value {
-    font-size: 1.1rem;
-    color: #0f172a;
-    font-weight: 500;
-  }
-`;
-
-const TempleDescription = styled.div`
-  background: #f6faff;
-  padding: 1.25rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid #e6efff;
-
-  .label {
-    font-size: 0.85rem;
-    color: #0a4db4;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .content {
-    color: #0f172a;
-    line-height: 1.6;
-    font-size: 1rem;
-  }
-`;
-
-const TempleTimings = styled.div`
-  background: #f3f8ff;
-  padding: 1.25rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid #e6efff;
-
-  .label {
-    font-size: 0.85rem;
-    color: #0a4db4;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .timings {
-    display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .timing-slot {
-    background: #ffffff;
-    padding: 0.75rem 1rem;
-    border-radius: 0.375rem;
-    font-size: 0.95rem;
-    color: #0a4db4;
-    font-weight: 600;
-    border: 1px solid #e6efff;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
   }
 `;
 
-const ActionButtons = styled.div`
+const DetailCard = styled.div`
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #f1f5f9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 86, 214, 0.08);
+  }
+`;
+
+const DetailLabel = styled.div`
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const DetailValue = styled.div`
+  font-size: 1rem;
+  font-weight: 500;
+  color: #334155;
+  line-height: 1.4;
+`;
+
+const InfoSection = styled.div`
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #bae6fd;
+  position: relative;
+  overflow: hidden;
+`;
+
+const TimingSection = styled.div`
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #bae6fd;
+  position: relative;
+  overflow: hidden;
+`;
+
+const SectionLabel = styled.div`
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: 0.25px;
+`;
+
+const SectionContent = styled.div`
+  color: #475569;
+  line-height: 1.6;
+  font-size: 1rem;
+  font-weight: 400;
+`;
+
+const TimingSlots = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+`;
+
+const TimingSlot = styled.div`
+  background: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  
+  &:hover {
+    border-color: #0056d6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 86, 214, 0.1);
+  }
+`;
+
+const ActionArea = styled.div`
   display: flex;
   gap: 1rem;
-  justify-content: flex-end;
-
-  @media (max-width: 768px) {
+  padding-top: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+  
+  @media (max-width: 600px) {
     flex-direction: column;
   }
 `;
 
 const ActionButton = styled(motion.button)`
-  padding: 0.875rem 1.75rem;
-  border-radius: 0.5rem;
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
   font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
   border: none;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 
   &.primary {
     background: #0056d6;
-    color: #ffffff;
-    border: 1px solid #0050c6;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 86, 214, 0.2);
 
     &:hover {
-      background: #0a4db4;
-      box-shadow: 0 6px 18px rgba(0, 86, 214, 0.35);
-    }
-  }
-
-  &.secondary {
-    background: #ffffff;
-    color: #0f172a;
-    border: 1px solid #e6efff;
-
-    &:hover {
-      background: #f6faff;
-      box-shadow: 0 4px 12px rgba(0, 86, 214, 0.15);
+      background: #0045b3;
+      box-shadow: 0 8px 15px rgba(0, 86, 214, 0.3);
+      transform: translateY(-2px);
     }
   }
 `;
@@ -311,73 +338,86 @@ const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4rem;
+  min-height: 60vh;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
+`;
 
-  .spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid rgba(0, 86, 214, 0.15);
-    border-top: 4px solid #0056d6;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  .loading-text {
-    color: #3b82f6;
-    font-size: 1.1rem;
-  }
+const LoadingSpinner = styled.div`
+  width: 64px;
+  height: 64px;
+  border: 4px solid #f1f5f9;
+  border-top: 4px solid #0056d6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 
   @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
+`;
+
+const LoadingText = styled.div`
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #64748b;
+  text-align: center;
 `;
 
 const EmptyState = styled.div`
   text-align: center;
   padding: 4rem 2rem;
-  color: #3b82f6;
+  max-width: 600px;
+  margin: 0 auto;
+`;
 
-  .icon {
-    font-size: 5rem;
-    margin-bottom: 1.5rem;
-    color: #a8c6ff;
-    opacity: 0.9;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: #0f172a;
-  }
-
-  p {
-    margin: 0;
-    opacity: 0.8;
-    font-size: 1.1rem;
-    max-width: 500px;
-    margin: 0 auto;
+const EmptyIcon = styled.div`
+  font-size: 6rem;
+  color: #e2e8f0;
+  margin-bottom: 2rem;
+  opacity: 0.7;
+  
+  svg {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.05));
   }
 `;
 
-const DecorativeDivider = styled.div`
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #a8c6ff,
-    #0056d6,
-    #a8c6ff,
-    transparent
-  );
-  margin: 1.5rem 0;
-  border-radius: 1px;
+const EmptyTitle = styled.h3`
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1rem;
+  letter-spacing: -0.25px;
+`;
+
+const EmptyDescription = styled.p`
+  font-size: 1.125rem;
+  color: #64748b;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  font-weight: 400;
+`;
+
+const AddButton = styled(motion.button)`
+  background: #0056d6;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 86, 214, 0.2);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #0045b3;
+    box-shadow: 0 8px 15px rgba(0, 86, 214, 0.3);
+    transform: translateY(-2px);
+  }
 `;
 
 const AllTempleList = () => {
@@ -389,6 +429,26 @@ const AllTempleList = () => {
 
   useEffect(() => {
     fetchTemples();
+  }, []);
+
+  // Auto-open edit by query param (?edit=T_123)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const editId = params.get('edit');
+    if (!editId) return;
+    (async () => {
+      try {
+        const res = await gettemplist();
+        const list = res?.data?.data || res?.data || [];
+        const found = list.find(t => String(t.temple_id) === String(editId));
+        if (found) {
+          setSelectedTemple(found);
+          setShowAddModal(true);
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
   }, []);
 
   const fetchTemples = async () => {
@@ -419,11 +479,21 @@ const AllTempleList = () => {
   const handleEditTemple = (temple) => {
     setSelectedTemple(temple);
     setShowAddModal(true);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('edit', temple.temple_id);
+      window.history.pushState({}, '', url);
+    } catch {}
   };
 
   const handleModalClose = () => {
     setShowAddModal(false);
     setSelectedTemple(null);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('edit');
+      window.history.replaceState({}, '', url);
+    } catch {}
   };
 
   const handleTempleAdded = () => {
@@ -435,10 +505,10 @@ const AllTempleList = () => {
     if (temple.additional_field_list?.temple_timings?.selected_time_slots) {
       return temple.additional_field_list.temple_timings.selected_time_slots.map(
         (slot, index) => (
-          <div key={index} className="timing-slot">
-            <span>⏰</span>
+          <TimingSlot key={index}>
+            <FiClock size={14} />
             {slot.name}: {slot.start} - {slot.end}
-          </div>
+          </TimingSlot>
         )
       );
     }
@@ -446,31 +516,27 @@ const AllTempleList = () => {
     if (temple.temple_timings) {
       return (
         <>
-          <div className="timing-slot">
-            <span>🌅</span>
-            Morning: {temple.temple_timings.morning_opening} -{" "}
-            {temple.temple_timings.morning_closing}
-          </div>
-          <div className="timing-slot">
-            <span>🌇</span>
-            Evening: {temple.temple_timings.evening_opening} -{" "}
-            {temple.temple_timings.evening_closing}
-          </div>
+          <TimingSlot>
+            <FiClock size={14} />
+            Morning: {temple.temple_timings.morning_opening} - {temple.temple_timings.morning_closing}
+          </TimingSlot>
+          <TimingSlot>
+            <FiClock size={14} />
+            Evening: {temple.temple_timings.evening_opening} - {temple.temple_timings.evening_closing}
+          </TimingSlot>
         </>
       );
     }
 
-    return <div className="timing-slot">⏰ Timings not available</div>;
+    return <TimingSlot><FiClock size={14} />Timings not available</TimingSlot>;
   };
 
   if (loading) {
     return (
       <PageContainer>
         <LoadingContainer>
-          <div className="spinner"></div>
-          <div className="loading-text">
-            Loading sacred temple information...
-          </div>
+          <LoadingSpinner />
+          <LoadingText>Loading sacred temple information...</LoadingText>
         </LoadingContainer>
       </PageContainer>
     );
@@ -480,144 +546,138 @@ const AllTempleList = () => {
     <>
       {!showAddModal && (
         <PageContainer>
-          <PageHeader>
-            <HeaderContent>
-              <h1>
-                <GiLotus /> My Temple
-              </h1>
-              <p>Manage your assigned temple information and services</p>
-            </HeaderContent>
-            {temples.length === 0 && (
-              <AddButton
-                onClick={handleAddTemple}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span>+</span>
-                Add Temple
-              </AddButton>
-            )}
-          </PageHeader>
-
           {temples.length === 0 ? (
             <EmptyState>
-              <div className="icon">
+              <EmptyIcon>
                 <GiTempleGate />
-              </div>
-              <h3>No Temple Assigned</h3>
-              <p>
-                You don't have any temple assigned to your account yet. Contact
-                your administrator or add a new temple to get started.
-              </p>
+              </EmptyIcon>
+              <EmptyTitle>No Temple Assigned</EmptyTitle>
+              <EmptyDescription>
+                You don't have any temple assigned to your account yet. Contact your administrator or add a new temple to get started on your spiritual journey.
+              </EmptyDescription>
               <AddButton
                 onClick={handleAddTemple}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                style={{ marginTop: "2rem" }}
               >
                 <span>+</span>
                 Add Your First Temple
               </AddButton>
             </EmptyState>
           ) : (
-            temples.map((temple, index) => (
-              <TempleCard
-                key={temple.temple_id || index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <TempleImage image={temple.image}>
-                  {!temple.image && (
-                    <div className="placeholder-icon">
-                      <GiTempleGate />
-                    </div>
-                  )}
-                </TempleImage>
+            <TemplesGrid>
+              {temples.map((temple, index) => (
+                <TempleCard
+                  key={temple.temple_id || index}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    delay: index * 0.15,
+                    duration: 0.6,
+                    ease: [0.4, 0, 0.2, 1]
+                  }}
+                  whileHover={{ y: -5 }}
+                >
+                  <TempleImageContainer>
+                    <TempleImage image={temple.image}>
+                      {!temple.image && (
+                        <PlaceholderIcon>
+                          <GiTempleGate />
+                        </PlaceholderIcon>
+                      )}
+                    </TempleImage>
+                    <StatusBadge>Active</StatusBadge>
+                  </TempleImageContainer>
 
-                <TempleContent>
-                  <TempleTitle>
-                    <GiLotus /> {temple.name}
-                    <span className="temple-id">ID: {temple.temple_id}</span>
-                  </TempleTitle>
+                  <TempleContent>
+                    <TempleHeader>
+                      <TempleTitle>
+                        <GiLotus />
+                        {temple.name}
+                      </TempleTitle>
+                      <TempleId>Temple ID: {temple.temple_id}</TempleId>
+                    </TempleHeader>
 
-                  <TempleDetails>
-                    <DetailItem>
-                      <div className="label">📍 Location</div>
-                      <div className="value">
-                        {temple.location ||
-                          `${temple.address_line_3}, ${temple.state_code}`}
-                      </div>
-                    </DetailItem>
-                    <DetailItem>
-                      <div className="label">📞 Contact</div>
-                      <div className="value">
-                        {temple.mobile_number || "Not provided"}
-                      </div>
-                    </DetailItem>
-                    <DetailItem>
-                      <div className="label">✉️ Email</div>
-                      <div className="value">
-                        {temple.email_id || "Not provided"}
-                      </div>
-                    </DetailItem>
-                    <DetailItem>
-                      <div className="label">🏛️ Temple Group</div>
-                      <div className="value">
-                        {temple.temple_group || "Not specified"}
-                      </div>
-                    </DetailItem>
-                  </TempleDetails>
+                    <DetailsGrid>
+                      <DetailCard>
+                        <DetailLabel>
+                          <FiMapPin size={14} />
+                          Location
+                        </DetailLabel>
+                        <DetailValue>
+                          {temple.location || `${temple.address_line_3}, ${temple.state_code}`}
+                        </DetailValue>
+                      </DetailCard>
+                      <DetailCard>
+                        <DetailLabel>
+                          <FiPhone size={14} />
+                          Contact
+                        </DetailLabel>
+                        <DetailValue>{temple.mobile_number || "Not provided"}</DetailValue>
+                      </DetailCard>
+                      <DetailCard>
+                        <DetailLabel>
+                          <FiMail size={14} />
+                          Email
+                        </DetailLabel>
+                        <DetailValue>{temple.email_id || "Not provided"}</DetailValue>
+                      </DetailCard>
+                      <DetailCard>
+                        <DetailLabel>🏛️ Temple Group</DetailLabel>
+                        <DetailValue>{temple.temple_group || "Not specified"}</DetailValue>
+                      </DetailCard>
+                    </DetailsGrid>
 
-                  <DecorativeDivider />
+                    {temple.remarks && (
+                      <InfoSection>
+                        <SectionLabel>📝 Remarks</SectionLabel>
+                        <SectionContent>{temple.remarks}</SectionContent>
+                      </InfoSection>
+                    )}
 
-                  {temple.remarks && (
-                    <TempleDescription>
-                      <div className="label">📝 Remarks</div>
-                      <div className="content">{temple.remarks}</div>
-                    </TempleDescription>
-                  )}
+                    <TimingSection>
+                      <SectionLabel>
+                        <FiClock size={16} />
+                        Temple Timings
+                      </SectionLabel>
+                      <TimingSlots>{renderTimings(temple)}</TimingSlots>
+                    </TimingSection>
 
-                  <TempleTimings>
-                    <div className="label">🕒 Temple Timings</div>
-                    <div className="timings">{renderTimings(temple)}</div>
-                  </TempleTimings>
-
-                  {temple.additional_field_list?.temple_data_list && (
-                    <TempleDescription>
-                      <div className="label">📋 Temple Information</div>
-                      <div className="content">
-                        {temple.additional_field_list.temple_data_list.map(
-                          (data, idx) => (
+                    {temple.additional_field_list?.temple_data_list && (
+                      <InfoSection>
+                        <SectionLabel>📋 Temple Information</SectionLabel>
+                        <SectionContent>
+                          {temple.additional_field_list.temple_data_list.map((data, idx) => (
                             <div key={idx} style={{ marginBottom: "1rem" }}>
                               <strong>{data.title}:</strong> {data.paragraph}
                             </div>
-                          )
-                        )}
-                      </div>
-                    </TempleDescription>
-                  )}
+                          ))}
+                        </SectionContent>
+                      </InfoSection>
+                    )}
 
-                  <ActionButtons>
-                    <ActionButton
-                      className="primary"
-                      onClick={() => handleEditTemple(temple)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      ✏️ Edit Temple
-                    </ActionButton>
-                  </ActionButtons>
-                </TempleContent>
-              </TempleCard>
-            ))
+                    <ActionArea>
+                      <ActionButton
+                        className="primary"
+                        onClick={() => handleEditTemple(temple)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <FiEdit size={16} />
+                        Edit Temple Details
+                      </ActionButton>
+                    </ActionArea>
+                  </TempleContent>
+                </TempleCard>
+              ))}
+            </TemplesGrid>
           )}
         </PageContainer>
       )}
 
       <AnimatePresence>
         {showAddModal && (
-          <TempleMaster
+          <ManageTemple
             templeId={userTempleId}
             selectedTemple={selectedTemple}
             onClose={handleModalClose}

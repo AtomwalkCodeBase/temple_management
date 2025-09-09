@@ -141,39 +141,40 @@ const features = [
     icon: "🛕",
     color: "#F4A300",
     title: "Digital Temple",
-    desc: "Carry your temple in your pocket and feel the divine presence anytime, anywhere.",
+    desc: "Explore temple history, deities, galleries, and rituals — all in one place.",
   },
   {
     icon: "📅",
     color: "#E86A33",
-    title: "Puja Booking",
-    desc: "Book sevas and rituals online with ease and personalized Sankalp details.",
+    title: "Puja & Hall Booking",
+    desc: "Book pujas, sevas, and temple halls online with personalized Sankalp details.",
   },
   {
-    icon: "💰",
-    color: "#A259FF",
-    title: "Easy Donations",
-    desc: "Offer your support securely and receive instant digital receipts.",
-  },
-  {
-    icon: "📩",
-    color: "#2EC4B6",
-    title: "Devotee Connect",
-    desc: "Send blessings, aarti timings, and festival updates directly to devotees.",
+    icon: "🛍️",
+    color: "#3F88C5",
+    title: "Temple E-Commerce",
+    desc: "Order prasadam, puja samagri, and spiritual items directly from the temple store.",
   },
   {
     icon: "🔔",
     color: "#FFB703",
-    title: "Ritual Alerts",
-    desc: "Get reminders for aartis, fasts, and sacred festivals every day.",
+    title: "Ritual & Festival Reminders",
+    desc: "Stay updated with daily aarti timings, sacred fasts, and festival schedules.",
   },
   {
-    icon: "🌸",
-    color: "#FF6F61",
-    title: "Virtual Seva",
-    desc: "Light a diya, offer flowers, and stay connected with devotion from anywhere.",
+    icon: "📖",
+    color: "#8E44AD",
+    title: "Spiritual Content Hub",
+    desc: "Access mantras, stotras, stories, and devotional updates anytime, anywhere.",
+  },
+  {
+    icon: "💰",
+    color: "#2EC4B6",
+    title: "Seamless Donations",
+    desc: "Offer donations securely with instant digital receipts and tax benefits.",
   },
 ];
+
 
 const DevotionalFeatures = () => (
   <Section>

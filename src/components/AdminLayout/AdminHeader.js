@@ -330,7 +330,7 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
       const svc = (params.get('service') || 'HALL').toUpperCase();
       return svc === 'PUJA' ? "Divine Puja Services" : "Sacred Halls Management";
     }
-    if (path.includes("/temple-list")) return "Temple List";
+    if (path.includes("/temple-list")) return "My Temple";
     if (path.includes("/services")) return "Temple Services";
     if (path.includes("/advance-policies")) return "Advance Policies";
     if (path.includes("/refund-policies")) return "Refund Policies";
@@ -346,6 +346,9 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
       return svc === 'PUJA'
         ? "Manage puja offerings, schedules, and configurations with enterprise-grade tools"
         : "Manage hall bookings, availability, and configurations with enterprise-grade tools";
+    }
+    if (path.includes("/temple-list")) {
+      return "Manage your assigned temple information and services";
     }
     return "";
   };

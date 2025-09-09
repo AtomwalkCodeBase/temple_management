@@ -2,12 +2,9 @@
 
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import { FiX } from "react-icons/fi";
-import {
-  processPricingRuleData,
-  getWeekDayList,
-} from "../../services/templeServices";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiX, FiClock, FiCalendar, FiChevronRight } from "react-icons/fi";
+import { processPricingRuleData, getWeekDayList, } from "../../services/templeServices";
 import { getStoredTempleId } from "../../services/authServices";
 
 const ModalOverlay = styled(motion.div)`
@@ -35,18 +32,39 @@ const ModalContent = styled(motion.div)`
 `;
 
 const ModalHeader = styled.div`
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  background: linear-gradient(135deg, #0056d6 0%, #0041a3 100%);
   color: white;
   padding: 2rem;
   border-radius: 1rem 1rem 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 
   h2 {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
+  }
+`;
+
+const ProgressIndicator = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: ${props => props.step === 1 ? '33%' : props.step === 2 ? '66%' : '100%'};
+    background: white;
+    transition: width 0.3s ease;
   }
 `;
 
@@ -59,6 +77,7 @@ const CloseButton = styled.button`
   padding: 0.5rem;
   border-radius: 0.375rem;
   transition: all 0.2s ease;
+  z-index: 10;
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -106,8 +125,8 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #7c3aed;
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    border-color: #0056d6;
+    box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.1);
   }
 `;
 
@@ -121,15 +140,15 @@ const Select = styled.select`
 
   &:focus {
     outline: none;
-    border-color: #7c3aed;
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    border-color: #0056d6;
+    box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.1);
   }
 `;
 
 const ModalActions = styled.div`
   display: flex;
   gap: 1rem;
-  justify-content: flex-end;
+  justify-content: ${props => props.step === 1 ? 'flex-end' : 'space-between'};
   padding: 2rem;
   border-top: 1px solid #e5e7eb;
 `;
@@ -140,9 +159,12 @@ const Button = styled(motion.button)`
   font-weight: 600;
   cursor: pointer;
   border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 
   &.primary {
-    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    background: linear-gradient(135deg, #0056d6 0%, #0041a3 100%);
     color: white;
 
     &:disabled {
@@ -160,6 +182,16 @@ const Button = styled(motion.button)`
       background: #e5e7eb;
     }
   }
+  
+  &.back {
+    background: transparent;
+    color: #0056d6;
+    border: 1px solid #0056d6;
+    
+    &:hover {
+      background: rgba(0, 86, 214, 0.1);
+    }
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -172,7 +204,67 @@ const ErrorMessage = styled.div`
   margin-bottom: 1rem;
 `;
 
+const RuleTypeSelector = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const RuleTypeCard = styled(motion.div)`
+  border: 2px solid ${props => props.selected ? '#0056d6' : '#e5e7eb'};
+  background: ${props => props.selected ? 'rgba(0, 86, 214, 0.05)' : 'white'};
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: #0056d6;
+    transform: translateY(-2px);
+  }
+  
+  svg {
+    font-size: 2rem;
+    color: #0056d6;
+    margin-bottom: 0.75rem;
+  }
+  
+  h3 {
+    margin: 0 0 0.5rem 0;
+    color: #374151;
+    font-size: 1.1rem;
+  }
+  
+  p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+`;
+
+const StepIndicator = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  
+  span {
+    background: #f3f4f6;
+    color: #6b7280;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+`;
+
 const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
+  const [step, setStep] = useState(1);
+  const [ruleType, setRuleType] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     start_time: "",
@@ -190,10 +282,19 @@ const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
   const [error, setError] = useState("");
 
   const templeId = getStoredTempleId();
+  console.log("Temple ID:", templeId);
 
   useEffect(() => {
     fetchWeekDays();
     if (rule) {
+      // If editing an existing rule, determine the rule type
+      setRuleType(
+        rule.start_time && rule.end_time ? "timing" : 
+        rule.day_of_week ? "day" : 
+        rule.start_date && rule.end_date ? "date_range" : null
+      );
+      setStep(2);
+      
       setFormData({
         name: rule.name || "",
         start_time: rule.start_time || "",
@@ -218,6 +319,11 @@ const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
     }
   };
 
+  const handleRuleTypeSelect = (type) => {
+    setRuleType(type);
+    setStep(2);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -239,7 +345,63 @@ const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("=== HANDLE SUBMIT CALLED ===");
     e.preventDefault();
+    console.log("Form submitted!", { ruleType, formData, step });
+    
+    // Validate required fields based on rule type
+    if (!ruleType) {
+      console.log("Validation failed: No rule type selected");
+      setError("Please select a rule type");
+      return;
+    }
+    
+    if (!formData.name.trim()) {
+      console.log("Validation failed: No rule name");
+      setError("Please enter a rule name");
+      return;
+    }
+    
+    // Validate rule-specific fields
+    if (ruleType === "timing") {
+      console.log("Validating timing fields:", { 
+        start_time: formData.start_time, 
+        end_time: formData.end_time, 
+        time_price: formData.time_price 
+      });
+      if (!formData.start_time || !formData.end_time || !formData.time_price) {
+        console.log("Validation failed: Missing timing fields");
+        setError("Please fill in all timing fields");
+        return;
+      }
+    }
+    
+    if (ruleType === "day") {
+      console.log("Validating day fields:", { 
+        day_of_week: formData.day_of_week, 
+        week_day_price: formData.week_day_price 
+      });
+      if (!formData.day_of_week || !formData.week_day_price) {
+        console.log("Validation failed: Missing day fields");
+        setError("Please fill in all day fields");
+        return;
+      }
+    }
+    
+    if (ruleType === "date_range") {
+      console.log("Validating date range fields:", { 
+        start_date: formData.start_date, 
+        end_date: formData.end_date, 
+        date_price: formData.date_price 
+      });
+      if (!formData.start_date || !formData.end_date || !formData.date_price) {
+        console.log("Validation failed: Missing date range fields");
+        setError("Please fill in all date range fields");
+        return;
+      }
+    }
+    
+    console.log("All validations passed, proceeding to API call");
     setLoading(true);
     setError("");
 
@@ -248,29 +410,255 @@ const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
         call_mode: rule ? "UPDATE" : "ADD",
         temple_id: templeId,
         name: formData.name,
-        start_time: formData.start_time,
-        end_time: formData.end_time,
-        day_of_week: formData.day_of_week
+        start_time: ruleType === "timing" ? formData.start_time : null,
+        end_time: ruleType === "timing" ? formData.end_time : null,
+        day_of_week: ruleType === "day" && formData.day_of_week
           ? Number.parseInt(formData.day_of_week)
           : null,
-        start_date: formatDateForAPI(formData.start_date),
-        end_date: formatDateForAPI(formData.end_date),
-        date_price: Number.parseFloat(formData.date_price),
-        time_price: Number.parseFloat(formData.time_price),
-        week_day_price: Number.parseFloat(formData.week_day_price),
-        excluded_days_price: Number.parseFloat(formData.excluded_days_price),
+        start_date: ruleType === "date_range" ? formatDateForAPI(formData.start_date) : null,
+        end_date: ruleType === "date_range" ? formatDateForAPI(formData.end_date) : null,
+        date_price: ruleType === "date_range" ? Number.parseFloat(formData.date_price) : 0,
+        time_price: ruleType === "timing" ? Number.parseFloat(formData.time_price) : 0,
+        week_day_price: ruleType === "day" ? Number.parseFloat(formData.week_day_price) : 0,
+        excluded_days_price: Number.parseFloat(formData.excluded_days_price) || 0,
       };
 
       if (rule) {
         ruleData.pricing_rule_id = rule.id;
       }
 
-      await processPricingRuleData(ruleData);
+      console.log("Sending pricing rule data:", ruleData);
+      console.log("Calling processPricingRuleData API...");
+      const response = await processPricingRuleData(ruleData);
+      console.log("API response:", response);
       onSuccess();
     } catch (err) {
+      console.error("API error:", err);
       setError(err.message || "Failed to save pricing rule");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const renderRuleTypeSelection = () => (
+    <>
+      <StepIndicator>
+        <span>Step 1 of 2: Select Rule Type</span>
+      </StepIndicator>
+      
+      <RuleTypeSelector>
+        <RuleTypeCard
+          selected={ruleType === "timing"}
+          onClick={() => handleRuleTypeSelect("timing")}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <FiClock />
+          <h3>Timing Price</h3>
+          <p>Set prices based on specific time intervals</p>
+        </RuleTypeCard>
+        
+        <RuleTypeCard
+          selected={ruleType === "day"}
+          onClick={() => handleRuleTypeSelect("day")}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <FiCalendar />
+          <h3>Day Price</h3>
+          <p>Set prices for specific days of the week</p>
+        </RuleTypeCard>
+        
+        <RuleTypeCard
+          selected={ruleType === "date_range"}
+          onClick={() => handleRuleTypeSelect("date_range")}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <FiCalendar />
+          <h3>Date Range Price</h3>
+          <p>Set prices for specific date ranges</p>
+        </RuleTypeCard>
+      </RuleTypeSelector>
+    </>
+  );
+
+  const renderTimingPriceForm = () => (
+    <>
+      <FormGroup>
+        <Label htmlFor="name">Rule Name *</Label>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          placeholder="e.g., Evening Premium Hours"
+        />
+      </FormGroup>
+
+      <FormRow>
+        <FormGroup>
+          <Label htmlFor="start_time">Start Time *</Label>
+          <Input
+            type="time"
+            id="start_time"
+            name="start_time"
+            value={formData.start_time}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="end_time">End Time *</Label>
+          <Input
+            type="time"
+            id="end_time"
+            name="end_time"
+            value={formData.end_time}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+      </FormRow>
+
+      <FormGroup>
+        <Label htmlFor="time_price">Time Price (₹) *</Label>
+        <Input
+          type="number"
+          id="time_price"
+          name="time_price"
+          value={formData.time_price}
+          onChange={handleChange}
+          min="0"
+          step="0.01"
+          placeholder="200"
+          required
+        />
+      </FormGroup>
+    </>
+  );
+
+  const renderDayPriceForm = () => (
+    <>
+      <FormGroup>
+        <Label htmlFor="name">Rule Name *</Label>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          placeholder="e.g., Weekend Pricing"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Label htmlFor="day_of_week">Day of Week *</Label>
+        <Select
+          id="day_of_week"
+          name="day_of_week"
+          value={formData.day_of_week}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select a day</option>
+          {weekDays.map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </Select>
+      </FormGroup>
+
+      <FormGroup>
+        <Label htmlFor="week_day_price">Week Day Price (₹) *</Label>
+        <Input
+          type="number"
+          id="week_day_price"
+          name="week_day_price"
+          value={formData.week_day_price}
+          onChange={handleChange}
+          min="0"
+          step="0.01"
+          placeholder="300"
+          required
+        />
+      </FormGroup>
+    </>
+  );
+
+  const renderDateRangePriceForm = () => (
+    <>
+      <FormGroup>
+        <Label htmlFor="name">Rule Name *</Label>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          placeholder="e.g., Festival Season Pricing"
+        />
+      </FormGroup>
+
+      <FormRow>
+        <FormGroup>
+          <Label htmlFor="start_date">Start Date *</Label>
+          <Input
+            type="date"
+            id="start_date"
+            name="start_date"
+            value={formData.start_date}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="end_date">End Date *</Label>
+          <Input
+            type="date"
+            id="end_date"
+            name="end_date"
+            value={formData.end_date}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+      </FormRow>
+
+      <FormGroup>
+        <Label htmlFor="date_price">Date Price (₹) *</Label>
+        <Input
+          type="number"
+          id="date_price"
+          name="date_price"
+          value={formData.date_price}
+          onChange={handleChange}
+          min="0"
+          step="0.01"
+          placeholder="500"
+          required
+        />
+      </FormGroup>
+    </>
+  );
+
+  const renderFormContent = () => {
+    switch (ruleType) {
+      case "timing":
+        return renderTimingPriceForm();
+      case "day":
+        return renderDayPriceForm();
+      case "date_range":
+        return renderDateRangePriceForm();
+      default:
+        return renderRuleTypeSelection();
     }
   };
 
@@ -288,178 +676,90 @@ const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
       >
         <ModalHeader>
           <h2>{rule ? "Edit Pricing Rule" : "Add Pricing Rule"}</h2>
+          <ProgressIndicator step={step} />
           <CloseButton onClick={onClose}>
             <FiX />
           </CloseButton>
         </ModalHeader>
 
-        <ModalBody>
-          <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
+          <ModalBody>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-
-            <FormGroup>
-              <Label htmlFor="name">Rule Name *</Label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="e.g., Weekend Pricing"
-              />
-            </FormGroup>
-
-            <FormRow>
-              <FormGroup>
-                <Label htmlFor="start_time">Start Time</Label>
-                <Input
-                  type="time"
-                  id="start_time"
-                  name="start_time"
-                  value={formData.start_time}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label htmlFor="end_time">End Time</Label>
-                <Input
-                  type="time"
-                  id="end_time"
-                  name="end_time"
-                  value={formData.end_time}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-            </FormRow>
-
-            <FormGroup>
-              <Label htmlFor="day_of_week">Day of Week</Label>
-              <Select
-                id="day_of_week"
-                name="day_of_week"
-                value={formData.day_of_week}
-                onChange={handleChange}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, x: step === 1 ? 20 : -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: step === 1 ? -20 : 20 }}
+                transition={{ duration: 0.2 }}
               >
-                <option value="">All Days</option>
-                {weekDays.map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </Select>
-            </FormGroup>
+                {renderFormContent()}
+              </motion.div>
+            </AnimatePresence>
+          </ModalBody>
 
-            <FormRow>
-              <FormGroup>
-                <Label htmlFor="start_date">Start Date</Label>
-                <Input
-                  type="date"
-                  id="start_date"
-                  name="start_date"
-                  value={formData.start_date}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label htmlFor="end_date">End Date</Label>
-                <Input
-                  type="date"
-                  id="end_date"
-                  name="end_date"
-                  value={formData.end_date}
-                  onChange={handleChange}
-                />
-              </FormGroup>
-            </FormRow>
-
-            <FormRow>
-              <FormGroup>
-                <Label htmlFor="date_price">Date Price (₹)</Label>
-                <Input
-                  type="number"
-                  id="date_price"
-                  name="date_price"
-                  value={formData.date_price}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.01"
-                  placeholder="500"
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label htmlFor="time_price">Time Price (₹)</Label>
-                <Input
-                  type="number"
-                  id="time_price"
-                  name="time_price"
-                  value={formData.time_price}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.01"
-                  placeholder="200"
-                />
-              </FormGroup>
-            </FormRow>
-
-            <FormRow>
-              <FormGroup>
-                <Label htmlFor="week_day_price">Week Day Price (₹)</Label>
-                <Input
-                  type="number"
-                  id="week_day_price"
-                  name="week_day_price"
-                  value={formData.week_day_price}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.01"
-                  placeholder="300"
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label htmlFor="excluded_days_price">
-                  Excluded Days Price (₹)
-                </Label>
-                <Input
-                  type="number"
-                  id="excluded_days_price"
-                  name="excluded_days_price"
-                  value={formData.excluded_days_price}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.01"
-                  placeholder="0"
-                />
-              </FormGroup>
-            </FormRow>
-          </Form>
-        </ModalBody>
-
-        <ModalActions>
-          <Button
-            type="button"
-            className="secondary"
-            onClick={onClose}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="primary"
-            disabled={loading}
-            onClick={handleSubmit}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {loading ? "Saving..." : rule ? "Update Rule" : "Create Rule"}
-          </Button>
+          <ModalActions step={step}>
+          {step === 2 && (
+            <Button
+              type="button"
+              className="back"
+              onClick={() => {
+                setStep(1);
+                setRuleType(null);
+                // Clear form data when going back to rule type selection
+                if (!rule) {
+                  setFormData({
+                    name: "",
+                    start_time: "",
+                    end_time: "",
+                    day_of_week: "",
+                    start_date: "",
+                    end_date: "",
+                    date_price: "",
+                    time_price: "",
+                    week_day_price: "",
+                    excluded_days_price: "",
+                  });
+                }
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Back
+            </Button>
+          )}
+          
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <Button
+              type="button"
+              className="secondary"
+              onClick={onClose}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Cancel
+            </Button>
+            
+            {step === 2 && (
+              <Button
+                type="submit"
+                className="primary"
+                disabled={loading}
+                onClick={(e) => {
+                  console.log("=== BUTTON CLICKED ===");
+                  console.log("Button click event:", e);
+                  console.log("Current state:", { ruleType, formData, step, loading });
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {loading ? "Saving..." : rule ? "Update Rule" : "Create Rule"}
+                <FiChevronRight />
+              </Button>
+            )}
+          </div>
         </ModalActions>
+        </Form>
       </ModalContent>
     </ModalOverlay>
   );

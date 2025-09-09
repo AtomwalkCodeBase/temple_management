@@ -13,31 +13,32 @@ const FontImport = styled.div`
 
 const Panel = styled.div`
   background: #fafafa;
-  border-radius: 16px;
-  padding: 16px 16px 10px 16px;
+  border-radius: 14px;
+  padding: 16px;
   min-height: 0;
+  border: 1px solid rgba(0, 0, 0, 0.04);
 `;
 
 const SuccessBanner = styled.div`
   padding: 10px 12px;
   background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
   border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: 12px;
+  border-radius: 10px;
   color: #065f46;
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08);
+  gap: 10px;
+  box-shadow: 0 2px 12px rgba(16, 185, 129, 0.08);
 `;
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 `;
 
 const HeaderLeft = styled.div`
@@ -47,11 +48,11 @@ const HeaderLeft = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #1d1d1f;
   margin: 0;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.02em;
 `;
 
 const Subtitle = styled.p`
@@ -67,17 +68,17 @@ const PrimaryButton = styled.button`
   background: linear-gradient(135deg, #007aff 0%, #0056d6 100%);
   color: #ffffff;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.18);
+  box-shadow: 0 2px 6px rgba(0, 122, 255, 0.18);
   letter-spacing: -0.01em;
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.24);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.24);
   }
 
   &:active {
@@ -88,20 +89,20 @@ const PrimaryButton = styled.button`
 
 const Grid = styled.div`
   display: grid;
-  gap: 16px;
+  gap: 14px;
   margin-bottom: 8px;
 
   /* Dynamic grid based on package count */
   &.single-package {
     grid-template-columns: 1fr;
-    max-width: 400px;
-    margin: 0 auto 24px auto;
+    max-width: 380px;
+    margin: 0 auto 20px auto;
   }
 
   &.two-packages {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 824px;
-    margin: 0 auto 24px auto;
+    max-width: 780px;
+    margin: 0 auto 20px auto;
   }
 
   &.multiple-packages {
@@ -111,32 +112,32 @@ const Grid = styled.div`
   @media (max-width: 768px) {
     grid-template-columns: 1fr !important;
     max-width: none !important;
-    margin: 0 0 24px 0 !important;
-    gap: 16px;
+    margin: 0 0 20px 0 !important;
+    gap: 14px;
   }
 
   @media (max-width: 1024px) and (min-width: 769px) {
     &.multiple-packages {
       grid-template-columns: repeat(2, 1fr);
     }
-    gap: 20px;
+    gap: 16px;
   }
 `;
 
 const PackageCard = styled.div`
   background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
   border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 16px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
 
   /* Enhanced styling for single package view */
   .single-package &,
   .two-packages & {
-    padding: 20px;
-    border-radius: 18px;
+    padding: 18px;
+    border-radius: 16px;
   }
 
   .single-package & {
@@ -144,26 +145,26 @@ const PackageCard = styled.div`
   }
 
   &:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.08);
   }
 `;
 
 const PackageTitle = styled.h3`
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #1d1d1f;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   line-height: 1.2;
   letter-spacing: -0.01em;
 `;
 
 const PackagePrice = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #30d158;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   line-height: 1;
   letter-spacing: -0.02em;
   position: relative;
@@ -173,7 +174,7 @@ const PackagePrice = styled.div`
     position: absolute;
     bottom: -4px;
     left: 0;
-    width: 30px;
+    width: 28px;
     height: 2px;
     background: linear-gradient(90deg, #30d158 0%, #34c759 100%);
     border-radius: 1px;
@@ -187,23 +188,23 @@ const PackagePrice = styled.div`
 `;
 
 const PackageInfo = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 `;
 
 const InfoItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   color: #6e6e73;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.004em;
-  padding: 8px 12px;
+  padding: 7px 10px;
   background: rgba(0, 0, 0, 0.02);
-  border-radius: 10px;
+  border-radius: 8px;
   transition: all 0.2s ease;
 
   &:hover {
@@ -221,17 +222,17 @@ const InfoIcon = styled.svg`
 
 const ButtonGroup = styled.div`
   display: flex;
-  gap: 12px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 `;
 
 const EditButton = styled.button`
   flex: 1;
-  padding: 10px 14px;
+  padding: 9px 12px;
   background: #ffffff;
   border: 1.5px solid #007aff;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #007aff;
   font-size: 13px;
   font-weight: 600;
@@ -254,10 +255,10 @@ const EditButton = styled.button`
 
 const DeleteButton = styled.button`
   flex: 1;
-  padding: 10px 14px;
+  padding: 9px 12px;
   background: linear-gradient(135deg, #ff3b30 0%, #d70015 100%);
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #ffffff;
   font-size: 13px;
   font-weight: 600;
@@ -267,7 +268,7 @@ const DeleteButton = styled.button`
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(215, 0, 21, 0.24);
+    box-shadow: 0 4px 12px rgba(215, 0, 21, 0.24);
   }
 
   &:active {
@@ -278,7 +279,7 @@ const DeleteButton = styled.button`
 
 const EmptyState = styled.div`
   text-align: center;
-  padding: 80px 24px;
+  padding: 60px 20px;
   color: #6e6e73;
   animation: fadeIn 0.6s ease-out;
 
@@ -295,44 +296,44 @@ const EmptyState = styled.div`
 `;
 
 const EmptyIcon = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin: 0 auto 20px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
 `;
 
 const EmptyTitle = styled.h3`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #1d1d1f;
   margin: 0 0 8px 0;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.02em;
 `;
 
 const EmptyDescription = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   color: #6e6e73;
-  margin: 0 0 32px 0;
+  margin: 0 0 24px 0;
   line-height: 1.5;
   letter-spacing: -0.01em;
-  max-width: 400px;
+  max-width: 360px;
   margin-left: auto;
   margin-right: auto;
 `;
 
 const MorePackages = styled.div`
   text-align: center;
-  padding: 12px;
+  padding: 10px;
   margin-top: 6px;
   background: rgba(0, 0, 0, 0.02);
-  border-radius: 16px;
+  border-radius: 12px;
   color: #6e6e73;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
 `;
@@ -429,7 +430,7 @@ const PackagesPanel = ({
       <Panel>
         {successMessage && (
           <SuccessBanner>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
                 d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -519,8 +520,8 @@ const PackagesPanel = ({
           <EmptyState>
             <EmptyIcon>
               <svg
-                width="40"
-                height="40"
+                width="32"
+                height="32"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -532,12 +533,8 @@ const PackagesPanel = ({
             </EmptyIcon>
             <EmptyTitle>No packages defined</EmptyTitle>
             <EmptyDescription>
-              Create your first package to get started with pricing and
-              availability
+              Add your first package to get started with pricing and availability
             </EmptyDescription>
-            <PrimaryButton onClick={() => onAdd(hall)}>
-              Create Package
-            </PrimaryButton>
           </EmptyState>
         )}
       </Panel>

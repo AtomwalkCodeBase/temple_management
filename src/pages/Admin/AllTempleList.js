@@ -643,6 +643,43 @@ const AllTempleList = () => {
                       <TimingSlots>{renderTimings(temple)}</TimingSlots>
                     </TimingSection>
 
+                    {temple.additional_field_list?.supplier_document_name_list && (
+                      <InfoSection>
+                        <SectionLabel>📄 Required Documents</SectionLabel>
+                        <SectionContent>
+                          <div style={{ display: "grid", gap: "0.75rem" }}>
+                            {temple.additional_field_list.supplier_document_name_list.map((doc, idx) => (
+                              <div key={idx} style={{ 
+                                display: "flex", 
+                                justifyContent: "space-between", 
+                                alignItems: "center",
+                                padding: "0.75rem 1rem",
+                                background: "white",
+                                borderRadius: "8px",
+                                border: "1px solid #e2e8f0",
+                                boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)"
+                              }}>
+                                <span style={{ fontWeight: "500", color: "#334155" }}>
+                                  {doc.name}
+                                </span>
+                                <span style={{ 
+                                  fontSize: "0.875rem",
+                                  fontWeight: "600",
+                                  color: doc.is_mandatory === "True" ? "#dc2626" : "#059669",
+                                  background: doc.is_mandatory === "True" ? "#fef2f2" : "#f0fdf4",
+                                  padding: "0.25rem 0.75rem",
+                                  borderRadius: "100px",
+                                  border: `1px solid ${doc.is_mandatory === "True" ? "#fecaca" : "#bbf7d0"}`
+                                }}>
+                                  {doc.is_mandatory === "True" ? "Required" : "Optional"}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </SectionContent>
+                      </InfoSection>
+                    )}
+
                     {temple.additional_field_list?.temple_data_list && (
                       <InfoSection>
                         <SectionLabel>📋 Temple Information</SectionLabel>

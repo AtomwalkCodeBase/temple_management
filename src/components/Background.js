@@ -46,7 +46,7 @@ const CardTitle = styled.h2`
   font-size: 36px;
   line-height: 44px;
   color: #000000;
-  margin-bottom: 16px;
+  white-space: nowrap;
 
   @media (max-width: 768px) {
     font-size: 28px;
@@ -65,47 +65,18 @@ const IconCircle = styled.div`
   color: #232136;
   font-size: 30px;
   font-weight: 700;
-  margin-bottom: 14px;
+  margin-bottom: 0;
   box-shadow: 0 6px 16px rgba(235, 207, 137, 0.25);
 `;
 
-const BulletList = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 8px;
+const CardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
 `;
 
-const BulletItem = styled.li`
-  font-size: 16px;
-  line-height: 26px;
-  color: #55525a;
-  position: relative;
-  padding-left: 22px;
-  text-align: left;
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 9px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #ebcf89;
-    box-shadow: 0 0 0 3px rgba(235, 207, 137, 0.18);
-  }
-`;
-
-const Quote = styled.blockquote`
-  margin: 12px 0 0 0;
-  padding-left: 16px;
-  border-left: 3px solid #ebcf89;
-  color: #6a6670;
-  font-size: 16px;
-  line-height: 24px;
-`;
+// Removed BulletList, BulletItem, and Quote as they are no longer used
 
 const RestorationSection = styled.section`
   background: #fff;
@@ -150,13 +121,16 @@ const RestorationText = styled.div`
 `;
 
 const RestorationTitle = styled.h2`
-  line-height: 48px;
+  font-size: clamp(30px, 3.1vw, 36px);
+  line-height: 1.25;
+  white-space: nowrap;
   color: #2d253f;
   margin-bottom: 2rem;
 
   @media (max-width: 768px) {
     font-size: 32px;
     line-height: 40px;
+    white-space: normal;
     margin-bottom: 1.5rem;
   }
 `;
@@ -195,10 +169,13 @@ const RestorationImage = styled.img`
 `;
 
 const TempleCardBase = styled.div`
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
   z-index: 10;
   width: 480px;
   max-width: 90%;
@@ -263,18 +240,14 @@ const TempleCardRight = styled(TempleCardBase)`
   }
 `;
 
-const CardSubtitle = styled.p`
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
-  color: #55525a;
-  margin-bottom: 28px;
+// Removed CardSubtitle as per requirement
 
-  @media (max-width: 768px) {
-    font-size: 16px;
-    line-height: 24px;
-    margin-bottom: 20px;
-  }
+const CardParagraph = styled.p`
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: #6a6670;
+  margin: 0;
 `;
 
 const MobileCardContainer = styled.div`
@@ -291,17 +264,13 @@ const Background = () => {
           <TempleImage imageUrl={temple01} />
         </BackgroundImage>
         <TempleScienceCard>
-          <IconCircle>🛕</IconCircle>
-          <CardTitle>Science Behind Hindu Temples</CardTitle>
-          <CardSubtitle>
-            How temples use design, sound, and sunlight to lift the mind and heart.
-          </CardSubtitle>
-          <BulletList>
-            <BulletItem>Balanced layouts that feel calm and welcoming</BulletItem>
-            <BulletItem>Stone walls that carry chants like gentle echoes</BulletItem>
-            <BulletItem>Simple rituals that help you feel centered</BulletItem>
-          </BulletList>
-          <Quote>“A temple is like a tuning fork for peace—step in, and you feel it.”</Quote>
+          <CardHeader>
+            <IconCircle>🛕</IconCircle>
+            <CardTitle>Science Behind Temples</CardTitle>
+          </CardHeader>
+          <CardParagraph>
+            Temples balance form and subtle energy to create quiet focus.
+          </CardParagraph>
         </TempleScienceCard>
       </Section>
 
@@ -337,29 +306,23 @@ const Background = () => {
         </BackgroundImage>
         <MobileCardContainer>
           <TempleCardLeft>
-            <IconCircle>🎶</IconCircle>
-            <CardTitle>Sound That Soothes</CardTitle>
-            <CardSubtitle>
-              Spaces shaped so sound feels soft, soothing, and clear.
-            </CardSubtitle>
-            <BulletList>
-              <BulletItem>Stone halls gently echo chants and bells</BulletItem>
-              <BulletItem>Rhythmic chanting helps the body relax</BulletItem>
-              <BulletItem>Bells refocus attention before you pray</BulletItem>
-            </BulletList>
+            <CardHeader>
+              <IconCircle>🎶</IconCircle>
+              <CardTitle>Sound That Soothes</CardTitle>
+            </CardHeader>
+            <CardParagraph>
+              Chants resonate smoothly, while a bell recenters attention.
+            </CardParagraph>
           </TempleCardLeft>
         </MobileCardContainer>
         <TempleCardLeft>
-          <IconCircle>🎶</IconCircle>
-          <CardTitle>Sound That Soothes</CardTitle>
-          <CardSubtitle>
-            Spaces shaped so sound feels soft, soothing, and clear.
-          </CardSubtitle>
-          <BulletList>
-            <BulletItem>Stone halls gently echo chants and bells</BulletItem>
-            <BulletItem>Rhythmic chanting helps the body relax</BulletItem>
-            <BulletItem>Bells refocus attention before you pray</BulletItem>
-          </BulletList>
+          <CardHeader>
+            <IconCircle>🎶</IconCircle>
+            <CardTitle>Sound That Soothes</CardTitle>
+          </CardHeader>
+          <CardParagraph>
+            Chants resonate smoothly, while a bell recenters attention.
+          </CardParagraph>
         </TempleCardLeft>
       </Section>
 
@@ -369,29 +332,23 @@ const Background = () => {
         </BackgroundImage>
         <MobileCardContainer>
           <TempleCardRight>
-            <IconCircle>🪐</IconCircle>
-            <CardTitle>Sunlight, Seasons & Stars</CardTitle>
-            <CardSubtitle>
-              Many temples line up with the sun and seasons in simple, beautiful ways.
-            </CardSubtitle>
-            <BulletList>
-              <BulletItem>Special days when sunlight touches the sanctum</BulletItem>
-              <BulletItem>Entrances facing east to welcome the morning light</BulletItem>
-              <BulletItem>Festivals timed with the moon and seasons</BulletItem>
-            </BulletList>
+            <CardHeader>
+              <IconCircle>🪐</IconCircle>
+              <CardTitle>Sacred Dawn</CardTitle>
+            </CardHeader>
+            <CardParagraph>
+              Light marks sacred moments; dawn-facing entries welcome the day.
+            </CardParagraph>
           </TempleCardRight>
         </MobileCardContainer>
         <TempleCardRight>
-          <IconCircle>🪐</IconCircle>
-          <CardTitle>Sunlight, Seasons & Stars</CardTitle>
-          <CardSubtitle>
-            Many temples line up with the sun and seasons in simple, beautiful ways.
-          </CardSubtitle>
-          <BulletList>
-            <BulletItem>Special days when sunlight touches the sanctum</BulletItem>
-            <BulletItem>Entrances facing east to welcome the morning light</BulletItem>
-            <BulletItem>Festivals timed with the moon and seasons</BulletItem>
-          </BulletList>
+          <CardHeader>
+            <IconCircle>🪐</IconCircle>
+            <CardTitle>Sacred Dawn</CardTitle>
+          </CardHeader>
+          <CardParagraph>
+            Light marks sacred moments; dawn-facing entries welcome the day.
+          </CardParagraph>
         </TempleCardRight>
       </Section>
     </>

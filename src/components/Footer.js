@@ -326,7 +326,7 @@ const Footer = () => {
           <LinksColumn>
             <ColumnTitle>Contact</ColumnTitle>
             <LinkItem href="mailto:support@agamandira.com">support@agamandira.com</LinkItem>
-            <LinkItem href="tel:+910000000000">+91 08028476770</LinkItem>
+            <LinkItem href="tel:+9108028476770">+91 08028476770</LinkItem>
           </LinksColumn>
           
         </LinksSection>

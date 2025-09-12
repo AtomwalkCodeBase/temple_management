@@ -374,6 +374,66 @@ const DetailSection = ({ detail, index, canMoveUp, canMoveDown, onChange, onRemo
   </motion.div>
 );
 
+const DocumentSection = ({ document, index, onChange, onRemove }) => (
+  <motion.div
+    style={{
+      background: theme.colors.white, padding: "1.5rem", marginBottom: "1rem",
+      borderRadius: "16px", border: `2px solid ${theme.colors.gray200}`,
+      boxShadow: theme.shadows.md
+    }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+  >
+    <Grid>
+      <FormGroup>
+        <Label>Document Name *</Label>
+        <Input
+          value={document.name}
+          onChange={(e) => onChange(index, "name", e.target.value)}
+          placeholder="e.g., Aadhar Card, PAN Card, Passport"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label>Mandatory Document</Label>
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "0.75rem",
+          padding: "1rem 1.25rem",
+          background: theme.colors.gray50,
+          borderRadius: "12px",
+          border: `2px solid ${theme.colors.gray200}`
+        }}>
+          <input
+            type="checkbox"
+            checked={document.is_mandatory}
+            onChange={(e) => onChange(index, "is_mandatory", e.target.checked)}
+            style={{ 
+              width: "20px", 
+              height: "20px", 
+              accentColor: theme.colors.primary,
+              cursor: "pointer"
+            }}
+          />
+          <span style={{ 
+            color: theme.colors.gray700, 
+            fontWeight: "500",
+            cursor: "pointer"
+          }} onClick={() => onChange(index, "is_mandatory", !document.is_mandatory)}>
+            This document is required for temple services
+          </span>
+        </div>
+      </FormGroup>
+    </Grid>
+    <ActionRow style={{ marginTop: "1rem", justifyContent: "flex-end" }}>
+      <Button color="red" size="sm" onClick={() => onRemove(index)}>
+        Remove Document
+      </Button>
+    </ActionRow>
+  </motion.div>
+);
+
 // Mock components (would normally be separate files)
 const MasterTabs = ({ tabs, activeTab, onChange }) => (
   <TabContainer>
@@ -450,6 +510,7 @@ function ManageTemple(props) {
   });
 
   const [details, setDetails] = useState([{ title: "", paragraph: "" }]);
+  const [documents, setDocuments] = useState([{ name: "", is_mandatory: false }]);
   const [currentImages, setCurrentImages] = useState([]);
 
   // Time slots state
@@ -503,7 +564,8 @@ function ManageTemple(props) {
   const formSteps = useMemo(() => [
     { id: 0, label: "Basic Information" }, { id: 1, label: "Address Details" },
     { id: 2, label: "Groups & Remarks" }, { id: 3, label: "Temple Timings" },
-    { id: 4, label: "Temple Sections" }, { id: 5, label: "Temple Images" },
+    { id: 4, label: "Temple Sections" }, { id: 5, label: "Documents Required" },
+    { id: 6, label: "Temple Images" },
   ], []);
 
   // Helper functions
@@ -521,6 +583,13 @@ function ManageTemple(props) {
 
   const handleAddDetail = () => setDetails(prev => [...prev, { title: "", paragraph: "" }]);
   const handleRemoveDetail = (idx) => setDetails(prev => prev.filter((_, i) => i !== idx));
+
+  const handleDocumentChange = (idx, field, value) => {
+    setDocuments(prev => prev.map((d, i) => (i === idx ? { ...d, [field]: value } : d)));
+  };
+
+  const handleAddDocument = () => setDocuments(prev => [...prev, { name: "", is_mandatory: false }]);
+  const handleRemoveDocument = (idx) => setDocuments(prev => prev.filter((_, i) => i !== idx));
 
   const handleTimeSlotToggle = (id, checked) => {
     if (checked) {
@@ -583,6 +652,14 @@ function ManageTemple(props) {
       setDetails(templeData.additional_field_list.temple_data_list);
     }
 
+    // Prefill documents
+    if (templeData.additional_field_list?.supplier_document_name_list?.length) {
+      setDocuments(templeData.additional_field_list.supplier_document_name_list.map(doc => ({
+        name: doc.name || "",
+        is_mandatory: doc.is_mandatory === "True" || doc.is_mandatory === true
+      })));
+    }
+
     // Prefill timing selections
     if (templeData.additional_field_list?.temple_timings?.selected_time_slots?.length) {
       const ids = templeData.additional_field_list.temple_timings.selected_time_slots.map(s => s.id);
@@ -607,7 +684,7 @@ function ManageTemple(props) {
 
   // Ensure images are fetched when Images step is opened
   useEffect(() => {
-    if (activeTab === "add-temple" && currentStep === 5 && templeId) {
+    if (activeTab === "add-temple" && currentStep === 6 && templeId) {
       fetchCurrentImages(templeId);
     }
   }, [activeTab, currentStep, templeId]);
@@ -622,6 +699,7 @@ function ManageTemple(props) {
     });
     setSelectedTimeSlotIds([]);
     setDetails([{ title: "", paragraph: "" }]);
+    setDocuments([{ name: "", is_mandatory: false }]);
     setImageFiles({ mainImage: null, additionalImages: [] });
     setCurrentStep(0);
   };
@@ -642,6 +720,10 @@ function ManageTemple(props) {
           ...templeForm,
           temple_timings: timingsPayload,
           temple_data_list: details.filter(d => d.title || d.paragraph),
+          supplier_document_name_list: documents.filter(d => d.name).map(doc => ({
+            name: doc.name,
+            is_mandatory: doc.is_mandatory ? "True" : "false"
+          })),
         },
       };
 
@@ -656,7 +738,7 @@ function ManageTemple(props) {
       }
 
       setSuccess(templeId ? "Temple updated successfully!" : "Temple created successfully!");
-        setCurrentStep(5);
+        setCurrentStep(6);
     } catch (err) {
       setError(err?.response?.data?.message || err?.message || "Failed to save temple");
     } finally {
@@ -864,9 +946,43 @@ function ManageTemple(props) {
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <Button onClick={() => setCurrentStep(s => Math.max(0, s - 1))}>← Previous</Button>
           <Button color="secondary" onClick={() => setCurrentStep(s => Math.min(formSteps.length - 1, s + 1))}>Next →</Button>
-          <Button color="primary" onClick={submitTempleSections} loading={saving} disabled={saving}>
-          {templeId ? "Update Temple & Continue" : "Create Temple & Continue"}
+        </div>
+      </ActionRow>
+    </motion.div>
+  );
+
+  const renderDocumentsStep = () => (
+    <motion.div variants={slideIn} initial="hidden" animate="visible">
+      <div style={{ marginBottom: "2rem" }}>
+        <Label style={{ display: "block", marginBottom: "1rem", fontSize: "1.2rem", color: theme.colors.gray800 }}>
+          Documents Required
+        </Label>
+        <p style={{ color: theme.colors.gray600, marginBottom: "1.5rem" }}>
+          Specify which documents are required from devotees for temple services and bookings.
+        </p>
+      </div>
+      
+      <AnimatePresence>
+        {documents.map((document, idx) => (
+          <DocumentSection 
+            key={idx} 
+            document={document}
+            index={idx} 
+            onChange={handleDocumentChange}
+            onRemove={handleRemoveDocument}
+          />
+        ))}
+      </AnimatePresence>
+      
+      <ActionRow style={{ justifyContent: "space-between" }}>
+        <Button color="primary" onClick={handleAddDocument}>
+          + Add Document
         </Button>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <Button onClick={() => setCurrentStep(s => Math.max(0, s - 1))}>← Previous</Button>
+          <Button color="primary" onClick={submitTempleSections} loading={saving} disabled={saving}>
+            {templeId ? "Update Temple & Continue" : "Create Temple & Continue"}
+          </Button>
         </div>
       </ActionRow>
     </motion.div>
@@ -1274,10 +1390,10 @@ function ManageTemple(props) {
 
         <ActionRow>
           <Button 
-            onClick={() => setCurrentStep(4)}
+            onClick={() => setCurrentStep(5)}
             style={{ background: theme.colors.gray100, color: theme.colors.gray700 }}
           >
-            ← Back to Sections
+            ← Back to Documents
             </Button>
           <Button 
             color="primary" 
@@ -1350,7 +1466,8 @@ function ManageTemple(props) {
             {currentStep === 2 && renderGroupsStep()}
             {currentStep === 3 && renderTimingsStep()}
             {currentStep === 4 && renderSectionsStep()}
-            {currentStep === 5 && renderImagesStep()}
+            {currentStep === 5 && renderDocumentsStep()}
+            {currentStep === 6 && renderImagesStep()}
                 </motion.div>
               </AnimatePresence>
             

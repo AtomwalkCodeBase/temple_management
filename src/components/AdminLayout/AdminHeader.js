@@ -24,7 +24,7 @@ import {
 const HeaderContainer = styled.div`
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-bottom: 1px solid #e2e8f0;
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +36,7 @@ const HeaderContainer = styled.div`
   background: rgba(255, 255, 255, 0.95);
 
   @media (max-width: 768px) {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.25rem;
   }
 `;
 
@@ -74,7 +74,7 @@ const MobileMenuButton = styled.button`
 
 const PageInfo = styled.div`
   .breadcrumb {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #64748b;
     margin-bottom: 0.25rem;
     display: flex;
@@ -91,14 +91,14 @@ const PageInfo = styled.div`
   }
 
   .page-title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #0f172a;
     margin: 0;
     letter-spacing: -0.025em;
 
     @media (max-width: 768px) {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
     }
   }
 `;
@@ -112,11 +112,11 @@ const HeaderRight = styled.div`
 const NotificationButton = styled(motion.button)`
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   cursor: pointer;
   color: #475569;
   position: relative;
-  padding: 0.75rem;
+  padding: 0.9rem;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -161,9 +161,9 @@ const QuickActionButton = styled(motion.button)`
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: #ffffff;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.1rem;
   border-radius: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -194,7 +194,7 @@ const UserButton = styled(motion.button)`
   background: #ffffff;
   border: 1px solid #e2e8f0;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border-radius: 0.75rem;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -207,8 +207,8 @@ const UserButton = styled(motion.button)`
 `;
 
 const UserAvatar = styled.div`
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   border-radius: 50%;
   display: flex;
@@ -216,7 +216,7 @@ const UserAvatar = styled.div`
   justify-content: center;
   color: #ffffff;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1rem;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   border: 1px solid #dbeafe;
 `;

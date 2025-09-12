@@ -327,6 +327,21 @@ const Navbar = () => {
         </svg>
       ),
     },
+    {
+      path: "/seller-login",
+      label: "Login as Seller",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M3 9V7l2-4h14l2 4v2h-2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9H3zm4 0v10h10V9H7zm2-4-1 2h8l-1-2H9z" />
+        </svg>
+      ),
+    },
   ];
 
   return (

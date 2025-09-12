@@ -300,14 +300,13 @@ const CustomerLogin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useCustomerAuth();
+  const pathname = window.location.pathname;
   const adminId = localStorage.getItem("userToken");
   const userId = localStorage.getItem("customerToken");
   useEffect(() => {
     const currentPath = window.location.pathname;
     if (userId && currentPath !== "/customer-dashboard") {
       window.location.href = "/customer-dashboard";
-    } else if (!adminId && !userId && currentPath !== "/customer-login") {
-      window.location.href = "/customer-login";
     }
   }, []);
   const handleChange = (e) => {
@@ -420,8 +419,17 @@ const CustomerLogin = () => {
         </Form>
 
         <LinkContainer>
-          <Link to="/forgot-pin">Forgot PIN?</Link>
-          <Link to="/customer-register">Create Account</Link>
+          {pathname === "/seller-login" ? (
+            <>
+              <Link to="/sellerforgot-pin">Forgot PIN?</Link>
+              <Link to="/seller-register">Create Account</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/forgot-pin">Forgot PIN?</Link>
+              <Link to="/customer-register">Create Account</Link>
+            </>
+          )}
         </LinkContainer>
       </LoginCard>
     </LoginContainer>

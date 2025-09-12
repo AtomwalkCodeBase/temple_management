@@ -293,7 +293,7 @@ const CustomerRegistration = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
-
+  const pathName = window.location.pathname;
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -308,7 +308,10 @@ const CustomerRegistration = () => {
     setError("");
 
     try {
-      const response = await registerCustomer(formData);
+      const response = await registerCustomer(
+        pathName !== "/seller-register" ? formData : formData,
+        pathName
+      );
       setSuccess(response);
 
       // Auto redirect to login after 8 seconds
@@ -470,7 +473,11 @@ const CustomerRegistration = () => {
 
         <LoginLink>
           <div className="text">Already have an account?</div>
-          <Link to="/customer-login">Sign In Here</Link>
+          {pathName === "/seller-register" ? (
+            <Link to="/seller-login">Sign In Here</Link>
+          ) : (
+            <Link to="/customer-login">Sign In Here</Link>
+          )}
         </LoginLink>
       </RegistrationCard>
     </RegistrationContainer>

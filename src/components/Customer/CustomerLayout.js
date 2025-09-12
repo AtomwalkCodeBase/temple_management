@@ -13,11 +13,19 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
-import { FaHome, FaCalendarAlt } from "react-icons/fa";
+import { FaHome, FaCalendarAlt, FaBook } from "react-icons/fa";
 import { IoPerson, IoSettingsSharp } from "react-icons/io5";
 import { FaPersonWalkingDashedLineArrowRight } from "react-icons/fa6";
 import { MdTempleHindu } from "react-icons/md";
 import { useCustomerAuth } from "../../contexts/CustomerAuthContext";
+import {
+  BookAIcon,
+  BookCheck,
+  CheckCircleIcon,
+  Notebook,
+  NotebookIcon,
+  NotebookTabs,
+} from "lucide-react";
 
 /* Shared sizing */
 const SIDEBAR_W_COLLAPSED = 88;
@@ -619,50 +627,75 @@ const CustomerLayout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { customerData, logout } = useCustomerAuth();
+  const custmercode = localStorage.getItem("customerRefCode");
+  let menuItems = [];
 
-  const menuItems = [
-    {
-      section: "Main",
-      items: [
-        {
-          path: "/customer-dashboard",
-          icon: FaHome,
-          label: "Dashboard",
-          badge: null,
-        },
-        {
-          path: "/customer-temples",
-          icon: MdTempleHindu,
-          label: "Temples",
-          badge: null,
-        },
-        {
-          path: "/customer-bookings",
-          icon: FaCalendarAlt,
-          label: "My Bookings",
-          badge: null,
-        },
-      ],
-    },
-    {
-      section: "Account",
-      items: [
-        {
-          path: "/customer-profile",
-          icon: IoPerson,
-          label: "Profile",
-          badge: null,
-        },
-        {
-          path: "/customer-settings",
-          icon: IoSettingsSharp,
-          label: "Settings",
-          badge: null,
-        },
-      ],
-    },
-  ];
-
+  if (custmercode?.startsWith("S")) {
+    // ✅ Only Dashboard + Profile
+    menuItems = [
+      {
+        section: "Main",
+        items: [
+          {
+            path: "/customer-dashboard",
+            icon: FaHome,
+            label: "Dashboard",
+            badge: null,
+          },
+          {
+            path: "/seller-Application",
+            icon: FaBook,
+            label: "My Application",
+            badge: null,
+          },
+        ],
+      },
+    ];
+  } else {
+    // ✅ Full menu
+    menuItems = [
+      {
+        section: "Main",
+        items: [
+          {
+            path: "/customer-dashboard",
+            icon: FaHome,
+            label: "Dashboard",
+            badge: null,
+          },
+          {
+            path: "/customer-temples",
+            icon: MdTempleHindu,
+            label: "Temples",
+            badge: null,
+          },
+          {
+            path: "/customer-bookings",
+            icon: FaCalendarAlt,
+            label: "My Bookings",
+            badge: null,
+          },
+        ],
+      },
+      {
+        section: "Account",
+        items: [
+          {
+            path: "/customer-profile",
+            icon: IoPerson,
+            label: "Profile",
+            badge: null,
+          },
+          {
+            path: "/customer-settings",
+            icon: IoSettingsSharp,
+            label: "Settings",
+            badge: null,
+          },
+        ],
+      },
+    ];
+  }
   const handleMenuClick = (path) => {
     navigate(path);
     setMobileMenuOpen(false);

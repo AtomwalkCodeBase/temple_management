@@ -3,12 +3,13 @@ import axios from "axios";
 const BASE_URL = "https://temple.atomwalk.com/customer/api";
 
 // Customer Registration
-export const registerCustomer = async (customerData) => {
+export const registerCustomer = async (customerData, pathName) => {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/customer_registration/`,
-      customerData
-    );
+    const apiEndpoint =
+      pathName === "/seller-register"
+        ? `${BASE_URL}/seller_registration/`
+        : `${BASE_URL}/customer_registration/`;
+    const response = await axios.post(apiEndpoint, customerData);
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
@@ -68,7 +69,24 @@ export const processBooking = async (bookingData) => {
     throw error.response?.data || error.message;
   }
 };
-
+export const processSellerApplication = async (bookingData) => {
+  const token = localStorage.getItem("customerToken");
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/seller_update/`,
+      bookingData,
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
 // Get Booking List
 export const getBookingList = async () => {
   const custRefCode = localStorage.getItem("customerRefCode");
@@ -87,7 +105,24 @@ export const getBookingList = async () => {
     throw error.response?.data || error.message;
   }
 };
-
+//get my Application details
+export const getmyApplication = async () => {
+  const custRefCode = localStorage.getItem("customerRefCode");
+  const token = localStorage.getItem("customerToken");
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/get_seller_temple_list/?seller_ref_code=${custRefCode}`,
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
 // Fetch Bookings by Service ID
 export const getServiceBookings = async (serviceId) => {
   const token = localStorage.getItem("customerToken");

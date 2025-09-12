@@ -35,6 +35,8 @@ import CustomerBookSeva from "./pages/Customer/BookSeva";
 import CustomerBookings from "./pages/Customer/CustomerBookings";
 import CustomerDashboard from "./pages/Customer/CustomerDashboard";
 import { useEffect } from "react";
+import SellerRegistartion from "./pages/seller/SellerRegistartion";
+import { ToastContainer } from "react-toastify";
 
 function AppContent() {
   const location = useLocation();
@@ -57,6 +59,7 @@ function AppContent() {
     "/customer-bookings",
     "/customer-dashboard",
     "/halls-management",
+    "/seller-Application",
   ].some((route) => location.pathname.startsWith(route));
 
   const hideNavAndFooter = isAdminRoute || isCustomerRoute;
@@ -75,12 +78,16 @@ function AppContent() {
         {/* Customer routes */}
         <Route path="/customer-register" element={<CustomerRegistration />} />
         <Route path="/customer-login" element={<CustomerLogin />} />
+        <Route path="/seller-register" element={<CustomerRegistration />} />
+        <Route path="/seller-login" element={<CustomerLogin />} />
         <Route path="/forgot-pin" element={<ForgotPin />} />
+        <Route path="/sellerforgot-pin" element={<ForgotPin />} />
         <Route path="/set-new-pin" element={<SetNewPin />} />
         <Route path="/customer-temples" element={<CustomerTemples />} />
         <Route path="/book-seva/:templeId" element={<CustomerBookSeva />} />
         <Route path="/customer-bookings" element={<CustomerBookings />} />
         <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+        <Route path="/seller-Application" element={<SellerRegistartion />} />
 
         {/* Admin nested router */}
         <Route path="/templeadmin/*" element={<AdminRouter />} />
@@ -156,6 +163,7 @@ function App() {
         <Router>
           <AppContent />
         </Router>
+        <ToastContainer position="top-right" autoClose={3000} />
       </CustomerAuthProvider>
     </ThemeProvider>
   );

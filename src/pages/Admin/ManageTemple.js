@@ -588,7 +588,7 @@ function ManageTemple(props) {
     setDocuments(prev => prev.map((d, i) => (i === idx ? { ...d, [field]: value } : d)));
   };
 
-  const handleAddDocument = () => setDocuments(prev => [...prev, { name: "", is_mandatory: false }]);
+  const handleAddDocument = () => setDocuments(prev => (prev.length >= 3 ? prev : [...prev, { name: "", is_mandatory: false }]));
   const handleRemoveDocument = (idx) => setDocuments(prev => prev.filter((_, i) => i !== idx));
 
   const handleTimeSlotToggle = (id, checked) => {
@@ -654,7 +654,7 @@ function ManageTemple(props) {
 
     // Prefill documents
     if (templeData.additional_field_list?.supplier_document_name_list?.length) {
-      setDocuments(templeData.additional_field_list.supplier_document_name_list.map(doc => ({
+      setDocuments(templeData.additional_field_list.supplier_document_name_list.slice(0, 3).map(doc => ({
         name: doc.name || "",
         is_mandatory: doc.is_mandatory === "True" || doc.is_mandatory === true
       })));
@@ -975,9 +975,14 @@ function ManageTemple(props) {
       </AnimatePresence>
       
       <ActionRow style={{ justifyContent: "space-between" }}>
-        <Button color="primary" onClick={handleAddDocument}>
+        <Button color="primary" onClick={handleAddDocument} disabled={documents.length >= 3}>
           + Add Document
         </Button>
+        {documents.length >= 3 && (
+          <span style={{ alignSelf: "center", color: theme.colors.gray500 }}>
+            Maximum 3 documents allowed
+          </span>
+        )}
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <Button onClick={() => setCurrentStep(s => Math.max(0, s - 1))}>← Previous</Button>
           <Button color="primary" onClick={submitTempleSections} loading={saving} disabled={saving}>

@@ -328,7 +328,9 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
     if (path.includes("/halls-management")) {
       const params = new URLSearchParams(window.location.search);
       const svc = (params.get('service') || 'HALL').toUpperCase();
-      return svc === 'PUJA' ? "Divine Puja Services" : "Sacred Halls Management";
+      if (svc === 'PUJA') return "Divine Puja Services";
+      if (svc === 'EVENT') return "Temple Events Management";
+      return "Sacred Halls Management";
     }
     if (path.includes("/temple-list")) return "My Temple";
     if (path.includes("/services")) return "Temple Services";
@@ -343,9 +345,13 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
     if (path.includes("/halls-management")) {
       const params = new URLSearchParams(window.location.search);
       const svc = (params.get('service') || 'HALL').toUpperCase();
-      return svc === 'PUJA'
-        ? "Manage puja offerings, schedules, and configurations with enterprise-grade tools"
-        : "Manage hall bookings, availability, and configurations with enterprise-grade tools";
+      if (svc === 'PUJA') {
+        return "Manage puja offerings, schedules, and configurations with enterprise-grade tools";
+      }
+      if (svc === 'EVENT') {
+        return "Manage temple events, schedules, and configurations with enterprise-grade tools";
+      }
+      return "Manage hall bookings, availability, and configurations with enterprise-grade tools";
     }
     if (path.includes("/temple-list")) {
       return "Manage your assigned temple information and services";
@@ -383,7 +389,9 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
     if (path.includes("/halls-management")) {
       const params = new URLSearchParams(window.location.search);
       const svc = (params.get('service') || 'HALL').toUpperCase();
-      return svc === 'PUJA' ? ["Puja Management", "Divine Pujas"] : ["Hall Management", "Sacred Halls"];
+      if (svc === 'PUJA') return ["Puja Management", "Divine Pujas"];
+      if (svc === 'EVENT') return ["Event Management", "Temple Events"];
+      return ["Hall Management", "Sacred Halls"];
     }
     if (path.includes("/advance-policies"))
       return ["Policy Management", "Advance Policies"];

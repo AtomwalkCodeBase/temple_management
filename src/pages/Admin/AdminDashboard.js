@@ -1,5 +1,5 @@
 import React from "react";
-import { FiHome, FiTrendingUp, FiClock, FiCalendar, FiSearch, FiMoreVertical, FiArrowUp, FiArrowDown, FiEye, FiChevronLeft, FiChevronRight, FiUser, FiFile, FiMail, FiPhone, FiCalendar as FiCal } from "react-icons/fi";
+import { FiHome, FiTrendingUp, FiClock, FiCalendar, FiSearch, FiMoreVertical, FiArrowUp, FiArrowDown, FiEye, FiChevronLeft, FiChevronRight, FiUser, FiFile, FiMail, FiPhone, FiCalendar as FiCal, FiCheckCircle, FiXCircle } from "react-icons/fi";
 import styled from "styled-components";
 import { getServiceBookings, getSellerTempleList, updateSellerStatus } from "../../services/customerServices";
 import { getCurrentTempleId } from "../../services/serviceUtils";
@@ -1320,18 +1320,8 @@ const Dashboard = () => {
                                    borderRadius: '8px',
                                    overflow: 'hidden',
                                    border: '2px solid #e2e8f0',
-                                   transition: 'all 0.2s ease',
+                                   transition: 'none',
                                    textDecoration: 'none'
-                                 }}
-                                 onMouseEnter={(e) => {
-                                   e.target.style.transform = 'scale(1.05)';
-                                   e.target.style.borderColor = '#3b82f6';
-                                   e.target.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.2)';
-                                 }}
-                                 onMouseLeave={(e) => {
-                                   e.target.style.transform = 'scale(1)';
-                                   e.target.style.borderColor = '#e2e8f0';
-                                   e.target.style.boxShadow = 'none';
                                  }}
                                >
                                  <img 
@@ -1373,7 +1363,9 @@ const Dashboard = () => {
                              >
                                {processingAction === `${seller.seller_ref_code}-approve` ? (
                                  <LoadingSpinner />
-                               ) : null}
+                               ) : (
+                                 <FiCheckCircle size={16} />
+                               )}
                                Approve
                              </PremiumButton>
                            ) : (
@@ -1385,7 +1377,9 @@ const Dashboard = () => {
                              >
                                {processingAction === `${seller.seller_ref_code}-reject` ? (
                                  <LoadingSpinner />
-                               ) : null}
+                               ) : (
+                                 <FiXCircle size={16} />
+                               )}
                                Reject
                              </PremiumButton>
                            )}

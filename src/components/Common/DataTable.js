@@ -15,7 +15,7 @@ import { GiLotus, TempleGate } from "react-icons/gi";
 const TableContainer = styled.div`
   background: #ffffff;
   border-radius: 0.75rem;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 6px 24px rgba(0, 86, 214, 0.08);
   border: 1px solid #cfe0ff;
 `;
@@ -75,6 +75,7 @@ const SearchInput = styled.input`
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  overflow: visible;
 `;
 
 const TableHead = styled.thead`
@@ -107,6 +108,7 @@ const TableBody = styled.tbody`
     border-bottom: 1px solid #e6efff;
     transition: background-color 0.2s;
     background: #ffffff;
+    position: relative;
 
     &:nth-child(even) {
       background: #f6faff;
@@ -130,7 +132,6 @@ const TableBody = styled.tbody`
 `;
 
 const ActionCell = styled.td`
-  position: relative;
   text-align: right;
 `;
 
@@ -145,6 +146,9 @@ const ActionButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 0;
+  width: 36px;
+  height: 36px;
 
   &:hover {
     background: #eaf2ff;
@@ -155,15 +159,27 @@ const ActionButton = styled.button`
 
 const ActionMenu = styled(motion.div)`
   position: absolute;
-  top: 100%;
+  ${(props) => (props.openAbove ? "bottom: calc(100% + 4px);" : "top: calc(100% + 4px);")}
   right: 0;
   background: #ffffff;
   border: 1px solid #cfe0ff;
   border-radius: 0.5rem;
   box-shadow: 0 10px 25px rgba(0, 86, 214, 0.15);
   min-width: 160px;
-  z-index: 100;
+  z-index: 1000;
   overflow: hidden;
+  transform-origin: ${(props) => (props.openAbove ? "bottom right" : "top right")};
+  /* Keep menu within viewport when near bottom */
+  @media (max-height: 700px) {
+    max-height: 60vh;
+    overflow: auto;
+  }
+`;
+
+const ActionWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
 `;
 
 const ActionMenuItem = styled.button`
@@ -322,6 +338,7 @@ const DataTable = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeActionMenu, setActiveActionMenu] = useState(null);
+  const [openAboveRowIndex, setOpenAboveRowIndex] = useState(null);
 
   const filteredData = searchable
     ? data.filter((item) =>
@@ -337,11 +354,27 @@ const DataTable = ({
 
   const handleActionClick = (index, event) => {
     event.stopPropagation();
-    setActiveActionMenu(activeActionMenu === index ? null : index);
+    if (activeActionMenu === index) {
+      setActiveActionMenu(null);
+      setOpenAboveRowIndex(null);
+      return;
+    }
+
+    try {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const shouldOpenAbove = spaceBelow < 180; // approximate menu height + spacing
+      setOpenAboveRowIndex(shouldOpenAbove ? index : null);
+    } catch {
+      setOpenAboveRowIndex(null);
+    }
+
+    setActiveActionMenu(index);
   };
 
   const handleActionItemClick = (action, item) => {
     setActiveActionMenu(null);
+    setOpenAboveRowIndex(null);
     if (action === "edit" && onEdit) onEdit(item);
     if (action === "delete" && onDelete) onDelete(item);
     if (action === "view" && onView) onView(item);
@@ -351,6 +384,7 @@ const DataTable = ({
   useState(() => {
     const handleClickOutside = () => {
       setActiveActionMenu(null);
+      setOpenAboveRowIndex(null);
     };
 
     document.addEventListener("click", handleClickOutside);
@@ -420,51 +454,56 @@ const DataTable = ({
                   ))}
                   {(onEdit || onDelete || onView) && (
                     <ActionCell>
-                      <ActionButton
-                        onClick={(e) => handleActionClick(rowIndex, e)}
-                      >
-                        <FiMoreVertical />
-                      </ActionButton>
-
-                      {activeActionMenu === rowIndex && (
-                        <ActionMenu
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
+                      <ActionWrapper>
+                        <ActionButton
+                          aria-label="Row actions"
+                          onClick={(e) => handleActionClick(rowIndex, e)}
                         >
-                          {onView && (
-                            <ActionMenuItem
-                              onClick={() =>
-                                handleActionItemClick("view", item)
-                              }
-                            >
-                              <FiEye className="icon" />
-                              View Details
-                            </ActionMenuItem>
-                          )}
-                          {onEdit && (
-                            <ActionMenuItem
-                              onClick={() =>
-                                handleActionItemClick("edit", item)
-                              }
-                            >
-                              <FiEdit className="icon" />
-                              Edit
-                            </ActionMenuItem>
-                          )}
-                          {onDelete && (
-                            <ActionMenuItem
-                              className="danger"
-                              onClick={() =>
-                                handleActionItemClick("delete", item)
-                              }
-                            >
-                              <FiTrash2 className="icon" />
-                              Delete
-                            </ActionMenuItem>
-                          )}
-                        </ActionMenu>
-                      )}
+                          <FiMoreVertical />
+                        </ActionButton>
+
+                        {activeActionMenu === rowIndex && (
+                          <ActionMenu
+                            openAbove={openAboveRowIndex === rowIndex}
+                            initial={{ opacity: 0, scale: 0.98, y: 0 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.98, y: 0 }}
+                            transition={{ duration: 0.15 }}
+                          >
+                            {onView && (
+                              <ActionMenuItem
+                                onClick={() =>
+                                  handleActionItemClick("view", item)
+                                }
+                              >
+                                <FiEye className="icon" />
+                                View Details
+                              </ActionMenuItem>
+                            )}
+                            {onEdit && (
+                              <ActionMenuItem
+                                onClick={() =>
+                                  handleActionItemClick("edit", item)
+                                }
+                              >
+                                <FiEdit className="icon" />
+                                Edit
+                              </ActionMenuItem>
+                            )}
+                            {onDelete && (
+                              <ActionMenuItem
+                                className="danger"
+                                onClick={() =>
+                                  handleActionItemClick("delete", item)
+                                }
+                              >
+                                <FiTrash2 className="icon" />
+                                Delete
+                              </ActionMenuItem>
+                            )}
+                          </ActionMenu>
+                        )}
+                      </ActionWrapper>
                     </ActionCell>
                   )}
                 </motion.tr>

@@ -358,7 +358,7 @@ const TempleServices = () => {
         total: "—",
         bookings: "—"
       },
-      route: "/templeadmin/calendar"
+      route: "/halls-management?service=EVENT"
     }
   ], [metrics]);
 

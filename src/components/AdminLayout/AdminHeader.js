@@ -447,6 +447,8 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
                   if (window.addNewHallHandler) window.addNewHallHandler();
                 } else if (svc === 'PUJA') {
                   if (window.addNewPujaHandler) window.addNewPujaHandler();
+                } else if (svc === 'EVENT') {
+                  if (window.addNewEventHandler) window.addNewEventHandler();
                 }
               }}
               style={{
@@ -485,7 +487,9 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
                   +
                 </span>
               </div>
-              {new URLSearchParams(window.location.search).get('service')?.toUpperCase() === 'PUJA' ? 'Add New Puja' : 'Add New Hall'}
+              {new URLSearchParams(window.location.search).get('service')?.toUpperCase() === 'PUJA' ? 'Add New Puja' : 
+               new URLSearchParams(window.location.search).get('service')?.toUpperCase() === 'EVENT' ? 'Add New Event' : 
+               'Add New Hall'}
             </QuickActionButton>
           ) : (
             <QuickActionButton

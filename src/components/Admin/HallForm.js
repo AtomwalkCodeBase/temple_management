@@ -645,9 +645,9 @@ export default function HallForm({
 
   const [formData, setFormData] = useState({
     name: "",
-    service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall',
+    service_type: serviceType === 'PUJA' ? 'PUJA' : serviceType === 'EVENT' ? 'EVENT' : 'Hall',
     description: "",
-    capacity: serviceType === 'PUJA' ? "" : "",
+    capacity: (serviceType === 'PUJA' || serviceType === 'EVENT') ? "" : "",
     duration_minutes: serviceType === 'PUJA' ? "" : "0"
   });
   const currentTempleId = useMemo(() => getCurrentTempleId() || templeId, [templeId]);
@@ -659,7 +659,7 @@ export default function HallForm({
       setServiceId(editService.service_id || editService.id || "");
       setFormData({
         name: editService.name || "",
-        service_type: editService.service_type || (serviceType === 'PUJA' ? 'PUJA' : 'Hall'),
+        service_type: editService.service_type || (serviceType === 'PUJA' ? 'PUJA' : serviceType === 'EVENT' ? 'EVENT' : 'Hall'),
         description: editService.description || "",
         capacity: editService.capacity ? String(editService.capacity) : "",
         duration_minutes: editService.duration_minutes ? String(editService.duration_minutes) : "0"
@@ -725,9 +725,9 @@ export default function HallForm({
       setServiceId("");
       setFormData({
         name: "",
-        service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall',
+        service_type: serviceType === 'PUJA' ? 'PUJA' : serviceType === 'EVENT' ? 'EVENT' : 'Hall',
         description: "",
-        capacity: serviceType === 'PUJA' ? "" : "",
+        capacity: (serviceType === 'PUJA' || serviceType === 'EVENT') ? "" : "",
         duration_minutes: serviceType === 'PUJA' ? "" : "0"
       });
       setExistingImages({
@@ -762,8 +762,8 @@ export default function HallForm({
   const steps = [
     { 
       id: 0, 
-      label: serviceType === 'PUJA' ? "Service Details" : "Hall Information", 
-      icon: serviceType === 'PUJA' ? "🕉️" : "🏛️" 
+      label: serviceType === 'PUJA' ? "Service Details" : serviceType === 'EVENT' ? "Event Information" : "Hall Information", 
+      icon: serviceType === 'PUJA' ? "🕉️" : serviceType === 'EVENT' ? "🎉" : "🏛️" 
     },
     { 
       id: 1, 
@@ -772,7 +772,7 @@ export default function HallForm({
     }
   ];
 
-  const canSubmit = serviceType === 'PUJA' ? 
+  const canSubmit = (serviceType === 'PUJA' || serviceType === 'EVENT') ? 
     Boolean(formData.name) : 
     Boolean(formData.name && formData.capacity);
 
@@ -803,6 +803,8 @@ export default function HallForm({
     if (!canSubmit) {
       setError(serviceType === 'PUJA' ? 
         "Please enter the puja name" : 
+        serviceType === 'EVENT' ?
+        "Please enter the event name" :
         "Please fill in all required fields");
       setSaving(false);
       return;
@@ -813,10 +815,10 @@ export default function HallForm({
         call_mode: isEditing ? "UPDATE" : "ADD",
         temple_id: currentTempleId || templeId,
         name: formData.name.trim(),
-        service_type: serviceType === 'PUJA' ? 'PUJA' : 'Hall',
+        service_type: serviceType === 'PUJA' ? 'PUJA' : serviceType === 'EVENT' ? 'EVENT' : 'Hall',
         description: formData.description.trim() || "",
         base_price: 0,
-        capacity: serviceType === 'PUJA' ? 0 : Number(formData.capacity),
+        capacity: (serviceType === 'PUJA' || serviceType === 'EVENT') ? 0 : Number(formData.capacity),
         duration_minutes: serviceType === 'PUJA' ? 0 : 0,
         service_variation_list: []
       };
@@ -831,6 +833,8 @@ export default function HallForm({
       if (isEditing) {
         setSuccess(serviceType === 'PUJA' ? 
           "Puja service updated successfully!" : 
+          serviceType === 'EVENT' ?
+          "Event updated successfully!" :
           "Hall updated successfully!");
         
         // For editing, call onInlineUpdate to refresh the parent list
@@ -856,7 +860,7 @@ export default function HallForm({
             const listResp = await getTempleServicesList();
             const raw = Array.isArray(listResp) ? listResp : Array.isArray(listResp?.data) ? listResp.data : Array.isArray(listResp?.results) ? listResp.results : [];
             const candidates = raw.filter(s => String(s?.temple_id) === String(currentTempleId || templeId))
-                                  .filter(s => String(s?.service_type || '').toUpperCase() === (serviceType === 'PUJA' ? 'PUJA' : 'HALL'))
+                                  .filter(s => String(s?.service_type || '').toUpperCase() === (serviceType === 'PUJA' ? 'PUJA' : serviceType === 'EVENT' ? 'EVENT' : 'HALL'))
                                   .filter(s => String(s?.name || '').trim() === serviceData.name);
             if (candidates.length > 0) {
               newServiceId = candidates[0].service_id || candidates[0].id;
@@ -882,6 +886,8 @@ export default function HallForm({
         } catch {}
         setSuccess(serviceType === 'PUJA' ? 
           "Puja service created successfully! Now add some beautiful images." : 
+          serviceType === 'EVENT' ?
+          "Event created successfully! Now add some stunning photos." :
           "Hall created successfully! Now add some stunning photos.");
         
         setTimeout(() => {
@@ -943,7 +949,7 @@ export default function HallForm({
       }
 
     } catch (err) {
-      setError(err.message || "Failed to upload images. Please check your files and try again.");
+      setError(err.message || "Image Size must be less than 1MB. Please check your files and try again.");
     } finally {
       setSaving(false);
     }
@@ -1030,8 +1036,8 @@ export default function HallForm({
           <TitleContent>
             <Title>
               {isEditing ? 
-                `Edit ${serviceType === 'PUJA' ? 'Puja' : 'Hall'}` : 
-                `Create New ${serviceType === 'PUJA' ? 'Puja' : 'Hall'}`
+                `Edit ${serviceType === 'PUJA' ? 'Puja' : serviceType === 'EVENT' ? 'Event' : 'Hall'}` : 
+                `Create New ${serviceType === 'PUJA' ? 'Puja' : serviceType === 'EVENT' ? 'Event' : 'Hall'}`
               }
             </Title>
             <Subtitle>
@@ -1075,6 +1081,8 @@ export default function HallForm({
             <SectionDescription>
               {serviceType === 'PUJA' ? 
                 'Provide essential details about your puja service to help devotees understand what you offer.' :
+                serviceType === 'EVENT' ?
+                'Tell us about your event so we can help you attract the right attendees.' :
                 'Tell us about your hall space so we can help you attract the right events.'
               }
             </SectionDescription>
@@ -1082,7 +1090,7 @@ export default function HallForm({
             <FormGrid>
               <FormGroup>
                 <Label required>
-                  {serviceType === 'PUJA' ? 'Puja Name' : 'Hall Name'}
+                  {serviceType === 'PUJA' ? 'Puja Name' : serviceType === 'EVENT' ? 'Event Name' : 'Hall Name'}
                 </Label>
                 <Input 
                   name="name" 
@@ -1090,13 +1098,15 @@ export default function HallForm({
                   onChange={handleChange} 
                   placeholder={serviceType === 'PUJA' ? 
                     'e.g., Ganesha Puja, Satyanarayan Katha' : 
+                    serviceType === 'EVENT' ?
+                    'e.g., Diwali Celebration, Community Festival' :
                     'e.g., Grand Wedding Hall, Meditation Hall'
                   }
                   required
                 />
               </FormGroup>
 
-              {serviceType !== 'PUJA' && (
+              {serviceType === 'HALL' && (
                 <FormGroup>
                   <Label required>Guest Capacity</Label>
                   <Input 
@@ -1119,6 +1129,8 @@ export default function HallForm({
                   onChange={handleChange} 
                   placeholder={serviceType === 'PUJA' ? 
                     'Describe the puja rituals, duration, what\'s included, special arrangements...' : 
+                    serviceType === 'EVENT' ?
+                    'Describe your event details, activities, what\'s included, special arrangements...' :
                     'Describe your hall\'s unique features, amenities, ideal events, special services...'
                   }
                 />
@@ -1132,7 +1144,7 @@ export default function HallForm({
             <ImageSection>
               <SectionTitle>Upload Photos</SectionTitle>
               <SectionDescription>
-                Showcase your {serviceType === 'PUJA' ? 'puja setup' : 'hall'} with high-quality images. 
+                Showcase your {serviceType === 'PUJA' ? 'puja setup' : serviceType === 'EVENT' ? 'event' : 'hall'} with high-quality images. 
                 The main photo will be featured prominently in search results.
               </SectionDescription>
               
@@ -1164,19 +1176,14 @@ export default function HallForm({
         </Button>
         
         <div style={{ display: 'flex', gap: '16px' }}>
-          {currentStep === 0 && (
+          {currentStep === 0 && isEditing && (
             <>
               <Button 
                 className="secondary"
                 onClick={async () => {
                   setError("");
                   setSuccess("");
-                  if (!isEditing && !serviceId) {
-                    // Create the service first, handleSubmit will navigate to step 1 on success
-                    await handleSubmit();
-                  } else {
-                    setCurrentStep(1);
-                  }
+                  setCurrentStep(1);
                 }}
               >
                 Skip to Photos →
@@ -1205,7 +1212,7 @@ export default function HallForm({
                   {isEditing ? 'Updating...' : 'Creating...'}
                 </>
               ) : (
-                `${isEditing ? 'Update' : 'Create'} ${serviceType === 'PUJA' ? 'Puja' : 'Hall'}`
+                `${isEditing ? 'Update' : 'Create'} ${serviceType === 'PUJA' ? 'Puja' : serviceType === 'EVENT' ? 'Event' : 'Hall'}`
               )
             ) : (
               saving ? (

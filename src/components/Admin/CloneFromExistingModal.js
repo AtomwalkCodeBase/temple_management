@@ -109,6 +109,14 @@ export default function CloneFromExistingModal({ isOpen, onClose, targetService,
   const [includeRefund, setIncludeRefund] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
+  // Friendly label for current service type (no hooks to avoid conditional usage)
+  const labelForType = (() => {
+    const st = String(serviceType || '').toUpperCase();
+    if (st === 'PUJA') return 'Puja';
+    if (st === 'EVENT') return 'Event';
+    return 'Hall';
+  })();
+
   useEffect(() => {
     if (!isOpen) return;
     const fetchList = async () => {
@@ -238,7 +246,7 @@ export default function CloneFromExistingModal({ isOpen, onClose, targetService,
       <Modal>
         <Header>
           <div>
-            <h3>Clone policies from an existing {String(serviceType).toUpperCase()==='PUJA'?'Puja':'Hall'}</h3>
+            <h3>Clone policies from an existing {labelForType}</h3>
             <p>Select a source to import packages and policies</p>
           </div>
           <CloseBtn onClick={onClose}><X size={16} /></CloseBtn>
@@ -246,7 +254,7 @@ export default function CloneFromExistingModal({ isOpen, onClose, targetService,
         <Body>
           <Row>
             <Select value={selectedId} onChange={e=>setSelectedId(e.target.value)}>
-              <option value="">Select {String(serviceType).toUpperCase()==='PUJA'?'Puja':'Hall'} to clone from</option>
+              <option value="">Select {labelForType} to clone from</option>
               {filtered.map(s=> (
                 <option key={s.service_id} value={s.service_id}>{s.name}</option>
               ))}

@@ -354,10 +354,11 @@ const PackagesPanel = ({
 
   const serviceType = String((selectedHall || hall)?.service_type || '').toUpperCase();
   const isPuja = serviceType === 'PUJA';
+  const isEvent = serviceType === 'EVENT';
 
   // Dedupe by normalized logical signature
   const normalizeSignature = (pkg) => {
-    const typeKey = isPuja
+    const typeKey = (isPuja || isEvent)
       ? String(pkg.slot_name || pkg.price_type || '').trim().toUpperCase()
       : String(pkg.price_type || '').trim().toUpperCase();
     const normalizeTime = (t) => {
@@ -408,6 +409,25 @@ const PackagesPanel = ({
           return priceType || 'Puja Slot';
       }
     }
+    if (isEvent) {
+      // For EVENT, prioritize slotName (full name) over priceType (short name)
+      if (slotName && slotName.trim()) {
+        return slotName.trim();
+      }
+      // Fallback to mapping short price_type to full names
+      switch (priceType) {
+        case "Individual-1":
+          return "Individual Event (1 person)";
+        case "Partner-2":
+          return "Partner Event (2 person)";
+        case "Family-5":
+          return "Family Event (5 person)";
+        case "Joint-10":
+          return "Joint Family Event (10 person)";
+        default:
+          return priceType || 'Event Slot';
+      }
+    }
     switch (priceType) {
       case "HOURLY":
         return "Hourly Package";
@@ -444,11 +464,17 @@ const PackagesPanel = ({
         <Header>
           <HeaderLeft>
             <Title>
-              {list.length} Package{list.length !== 1 ? "s" : ""}
+              {list.length} {isEvent ? 'Event Slot' : isPuja ? 'Puja Slot' : 'Package'}{list.length !== 1 ? "s" : ""}
             </Title>
-            <Subtitle>Manage time slots and pricing variations</Subtitle>
+            <Subtitle>
+              {isEvent ? 'Manage event slots and pricing variations' : 
+               isPuja ? 'Manage puja slots and pricing variations' : 
+               'Manage time slots and pricing variations'}
+            </Subtitle>
           </HeaderLeft>
-          <PrimaryButton onClick={() => onAdd(hall)}>Add Package</PrimaryButton>
+          <PrimaryButton onClick={() => onAdd(hall)}>
+            {isEvent ? 'Add Event Slot' : isPuja ? 'Add Puja Slot' : 'Add Package'}
+          </PrimaryButton>
         </Header>
 
         {list.length > 0 ? (
@@ -511,7 +537,7 @@ const PackagesPanel = ({
 
             {list.length > 6 && (
               <MorePackages>
-                +{list.length - 6} more package
+                +{list.length - 6} more {isEvent ? 'event slot' : isPuja ? 'puja slot' : 'package'}
                 {list.length - 6 !== 1 ? "s" : ""}
               </MorePackages>
             )}
@@ -531,9 +557,13 @@ const PackagesPanel = ({
                 <line x1="7" y1="7" x2="7.01" y2="7" />
               </svg>
             </EmptyIcon>
-            <EmptyTitle>No packages defined</EmptyTitle>
+            <EmptyTitle>
+              {isEvent ? 'No event slots defined' : isPuja ? 'No puja slots defined' : 'No packages defined'}
+            </EmptyTitle>
             <EmptyDescription>
-              Add your first package to get started with pricing and availability
+              {isEvent ? 'Add your first event slot to get started with pricing and availability' :
+               isPuja ? 'Add your first puja slot to get started with pricing and availability' :
+               'Add your first package to get started with pricing and availability'}
             </EmptyDescription>
           </EmptyState>
         )}

@@ -227,14 +227,33 @@ const HallsManagement = () => {
       const expected = String(serviceType || '').toUpperCase();
       const typeMatches = (svc) => {
         const raw = (svc?.service_type || '').toString().toUpperCase();
-        if (raw === 'PUJA' || raw === 'HALL') return raw === expected;
+        if (raw === 'PUJA' || raw === 'HALL' || raw === 'EVENT') return raw === expected;
         const str = (svc?.service_type_str || '').toString().toUpperCase();
-        return expected === 'PUJA' ? str.includes('PUJA') : str.includes('HALL');
+        if (expected === 'PUJA') return str.includes('PUJA');
+        if (expected === 'EVENT') return str.includes('EVENT');
+        return str.includes('HALL');
       };
       const hallsOnly = list
         .filter(typeMatches)
         .filter(service => !templeId || String(service?.temple_id) === String(templeId));
-      setHallServices(hallsOnly);
+      // Preserve current gallery order; append any new services to the end
+      setHallServices(prev => {
+        const getKey = (s) => String(s?.service_id ?? s?.id ?? s?.name ?? '').trim();
+        const indexOfPrev = new Map();
+        prev.forEach((item, idx) => indexOfPrev.set(getKey(item), idx));
+
+        const fetched = [...hallsOnly];
+        // Stable sort: items seen before keep their relative order; new ones go to the end
+        fetched.sort((a, b) => {
+          const ka = getKey(a);
+          const kb = getKey(b);
+          const ia = indexOfPrev.has(ka) ? indexOfPrev.get(ka) : Number.POSITIVE_INFINITY;
+          const ib = indexOfPrev.has(kb) ? indexOfPrev.get(kb) : Number.POSITIVE_INFINITY;
+          if (ia === ib) return 0; // keep fetched relative order for equally new/unknown items
+          return ia - ib;
+        });
+        return fetched;
+      });
     } catch (e) {
       setHallServices([]);
     } finally {
@@ -260,10 +279,11 @@ const HallsManagement = () => {
       const expected = serviceType.toUpperCase();
       const normalizeType = (svc) => {
         const typeRaw = (svc?.service_type || "").toString().toUpperCase();
-        if (typeRaw === "PUJA" || typeRaw === "HALL") return typeRaw;
+        if (typeRaw === "PUJA" || typeRaw === "HALL" || typeRaw === "EVENT") return typeRaw;
         const typeStr = (svc?.service_type_str || "").toString().toUpperCase();
         if (typeStr.includes("PUJA")) return "PUJA";
         if (typeStr.includes("HALL")) return "HALL";
+        if (typeStr.includes("EVENT")) return "EVENT";
         return "";
       };
       
@@ -305,10 +325,12 @@ const HallsManagement = () => {
   useEffect(() => {
     window.addNewHallHandler = () => { setEditService(null); setShowHallWizard(true); };
     window.addNewPujaHandler = () => { setEditService(null); setShowPujaWizard(true); };
+    window.addNewEventHandler = () => { setEditService(null); setShowHallWizard(true); };
 
     return () => {
       delete window.addNewHallHandler;
       delete window.addNewPujaHandler;
+      delete window.addNewEventHandler;
     };
   }, []);
 
@@ -414,7 +436,9 @@ const HallsManagement = () => {
           <ContentCard>
             <div className="card-header">
               <div className="card-title">
-                {serviceType === 'PUJA' ? 'Puja Services Bookings' : 'Hall Services Bookings'}
+                {serviceType === 'PUJA' ? 'Puja Services Bookings' : 
+                 serviceType === 'EVENT' ? 'Event Services Bookings' : 
+                 'Hall Services Bookings'}
               </div>
             </div>
             
@@ -516,7 +540,7 @@ const HallsManagement = () => {
                           <p>
                             {bookingsLoading 
                               ? "Loading bookings..." 
-                              : `No ${serviceType === 'PUJA' ? 'puja' : 'hall'} bookings found for the selected criteria.`}
+                              : `No ${serviceType === 'PUJA' ? 'puja' : serviceType === 'EVENT' ? 'event' : 'hall'} bookings found for the selected criteria.`}
                           </p>
                         </EmptyState>
                       </td>
@@ -550,7 +574,8 @@ const HallsManagement = () => {
                         setHallServices(prev => {
                           const exists = prev.some(h => h.service_id === payload.service_id);
                           if (exists) return prev;
-                          return [payload, ...prev];
+                          // Append new creation at the end so it appears last in the gallery
+                          return [...prev, payload];
                         });
                         return;
                       }

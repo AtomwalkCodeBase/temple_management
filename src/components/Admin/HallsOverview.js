@@ -604,7 +604,8 @@ const HallsOverview = ({
     const result = [];
     for (const pkg of packages) {
       const isPuja = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
-      const key = normalizeSignature(pkg, isPuja);
+      const isEvent = String(selectedHall?.service_type || '').toUpperCase() === 'EVENT';
+      const key = normalizeSignature(pkg, isPuja || isEvent);
       if (!seen.has(key)) {
         seen.add(key);
         result.push(pkg);
@@ -698,9 +699,9 @@ const HallsOverview = ({
       // For policy-only updates, avoid sending variations to prevent backend duplication
       const isPujaAdv = String(hall?.service_type || '').toUpperCase() === 'PUJA';
       
-      // For PUJA, set capacity to max_participant of the first variation (for policy updates)
+      // For PUJA and EVENT, set capacity to max_participant of the first variation (for policy updates)
       let serviceCapacity = hall.capacity;
-      if (isPujaAdv && hall.service_variation_list && hall.service_variation_list.length > 0) {
+      if ((isPujaAdv || String(hall?.service_type || '').toUpperCase() === 'EVENT') && hall.service_variation_list && hall.service_variation_list.length > 0) {
         const firstVariation = hall.service_variation_list[0];
         serviceCapacity = typeof firstVariation.max_participant === 'string' 
           ? parseInt(firstVariation.max_participant) 
@@ -718,8 +719,8 @@ const HallsOverview = ({
         // Keep existing refund policy when updating advance policy - ensure it's always included
         refund_policy_id: hall.refund_policy_id ?? hall.refund_policy_data?.id,
         base_price: typeof hall.base_price === 'string' ? parseFloat(hall.base_price) : hall.base_price,
-        capacity: isPujaAdv ? serviceCapacity : (typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity),
-        duration_minutes: isPujaAdv ? 0 : (typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes),
+        capacity: (isPujaAdv || String(hall?.service_type || '').toUpperCase() === 'EVENT') ? serviceCapacity : (typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity),
+        duration_minutes: (isPujaAdv || String(hall?.service_type || '').toUpperCase() === 'EVENT') ? 0 : (typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes),
         // Never default pricing rule to a global id
         pricing_rule_id: hall.pricing_rule_id ?? hall.pricing_rule_data?.id,
         // Include empty service_variation_list to satisfy backend requirements
@@ -763,10 +764,11 @@ const HallsOverview = ({
     try {
       // For policy-only updates, avoid sending variations to prevent backend duplication
       const isPujaRef = String(hall?.service_type || '').toUpperCase() === 'PUJA';
+      const isEventRef = String(hall?.service_type || '').toUpperCase() === 'EVENT';
       
-      // For PUJA, set capacity to max_participant of the first variation (for policy updates)
+      // For PUJA and EVENT, set capacity to max_participant of the first variation (for policy updates)
       let serviceCapacity = hall.capacity;
-      if (isPujaRef && hall.service_variation_list && hall.service_variation_list.length > 0) {
+      if ((isPujaRef || isEventRef) && hall.service_variation_list && hall.service_variation_list.length > 0) {
         const firstVariation = hall.service_variation_list[0];
         serviceCapacity = typeof firstVariation.max_participant === 'string' 
           ? parseInt(firstVariation.max_participant) 
@@ -784,8 +786,8 @@ const HallsOverview = ({
         adv_policy_id: hall.adv_policy_id ?? hall.adv_policy_data?.id,
         refund_policy_id: selectedPolicyId,
         base_price: typeof hall.base_price === 'string' ? parseFloat(hall.base_price) : hall.base_price,
-        capacity: isPujaRef ? serviceCapacity : (typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity),
-        duration_minutes: isPujaRef ? 0 : (typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes),
+        capacity: (isPujaRef || isEventRef) ? serviceCapacity : (typeof hall.capacity === 'string' ? parseInt(hall.capacity) : hall.capacity),
+        duration_minutes: (isPujaRef || isEventRef) ? 0 : (typeof hall.duration_minutes === 'string' ? parseInt(hall.duration_minutes) : hall.duration_minutes),
         // Never default pricing rule to a global id
         pricing_rule_id: hall.pricing_rule_id ?? hall.pricing_rule_data?.id,
         // Include empty service_variation_list to satisfy backend requirements
@@ -878,9 +880,10 @@ const HallsOverview = ({
 
     // Idempotency key per new/update payload
     const isPuja = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
+    const isEvent = String(selectedHall?.service_type || '').toUpperCase() === 'EVENT';
     const key = packageData.id != null
       ? `upd:${packageData.id}`
-      : `add:${(isPuja ? (packageData.slot_name || packageData.price_type) : packageData.price_type)}|${packageData.start_time}|${packageData.end_time}|${packageData.no_hours ?? ''}|${packageData.max_no_per_day}|${packageData.max_participant}|${packageData.base_price}`;
+      : `add:${((isPuja || isEvent) ? (packageData.slot_name || packageData.price_type) : packageData.price_type)}|${packageData.start_time}|${packageData.end_time}|${packageData.no_hours ?? ''}|${packageData.max_no_per_day}|${packageData.max_participant}|${packageData.base_price}`;
     const now = Date.now();
     if (lastPackageSubmitRef.current.key === key && now - lastPackageSubmitRef.current.at < 1500) {
       return; // ignore duplicate rapid submissions
@@ -895,15 +898,16 @@ const HallsOverview = ({
       if (packageData.id) {
         // Update existing package - preserve existing fields and update with new data
         const isPujaUpdate = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
+        const isEventUpdate = String(selectedHall?.service_type || '').toUpperCase() === 'EVENT';
         // Build a tentative merged package to compute signature
         const mergedCandidate = (() => {
           const existing = currentPackages.find(p => p.id === packageData.id) || {};
           return { ...existing, ...packageData, id: packageData.id };
         })();
-        const newSig = normalizeSignature(mergedCandidate, isPujaUpdate);
+        const newSig = normalizeSignature(mergedCandidate, isPujaUpdate || isEventUpdate);
         updatedPackages = currentPackages
           // First, remove any other package that would collide with the updated signature
-          .filter(pkg => pkg.id === packageData.id || normalizeSignature(pkg, isPujaUpdate) !== newSig)
+          .filter(pkg => pkg.id === packageData.id || normalizeSignature(pkg, isPujaUpdate || isEventUpdate) !== newSig)
           // Then, map to apply the update
           .map(pkg => {
             if (pkg.id === packageData.id) {
@@ -918,17 +922,17 @@ const HallsOverview = ({
       } else {
         // Add new package - ensure it has the correct structure
         // Short-circuit if a logically identical package already exists
-        const newSig = normalizeSignature({ ...packageData, pricing_rule_id: packageData.pricing_rule_id ?? selectedHall.pricing_rule_id }, isPuja);
-        const exists = (currentPackages || []).some(p => normalizeSignature(p, isPuja) === newSig);
+        const newSig = normalizeSignature({ ...packageData, pricing_rule_id: packageData.pricing_rule_id ?? selectedHall.pricing_rule_id }, isPuja || isEvent);
+        const exists = (currentPackages || []).some(p => normalizeSignature(p, isPuja || isEvent) === newSig);
         if (exists) {
           setPackageModalOpen(false);
           setIsSavingPackage(false);
           return;
         }
-        const newPackage = isPuja ? {
+        const newPackage = (isPuja || isEvent) ? {
           id: null,
           slot_name: packageData.slot_name ?? packageData.price_type,
-          price_type: "FIXED", // Use fixed short value for backend compatibility
+          price_type: packageData.price_type, // Use actual price_type from form (e.g., "Family-5")
           base_price: packageData.base_price,
           pricing_rule_id: packageData.pricing_rule_id,
           start_time: packageData.start_time,
@@ -936,7 +940,7 @@ const HallsOverview = ({
           max_no_per_day: packageData.max_no_per_day,
           max_participant: packageData.max_participant,
           no_hours: null,
-          available_priests: Array.isArray(packageData.available_priests) ? packageData.available_priests : undefined
+          available_priests: isPuja && Array.isArray(packageData.available_priests) ? packageData.available_priests : undefined
         } : {
           id: null,
           price_type: packageData.price_type,
@@ -964,12 +968,12 @@ const HallsOverview = ({
       if (packageData.id != null) {
         targetPkg.id = packageData.id;
       }
-      const cleanedSingle = cleanPackageForAPI(targetPkg, selectedHall.pricing_rule_id, isPuja);
+      const cleanedSingle = cleanPackageForAPI(targetPkg, selectedHall.pricing_rule_id, isPuja || isEvent);
       
-      // For PUJA, set capacity to max_participant of the current package being added/updated
+      // For PUJA and EVENT, set capacity to max_participant of the current package being added/updated
       let serviceCapacity = selectedHall.capacity;
       let serviceDurationMinutes = selectedHall.duration_minutes;
-      if (isPuja) {
+      if (isPuja || isEvent) {
         serviceCapacity = typeof packageData.max_participant === 'string' 
           ? parseInt(packageData.max_participant) 
           : packageData.max_participant || 0;
@@ -991,9 +995,9 @@ const HallsOverview = ({
         adv_policy_id: selectedHall.adv_policy_id ?? selectedHall.adv_policy_data?.id ?? null,
         refund_policy_id: selectedHall.refund_policy_id ?? selectedHall.refund_policy_data?.id ?? null,
         base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : selectedHall.base_price,
-        capacity: isPuja ? serviceCapacity : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
-        // For PUJA, send calculated duration_minutes
-        duration_minutes: isPuja ? serviceDurationMinutes : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
+        capacity: (isPuja || isEvent) ? serviceCapacity : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
+        // For PUJA and EVENT, send calculated duration_minutes
+        duration_minutes: (isPuja || isEvent) ? serviceDurationMinutes : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
         pricing_rule_id: selectedHall.pricing_rule_id ?? selectedHall.pricing_rule_data?.id ?? null,
         service_variation_list: [cleanedSingle]
       };
@@ -1010,7 +1014,7 @@ const HallsOverview = ({
       // Prefer items with ids when duplicates by signature exist
       const buckets = new Map();
       for (const p of responsePackages) {
-        const sig = normalizeSignature(p, isPuja);
+        const sig = normalizeSignature(p, isPuja || isEvent);
         const existing = buckets.get(sig);
         if (!existing) {
           buckets.set(sig, p);
@@ -1059,7 +1063,8 @@ const HallsOverview = ({
       
       // Clean packages for API - remove extra fields that API doesn't expect and ensure numeric types
       const isPuja = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
-      const cleanedPackages = dedupePackages(updatedPackages).map(pkg => cleanPackageForAPI(pkg, selectedHall.pricing_rule_id, isPuja));
+      const isEvent = String(selectedHall?.service_type || '').toUpperCase() === 'EVENT';
+      const cleanedPackages = dedupePackages(updatedPackages).map(pkg => cleanPackageForAPI(pkg, selectedHall.pricing_rule_id, isPuja || isEvent));
       
       // Prepare the service data for API call
       const serviceData = {
@@ -1072,8 +1077,8 @@ const HallsOverview = ({
         adv_policy_id: selectedHall.adv_policy_id ?? selectedHall.adv_policy_data?.id ?? null,
         refund_policy_id: selectedHall.refund_policy_id ?? selectedHall.refund_policy_data?.id ?? null,
         base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : selectedHall.base_price,
-        capacity: isPuja ? 0 : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
-        duration_minutes: isPuja ? 0 : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
+        capacity: (isPuja || isEvent) ? 0 : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
+        duration_minutes: (isPuja || isEvent) ? 0 : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
         pricing_rule_id: selectedHall.pricing_rule_id ?? selectedHall.pricing_rule_data?.id ?? null,
         service_variation_list: cleanedPackages
       };
@@ -1086,7 +1091,7 @@ const HallsOverview = ({
       const uniq = [];
       const seen = new Set();
       for (const p of respPkgs) {
-        const sig = normalizeSignature(p, isPuja);
+        const sig = normalizeSignature(p, isPuja || isEvent);
         if (!seen.has(sig)) {
           seen.add(sig);
           uniq.push(p);
@@ -1121,13 +1126,13 @@ const HallsOverview = ({
 
       <ContentCard>
         <HallGalleryHeader>
-          <div className="card-title">{serviceType === 'PUJA' ? 'Puja Gallery' : 'Hall Gallery'}</div>
+          <div className="card-title">{serviceType === 'PUJA' ? 'Puja Gallery' : serviceType === 'EVENT' ? 'Event Gallery' : 'Hall Gallery'}</div>
           <GalleryControls>
             <SearchInput>
               <Search size={16} />
               <input 
                 type="text" 
-                placeholder={serviceType === 'PUJA' ? 'Search pujas...' : 'Search halls...'} 
+                placeholder={serviceType === 'PUJA' ? 'Search pujas...' : serviceType === 'EVENT' ? 'Search events...' : 'Search halls...'} 
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
               />
@@ -1236,18 +1241,20 @@ const HallsOverview = ({
                     <HallBody>
                       <HallHeaderRow>
                         <HallTitle>{hall.name}</HallTitle>
-                        <EditHeaderButton onClick={() => onEditHall?.(hall)} title="Edit hall">
+                        <EditHeaderButton onClick={() => onEditHall?.(hall)} title={`Edit ${serviceType === 'PUJA' ? 'puja' : serviceType === 'EVENT' ? 'event' : 'hall'}`}>
                           <Edit3 size={14} /> Edit
                         </EditHeaderButton>
                       </HallHeaderRow>
                       <HallDescription>
-                        {hall.description || 'Premium sacred hall for ceremonies and gatherings'}
+                        {hall.description || (serviceType === 'PUJA' ? 'Traditional puja service with experienced priests' : 
+                         serviceType === 'EVENT' ? 'Community event with cultural activities' : 
+                         'Premium sacred hall for ceremonies and gatherings')}
                       </HallDescription>
 
                       <HallFeatures>
                         <FeatureTag>
                           <Users size={10} />
-                          Capacity: {hall.capacity || '—'}
+                          {serviceType === 'EVENT' ? 'Seats' : 'Capacity'}: {hall.capacity || '—'}
                         </FeatureTag>
                       </HallFeatures>
 
@@ -1342,10 +1349,10 @@ const HallsOverview = ({
                     fontWeight: "bold"
                   }}
                 >
-                  {serviceType === 'PUJA' ? 'P' : 'H'}
+                  {serviceType === 'PUJA' ? 'P' : serviceType === 'EVENT' ? 'E' : 'H'}
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>{serviceType === 'PUJA' ? 'No pujas found' : 'No halls found'}</div>
-                <div style={{ fontSize: '14px' }}>{serviceType === 'PUJA' ? 'Create your first puja to get started' : 'Create your first hall to get started'}</div>
+                <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>{serviceType === 'PUJA' ? 'No pujas found' : serviceType === 'EVENT' ? 'No events found' : 'No halls found'}</div>
+                <div style={{ fontSize: '14px' }}>{serviceType === 'PUJA' ? 'Create your first puja to get started' : serviceType === 'EVENT' ? 'Create your first event to get started' : 'Create your first hall to get started'}</div>
               </div>
             )}
           </HallGrid>

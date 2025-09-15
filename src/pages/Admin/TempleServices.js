@@ -229,6 +229,7 @@ const TempleServices = () => {
   const [metrics, setMetrics] = useState({
     HALL: { total: 0, bookings: 0 },
     PUJA: { total: 0, bookings: 0 },
+    EVENT: { total: 0, bookings: 0 },
     TOTALS: { services: 0, bookings: 0 },
   });
 
@@ -246,9 +247,10 @@ const TempleServices = () => {
           : Array.isArray(svcResp?.services)
           ? svcResp.services
           : [];
-        const byTemple = svcList.filter(s => !templeId || s?.temple_id === templeId);
+        const byTemple = svcList.filter(s => !templeId || String(s?.temple_id) === String(templeId));
         const totalHall = byTemple.filter(s => (s?.service_type || "").toString().toUpperCase() === "HALL").length;
         const totalPuja = byTemple.filter(s => (s?.service_type || "").toString().toUpperCase() === "PUJA").length;
+        const totalEvent = byTemple.filter(s => (s?.service_type || "").toString().toUpperCase() === "EVENT").length;
 
         // Build service_id sets per type for accurate booking attribution
         const hallServiceIds = new Set(
@@ -260,6 +262,12 @@ const TempleServices = () => {
         const pujaServiceIds = new Set(
           byTemple
             .filter(s => (s?.service_type || "").toString().toUpperCase() === "PUJA")
+            .map(s => s?.service_id || s?.service_ref_code || s?.id)
+            .filter(Boolean)
+        );
+        const eventServiceIds = new Set(
+          byTemple
+            .filter(s => (s?.service_type || "").toString().toUpperCase() === "EVENT")
             .map(s => s?.service_id || s?.service_ref_code || s?.id)
             .filter(Boolean)
         );
@@ -275,15 +283,16 @@ const TempleServices = () => {
           : [];
 
         // Defensive temple guard
-        const templeScoped = list.filter(b => (b?.service_data?.temple_id || "") === (templeId || ""));
+        const templeScoped = list.filter(b => String(b?.service_data?.temple_id || "") === String(templeId || ""));
 
         // Normalize type since backend may return different display strings
         const normalizeType = (svc) => {
           const typeRaw = (svc?.service_type || "").toString().toUpperCase();
-          if (typeRaw === "PUJA" || typeRaw === "HALL") return typeRaw;
+          if (typeRaw === "PUJA" || typeRaw === "HALL" || typeRaw === "EVENT") return typeRaw;
           const typeStr = (svc?.service_type_str || "").toString().toUpperCase();
           if (typeStr.includes("PUJA")) return "PUJA";
           if (typeStr.includes("HALL")) return "HALL";
+          if (typeStr.includes("EVENT")) return "EVENT";
           return "";
         };
 
@@ -301,13 +310,21 @@ const TempleServices = () => {
           return type === "PUJA" && sid && pujaServiceIds.has(sid);
         }).length;
 
+        const eventBookings = templeScoped.filter(b => {
+          const svc = b?.service_data || {};
+          const type = normalizeType(svc);
+          const sid = svc?.service_id;
+          return type === "EVENT" && sid && eventServiceIds.has(sid);
+        }).length;
+
         setMetrics({
           HALL: { total: totalHall, bookings: hallBookings },
           PUJA: { total: totalPuja, bookings: pujaBookings },
-          TOTALS: { services: totalHall + totalPuja, bookings: hallBookings + pujaBookings },
+          EVENT: { total: totalEvent, bookings: eventBookings },
+          TOTALS: { services: totalHall + totalPuja + totalEvent, bookings: hallBookings + pujaBookings + eventBookings },
         });
       } catch (e) {
-        setMetrics({ HALL: { total: 0, bookings: 0 }, PUJA: { total: 0, bookings: 0 } });
+        setMetrics({ HALL: { total: 0, bookings: 0 }, PUJA: { total: 0, bookings: 0 }, EVENT: { total: 0, bookings: 0 }, TOTALS: { services: 0, bookings: 0 } });
       }
     };
     fetchData();
@@ -355,8 +372,8 @@ const TempleServices = () => {
       textColor: "#9333ea",
       hoverColor: "rgba(147, 51, 234, 0.3)",
       metrics: {
-        total: "—",
-        bookings: "—"
+        total: String(metrics.EVENT.total || 0),
+        bookings: String(metrics.EVENT.bookings || 0)
       },
       route: "/halls-management?service=EVENT"
     }

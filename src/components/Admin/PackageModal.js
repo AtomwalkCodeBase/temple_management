@@ -412,8 +412,18 @@ const PackageModal = ({
   const [pricingRules, setPricingRules] = useState([]);
   const serviceType = String(hall?.service_type || '').toUpperCase();
   const isPuja = serviceType === 'PUJA';
+  const isEvent = serviceType === 'EVENT';
 
   const mapPriceTypeToFullLabel = (priceType) => {
+    if (isEvent) {
+      switch (String(priceType || '').trim()) {
+        case 'Individual-1': return 'Individual Event (1 person)';
+        case 'Partner-2': return 'Partner Event (2 person)';
+        case 'Family-5': return 'Family Event (5 person)';
+        case 'Joint-10': return 'Joint Family Event (10 person)';
+        default: return '';
+      }
+    }
     switch (String(priceType || '').trim()) {
       case 'Individual-1': return 'Individual Puja (1 person)';
       case 'Partner-2': return 'Partner Puja (2 person)';
@@ -466,7 +476,7 @@ const PackageModal = ({
     if (initialPackage !== undefined) {
       const pkg = initialPackage || {};
       setEditingPackage(pkg.id ? pkg : (isEditing ? pkg : null));
-      const resolvedSlotName = isPuja 
+      const resolvedSlotName = (isPuja || isEvent)
         ? (pkg.slot_name || mapPriceTypeToFullLabel(pkg.price_type)) 
         : '';
       const resolvedPricingRuleId = (pkg.pricing_rule_id != null ? pkg.pricing_rule_id : (pkg.pricing_rule_data?.id != null ? pkg.pricing_rule_data.id : null));
@@ -499,7 +509,7 @@ const PackageModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const packageData = isPuja ? {
+    const packageData = (isPuja || isEvent) ? {
       id: editingPackage?.id || null,
       slot_name: formData.slot_name || formData.price_type,
       price_type: (() => {
@@ -508,7 +518,7 @@ const PackageModal = ({
         if (slotName.includes("Individual")) return "Individual-1";
         if (slotName.includes("Partner")) return "Partner-2";
         if (slotName.includes("Family")) return "Family-5";
-        return "FIXED";
+        return slotName || "FIXED";
       })(),
       base_price: parseFloat(formData.base_price),
       pricing_rule_id: formData.pricing_rule_id != null ? parseInt(formData.pricing_rule_id) : null,
@@ -567,7 +577,7 @@ const PackageModal = ({
                   Package Details
                 </SectionTitle>
                 <FormRow>
-                  {!isPuja && (
+                  {!(isPuja || isEvent) && (
                     <FormGroup>
                       <Label required>Package Type</Label>
                       <Select
@@ -581,7 +591,7 @@ const PackageModal = ({
                       </Select>
                     </FormGroup>
                   )}
-                  {isPuja && (
+                  {(isPuja || isEvent) && (
                     <FormGroup>
                       <Label required>Package Name</Label>
                       <Select
@@ -589,11 +599,22 @@ const PackageModal = ({
                         onChange={(e) => setFormData({ ...formData, slot_name: e.target.value })}
                         required
                       >
-                        <option value="">Choose a puja package</option>
-                        <option value="Individual Puja (1 person)">Individual Puja (1 person)</option>
-                        <option value="Partner Puja (2 person)">Partner Puja (2 person)</option>
-                        <option value="Family Puja (5 person)">Family Puja (5 person)</option>
-                        <option value="Joint Family Puja (10 person)">Joint Family Puja (10 person)</option>
+                        <option value="">Choose a {isEvent ? 'event' : 'puja'} package</option>
+                        {isEvent ? (
+                          <>
+                            <option value="Individual Event (1 person)">Individual Event (1 person)</option>
+                            <option value="Partner Event (2 person)">Partner Event (2 person)</option>
+                            <option value="Family Event (5 person)">Family Event (5 person)</option>
+                            <option value="Joint Family Event (10 person)">Joint Family Event (10 person)</option>
+                          </>
+                        ) : (
+                          <>
+                            <option value="Individual Puja (1 person)">Individual Puja (1 person)</option>
+                            <option value="Partner Puja (2 person)">Partner Puja (2 person)</option>
+                            <option value="Family Puja (5 person)">Family Puja (5 person)</option>
+                            <option value="Joint Family Puja (10 person)">Joint Family Puja (10 person)</option>
+                          </>
+                        )}
                       </Select>
                     </FormGroup>
                   )}
@@ -639,7 +660,7 @@ const PackageModal = ({
                     />
                   </FormGroup>
                   
-                  {!isPuja && formData.price_type === "HOURLY" && (
+                  {!(isPuja || isEvent) && formData.price_type === "HOURLY" && (
                     <FormGroup>
                       <Label>Number of Hours</Label>
                       <Input

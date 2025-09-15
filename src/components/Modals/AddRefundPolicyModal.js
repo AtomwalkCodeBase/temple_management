@@ -167,7 +167,7 @@ const RemoveRuleButton = styled.button`
 const RuleFormRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 2.1rem;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -403,6 +403,7 @@ const AddRefundPolicyModal = ({ policy, onClose, onSuccess }) => {
                     <FormGroup>
                       <Label>Hours Before</Label>
                       <Input
+                        style={{ maxWidth: "200px" }}
                         type="number"
                         value={rule.min_hours_before}
                         onChange={(e) =>
@@ -416,6 +417,7 @@ const AddRefundPolicyModal = ({ policy, onClose, onSuccess }) => {
                     <FormGroup>
                       <Label>Days Before</Label>
                       <Input
+                        style={{ maxWidth: "200px" }}
                         type="number"
                         value={rule.min_days_before}
                         onChange={(e) =>

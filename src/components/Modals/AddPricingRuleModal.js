@@ -284,6 +284,39 @@ const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
   const templeId = getStoredTempleId();
   console.log("Temple ID:", templeId);
 
+  // Convert various API date formats (e.g., 15-Aug-2025, 15-08-2025, 2025-08-15)
+  // into HTML input date value format: YYYY-MM-DD
+  const toInputDate = (value) => {
+    if (!value) return "";
+    const str = String(value).trim();
+    // Already in input format
+    if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+    // DD-MM-YYYY numeric
+    if (/^\d{2}-\d{2}-\d{4}$/.test(str)) {
+      const [dd, mm, yyyy] = str.split('-');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+    // DD-MMM-YYYY (month short)
+    if (/^\d{2}-[A-Za-z]{3}-\d{4}$/.test(str)) {
+      const [dd, mon, yyyy] = str.split('-');
+      const months = {
+        JAN: '01', FEB: '02', MAR: '03', APR: '04', MAY: '05', JUN: '06',
+        JUL: '07', AUG: '08', SEP: '09', OCT: '10', NOV: '11', DEC: '12'
+      };
+      const mm = months[mon.toUpperCase()] || '01';
+      return `${yyyy}-${mm}-${dd}`;
+    }
+    // Fallback: try Date parsing
+    const d = new Date(str);
+    if (!Number.isNaN(d.getTime())) {
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+    return "";
+  };
+
   useEffect(() => {
     fetchWeekDays();
     if (rule) {
@@ -300,8 +333,8 @@ const AddPricingRuleModal = ({ rule, onClose, onSuccess }) => {
         start_time: rule.start_time || "",
         end_time: rule.end_time || "",
         day_of_week: rule.day_of_week?.toString() || "",
-        start_date: rule.start_date || "",
-        end_date: rule.end_date || "",
+        start_date: toInputDate(rule.start_date),
+        end_date: toInputDate(rule.end_date),
         date_price: rule.date_price || "",
         time_price: rule.time_price || "",
         week_day_price: rule.week_day_price || "",

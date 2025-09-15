@@ -183,6 +183,7 @@ const HallsManagement = () => {
   const [bookings, setBookings] = useState([]);
   const [bookingsLoading, setBookingsLoading] = useState(false);
   const [ordering, setOrdering] = useState("-booking_date");
+  const [serviceFilter, setServiceFilter] = useState("");
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
   const templeId = getCurrentTempleId() || null;
   
@@ -452,6 +453,19 @@ const HallsManagement = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </SearchInput>
+
+              {/* Service name filter */}
+              <SortSelect>
+                <select value={serviceFilter} onChange={(e) => setServiceFilter(e.target.value)}>
+                  <option value="">All Services</option>
+                  {Array.from(new Set((bookings || []).map(b => String(b?.service_data?.name || '').trim()).filter(Boolean)))
+                    .sort((a,b)=>a.localeCompare(b))
+                    .map(name => (
+                      <option key={name} value={name}>{name}</option>
+                    ))}
+                </select>
+                <ChevronDown size={16} />
+              </SortSelect>
               
               <SortSelect>
                 <select value={ordering} onChange={handleSortChange}>
@@ -463,19 +477,16 @@ const HallsManagement = () => {
             </Toolbar>
             
             <TableContainer>
-              <Table>
+              <Table style={{ minWidth: 820 }}>
                 <thead>
                   <tr>
                     <th style={{ width: '120px' }}>Booking Ref</th>
-                    <th style={{ width: '100px' }}>Date</th>
-                    <th style={{ width: '120px' }}>Time</th>
-                    <th style={{ width: '180px' }}>Customer</th>
-                    <th style={{ width: '200px' }}>Service</th>
-                    <th style={{ width: '120px' }}>Variation</th>
-                    <th style={{ width: '100px' }}>Status</th>
+                    <th style={{ width: '110px' }}>Date</th>
+                    <th style={{ width: '110px' }}>Time</th>
+                    <th style={{ width: '200px' }}>Customer</th>
+                    <th style={{ width: '220px' }}>Service</th>
+                    <th style={{ width: '110px' }}>Status</th>
                     <th style={{ width: '120px' }}>Price</th>
-                    <th style={{ width: '120px' }}>Policy</th>
-                    <th style={{ width: '100px' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -487,16 +498,14 @@ const HallsManagement = () => {
                       const svc = (b?.service_data?.name || "").toLowerCase();
                       const temple = (b?.service_data?.temple_name || "").toLowerCase();
                       const q = searchQuery.toLowerCase();
-                      return [ref, cust, phone, svc, temple].some(x => x.includes(q));
+                      const matchesSearch = [ref, cust, phone, svc, temple].some(x => x.includes(q));
+                      const matchesService = !serviceFilter || String(b?.service_data?.name || '').trim() === serviceFilter;
+                      return matchesSearch && matchesService;
                     })
                     .map((b, idx) => {
                       const time = `${(b?.start_time || "").slice(0,5)}–${(b?.end_time || "").slice(0,5)}`;
                       const status = b?.status_display || "";
-                      const priceRule = b?.service_variation_data?.pricing_rule_data?.name || b?.service_data?.pricing_rule_data?.name;
-                      const priceText = `₹${parseFloat(b?.unit_price || 0).toLocaleString("en-IN")}${priceRule ? ` (${priceRule})` : ""}`;
-                      const refundName = b?.service_data?.refund_policy_data?.name;
-                      const advName = b?.service_data?.adv_policy_data?.name;
-                      const policy = refundName || advName || "—";
+                      const priceText = `₹${parseFloat(b?.unit_price || 0).toLocaleString("en-IN")}`;
                       
                       return (
                         <tr key={b?.ref_code || idx}>
@@ -515,25 +524,13 @@ const HallsManagement = () => {
                               <span style={{ fontSize: '12px', color: '#6b7280' }}>{b?.service_data?.temple_name || ""}</span>
                             </div>
                           </td>
-                          <td>{b?.service_variation_data?.pricing_type_str || "—"}</td>
                           <td><StatusBadge $status={status}>{status}</StatusBadge></td>
                           <td style={{ fontWeight: '600' }}>{priceText}</td>
-                          <td>{policy}</td>
-                          <td>
-                            <div style={{ display: "flex", gap: "8px" }}>
-                              <ActionButton title="Edit" onClick={() => console.log("edit booking", b?.ref_code)}>
-                                <Edit size={14} />
-                              </ActionButton>
-                              <ActionButton title="Delete" className="delete" onClick={() => handleDeleteBooking(b)}>
-                                <Trash2 size={14} />
-                              </ActionButton>
-                            </div>
-                          </td>
                         </tr>
                       );
                     }) : (
                     <tr>
-                      <td colSpan={10}>
+                      <td colSpan={7}>
                         <EmptyState>
                           <Calendar size={48} />
                           <h3>No bookings found</h3>

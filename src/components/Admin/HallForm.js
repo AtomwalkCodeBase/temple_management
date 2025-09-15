@@ -772,9 +772,7 @@ export default function HallForm({
     }
   ];
 
-  const canSubmit = (serviceType === 'PUJA' || serviceType === 'EVENT') ? 
-    Boolean(formData.name) : 
-    Boolean(formData.name && formData.capacity);
+  const canSubmit = Boolean(formData.name && formData.capacity);
 
   const handleImageChange = (field, file) => {
     if (file) {
@@ -818,7 +816,7 @@ export default function HallForm({
         service_type: serviceType === 'PUJA' ? 'PUJA' : serviceType === 'EVENT' ? 'EVENT' : 'Hall',
         description: formData.description.trim() || "",
         base_price: 0,
-        capacity: (serviceType === 'PUJA' || serviceType === 'EVENT') ? 0 : Number(formData.capacity),
+        capacity: Number(formData.capacity),
         duration_minutes: serviceType === 'PUJA' ? 0 : 0,
         service_variation_list: []
       };
@@ -1106,16 +1104,18 @@ export default function HallForm({
                 />
               </FormGroup>
 
-              {serviceType === 'HALL' && (
+              {(
+                serviceType === 'HALL' || serviceType === 'PUJA' || serviceType === 'EVENT'
+              ) && (
                 <FormGroup>
-                  <Label required>Guest Capacity</Label>
+                  <Label required>{serviceType === 'EVENT' ? 'Seats Available' : serviceType === 'PUJA' ? 'Max Participants' : 'Guest Capacity'}</Label>
                   <Input 
                     name="capacity" 
                     type="number" 
                     min="1" 
                     value={formData.capacity} 
                     onChange={handleChange} 
-                    placeholder="e.g., 200 guests" 
+                    placeholder={serviceType === 'EVENT' ? 'e.g., 200 seats' : serviceType === 'PUJA' ? 'e.g., 50 participants' : 'e.g., 200 guests'} 
                     required
                   />
                 </FormGroup>

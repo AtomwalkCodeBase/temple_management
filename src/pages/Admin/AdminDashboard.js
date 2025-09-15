@@ -16,6 +16,7 @@ const MainContent = styled.div`
   margin: 0 auto;
   padding: 1rem;
   box-sizing: border-box;
+  position: relative;
 
   @media (max-width: 768px) {
     padding: 0.5rem;
@@ -665,6 +666,39 @@ const LoadingSpinner = styled.div`
     100% { transform: rotate(360deg); }
   }
 `;
+const LoaderWrap = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #64748b;
+`;
+const Spinner = styled.div`
+  width: 24px; height: 24px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+`;
+
+const FullscreenLoader = styled.div`
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SpinnerXL = styled.div`
+  width: 48px; height: 48px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+`;
 
 const EmptyState = styled.div`
   padding: 4rem 2rem;
@@ -717,6 +751,47 @@ const PaginationButtons = styled.div`
   flex-wrap: wrap;
 `;
 
+// View Modal
+const ViewOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+`;
+const ViewCard = styled.div`
+  width: 100%;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+`;
+const ViewHeader = styled.div`
+  padding: 16px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  color: #0f172a;
+`;
+const ViewBody = styled.div`
+  padding: 16px 20px;
+`;
+const CloseX = styled.button`
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #64748b;
+  cursor: pointer;
+`;
+
 const PaginationButton = styled.button`
   display: flex;
   align-items: center;
@@ -750,10 +825,12 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [itemsPerPage] = React.useState(5);
   const [apiBookings, setApiBookings] = React.useState([]);
+  const [bookingsLoading, setBookingsLoading] = React.useState(true);
   const [sellerTabData, setSellerTabData] = React.useState({ loading: false, rows: [], error: null });
   const [sellerSearch, setSellerSearch] = React.useState("");
   const [sellerPage, setSellerPage] = React.useState(1);
   const [sellerPerPage] = React.useState(5);
+  const [viewItem, setViewItem] = React.useState(null);
 
   // Keep templeId in sync with any login switches
   React.useEffect(() => {
@@ -783,6 +860,7 @@ const Dashboard = () => {
     let mounted = true;
     const fetchData = async () => {
       try {
+        setBookingsLoading(true);
         const data = await getServiceBookings();
         const raw = (
           (Array.isArray(data) && data) ||
@@ -827,7 +905,7 @@ const Dashboard = () => {
         }
       } catch (_) {
         // Silently ignore for now; no error UI
-      }
+      } finally { setBookingsLoading(false); }
     };
     fetchData();
     return () => { mounted = false; };
@@ -1048,6 +1126,11 @@ const Dashboard = () => {
   return (
     <DashboardContainer>
       <MainContent>
+        {(bookingsLoading || sellerTabData.loading) && (
+          <FullscreenLoader>
+            <SpinnerXL />
+          </FullscreenLoader>
+        )}
         {/* Stats Grid */}
       <StatsGrid>
         {stats.map((stat, index) => (
@@ -1140,10 +1223,7 @@ const Dashboard = () => {
                 <HeaderCell>Service</HeaderCell>
                 <HeaderCell>Booking ID</HeaderCell>
                 <HeaderCell>Devotee</HeaderCell>
-                <HeaderCell>Service/Hall</HeaderCell>
                 <HeaderCell>Date & Time</HeaderCell>
-                <HeaderCell>Amount</HeaderCell>
-                <HeaderCell>Status</HeaderCell>
                 <HeaderCell>Actions</HeaderCell>
               </HeaderRow>
             </TableHeader>
@@ -1162,7 +1242,16 @@ const Dashboard = () => {
             {/* Table Body */}
             <TableBody>
                {activeTab !== 'approvals' ? (
-                 currentItems.map((booking, index) => (
+                 bookingsLoading ? (
+                   <TableRow>
+                     <TableCell colSpan={8} style={{ textAlign: 'center', padding: '3rem' }}>
+                       <LoaderWrap>
+                         <Spinner />
+                         <span style={{ fontSize: '1rem', fontWeight: 600 }}>Loading bookings...</span>
+                       </LoaderWrap>
+                     </TableCell>
+                   </TableRow>
+                 ) : currentItems.map((booking, index) => (
                 <TableRow key={booking.id} last={index === currentItems.length - 1}>
                   <TableCell>
                     <ServiceBadge service={booking.service}>
@@ -1195,14 +1284,6 @@ const Dashboard = () => {
                     </div>
                   </TableCell>
                   
-                  <TableCell style={{
-                    fontSize: '0.95rem',
-                    color: '#334155',
-                    fontWeight: '500'
-                  }}>
-                    {booking.title}
-                  </TableCell>
-                  
                   <TableCell>
                     <div style={{
                       fontSize: '0.95rem',
@@ -1220,31 +1301,14 @@ const Dashboard = () => {
                     </div>
                   </TableCell>
                   
-                  <TableCell style={{
-                    fontSize: '0.95rem',
-                    fontWeight: '700',
-                    color: '#1e293b'
-                  }}>
-                    {booking.amount}
-                  </TableCell>
-                  
-                  <TableCell>
-                    <StatusBadge status={booking.status}>
-                      {booking.status}
-                    </StatusBadge>
-                  </TableCell>
-                  
                   <TableCell>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.6rem'
                     }}>
-                      <ActionButton>
+                      <ActionButton onClick={() => setViewItem(booking)}>
                         <FiEye size={16} />
-                      </ActionButton>
-                      <ActionButton>
-                        <FiMoreVertical size={16} />
                       </ActionButton>
                     </div>
                   </TableCell>
@@ -1477,6 +1541,28 @@ const Dashboard = () => {
           )
         )}
       </MainContent>
+      {viewItem && (
+        <ViewOverlay onClick={() => setViewItem(null)}>
+          <ViewCard onClick={(e)=>e.stopPropagation()}>
+            <ViewHeader>
+              <div>Booking Details – {viewItem.id}</div>
+              <CloseX onClick={() => setViewItem(null)}>×</CloseX>
+            </ViewHeader>
+            <ViewBody>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+                <div><strong>Service</strong><div>{viewItem.service}</div></div>
+                <div><strong>Devotee</strong><div>{viewItem.devotee}</div></div>
+                <div><strong>Contact</strong><div>{viewItem.contact}</div></div>
+                <div><strong>Service Name</strong><div>{viewItem.title}</div></div>
+                <div><strong>Date</strong><div>{formatDate(viewItem.dateTime)}</div></div>
+                <div><strong>Time</strong><div>{new Date(viewItem.dateTime.replace(' ','T')).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</div></div>
+                <div><strong>Status</strong><div>{viewItem.status}</div></div>
+                <div><strong>Amount</strong><div>{viewItem.amount}</div></div>
+              </div>
+            </ViewBody>
+          </ViewCard>
+        </ViewOverlay>
+      )}
     </DashboardContainer>
   );
 };

@@ -23,14 +23,14 @@ const ModalContent = styled(motion.div)`
   background: white;
   border-radius: 1rem;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 `;
 
 const ModalHeader = styled.div`
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  background: linear-gradient(135deg, #0056d6 0%, #0040a0 100%);
   color: white;
   padding: 2rem;
   border-radius: 1rem 1rem 0 0;
@@ -91,8 +91,8 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #059669;
-    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    border-color: #0056d6;
+    box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.1);
   }
 `;
 
@@ -106,8 +106,8 @@ const Select = styled.select`
 
   &:focus {
     outline: none;
-    border-color: #059669;
-    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    border-color: #0056d6;
+    box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.1);
   }
 `;
 
@@ -119,7 +119,7 @@ const CheckboxGroup = styled.div`
   input[type="checkbox"] {
     width: 1.25rem;
     height: 1.25rem;
-    accent-color: #059669;
+    accent-color: #0056d6;
   }
 
   label {
@@ -144,7 +144,7 @@ const Button = styled(motion.button)`
   border: none;
 
   &.primary {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #0056d6 0%, #0040a0 100%);
     color: white;
 
     &:disabled {
@@ -272,7 +272,7 @@ const AddAdvancePolicyModal = ({ policy, onClose, onSuccess }) => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                placeholder="e.g., Standard Advance Policy"
+                placeholder="Enter the policy name"
               />
             </FormGroup>
 
@@ -288,7 +288,7 @@ const AddAdvancePolicyModal = ({ policy, onClose, onSuccess }) => {
                 min="0"
                 max="100"
                 step="0.01"
-                placeholder="50"
+                placeholder="Enter percentage value"
               />
             </FormGroup>
 
@@ -303,7 +303,7 @@ const AddAdvancePolicyModal = ({ policy, onClose, onSuccess }) => {
                 required
                 min="0"
                 step="0.01"
-                placeholder="100"
+                placeholder="Enter minimum amount"
               />
             </FormGroup>
 
@@ -332,7 +332,7 @@ const AddAdvancePolicyModal = ({ policy, onClose, onSuccess }) => {
                 onChange={handleChange}
                 required
                 min="0"
-                placeholder="3"
+                placeholder="Enter number of days"
               />
             </FormGroup>
 

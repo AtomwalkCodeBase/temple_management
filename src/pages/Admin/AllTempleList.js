@@ -47,14 +47,20 @@ const Header = styled.div`
 
 const TemplesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: ${props => props.$single ? '1fr' : 'repeat(3, 1fr)'};
+  gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  align-items: stretch;
   
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    grid-template-columns: ${props => props.$single ? '1fr' : 'repeat(2, 1fr)'};
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 640px) {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.25rem;
   }
 `;
 
@@ -66,6 +72,7 @@ const TempleCard = styled(motion.div)`
   border: 1px solid #e2e8f0;
   position: relative;
   transition: all 0.3s ease;
+  min-width: 0; /* prevent overflow in grid items */
   
   &:hover {
     transform: translateY(-5px);
@@ -75,8 +82,15 @@ const TempleCard = styled(motion.div)`
 
 const TempleImageContainer = styled.div`
   position: relative;
-  height: 340px;
+  height: 300px;
   overflow: hidden;
+  
+  @media (max-width: 1200px) {
+    height: 260px;
+  }
+  @media (max-width: 768px) {
+    height: 220px;
+  }
 `;
 
 const TempleImage = styled.div`
@@ -186,14 +200,9 @@ const TempleId = styled.span`
 
 const DetailsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-bottom: 2rem;
-  
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 `;
 
 const DetailCard = styled.div`
@@ -565,7 +574,7 @@ const AllTempleList = () => {
               </AddButton>
             </EmptyState>
           ) : (
-            <TemplesGrid>
+            <TemplesGrid $single={temples.length === 1}>
               {temples.map((temple, index) => (
                 <TempleCard
                   key={temple.temple_id || index}

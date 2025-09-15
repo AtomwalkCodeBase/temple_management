@@ -6,13 +6,9 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiMenu,
-  FiBell,
-  FiUser,
   FiSettings,
-  FiHelpCircle,
   FiLogOut,
   FiChevronDown,
-  FiBarChart,
 } from "react-icons/fi";
 
 import {
@@ -109,43 +105,6 @@ const HeaderRight = styled.div`
   gap: 1rem;
 `;
 
-const NotificationButton = styled(motion.button)`
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  font-size: 1.35rem;
-  cursor: pointer;
-  color: #475569;
-  position: relative;
-  padding: 0.9rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
-  &:hover {
-    background: #f8fafc;
-    color: #1e293b;
-    border-color: #cbd5e1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .badge {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    color: #ffffff;
-    font-size: 0.7rem;
-    padding: 0.125rem 0.375rem;
-    border-radius: 9999px;
-    min-width: 1rem;
-    height: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
-  }
-`;
 
 const QuickActions = styled.div`
   display: flex;
@@ -359,7 +318,6 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
     return "";
   };
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
   const username = getStoredUsername();
   const firstName = getStoredFirstName();
@@ -416,18 +374,7 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
             ))}
           </div>
           <h1 className="page-title">{getCurrentPage()}</h1>
-          {getPageDescription() && (
-            <p
-              style={{
-                margin: "8px 0 0",
-                color: "#64748b",
-                fontSize: "14px",
-                fontStyle: "italic",
-              }}
-            >
-              {getPageDescription()}
-            </p>
-          )}
+          {/* Page descriptions removed as requested */}
         </PageInfo>
       </HeaderLeft>
 
@@ -503,15 +450,6 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
           )}
         </QuickActions>
 
-        <NotificationButton
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setShowNotifications(!showNotifications)}
-        >
-          <FiBell />
-          <span className="badge">3</span>
-        </NotificationButton>
-
         <UserMenu>
           <UserButton
             onClick={() => setShowUserMenu(!showUserMenu)}
@@ -543,48 +481,7 @@ const AdminHeader = ({ onToggleMobileMenu, currentPage }) => {
                   <div className="user-name">
                     {firstName || username || "Admin User"}
                   </div>
-                  <div className="user-email">temple.admin@example.com</div>
                 </DropdownHeader>
-
-                <DropdownItem
-                  whileHover={{ x: 4 }}
-                  onClick={() => setShowUserMenu(false)}
-                >
-                  <FiUser className="icon" />
-                  Profile Settings
-                </DropdownItem>
-
-                <TemplePatternDivider />
-
-                <DropdownItem
-                  whileHover={{ x: 4 }}
-                  onClick={() => setShowUserMenu(false)}
-                >
-                  <FiSettings className="icon" />
-                  Account Settings
-                </DropdownItem>
-
-                <TemplePatternDivider />
-
-                <DropdownItem
-                  whileHover={{ x: 4 }}
-                  onClick={() => setShowUserMenu(false)}
-                >
-                  <FiBarChart className="icon" />
-                  Analytics & Reports
-                </DropdownItem>
-
-                <TemplePatternDivider />
-
-                <DropdownItem
-                  whileHover={{ x: 4 }}
-                  onClick={() => setShowUserMenu(false)}
-                >
-                  <FiHelpCircle className="icon" />
-                  Help & Support
-                </DropdownItem>
-
-                <TemplePatternDivider />
 
                 <DropdownItem
                   className="danger"

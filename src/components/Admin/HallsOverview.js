@@ -968,16 +968,12 @@ const HallsOverview = ({
       if (packageData.id != null) {
         targetPkg.id = packageData.id;
       }
-      const cleanedSingle = cleanPackageForAPI(targetPkg, selectedHall.pricing_rule_id, isPuja || isEvent);
-      
-      // For PUJA and EVENT, set capacity to max_participant of the current package being added/updated
-      let serviceCapacity = selectedHall.capacity;
-      let serviceDurationMinutes = selectedHall.duration_minutes;
-      if (isPuja || isEvent) {
-        serviceCapacity = typeof packageData.max_participant === 'string' 
-          ? parseInt(packageData.max_participant) 
-          : packageData.max_participant || 0;
-        serviceDurationMinutes = packageData.duration_minutes || 0;
+      let cleanedSingle = cleanPackageForAPI(targetPkg, selectedHall.pricing_rule_id, isPuja || isEvent);
+      // Ensure new addition never carries an existing ID
+      if (packageData.id == null) {
+        if (cleanedSingle && typeof cleanedSingle === 'object' && 'id' in cleanedSingle) {
+          cleanedSingle.id = null;
+        }
       }
       
       // Always use UPDATE to avoid creating duplicate services when adding variations
@@ -991,14 +987,12 @@ const HallsOverview = ({
         name: selectedHall.name,
         service_type: selectedHall.service_type,
         description: selectedHall.description || "",
-        // Do not auto-assign cross-temple defaults
         adv_policy_id: selectedHall.adv_policy_id ?? selectedHall.adv_policy_data?.id ?? null,
         refund_policy_id: selectedHall.refund_policy_id ?? selectedHall.refund_policy_data?.id ?? null,
-        base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : selectedHall.base_price,
-        capacity: (isPuja || isEvent) ? serviceCapacity : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
-        // For PUJA and EVENT, send calculated duration_minutes
-        duration_minutes: (isPuja || isEvent) ? serviceDurationMinutes : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
         pricing_rule_id: selectedHall.pricing_rule_id ?? selectedHall.pricing_rule_data?.id ?? null,
+        base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : (selectedHall.base_price ?? 0),
+        duration_minutes: typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : (selectedHall.duration_minutes ?? 0),
+        capacity: typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : (selectedHall.capacity ?? 0),
         service_variation_list: [cleanedSingle]
       };
       
@@ -1010,17 +1004,35 @@ const HallsOverview = ({
       // Update the local state with the response data to get the updated packages with IDs
       // 1) Merge by id first (if id exists), keeping the latest occurrence
       // 2) Then de-duplicate by logical signature to avoid true duplicates
-      const responsePackages = response?.service_data?.service_variation_list || updatedPackages;
-      // Prefer items with ids when duplicates by signature exist
-      const buckets = new Map();
+      let responsePackages = response?.service_data?.service_variation_list || updatedPackages;
+      // If backend created a new row on update, drop the stale row with previous id
+      if (packageData.id != null) {
+        responsePackages = responsePackages.filter(p => p?.id !== packageData.id);
+      }
+      // 1) Collapse exact id duplicates (keep last occurrence)
+      const byId = new Map();
       for (const p of responsePackages) {
+        if (p?.id != null) byId.set(p.id, p);
+      }
+      let collapsed = responsePackages.map(p => (p?.id != null && byId.has(p.id)) ? byId.get(p.id) : p);
+      // 2) De-duplicate by logical signature, prefer the package we just updated (if any)
+      const buckets = new Map();
+      const preferredId = packageData.id != null ? packageData.id : null;
+      for (const p of collapsed) {
         const sig = normalizeSignature(p, isPuja || isEvent);
         const existing = buckets.get(sig);
         if (!existing) {
           buckets.set(sig, p);
         } else {
-          // Prefer the one that has an id (persisted), otherwise keep the latest
-          const pick = (existing?.id != null) ? existing : p?.id != null ? p : p;
+          // Prefer the one matching the updated id; otherwise prefer one with id
+          const pIsPreferred = preferredId != null && p?.id === preferredId;
+          const existingIsPreferred = preferredId != null && existing?.id === preferredId;
+          let pick = existing;
+          if (pIsPreferred && !existingIsPreferred) {
+            pick = p;
+          } else if (!existingIsPreferred && !pIsPreferred) {
+            pick = (p?.id != null && existing?.id == null) ? p : existing;
+          }
           buckets.set(sig, pick);
         }
       }
@@ -1076,10 +1088,10 @@ const HallsOverview = ({
         description: selectedHall.description || "",
         adv_policy_id: selectedHall.adv_policy_id ?? selectedHall.adv_policy_data?.id ?? null,
         refund_policy_id: selectedHall.refund_policy_id ?? selectedHall.refund_policy_data?.id ?? null,
-        base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : selectedHall.base_price,
-        capacity: (isPuja || isEvent) ? 0 : (typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : selectedHall.capacity),
-        duration_minutes: (isPuja || isEvent) ? 0 : (typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : selectedHall.duration_minutes),
         pricing_rule_id: selectedHall.pricing_rule_id ?? selectedHall.pricing_rule_data?.id ?? null,
+        base_price: typeof selectedHall.base_price === 'string' ? parseFloat(selectedHall.base_price) : (selectedHall.base_price ?? 0),
+        duration_minutes: typeof selectedHall.duration_minutes === 'string' ? parseInt(selectedHall.duration_minutes) : (selectedHall.duration_minutes ?? 0),
+        capacity: typeof selectedHall.capacity === 'string' ? parseInt(selectedHall.capacity) : (selectedHall.capacity ?? 0),
         service_variation_list: cleanedPackages
       };
       

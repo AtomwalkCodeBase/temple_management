@@ -221,10 +221,28 @@ const BottomSection = styled.div`
   }
 `;
 
+const LoaderWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 16px;
+  color: #64748b;
+`;
+
+const Spinner = styled.div`
+  width: 36px; height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+`;
+
 const TempleServices = () => {
   const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState(null);
   const templeId = localStorage.getItem("templeId") || null;
+  const [loading, setLoading] = useState(true);
 
   const [metrics, setMetrics] = useState({
     HALL: { total: 0, bookings: 0 },
@@ -236,6 +254,7 @@ const TempleServices = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // Fetch services and count totals per type for this temple
         const svcResp = await getTempleServicesList();
         const svcList = Array.isArray(svcResp)
@@ -325,7 +344,7 @@ const TempleServices = () => {
         });
       } catch (e) {
         setMetrics({ HALL: { total: 0, bookings: 0 }, PUJA: { total: 0, bookings: 0 }, EVENT: { total: 0, bookings: 0 }, TOTALS: { services: 0, bookings: 0 } });
-      }
+      } finally { setLoading(false); }
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -390,6 +409,11 @@ const TempleServices = () => {
           {/* Removed the HeaderBadge with Sparkles icon */}
         </HeaderSection>
 
+        {loading ? (
+          <LoaderWrap>
+            <Spinner />
+          </LoaderWrap>
+        ) : (
         <ServicesGrid>
           {services.map((service, index) => {
             const IconComponent = service.icon;
@@ -455,13 +479,14 @@ const TempleServices = () => {
             );
           })}
         </ServicesGrid>
+        )}
 
-        <BottomSection>
+        {/* <BottomSection>
           <div className="status-indicator">
             <div className="dot"></div>
             All services are currently operational
           </div>
-        </BottomSection>
+        </BottomSection> */}
       </ContentWrapper>
     </PageContainer>
   );

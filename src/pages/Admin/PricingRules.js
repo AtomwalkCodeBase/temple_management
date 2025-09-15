@@ -34,6 +34,37 @@ const AddButton = styled(motion.button)`
   }
 `;
 
+const StatusText = styled.span`
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: ${props => props.active ? "#000000" : "#991b1b"};
+`;
+
+const TableContainer = styled.div`
+  overflow-x: auto;
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+`;
+
+const PriceCell = styled.div`
+  font-weight: 500;
+  white-space: nowrap;
+`;
+
+const DateRangeCell = styled.div`
+  font-size: 0.875rem;
+  line-height: 1.2;
+  white-space: nowrap;
+`;
+
+const TimeRangeCell = styled.div`
+  font-size: 0.875rem;
+  white-space: nowrap;
+`;
+
 const PricingRules = () => {
   const [rules, setRules] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -100,60 +131,104 @@ const PricingRules = () => {
   };
 
   const getDayName = (dayNumber) => {
-    const days = [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ];
-    return days[dayNumber] || "All Days";
+    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    return days[dayNumber] || "All";
+  };
+
+  const formatPrice = (value) => {
+    if (!value || value === "null") return "Unavailable";
+    return `₹${Number.parseFloat(value).toLocaleString('en-IN')}`;
+  };
+
+  const formatDateRange = (startDate, endDate) => {
+    if (!startDate || startDate === "null" || !endDate || endDate === "null") {
+      return "Unavailable";
+    }
+    
+    // Format dates to be more compact
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short'
+      });
+    };
+    
+    return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+  };
+
+  const formatTimeRange = (startTime, endTime) => {
+    if (!startTime || startTime === "null" || !endTime || endTime === "null") {
+      return "Unavailable";
+    }
+    
+    // Format time to be more readable
+    const formatTime = (timeString) => {
+      if (!timeString) return "";
+      return timeString.slice(0, 5); // Just show HH:MM
+    };
+    
+    return `${formatTime(startTime)} - ${formatTime(endTime)}`;
   };
 
   const columns = [
     {
       key: "name",
       title: "Rule Name",
+      width: "140px",
       render: (value) => (
         <div style={{ fontWeight: 600, color: "#1f2937" }}>{value}</div>
       ),
     },
     {
       key: "day_of_week",
-      title: "Day of Week",
+      title: "Day",
+      width: "70px",
       render: (value) => getDayName(value),
     },
     {
       key: "start_time",
-      title: "Time Range",
-      render: (value, item) => `${value} - ${item.end_time}`,
+      title: "Time",
+      width: "120px",
+      render: (value, item) => (
+        <TimeRangeCell>{formatTimeRange(value, item.end_time)}</TimeRangeCell>
+      ),
     },
     {
       key: "date_price",
       title: "Date Price",
-      render: (value) => `₹${Number.parseFloat(value).toLocaleString()}`,
+      width: "90px",
+      render: (value) => <PriceCell>{formatPrice(value)}</PriceCell>,
     },
     {
       key: "time_price",
       title: "Time Price",
-      render: (value) => `₹${Number.parseFloat(value).toLocaleString()}`,
+      width: "90px",
+      render: (value) => <PriceCell>{formatPrice(value)}</PriceCell>,
     },
     {
       key: "week_day_price",
-      title: "Week Day Price",
-      render: (value) => `₹${Number.parseFloat(value).toLocaleString()}`,
+      title: "Weekday Price",
+      width: "100px",
+      render: (value) => <PriceCell>{formatPrice(value)}</PriceCell>,
     },
     {
       key: "start_date",
       title: "Date Range",
-      render: (value, item) => `${value} - ${item.end_date}`,
+      width: "140px",
+      render: (value, item) => (
+        <DateRangeCell>{formatDateRange(value, item.end_date)}</DateRangeCell>
+      ),
     },
     {
       key: "is_active",
       title: "Status",
-      render: (value) => (value ? "Active" : "Inactive"),
+      width: "80px",
+      render: (value) => (
+        <StatusText active={value}>
+          {value ? "Active" : "Inactive"}
+        </StatusText>
+      ),
     },
   ];
 
@@ -175,16 +250,18 @@ const PricingRules = () => {
           </AddButton>
         }
       >
-        <DataTable
-          data={rules}
-          columns={columns}
-          loading={loading}
-          onEdit={handleEditRule}
-          onDelete={handleDeleteRule}
-          emptyIcon="📊"
-          emptyTitle="No Pricing Rules Found"
-          emptyDescription="Create your first pricing rule to manage dynamic pricing."
-        />
+        <TableContainer>
+          <DataTable
+            data={rules}
+            columns={columns}
+            loading={loading}
+            onEdit={handleEditRule}
+            onDelete={handleDeleteRule}
+            emptyIcon="📊"
+            emptyTitle="No Pricing Rules Found"
+            emptyDescription="Create your first pricing rule to manage dynamic pricing."
+          />
+        </TableContainer>
       </PageContainer>
 
       <AnimatePresence>

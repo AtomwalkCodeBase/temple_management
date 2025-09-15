@@ -32,7 +32,7 @@ const ModalContent = styled(motion.div)`
 `;
 
 const ModalHeader = styled.div`
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  background: linear-gradient(135deg, #0056d6 0%, #0040a0 100%);
   color: white;
   padding: 2rem;
   border-radius: 1rem 1rem 0 0;
@@ -93,8 +93,8 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #dc2626;
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    border-color: #0056d6;
+    box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.1);
   }
 `;
 
@@ -106,7 +106,7 @@ const CheckboxGroup = styled.div`
   input[type="checkbox"] {
     width: 1.25rem;
     height: 1.25rem;
-    accent-color: #dc2626;
+    accent-color: #0056d6;
   }
 
   label {
@@ -148,9 +148,9 @@ const RuleHeader = styled.div`
 `;
 
 const RemoveRuleButton = styled.button`
-  background: #fee2e2;
-  border: 1px solid #fecaca;
-  color: #dc2626;
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  color: #0369a1;
   padding: 0.5rem;
   border-radius: 0.375rem;
   cursor: pointer;
@@ -160,7 +160,7 @@ const RemoveRuleButton = styled.button`
   gap: 0.25rem;
 
   &:hover {
-    background: #fca5a5;
+    background: #bae6fd;
   }
 `;
 
@@ -210,7 +210,7 @@ const Button = styled(motion.button)`
   border: none;
 
   &.primary {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    background: linear-gradient(135deg, #0056d6 0%, #0040a0 100%);
     color: white;
 
     &:disabled {
@@ -366,7 +366,7 @@ const AddRefundPolicyModal = ({ policy, onClose, onSuccess }) => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                placeholder="e.g., Standard Refund Policy"
+                placeholder="Enter the policy name"
               />
             </FormGroup>
 
@@ -410,7 +410,7 @@ const AddRefundPolicyModal = ({ policy, onClose, onSuccess }) => {
                           updateRule(index, "min_hours_before", e.target.value)
                         }
                         min="0"
-                        placeholder="24"
+                        placeholder="Enter hours before"
                       />
                     </FormGroup>
 
@@ -424,7 +424,7 @@ const AddRefundPolicyModal = ({ policy, onClose, onSuccess }) => {
                           updateRule(index, "min_days_before", e.target.value)
                         }
                         min="0"
-                        placeholder="1"
+                        placeholder="Enter days before"
                       />
                     </FormGroup>
                   </RuleFormRow>
@@ -440,7 +440,7 @@ const AddRefundPolicyModal = ({ policy, onClose, onSuccess }) => {
                       min="0"
                       max="100"
                       step="0.01"
-                      placeholder="70"
+                      placeholder="Enter refund percentage"
                     />
                   </FormGroup>
 
@@ -452,7 +452,7 @@ const AddRefundPolicyModal = ({ policy, onClose, onSuccess }) => {
                       onChange={(e) =>
                         updateRule(index, "notes", e.target.value)
                       }
-                      placeholder="Additional notes about this rule"
+                      placeholder="Enter additional notes"
                     />
                   </FormGroup>
                 </RuleItem>

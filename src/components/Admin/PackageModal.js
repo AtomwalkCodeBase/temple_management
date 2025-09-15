@@ -506,9 +506,28 @@ const PackageModal = ({
     });
   };
 
+  // Helper: derive max participants from slot_name or price_type
+  const deriveMaxParticipants = (slotName, priceType) => {
+    const fromSlot = typeof slotName === 'string' ? (slotName.match(/(\d+)/)?.[1] || '') : '';
+    if (fromSlot) {
+      const n = parseInt(fromSlot, 10);
+      if (Number.isFinite(n) && n > 0) return n;
+    }
+    const key = String(priceType || '').trim();
+    if (key === 'Individual-1') return 1;
+    if (key === 'Partner-2') return 2;
+    if (key === 'Family-5') return 5;
+    if (key === 'Joint-10') return 10;
+    return null;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
+    const derivedMax = (isPuja || isEvent)
+      ? deriveMaxParticipants(formData.slot_name, formData.price_type)
+      : null;
+
     const packageData = (isPuja || isEvent) ? {
       id: editingPackage?.id || null,
       slot_name: formData.slot_name || formData.price_type,
@@ -525,7 +544,7 @@ const PackageModal = ({
       start_time: formData.start_time,
       end_time: formData.end_time,
       max_no_per_day: 10,
-      max_participant: parseInt(formData.max_participant),
+      max_participant: derivedMax != null ? derivedMax : parseInt(formData.max_participant || '0') || 0,
       no_hours: null,
       duration_minutes: (() => {
         if (formData.start_time && formData.end_time) {
@@ -675,25 +694,27 @@ const PackageModal = ({
                 </FormRow>
               </Section>
               
-              <Section>
-                <SectionTitle>
-                  <Users size={16} />
-                  Capacity
-                </SectionTitle>
-                <FormRow>
-                  <FormGroup>
-                    <Label required>Maximum Participants</Label>
-                    <Input
-                      type="number"
-                      value={formData.max_participant}
-                      placeholder="Max number of people"
-                      onChange={(e) => setFormData({...formData, max_participant: e.target.value})}
-                      min="1"
-                      required
-                    />
-                  </FormGroup>
-                </FormRow>
-              </Section>
+              {!(isPuja || isEvent) && (
+                <Section>
+                  <SectionTitle>
+                    <Users size={16} />
+                    Capacity
+                  </SectionTitle>
+                  <FormRow>
+                    <FormGroup>
+                      <Label required>Maximum Participants</Label>
+                      <Input
+                        type="number"
+                        value={formData.max_participant}
+                        placeholder="Max number of people"
+                        onChange={(e) => setFormData({...formData, max_participant: e.target.value})}
+                        min="1"
+                        required
+                      />
+                    </FormGroup>
+                  </FormRow>
+                </Section>
+              )}
 
               <Section>
                 <SectionTitle>
@@ -726,9 +747,15 @@ const PackageModal = ({
                         {description && <div className="desc">{description}</div>}
                         {metaParts.length > 0 && <div className="meta">{metaParts.join(' • ')}</div>}
                         <div className="chips">
-                          {rule?.date_price != null && <span className="chip">Date ₹{rule.date_price}</span>}
-                          {rule?.time_price != null && <span className="chip">Time ₹{rule.time_price}</span>}
-                          {rule?.week_day_price != null && <span className="chip">Weekday ₹{rule.week_day_price}</span>}
+                          {rule?.date_price != null && Number(rule.date_price) > 0 && (
+                            <span className="chip">Date ₹{Number(rule.date_price)}</span>
+                          )}
+                          {rule?.time_price != null && Number(rule.time_price) > 0 && (
+                            <span className="chip">Time ₹{Number(rule.time_price)}</span>
+                          )}
+                          {rule?.week_day_price != null && Number(rule.week_day_price) > 0 && (
+                            <span className="chip">Weekday ₹{Number(rule.week_day_price)}</span>
+                          )}
                         </div>
                       </RuleCard>
                     );

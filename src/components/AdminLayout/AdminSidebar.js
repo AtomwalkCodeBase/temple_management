@@ -37,8 +37,6 @@ const SidebarContainer = styled(motion.div)`
   }
 `;
 
-// Removed dotted overlay for cleaner look
-
 const SidebarHeader = styled.div`
   padding: 1.5rem 1.2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
@@ -190,7 +188,7 @@ const MenuItem = styled(Link)`
     background: ${(props) =>
       props.active ? "rgba(255, 255, 255, 0.92)" : "rgba(255, 255, 255, 0.12)"};
     color: ${(props) => (props.active ? "#0f172a" : "#ffffff")};
-    transform: translateX(4px);
+    transform: ${(props) => (props.collapsed ? "translateX(0)" : "translateX(4px)")};
   }
 
   .icon {
@@ -223,20 +221,6 @@ const MenuItem = styled(Link)`
     justify-content: center;
     font-weight: 600;
   }
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 60%;
-    width: 3px;
-    background: ${(props) => (props.active ? "#0077ff" : "transparent")};
-    border-radius: 0 3px 3px 0;
-    box-shadow: ${(props) =>
-      props.active ? "0 0 10px rgba(0, 119, 255, 0.45)" : "none"};
-  }
 `;
 
 const Tooltip = styled(motion.div)`
@@ -266,8 +250,6 @@ const Tooltip = styled(motion.div)`
     border-right-color: rgba(17, 24, 39, 0.95);
   }
 `;
-
-// Removed unused TempleGateDivider
 
 const BellIconDecor = styled.div`
   position: absolute;
@@ -417,27 +399,9 @@ const AdminSidebar = ({
                   <span className="label">{item.label}</span>
                   {item.badge && <span className="badge">{item.badge}</span>}
 
-                  <AnimatePresence>
-                    {collapsed &&
-                      hoveredItem === `${sectionIndex}-${itemIndex}` && (
-                        <Tooltip
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -10 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          {item.label}
-                        </Tooltip>
-                      )}
-                  </AnimatePresence>
+                  {/* Tooltip disabled in collapsed mode to avoid visual artifact */}
                 </MenuItem>
               ))}
-
-              {/* {sectionIndex < menuItems.length - 1 && !collapsed && (
-                <TempleGateDivider>
-                  <GiTempleGate />
-                </TempleGateDivider>
-              )} */}
             </MenuSection>
           ))}
         </SidebarContent>

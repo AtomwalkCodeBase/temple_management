@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { X, Clock, Users, Calendar, CheckCircle, Package } from "lucide-react";
 import { getPricingRuleList } from "../../services/templeServices";
@@ -410,6 +410,8 @@ const PackageModal = ({
 }) => {
   const [editingPackage, setEditingPackage] = useState(null);
   const [pricingRules, setPricingRules] = useState([]);
+  const lastSubmitRef = useRef({ at: 0, snapshot: null });
+  const [localSubmitting, setLocalSubmitting] = useState(false);
   const serviceType = String(hall?.service_type || '').toUpperCase();
   const isPuja = serviceType === 'PUJA';
   const isEvent = serviceType === 'EVENT';
@@ -448,6 +450,7 @@ const PackageModal = ({
     if (!isOpen) {
       setEditingPackage(null);
       resetForm();
+      setLocalSubmitting(false);
       return;
     }
     
@@ -490,6 +493,11 @@ const PackageModal = ({
         max_participant: pkg.max_participant != null ? String(pkg.max_participant) : '',
         pricing_rule_id: resolvedPricingRuleId != null ? Number(resolvedPricingRuleId) : null
       });
+    } else {
+      // Opening for a fresh add: ensure completely clean form
+      setEditingPackage(null);
+      resetForm();
+      setLocalSubmitting(false);
     }
   }, [isOpen, initialPackage]);
 
@@ -523,6 +531,15 @@ const PackageModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Guard against rapid double-submit from user clicks or keypresses
+    const now = Date.now();
+    const snapshot = JSON.stringify(formData);
+    if (localSubmitting) return;
+    if (lastSubmitRef.current.snapshot === snapshot && (now - lastSubmitRef.current.at < 1200)) {
+      return;
+    }
+    lastSubmitRef.current = { at: now, snapshot };
+    setLocalSubmitting(true);
     
     const derivedMax = (isPuja || isEvent)
       ? deriveMaxParticipants(formData.slot_name, formData.price_type)
@@ -568,9 +585,14 @@ const PackageModal = ({
       max_participant: parseInt(formData.max_participant)
     };
     
-    onSave(packageData);
-    setEditingPackage(null);
-    resetForm();
+    try {
+      onSave(packageData);
+    } finally {
+      setEditingPackage(null);
+      resetForm();
+      // keep button disabled until parent closes or saving prop toggles
+      setTimeout(() => setLocalSubmitting(false), 1200);
+    }
   };
 
   if (!isOpen) return null;
@@ -786,7 +808,7 @@ const PackageModal = ({
               <Button 
                 type="submit" 
                 className="primary" 
-                disabled={isSaving}
+                disabled={isSaving || localSubmitting}
               >
                 {isSaving ? 'Saving...' : (editingPackage ? 'Update Package' : 'Create Package')}
               </Button>

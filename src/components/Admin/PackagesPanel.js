@@ -356,38 +356,48 @@ const PackagesPanel = ({
   const isPuja = serviceType === 'PUJA';
   const isEvent = serviceType === 'EVENT';
 
-  // Dedupe by normalized logical signature
-  const normalizeSignature = (pkg) => {
-    const typeKey = (isPuja || isEvent)
-      ? String(pkg.slot_name || pkg.price_type || '').trim().toUpperCase()
-      : String(pkg.price_type || '').trim().toUpperCase();
-    const normalizeTime = (t) => {
-      if (!t) return '';
-      const [h, m] = String(t).split(':');
-      const hh = String(h ?? '').padStart(2, '0');
-      const mm = String(m ?? '00').padStart(2, '0');
-      return `${hh}:${mm}`;
-    };
-    const start = normalizeTime(pkg.start_time);
-    const end = normalizeTime(pkg.end_time);
-    const hours = pkg.no_hours == null || pkg.no_hours === '' ? '' : String(parseInt(pkg.no_hours));
-    const maxPerDay = pkg.max_no_per_day == null ? '' : String(parseInt(pkg.max_no_per_day));
-    const maxParticipant = pkg.max_participant == null ? '' : String(parseInt(pkg.max_participant));
-    const base = (() => {
-      const n = Number(pkg.base_price);
-      return Number.isFinite(n) ? n.toFixed(2) : String(pkg.base_price || '');
-    })();
-    const ruleId = pkg.pricing_rule_id ?? pkg.pricing_rule_data?.id ?? '';
-    return `${typeKey}|${start}|${end}|${hours}|${maxPerDay}|${maxParticipant}|${base}|${ruleId}`;
-  };
-
-  const seen = new Set();
-  const list = rawList.filter((pkg) => {
-    const sig = normalizeSignature(pkg);
-    if (seen.has(sig)) return false;
-    seen.add(sig);
-    return true;
-  });
+  // Collapse duplicates for EVENT by ignoring pricing_rule in the key
+  const list = (() => {
+    if (isEvent) {
+      const buckets = new Map();
+      for (const pkg of rawList || []) {
+        const key = (() => {
+          const typeKey = String(pkg.slot_name || pkg.price_type || '').trim().toUpperCase();
+          const norm = (t) => {
+            if (!t) return '';
+            const [h, m] = String(t).split(':');
+            const hh = String(h ?? '').padStart(2, '0');
+            const mm = String(m ?? '00').padStart(2, '0');
+            return `${hh}:${mm}`;
+          };
+          const start = norm(pkg.start_time);
+          const end = norm(pkg.end_time);
+          const maxP = pkg.max_participant == null ? '' : String(parseInt(pkg.max_participant));
+          const base = (() => { const n = Number(pkg.base_price); return Number.isFinite(n) ? n.toFixed(2) : String(pkg.base_price || ''); })();
+          return `${typeKey}|${start}|${end}|${maxP}|${base}`;
+        })();
+        const existing = buckets.get(key);
+        if (!existing) {
+          buckets.set(key, pkg);
+        } else {
+          // Prefer one with explicit pricing_rule_data, otherwise with id, otherwise keep existing
+          const pick = (pkg?.pricing_rule_data ? pkg
+                       : existing?.pricing_rule_data ? existing
+                       : (pkg?.id != null && (existing?.id == null || pkg.id > existing.id)) ? pkg
+                       : existing);
+          buckets.set(key, pick);
+        }
+      }
+      return Array.from(buckets.values());
+    }
+    // For PUJA/HALL, keep API rows; only remove exact duplicate IDs
+    return rawList.filter((pkg, idx, arr) => {
+      const id = pkg?.id;
+      if (id == null) return true;
+      const firstIdx = arr.findIndex(p => p?.id === id);
+      return firstIdx === idx;
+    });
+  })();
 
   const formatPackageType = (priceType, slotName) => {
     if (isPuja) {

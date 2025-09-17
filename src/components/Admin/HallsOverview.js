@@ -605,7 +605,11 @@ const HallsOverview = ({
     for (const pkg of packages) {
       const isPuja = String(selectedHall?.service_type || '').toUpperCase() === 'PUJA';
       const isEvent = String(selectedHall?.service_type || '').toUpperCase() === 'EVENT';
-      const key = normalizeSignature(pkg, isPuja || isEvent);
+      // For EVENT, ignore pricing rule when deduping (treat same slot as one)
+      const key = normalizeSignature(
+        isEvent ? { ...pkg, pricing_rule_id: undefined, pricing_rule_data: undefined } : pkg,
+        isPuja || isEvent
+      );
       if (!seen.has(key)) {
         seen.add(key);
         result.push(pkg);
@@ -858,6 +862,7 @@ const HallsOverview = ({
     setSelectedHall(hall);
     setIsEditingPackage(true);
     setEditingPackageId(null);
+    setEditingPackageObj(null);
     setPackageModalOpen(true);
   };
 
@@ -904,25 +909,35 @@ const HallsOverview = ({
           const existing = currentPackages.find(p => p.id === packageData.id) || {};
           return { ...existing, ...packageData, id: packageData.id };
         })();
-        const newSig = normalizeSignature(mergedCandidate, isPujaUpdate || isEventUpdate);
-        updatedPackages = currentPackages
-          // First, remove any other package that would collide with the updated signature
-          .filter(pkg => pkg.id === packageData.id || normalizeSignature(pkg, isPujaUpdate || isEventUpdate) !== newSig)
-          // Then, map to apply the update
-          .map(pkg => {
-            if (pkg.id === packageData.id) {
-              return {
-                ...pkg,
-                ...packageData,
-                id: pkg.id
-              };
-            }
-            return pkg;
-          });
+        const newSig = normalizeSignature(
+          isEventUpdate ? { ...mergedCandidate, pricing_rule_id: undefined, pricing_rule_data: undefined } : mergedCandidate,
+          isPujaUpdate || isEventUpdate
+        );
+        // Remove any other package that would collide by signature EXCEPT the one being edited
+        const withoutCollisions = currentPackages.filter(pkg => {
+          if (pkg.id === packageData.id) return true;
+          return normalizeSignature(pkg, isPujaUpdate || isEventUpdate) !== newSig;
+        });
+        // Apply update on the matching id OR append if the id was missing locally
+        let applied = false;
+        updatedPackages = withoutCollisions.map(pkg => {
+          if (pkg.id === packageData.id) {
+            applied = true;
+            return { ...pkg, ...packageData, id: pkg.id };
+          }
+          return pkg;
+        });
+        if (!applied) {
+          updatedPackages = [...updatedPackages, { ...mergedCandidate }];
+        }
       } else {
         // Add new package - ensure it has the correct structure
         // Short-circuit if a logically identical package already exists
-        const newSig = normalizeSignature({ ...packageData, pricing_rule_id: packageData.pricing_rule_id ?? selectedHall.pricing_rule_id }, isPuja || isEvent);
+        const candidate = { ...packageData, pricing_rule_id: packageData.pricing_rule_id ?? selectedHall.pricing_rule_id };
+        const newSig = normalizeSignature(
+          isEvent ? { ...candidate, pricing_rule_id: undefined, pricing_rule_data: undefined } : candidate,
+          isPuja || isEvent
+        );
         const exists = (currentPackages || []).some(p => normalizeSignature(p, isPuja || isEvent) === newSig);
         if (exists) {
           setPackageModalOpen(false);
@@ -968,7 +983,18 @@ const HallsOverview = ({
       if (packageData.id != null) {
         targetPkg.id = packageData.id;
       }
+      // Propagate selected pricing_rule_id from the form into the target package before cleaning
+      if (packageData.pricing_rule_id != null) {
+        targetPkg.pricing_rule_id = packageData.pricing_rule_id;
+        if (targetPkg.pricing_rule_data && targetPkg.pricing_rule_data.id !== packageData.pricing_rule_id) {
+          delete targetPkg.pricing_rule_data;
+        }
+      }
       let cleanedSingle = cleanPackageForAPI(targetPkg, selectedHall.pricing_rule_id, isPuja || isEvent);
+      // Ensure pricing_rule_id from the edit form is explicitly sent when provided
+      if (packageData.pricing_rule_id != null) {
+        cleanedSingle.pricing_rule_id = Number(packageData.pricing_rule_id);
+      }
       // Ensure new addition never carries an existing ID
       if (packageData.id == null) {
         if (cleanedSingle && typeof cleanedSingle === 'object' && 'id' in cleanedSingle) {
@@ -1005,10 +1031,20 @@ const HallsOverview = ({
       // 1) Merge by id first (if id exists), keeping the latest occurrence
       // 2) Then de-duplicate by logical signature to avoid true duplicates
       let responsePackages = response?.service_data?.service_variation_list || updatedPackages;
-      // If backend created a new row on update, drop the stale row with previous id
-      if (packageData.id != null) {
-        responsePackages = responsePackages.filter(p => p?.id !== packageData.id);
-      }
+      // If backend inserted a new row instead of updating the same id, prefer the new row
+      try {
+        const sigToKeep = normalizeSignature(
+          // Use cleanedSingle for consistent comparison
+          cleanedSingle,
+          isPuja || isEvent
+        );
+        if (packageData.id != null) {
+          const matching = (responsePackages || []).find(p => normalizeSignature(p, isPuja || isEvent) === sigToKeep);
+          if (matching && matching.id != null && matching.id !== packageData.id) {
+            responsePackages = responsePackages.filter(p => p?.id !== packageData.id);
+          }
+        }
+      } catch {}
       // 1) Collapse exact id duplicates (keep last occurrence)
       const byId = new Map();
       for (const p of responsePackages) {
@@ -1019,7 +1055,10 @@ const HallsOverview = ({
       const buckets = new Map();
       const preferredId = packageData.id != null ? packageData.id : null;
       for (const p of collapsed) {
-        const sig = normalizeSignature(p, isPuja || isEvent);
+        const sig = normalizeSignature(
+          (isEvent ? { ...p, pricing_rule_id: undefined, pricing_rule_data: undefined } : p),
+          isPuja || isEvent
+        );
         const existing = buckets.get(sig);
         if (!existing) {
           buckets.set(sig, p);
@@ -1037,6 +1076,21 @@ const HallsOverview = ({
         }
       }
       const uniqueBySignature = Array.from(buckets.values());
+      // Final safety: if we edited and backend inserted a new id for same signature, drop the old id
+      if (packageData.id != null) {
+        const editedSig = normalizeSignature(
+          (isEvent ? { ...targetPkg, pricing_rule_id: undefined, pricing_rule_data: undefined } : targetPkg),
+          isPuja || isEvent
+        );
+        const withEdited = uniqueBySignature.filter(p => normalizeSignature(
+          (isEvent ? { ...p, pricing_rule_id: undefined, pricing_rule_data: undefined } : p),
+          isPuja || isEvent
+        ) === editedSig);
+        if (withEdited.length > 1) {
+          const newest = withEdited.find(p => p?.id != null && p.id !== packageData.id) || withEdited[0];
+          uniqueBySignature.splice(0, uniqueBySignature.length, ...Array.from(new Map(uniqueBySignature.map(p => [p.id ?? `${normalizeSignature(p, isPuja || isEvent)}|null`, p])).values()).filter(p => p === newest || normalizeSignature(p, isPuja || isEvent) !== editedSig));
+        }
+      }
       const updatedHall = {
         ...selectedHall,
         service_variation_list: uniqueBySignature,
@@ -1051,6 +1105,9 @@ const HallsOverview = ({
       setTimeout(() => setSuccessMessage(""), 3000);
       
       // Close modal/editor
+      setIsEditingPackage(false);
+      setEditingPackageId(null);
+      setEditingPackageObj(null);
       setPackageModalOpen(false);
       
       // Update the hall in the parent component's state

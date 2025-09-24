@@ -25,6 +25,7 @@ import {
   Notebook,
   NotebookIcon,
   NotebookTabs,
+  ServerIcon,
 } from "lucide-react";
 
 /* Shared sizing */
@@ -661,6 +662,12 @@ const CustomerLayout = ({ children }) => {
             path: "/customer-dashboard",
             icon: FaHome,
             label: "Dashboard",
+            badge: null,
+          },
+          {
+            path: "/customer-services",
+            icon: ServerIcon,
+            label: "All Services",
             badge: null,
           },
           {

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { MdTempleHindu, MdEventAvailable, MdHomeWork } from "react-icons/md";
 import { FaPrayingHands, FaBed } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const Container = styled.div`
   position: relative;
@@ -303,17 +304,38 @@ const itemVariants = {
     },
   },
 };
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.2rem;
+  color: #8b4513;
+`;
 
 export default function SevaCategories({ categories, onSelect, allServices }) {
-  // Filter categories to only show those that have services available
-  const availableCategories = categories.filter((category) => {
-    // Check if any service in allServices matches this category code
-    return allServices.some(
-      (service) =>
-        service.service_type &&
-        service.service_type.toUpperCase() === category.code
-    );
-  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (categories && categories.length > 0 && allServices) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    }
+  }, [categories, allServices]);
+
+  const availableCategories =
+    categories?.filter((category) =>
+      allServices?.some(
+        (service) =>
+          service.service_type &&
+          service.service_type.toUpperCase() === category.code
+      )
+    ) || [];
+
+  if (loading) {
+    return <LoadingContainer>Loading services...</LoadingContainer>;
+  }
 
   // If no categories are available, show a message
   if (availableCategories.length === 0) {

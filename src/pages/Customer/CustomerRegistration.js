@@ -24,7 +24,7 @@ const RegistrationContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("https://deshpee.com/wp-content/uploads/2024/01/Shri-Ram-Ft-img.jpg");
+    background: url("https://i.pinimg.com/236x/92/72/be/9272bec9a4977ba0f128b7fe8179bd9d.jpg");
     background-size: cover;
     background-position: center;
     filter: blur(5px);

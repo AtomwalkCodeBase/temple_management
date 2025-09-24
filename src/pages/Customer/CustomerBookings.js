@@ -6,23 +6,14 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiCalendar,
-  FiMapPin,
-  FiCheck,
   FiX,
   FiFilter,
-  FiUser,
-  FiClock,
   FiDollarSign,
-  FiPhone,
-  FiMail,
-  FiHome,
   FiInfo,
-  FiCreditCard,
-  FiRefreshCw,
-  FiPieChart,
-  FiImage,
+  FiEye,
+  FiXCircle,
 } from "react-icons/fi";
-import { MdTempleHindu } from "react-icons/md";
+import { MdQrCode2, MdTempleHindu } from "react-icons/md";
 import {
   getBookingList,
   processBooking,
@@ -30,6 +21,7 @@ import {
 import { useCustomerAuth } from "../../contexts/CustomerAuthContext";
 import CustomerLayout from "../../components/Customer/CustomerLayout";
 
+// Styled Components
 const BookingsContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
@@ -162,8 +154,8 @@ const FilterSection = styled(motion.div)`
 `;
 
 const BookingsGrid = styled.div`
-  /* display: grid; */
-  /* grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 1.5rem;
 
   @media (max-width: 768px) {
@@ -174,13 +166,13 @@ const BookingsGrid = styled.div`
 const BookingCard = styled(motion.div)`
   background: white;
   border-radius: 1.5rem;
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  margin-bottom: 1rem;
+
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
@@ -212,20 +204,20 @@ const BookingHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 `;
 
 const BookingRef = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #1f2937;
   margin: 0;
 `;
 
 const StatusBadge = styled.span`
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 1rem;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -247,13 +239,15 @@ const StatusBadge = styled.span`
 `;
 
 const ServiceImage = styled(motion.div)`
-  height: 400px;
+  height: 200px;
   border-radius: 0.75rem;
   overflow: hidden;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   cursor: pointer;
 
   img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
@@ -264,180 +258,159 @@ const ServiceImage = styled(motion.div)`
 `;
 
 const ServiceInfo = styled.div`
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   .service-name {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #1f2937;
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
 
     .icon {
       color: #667eea;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
     }
   }
 
-  .service-description {
+  .temple-name {
     color: #6b7280;
-    margin-bottom: 1rem;
     font-size: 0.9rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
 const BookingDetails = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 `;
 
 const DetailCard = styled.div`
   background: #f8fafc;
-  border-radius: 0.75rem;
-  padding: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
   border: 1px solid #e2e8f0;
 
   .detail-title {
     font-weight: 600;
     color: #374151;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
+    gap: 0.25rem;
+    font-size: 0.8rem;
 
     .icon {
       color: #667eea;
+      font-size: 0.8rem;
     }
   }
 
   .detail-content {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #6b7280;
   }
 
   .detail-value {
     font-weight: 600;
     color: #1f2937;
-    margin-top: 0.25rem;
   }
 `;
 
-const CustomerInfo = styled.div`
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+const QRCodeSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f9fafb;
   border-radius: 0.75rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid #bae6fd;
+  border: 1px dashed #e5e7eb;
 
-  .customer-header {
-    font-weight: 700;
-    color: #0369a1;
-    margin-bottom: 1rem;
+  h4 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  .customer-details {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 0.75rem;
-  }
-
-  .customer-detail {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    margin-bottom: 0.75rem;
     font-size: 0.9rem;
-
-    .icon {
-      color: #0369a1;
-      min-width: 16px;
-    }
-
-    .label {
-      color: #6b7280;
-      font-weight: 500;
-    }
-
-    .value {
-      color: #1f2937;
-      font-weight: 600;
-    }
+    color: #374151;
   }
 `;
 
-const PolicySection = styled.div`
-  margin-bottom: 1.5rem;
+const QRImage = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 8px;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+`;
 
-  .policy-header {
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+const QRPlaceholder = styled.div`
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #95a5a6;
+  font-style: italic;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.8rem;
+`;
 
-  .policy-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.75rem;
-  }
+const CardActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+`;
 
-  .policy-item {
-    background: #f9fafb;
-    border-radius: 0.5rem;
-    padding: 0.75rem;
-    font-size: 0.85rem;
+const ViewDetailsButton = styled(motion.button)`
+  background: transparent;
+  color: #667eea;
+  border: 1px solid #667eea;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
 
-    .policy-label {
-      color: #6b7280;
-      font-weight: 500;
-      margin-bottom: 0.25rem;
-    }
-
-    .policy-value {
-      color: #059669;
-      font-weight: 600;
-    }
+  &:hover {
+    background: #667eea;
+    color: white;
   }
 `;
 
 const BookingActions = styled.div`
   display: flex;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  gap: 0.5rem;
 `;
 
 const ActionButton = styled(motion.button)`
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   cursor: pointer;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   transition: all 0.3s ease;
-
-  &.update {
-    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-    color: #1e40af;
-
-    &:hover {
-      background: linear-gradient(135deg, #bfdbfe, #93c5fd);
-      transform: translateY(-2px);
-    }
-  }
 
   &.cancel {
     background: linear-gradient(135deg, #fee2e2, #fecaca);
@@ -553,12 +526,120 @@ const EmptyState = styled.div`
   }
 `;
 
+// Modal Components
+const ModalOverlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+`;
+
+const ModalContainer = styled(motion.div)`
+  background: white;
+  border-radius: 1.5rem;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  border-radius: 1.5rem 1.5rem 0 0;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+  }
+
+  .close-btn {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+  }
+`;
+
+const ModalContent = styled.div`
+  padding: 1.5rem;
+`;
+
+const ModalSection = styled.div`
+  margin-bottom: 2rem;
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+`;
+
+const ModalGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+`;
+
+const ModalDetailItem = styled.div`
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+
+  .label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .value {
+    color: #1f2937;
+    font-size: 1rem;
+  }
+`;
+
 const CustomerBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState("");
   const [error, setError] = useState("");
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     search: "",
     status: "",
@@ -629,7 +710,7 @@ const CustomerBookings = () => {
       );
     }
 
-    setFilteredBookings(filtered);
+    setFilteredBookings(filtered.reverse()); // Show latest bookings first
   };
 
   const handleFilterChange = (key, value) => {
@@ -660,6 +741,16 @@ const CustomerBookings = () => {
     } finally {
       setActionLoading("");
     }
+  };
+
+  const openModal = (booking) => {
+    setSelectedBooking(booking);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedBooking(null);
   };
 
   const getStatusText = (status) => {
@@ -836,276 +927,301 @@ const CustomerBookings = () => {
                     {getStatusText(booking.status)}
                   </StatusBadge>
                 </BookingHeader>
-                <div style={{ display: "flex", gap: "2rem" }}>
-                  {booking.service_data?.image && (
-                    <div>
-                      <ServiceImage>
-                        <img
-                          src={booking.service_data.image}
-                          alt={booking.service_data.name}
-                          onClick={() =>
-                            window.open(booking.service_data.image, "_blank")
-                          }
-                        />
-                      </ServiceImage>
-                      {booking.service_data && (
-                        <PolicySection>
-                          <div className="policy-header">
-                            <FiInfo className="icon" />
-                            Booking Policies
-                          </div>
-                          <div className="policy-grid">
-                            {booking.service_data.adv_policy_data && (
-                              <div className="policy-item">
-                                <div className="policy-label">
-                                  Advance Payment:
-                                </div>
-                                <div className="policy-value">
-                                  {booking.service_data.adv_policy_data.percent}
-                                  % (Min ₹
-                                  {
-                                    booking.service_data.adv_policy_data
-                                      .min_amount
-                                  }
-                                  )
-                                </div>
-                              </div>
-                            )}
-                            {booking.service_data.refund_policy_data && (
-                              <div className="policy-item">
-                                <div className="policy-label">
-                                  Refund Policy:
-                                </div>
-                                <div className="policy-value">
-                                  {booking.service_data.refund_policy_data.name}
-                                </div>
-                              </div>
-                            )}
-                            {booking.service_data.pricing_rule_data && (
-                              <div className="policy-item">
-                                <div className="policy-label">
-                                  Pricing Rule:
-                                </div>
-                                <div className="policy-value">
-                                  {booking.service_data.pricing_rule_data.name}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </PolicySection>
-                      )}
-                    </div>
-                  )}
-                  <div>
-                    <ServiceInfo>
-                      <div className="service-name">
-                        <MdTempleHindu className="icon" />
-                        {booking.service_data?.name || "Service"}
-                      </div>
-                      {booking.service_data?.description && (
-                        <div className="service-description">
-                          {booking.service_data.description}
-                        </div>
-                      )}
-                    </ServiceInfo>
 
-                    <BookingDetails>
-                      <DetailCard>
-                        <div className="detail-title">
-                          <FiCalendar className="icon" />
-                          Booking Details
-                        </div>
-                        <div className="detail-content">
-                          <div>
-                            Date:{" "}
-                            <span className="detail-value">
-                              {booking.booking_date}
-                            </span>
-                          </div>
-                          <div>
-                            Time:{" "}
-                            <span className="detail-value">
-                              {booking.start_time} - {booking.end_time}
-                            </span>
-                          </div>
-                          <div>
-                            Quantity:{" "}
-                            <span className="detail-value">
-                              {booking.quantity}
-                            </span>
-                          </div>
-                        </div>
-                      </DetailCard>
-
-                      <DetailCard>
-                        <div className="detail-title">
-                          <FiDollarSign className="icon" />
-                          Pricing
-                        </div>
-                        <div className="detail-content">
-                          <div>
-                            Unit Price:{" "}
-                            <span className="detail-value">
-                              {formatPrice(booking.unit_price)}
-                            </span>
-                          </div>
-                          <div>
-                            Total:{" "}
-                            <span className="detail-value">
-                              {formatPrice(calculateTotal(booking))}
-                            </span>
-                          </div>
-                          {booking.service_variation_data && (
-                            <div>
-                              Variation:{" "}
-                              <span className="detail-value">
-                                {
-                                  booking.service_variation_data
-                                    .pricing_type_str
-                                }
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </DetailCard>
-
-                      <DetailCard>
-                        <div className="detail-title">
-                          <FiHome className="icon" />
-                          Temple Info
-                        </div>
-                        <div className="detail-content">
-                          <div>
-                            Name:{" "}
-                            <span className="detail-value">
-                              {booking.service_data?.temple_name}
-                            </span>
-                          </div>
-                          <div>
-                            Capacity:{" "}
-                            <span className="detail-value">
-                              {booking.service_data?.capacity} people
-                            </span>
-                          </div>
-                          <div>
-                            Duration:{" "}
-                            <span className="detail-value">
-                              {booking.service_data?.duration_minutes} mins
-                            </span>
-                          </div>
-                        </div>
-                      </DetailCard>
-                    </BookingDetails>
-                  </div>
-                </div>
-                {/* <CustomerInfo>
-                  <div className="customer-header">
-                    <FiUser />
-                    Customer Information
-                  </div>
-                  <div className="customer-details">
-                    <div className="customer-detail">
-                      <FiUser className="icon" />
-                      <span className="label">Name:</span>
-                      <span className="value">
-                        {booking.customer_data?.name}
-                      </span>
-                    </div>
-                    <div className="customer-detail">
-                      <FiMail className="icon" />
-                      <span className="label">Email:</span>
-                      <span className="value">
-                        {booking.customer_data?.email_id}
-                      </span>
-                    </div>
-                    <div className="customer-detail">
-                      <FiPhone className="icon" />
-                      <span className="label">Phone:</span>
-                      <span className="value">
-                        {booking.customer_data?.mobile_number}
-                      </span>
-                    </div>
-                    <div className="customer-detail">
-                      <FiPhone className="icon" />
-                      <span className="label">Alt Phone:</span>
-                      <span className="value">
-                        {booking.customer_data?.alternate_contact_number}
-                      </span>
-                    </div>
-                  </div>
-                </CustomerInfo>
-
-                {booking.service_data && (
-                  <PolicySection>
-                    <div className="policy-header">
-                      <FiInfo className="icon" />
-                      Booking Policies
-                    </div>
-                    <div className="policy-grid">
-                      {booking.service_data.adv_policy_data && (
-                        <div className="policy-item">
-                          <div className="policy-label">Advance Payment:</div>
-                          <div className="policy-value">
-                            {booking.service_data.adv_policy_data.percent}% (Min
-                            ₹{booking.service_data.adv_policy_data.min_amount})
-                          </div>
-                        </div>
-                      )}
-                      {booking.service_data.refund_policy_data && (
-                        <div className="policy-item">
-                          <div className="policy-label">Refund Policy:</div>
-                          <div className="policy-value">
-                            {booking.service_data.refund_policy_data.name}
-                          </div>
-                        </div>
-                      )}
-                      {booking.service_data.pricing_rule_data && (
-                        <div className="policy-item">
-                          <div className="policy-label">Pricing Rule:</div>
-                          <div className="policy-value">
-                            {booking.service_data.pricing_rule_data.name}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </PolicySection>
-                )} */}
-                {booking.status?.toUpperCase() === "B" && (
-                  <BookingActions>
-                    <ActionButton
-                      className="cancel"
-                      onClick={() =>
-                        handleBookingAction(booking.ref_code, "cancel")
-                      }
-                      disabled={actionLoading === booking.ref_code}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <FiX />
-                      {actionLoading === booking.ref_code
-                        ? "..."
-                        : "Cancel Booking"}
-                    </ActionButton>
-                    <ActionButton
-                      className="complete"
-                      onClick={() =>
-                        handleBookingAction(booking.ref_code, "complete")
-                      }
-                      disabled={actionLoading === booking.ref_code}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <FiCheck />
-                      {actionLoading === booking.ref_code
-                        ? "..."
-                        : "Mark Complete"}
-                    </ActionButton>
-                  </BookingActions>
+                {booking.service_data?.image && (
+                  <ServiceImage onClick={() => openModal(booking)}>
+                    <img
+                      src={booking.service_data.image}
+                      alt={booking.service_data.name}
+                    />
+                  </ServiceImage>
                 )}
+
+                <ServiceInfo>
+                  <div className="service-name">
+                    <MdTempleHindu className="icon" />
+                    {booking.service_data?.name || "Service"}
+                  </div>
+                  <div className="temple-name">
+                    {booking.service_data?.temple_name}
+                  </div>
+                </ServiceInfo>
+
+                <BookingDetails>
+                  <DetailCard>
+                    <div className="detail-title">
+                      <FiCalendar className="icon" />
+                      Date & Time
+                    </div>
+                    <div className="detail-content">
+                      <div className="detail-value">{booking.booking_date}</div>
+                      <div>
+                        {booking.start_time} - {booking.end_time}
+                      </div>
+                    </div>
+                  </DetailCard>
+
+                  <DetailCard>
+                    <div className="detail-title">
+                      <FiDollarSign className="icon" />
+                      Price of {booking.quantity} quantity
+                    </div>
+                    <div className="detail-content">
+                      <div className="detail-value">
+                        {formatPrice(booking.unit_price)}
+                      </div>
+                    </div>
+                  </DetailCard>
+                </BookingDetails>
+
+                <QRCodeSection>
+                  <h4>
+                    <MdQrCode2 /> Booking QR Code
+                  </h4>
+                  {booking.status === "B" && booking.qr_image ? (
+                    <QRImage src={booking.qr_image} alt="Booking QR Code" />
+                  ) : (
+                    <QRPlaceholder>
+                      {booking.status === "B"
+                        ? "QR Code will be available soon"
+                        : "QR Code not available"}
+                    </QRPlaceholder>
+                  )}
+                </QRCodeSection>
+
+                <CardActions>
+                  <ViewDetailsButton
+                    onClick={() => openModal(booking)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FiEye /> View Details
+                  </ViewDetailsButton>
+
+                  {booking.status?.toUpperCase() === "B" && (
+                    <BookingActions>
+                      <ActionButton
+                        className="cancel"
+                        onClick={() =>
+                          handleBookingAction(booking.ref_code, "cancel")
+                        }
+                        disabled={actionLoading === booking.ref_code}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <FiX />
+                        {actionLoading === booking.ref_code ? "..." : "Cancel"}
+                      </ActionButton>
+                    </BookingActions>
+                  )}
+                </CardActions>
               </BookingCard>
             ))}
           </BookingsGrid>
         )}
+
+        {/* Modal for detailed view */}
+        <AnimatePresence>
+          {isModalOpen && selectedBooking && (
+            <ModalOverlay
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+            >
+              <ModalContainer
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ModalHeader>
+                  <h2>Booking Details</h2>
+                  <button className="close-btn" onClick={closeModal}>
+                    <FiXCircle size={20} />
+                  </button>
+                </ModalHeader>
+
+                <ModalContent>
+                  <ModalSection>
+                    <h3>
+                      <FiInfo /> Service Information
+                    </h3>
+                    <ModalGrid>
+                      <ModalDetailItem>
+                        <div className="label">Service Name</div>
+                        <div className="value">
+                          {selectedBooking.service_data?.name}
+                        </div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Temple</div>
+                        <div className="value">
+                          {selectedBooking.service_data?.temple_name}
+                        </div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Service Type</div>
+                        <div className="value">
+                          {selectedBooking.service_data?.service_type_str}
+                        </div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Capacity</div>
+                        <div className="value">
+                          {selectedBooking.service_data?.capacity} people
+                        </div>
+                      </ModalDetailItem>
+                    </ModalGrid>
+                  </ModalSection>
+
+                  <ModalSection>
+                    <h3>
+                      <FiCalendar /> Booking Information
+                    </h3>
+                    <ModalGrid>
+                      <ModalDetailItem>
+                        <div className="label">Booking Reference</div>
+                        <div className="value">{selectedBooking.ref_code}</div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Booking Date</div>
+                        <div className="value">
+                          {selectedBooking.booking_date}
+                        </div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Time Slot</div>
+                        <div className="value">
+                          {selectedBooking.start_time} -{" "}
+                          {selectedBooking.end_time}
+                        </div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Status</div>
+                        <div className="value">
+                          <StatusBadge
+                            className={getStatusClass(selectedBooking.status)}
+                          >
+                            {getStatusText(selectedBooking.status)}
+                          </StatusBadge>
+                        </div>
+                      </ModalDetailItem>
+                    </ModalGrid>
+                  </ModalSection>
+
+                  <ModalSection>
+                    <h3>
+                      <FiDollarSign /> Pricing Details
+                    </h3>
+                    <ModalGrid>
+                      <ModalDetailItem>
+                        <div className="label">Total Price</div>
+                        <div className="value">
+                          {formatPrice(selectedBooking.unit_price)}
+                        </div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Quantity</div>
+                        <div className="value">{selectedBooking.quantity}</div>
+                      </ModalDetailItem>
+                      <ModalDetailItem>
+                        <div className="label">Total Amount</div>
+                        <div className="value">
+                          {formatPrice(calculateTotal(selectedBooking))}
+                        </div>
+                      </ModalDetailItem>
+                      {selectedBooking.service_variation_data && (
+                        <ModalDetailItem>
+                          <div className="label">Service Variation</div>
+                          <div className="value">
+                            {
+                              selectedBooking.service_variation_data
+                                .pricing_type_str
+                            }
+                          </div>
+                        </ModalDetailItem>
+                      )}
+                    </ModalGrid>
+                  </ModalSection>
+
+                  {selectedBooking.service_data && (
+                    <ModalSection>
+                      <h3>
+                        <FiInfo /> Policies
+                      </h3>
+                      <ModalGrid>
+                        {selectedBooking.service_data.adv_policy_data && (
+                          <ModalDetailItem>
+                            <div className="label">Advance Payment Policy</div>
+                            <div className="value">
+                              {
+                                selectedBooking.service_data.adv_policy_data
+                                  .percent
+                              }
+                              % (Min ₹
+                              {
+                                selectedBooking.service_data.adv_policy_data
+                                  .min_amount
+                              }
+                              )
+                            </div>
+                          </ModalDetailItem>
+                        )}
+                        {selectedBooking.service_data.refund_policy_data && (
+                          <ModalDetailItem>
+                            <div className="label">Refund Policy</div>
+                            <div className="value">
+                              {
+                                selectedBooking.service_data.refund_policy_data
+                                  .name
+                              }
+                            </div>
+                          </ModalDetailItem>
+                        )}
+                        {selectedBooking.service_data.pricing_rule_data && (
+                          <ModalDetailItem>
+                            <div className="label">Pricing Rule</div>
+                            <div className="value">
+                              {
+                                selectedBooking.service_data.pricing_rule_data
+                                  .name
+                              }
+                            </div>
+                          </ModalDetailItem>
+                        )}
+                      </ModalGrid>
+                    </ModalSection>
+                  )}
+
+                  <ModalSection>
+                    <h3>
+                      <MdQrCode2 /> QR Code
+                    </h3>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      {selectedBooking.status === "B" &&
+                      selectedBooking.qr_image ? (
+                        <QRImage
+                          src={selectedBooking.qr_image}
+                          alt="Booking QR Code"
+                          style={{ width: "200px", height: "200px" }}
+                        />
+                      ) : (
+                        <QRPlaceholder
+                          style={{ width: "200px", height: "200px" }}
+                        >
+                          {selectedBooking.status === "B"
+                            ? "QR Code will be available soon"
+                            : "QR Code not available"}
+                        </QRPlaceholder>
+                      )}
+                    </div>
+                  </ModalSection>
+                </ModalContent>
+              </ModalContainer>
+            </ModalOverlay>
+          )}
+        </AnimatePresence>
       </BookingsContainer>
     </CustomerLayout>
   );

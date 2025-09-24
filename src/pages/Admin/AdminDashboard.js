@@ -1,7 +1,30 @@
 import React from "react";
-import { FiHome, FiTrendingUp, FiClock, FiCalendar, FiSearch, FiMoreVertical, FiArrowUp, FiArrowDown, FiEye, FiChevronLeft, FiChevronRight, FiUser, FiFile, FiMail, FiPhone, FiCalendar as FiCal, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import {
+  FiHome,
+  FiTrendingUp,
+  FiClock,
+  FiCalendar,
+  FiSearch,
+  FiMoreVertical,
+  FiArrowUp,
+  FiArrowDown,
+  FiEye,
+  FiChevronLeft,
+  FiChevronRight,
+  FiUser,
+  FiFile,
+  FiMail,
+  FiPhone,
+  FiCalendar as FiCal,
+  FiCheckCircle,
+  FiXCircle,
+} from "react-icons/fi";
 import styled from "styled-components";
-import { getServiceBookings, getSellerTempleList, updateSellerStatus } from "../../services/customerServices";
+import {
+  getServiceBookings,
+  getSellerTempleList,
+  updateSellerStatus,
+} from "../../services/customerServices";
 import { getCurrentTempleId } from "../../services/serviceUtils";
 // Approvals now sourced from customer API via getSellerTempleList
 
@@ -54,7 +77,7 @@ const StatGradient = styled.div`
   border-radius: 50%;
   transform: translate(40px, -40px);
   opacity: 0.1;
-  background: ${props => props.gradient};
+  background: ${(props) => props.gradient};
 `;
 
 const StatContent = styled.div`
@@ -73,11 +96,11 @@ const StatIcon = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: ${props => props.color}15;
+  background: ${(props) => props.color}15;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
 `;
 
 const StatNumber = styled.div`
@@ -131,8 +154,8 @@ const TabButton = styled.button`
   padding: 0.55rem 1.1rem;
   border-radius: 10px;
   border: none;
-  background: ${props => props.active ? '#0056d6' : 'transparent'};
-  color: ${props => props.active ? 'white' : '#64748b'};
+  background: ${(props) => (props.active ? "#0056d6" : "transparent")};
+  color: ${(props) => (props.active ? "white" : "#64748b")};
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -140,7 +163,7 @@ const TabButton = styled.button`
   min-height: 40px;
 
   &:hover {
-    background: ${props => props.active ? '#0056d6' : '#f8fafc'};
+    background: ${(props) => (props.active ? "#0056d6" : "#f8fafc")};
   }
 `;
 
@@ -148,7 +171,7 @@ const ControlsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.75rem;
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
   align-items: center;
 
   @media (max-width: 768px) {
@@ -225,7 +248,7 @@ const HeaderRow = styled.tr`
 
 const HeaderCell = styled.th`
   padding: 1.2rem 0.75rem;
-    font-size: 0.8rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #475569;
   text-transform: uppercase;
@@ -236,7 +259,7 @@ const HeaderCell = styled.th`
 const TableBody = styled.tbody``;
 
 const TableRow = styled.tr`
-  border-bottom: ${props => props.last ? 'none' : '1px solid #f1f5f9'};
+  border-bottom: ${(props) => (props.last ? "none" : "1px solid #f1f5f9")};
   transition: background-color 0.2s;
   cursor: pointer;
 
@@ -254,8 +277,18 @@ const ActionPill = styled.button`
   padding: 0.5rem 0.9rem;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
-  background: ${props => props.variant === 'accept' ? '#ecfdf5' : props.variant === 'reject' ? '#fee2e2' : 'white'};
-  color: ${props => props.variant === 'accept' ? '#065f46' : props.variant === 'reject' ? '#991b1b' : '#334155'};
+  background: ${(props) =>
+    props.variant === "accept"
+      ? "#ecfdf5"
+      : props.variant === "reject"
+      ? "#fee2e2"
+      : "white"};
+  color: ${(props) =>
+    props.variant === "accept"
+      ? "#065f46"
+      : props.variant === "reject"
+      ? "#991b1b"
+      : "#334155"};
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
@@ -274,8 +307,8 @@ const ServiceBadge = styled.div`
   border-radius: 10px;
   font-size: 0.8rem;
   font-weight: 700;
-  background: ${props => props.service === 'Hall' ? '#eff6ff' : '#f0fdf4'};
-  color: ${props => props.service === 'Hall' ? '#0056d6' : '#16a34a'};
+  background: ${(props) => (props.service === "Hall" ? "#eff6ff" : "#f0fdf4")};
+  color: ${(props) => (props.service === "Hall" ? "#0056d6" : "#16a34a")};
   text-align: center;
 `;
 
@@ -287,20 +320,28 @@ const StatusBadge = styled.div`
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 700;
-  background: ${props => {
-    switch(props.status) {
-      case 'Confirmed': return '#ecfdf5';
-      case 'Pending': return '#fef3c7';
-      case 'Cancelled': return '#fee2e2';
-      default: return '#f3f4f6';
+  background: ${(props) => {
+    switch (props.status) {
+      case "Confirmed":
+        return "#ecfdf5";
+      case "Pending":
+        return "#fef3c7";
+      case "Cancelled":
+        return "#fee2e2";
+      default:
+        return "#f3f4f6";
     }
   }};
-  color: ${props => {
-    switch(props.status) {
-      case 'Confirmed': return '#10b981';
-      case 'Pending': return '#f59e0b';
-      case 'Cancelled': return '#ef4444';
-      default: return '#6b7280';
+  color: ${(props) => {
+    switch (props.status) {
+      case "Confirmed":
+        return "#10b981";
+      case "Pending":
+        return "#f59e0b";
+      case "Cancelled":
+        return "#ef4444";
+      default:
+        return "#6b7280";
     }
   }};
   text-align: center;
@@ -340,10 +381,8 @@ const SellerCard = styled.div`
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius: 20px;
   padding: 0;
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(226, 232, 240, 0.8);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
@@ -351,25 +390,26 @@ const SellerCard = styled.div`
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 
-      0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04),
-      0 0 0 1px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(59, 130, 246, 0.1);
     border-color: rgba(59, 130, 246, 0.2);
   }
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 4px;
-    background: ${props => {
-      if (props.status === 'approved') return 'linear-gradient(90deg, #10b981, #34d399)';
-      if (props.status === 'pending') return 'linear-gradient(90deg, #f59e0b, #fbbf24)';
-      if (props.status === 'rejected') return 'linear-gradient(90deg, #ef4444, #f87171)';
-      return 'linear-gradient(90deg, #6b7280, #9ca3af)';
+    background: ${(props) => {
+      if (props.status === "approved")
+        return "linear-gradient(90deg, #10b981, #34d399)";
+      if (props.status === "pending")
+        return "linear-gradient(90deg, #f59e0b, #fbbf24)";
+      if (props.status === "rejected")
+        return "linear-gradient(90deg, #ef4444, #f87171)";
+      return "linear-gradient(90deg, #6b7280, #9ca3af)";
     }};
   }
 `;
@@ -415,24 +455,28 @@ const StatusIndicator = styled.div`
   border-radius: 50px;
   font-size: 0.8rem;
   font-weight: 600;
-  background: ${props => {
-    if (props.status === 'approved') return 'linear-gradient(135deg, #ecfdf5, #d1fae5)';
-    if (props.status === 'pending') return 'linear-gradient(135deg, #fffbeb, #fef3c7)';
-    if (props.status === 'rejected') return 'linear-gradient(135deg, #fef2f2, #fee2e2)';
-    return 'linear-gradient(135deg, #f3f4f6, #e5e7eb)';
+  background: ${(props) => {
+    if (props.status === "approved")
+      return "linear-gradient(135deg, #ecfdf5, #d1fae5)";
+    if (props.status === "pending")
+      return "linear-gradient(135deg, #fffbeb, #fef3c7)";
+    if (props.status === "rejected")
+      return "linear-gradient(135deg, #fef2f2, #fee2e2)";
+    return "linear-gradient(135deg, #f3f4f6, #e5e7eb)";
   }};
-  color: ${props => {
-    if (props.status === 'approved') return '#065f46';
-    if (props.status === 'pending') return '#92400e';
-    if (props.status === 'rejected') return '#991b1b';
-    return '#6b7280';
+  color: ${(props) => {
+    if (props.status === "approved") return "#065f46";
+    if (props.status === "pending") return "#92400e";
+    if (props.status === "rejected") return "#991b1b";
+    return "#6b7280";
   }};
-  border: 1px solid ${props => {
-    if (props.status === 'approved') return 'rgba(16, 185, 129, 0.2)';
-    if (props.status === 'pending') return 'rgba(245, 158, 11, 0.2)';
-    if (props.status === 'rejected') return 'rgba(239, 68, 68, 0.2)';
-    return 'rgba(107, 114, 128, 0.2)';
-  }};
+  border: 1px solid
+    ${(props) => {
+      if (props.status === "approved") return "rgba(16, 185, 129, 0.2)";
+      if (props.status === "pending") return "rgba(245, 158, 11, 0.2)";
+      if (props.status === "rejected") return "rgba(239, 68, 68, 0.2)";
+      return "rgba(107, 114, 128, 0.2)";
+    }};
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 `;
 
@@ -501,9 +545,9 @@ const DocumentThumb = styled.a`
     transform: translateY(-2px) scale(1.05);
     border-color: #3b82f6;
     box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
-    
+
     &::after {
-      content: 'View';
+      content: "View";
       position: absolute;
       top: 0;
       left: 0;
@@ -566,9 +610,9 @@ const PremiumButton = styled.button`
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  
-  ${props => {
-    if (props.variant === 'approve') {
+
+  ${(props) => {
+    if (props.variant === "approve") {
       return `
         background: white;
         color: #059669;
@@ -582,7 +626,7 @@ const PremiumButton = styled.button`
         }
         &:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25); }
       `;
-    } else if (props.variant === 'reject') {
+    } else if (props.variant === "reject") {
       return `
         background: white;
         color: #b91c1c;
@@ -596,7 +640,7 @@ const PremiumButton = styled.button`
         }
         &:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25); }
       `;
-    } else if (props.variant === 'activate') {
+    } else if (props.variant === "activate") {
       return `
         background: white;
         color: #1d4ed8;
@@ -610,7 +654,7 @@ const PremiumButton = styled.button`
         }
         &:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); }
       `;
-    } else if (props.variant === 'deactivate') {
+    } else if (props.variant === "deactivate") {
       return `
         background: white;
         color: #ef4444;
@@ -626,28 +670,33 @@ const PremiumButton = styled.button`
       `;
     }
   }}
-  
+
   &:active {
     transform: translateY(0);
   }
-  
+
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
   }
-  
+
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
     transition: left 0.5s;
   }
-  
+
   &:hover::before {
     left: 100%;
   }
@@ -660,10 +709,14 @@ const LoadingSpinner = styled.div`
   border-top: 2px solid white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  
+
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
 const LoaderWrap = styled.div`
@@ -673,12 +726,20 @@ const LoaderWrap = styled.div`
   color: #64748b;
 `;
 const Spinner = styled.div`
-  width: 24px; height: 24px;
+  width: 24px;
+  height: 24px;
   border: 3px solid #e2e8f0;
   border-top: 3px solid #2563eb;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const FullscreenLoader = styled.div`
@@ -692,12 +753,20 @@ const FullscreenLoader = styled.div`
 `;
 
 const SpinnerXL = styled.div`
-  width: 48px; height: 48px;
+  width: 48px;
+  height: 48px;
   border: 4px solid #e2e8f0;
   border-top: 4px solid #2563eb;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const EmptyState = styled.div`
@@ -755,7 +824,7 @@ const PaginationButtons = styled.div`
 const ViewOverlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -767,7 +836,7 @@ const ViewCard = styled.div`
   max-width: 720px;
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   border: 1px solid #e2e8f0;
 `;
@@ -799,8 +868,8 @@ const PaginationButton = styled.button`
   padding: 0.6rem;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
-  background: ${props => props.active ? '#0056d6' : 'white'};
-  color: ${props => props.active ? 'white' : '#64748b'};
+  background: ${(props) => (props.active ? "#0056d6" : "white")};
+  color: ${(props) => (props.active ? "white" : "#64748b")};
   font-size: 0.9rem;
   font-weight: 600;
   min-width: 36px;
@@ -808,7 +877,7 @@ const PaginationButton = styled.button`
   transition: all 0.2s;
 
   &:hover:not(:disabled) {
-    background: ${props => props.active ? '#0056d6' : '#f8fafc'};
+    background: ${(props) => (props.active ? "#0056d6" : "#f8fafc")};
   }
 
   &:disabled {
@@ -818,7 +887,9 @@ const PaginationButton = styled.button`
 `;
 
 const Dashboard = () => {
-  const [templeId, setTempleId] = React.useState(() => getCurrentTempleId() || "");
+  const [templeId, setTempleId] = React.useState(
+    () => getCurrentTempleId() || ""
+  );
   const [activeTab, setActiveTab] = React.useState("total");
   const [serviceFilter, setServiceFilter] = React.useState("All");
   const [search, setSearch] = React.useState("");
@@ -826,23 +897,29 @@ const Dashboard = () => {
   const [itemsPerPage] = React.useState(5);
   const [apiBookings, setApiBookings] = React.useState([]);
   const [bookingsLoading, setBookingsLoading] = React.useState(true);
-  const [sellerTabData, setSellerTabData] = React.useState({ loading: false, rows: [], error: null });
+  const [sellerTabData, setSellerTabData] = React.useState({
+    loading: false,
+    rows: [],
+    error: null,
+  });
   const [sellerSearch, setSellerSearch] = React.useState("");
   const [sellerPage, setSellerPage] = React.useState(1);
   const [sellerPerPage] = React.useState(5);
   const [viewItem, setViewItem] = React.useState(null);
+  const id = localStorage.getItem("templeId");
+  const name = "admin";
 
   // Keep templeId in sync with any login switches
   React.useEffect(() => {
     const refreshTempleId = () => setTempleId(getCurrentTempleId() || "");
-    window.addEventListener('storage', refreshTempleId);
-    window.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') refreshTempleId();
+    window.addEventListener("storage", refreshTempleId);
+    window.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") refreshTempleId();
     });
-    window.addEventListener('focus', refreshTempleId);
+    window.addEventListener("focus", refreshTempleId);
     return () => {
-      window.removeEventListener('storage', refreshTempleId);
-      window.removeEventListener('focus', refreshTempleId);
+      window.removeEventListener("storage", refreshTempleId);
+      window.removeEventListener("focus", refreshTempleId);
     };
   }, []);
 
@@ -861,40 +938,60 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         setBookingsLoading(true);
-        const data = await getServiceBookings();
-        const raw = (
+        const data = await getServiceBookings(id, name);
+        const raw =
           (Array.isArray(data) && data) ||
           data?.results ||
           data?.data ||
           data?.bookings ||
           data?.items ||
-          []
-        );
+          [];
         if (!Array.isArray(raw)) {
-          console.warn('Unexpected bookings payload shape:', data);
+          console.warn("Unexpected bookings payload shape:", data);
         }
         const normalized = raw
           // 1) Scope to logged-in temple
-          .filter((b) => (b?.service_data?.temple_id || b?.service_data?.templeId) === templeId)
+          .filter(
+            (b) =>
+              (b?.service_data?.temple_id || b?.service_data?.templeId) ===
+              templeId
+          )
           // 2) Normalize fields for UI and filters
           .map((b) => {
-            const svcRaw = (b?.service_data?.service_type_str || b?.service_data?.service_type || "").toString().toUpperCase();
-            const svcType = svcRaw.includes('HALL') ? 'Hall' : (svcRaw.includes('PUJA') ? 'Puja' : (b?.service_data?.service_type_str || 'Service'));
+            const svcRaw = (
+              b?.service_data?.service_type_str ||
+              b?.service_data?.service_type ||
+              ""
+            )
+              .toString()
+              .toUpperCase();
+            const svcType = svcRaw.includes("HALL")
+              ? "Hall"
+              : svcRaw.includes("PUJA")
+              ? "Puja"
+              : b?.service_data?.service_type_str || "Service";
             const dateObj = parseApiDate(b?.booking_date);
             const y = dateObj ? dateObj.getFullYear() : "";
-            const m = dateObj ? String(dateObj.getMonth() + 1).padStart(2, "0") : "";
+            const m = dateObj
+              ? String(dateObj.getMonth() + 1).padStart(2, "0")
+              : "";
             const d = dateObj ? String(dateObj.getDate()).padStart(2, "0") : "";
-            const hhmm = (b?.start_time || "").slice(0,5);
+            const hhmm = (b?.start_time || "").slice(0, 5);
             return {
               id: b?.ref_code || b?.id || "",
               service: svcType, // 2) Hall | Puja for filters
               devotee: b?.customer_data?.name || "",
               contact: b?.customer_data?.mobile_number || "",
               title: b?.service_data?.name || "",
-              dateTime: y ? `${y}-${m}-${d}${hhmm ? ` ${hhmm}:00` : ''}` : "",
+              dateTime: y ? `${y}-${m}-${d}${hhmm ? ` ${hhmm}:00` : ""}` : "",
               status: b?.status_display || b?.status || "",
-              amount: b?.unit_price ? `₹${b.unit_price}` : (b?.price ? `₹${b.price}` : "-"),
-              templeId: b?.service_data?.temple_id || b?.service_data?.templeId || "",
+              amount: b?.unit_price
+                ? `₹${b.unit_price}`
+                : b?.price
+                ? `₹${b.price}`
+                : "-",
+              templeId:
+                b?.service_data?.temple_id || b?.service_data?.templeId || "",
               // 3) Capture variation id to allow counting/grouping by variation if needed
               variationId: b?.service_variation_data?.id || null,
               raw: b,
@@ -905,10 +1002,14 @@ const Dashboard = () => {
         }
       } catch (_) {
         // Silently ignore for now; no error UI
-      } finally { setBookingsLoading(false); }
+      } finally {
+        setBookingsLoading(false);
+      }
     };
     fetchData();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, [templeId]);
 
   const stats = [
@@ -917,27 +1018,33 @@ const Dashboard = () => {
       number: String(apiBookings.length),
       label: "Total Bookings",
       color: "#0056d6",
-      bgGradient: "linear-gradient(135deg, #0056d6 0%, #0070f3 100%)"
+      bgGradient: "linear-gradient(135deg, #0056d6 0%, #0070f3 100%)",
     },
     {
       icon: <FiClock />,
-      number: String(apiBookings.filter((b) => {
-        if (!b.dateTime) return false;
-        const dt = new Date(b.dateTime.replace(" ", "T"));
-        const now = new Date();
-        return dt.getFullYear() === now.getFullYear() && dt.getMonth() === now.getMonth() && dt.getDate() === now.getDate();
-      }).length),
+      number: String(
+        apiBookings.filter((b) => {
+          if (!b.dateTime) return false;
+          const dt = new Date(b.dateTime.replace(" ", "T"));
+          const now = new Date();
+          return (
+            dt.getFullYear() === now.getFullYear() &&
+            dt.getMonth() === now.getMonth() &&
+            dt.getDate() === now.getDate()
+          );
+        }).length
+      ),
       label: "Today's Bookings",
       color: "#10b981",
-      bgGradient: "linear-gradient(135deg, #10b981 0%, #34d399 100%)"
+      bgGradient: "linear-gradient(135deg, #10b981 0%, #34d399 100%)",
     },
     {
       icon: <FiHome />,
       number: "2",
       label: "Authorized Sellers",
       color: "#f59e0b", // amber/golden
-      bgGradient: "linear-gradient(135deg, #fbbf24 0%, #f97316 100%)"
-    }    
+      bgGradient: "linear-gradient(135deg, #fbbf24 0%, #f97316 100%)",
+    },
   ];
 
   const allBookings = React.useMemo(() => apiBookings, [apiBookings]);
@@ -945,48 +1052,56 @@ const Dashboard = () => {
   const isToday = (iso) => {
     const d = new Date(iso.replace(" ", "T"));
     const now = new Date();
-    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
+    return (
+      d.getFullYear() === now.getFullYear() &&
+      d.getMonth() === now.getMonth() &&
+      d.getDate() === now.getDate()
+    );
   };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString.replace(" ", "T"));
     const day = date.getDate();
-    const month = date.toLocaleString('en-US', { month: 'short' });
+    const month = date.toLocaleString("en-US", { month: "short" });
     const year = date.getFullYear();
     return `${day} ${month} ${year}`;
   };
 
   const filteredBookings = React.useMemo(() => {
     // Filter by temple ID first
-    let base = allBookings.filter(b => b.templeId === templeId);
-    
+    let base = allBookings.filter((b) => b.templeId === templeId);
+
     // Filter by tab (total vs today)
     if (activeTab === "today") {
-      base = base.filter(b => isToday(b.dateTime));
+      base = base.filter((b) => isToday(b.dateTime));
     }
-    
+
     // Filter by service (Hall | Puja)
     if (serviceFilter !== "All") {
-      base = base.filter(b => b.service === serviceFilter);
+      base = base.filter((b) => b.service === serviceFilter);
     }
-    
+
     // Filter by search
     const q = search.trim().toLowerCase();
     if (q) {
-      base = base.filter(b => 
-        b.id.toLowerCase().includes(q) || 
-        b.devotee.toLowerCase().includes(q) || 
-        b.title.toLowerCase().includes(q)
+      base = base.filter(
+        (b) =>
+          b.id.toLowerCase().includes(q) ||
+          b.devotee.toLowerCase().includes(q) ||
+          b.title.toLowerCase().includes(q)
       );
     }
-    
+
     return base;
   }, [allBookings, templeId, activeTab, serviceFilter, search]);
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredBookings.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredBookings.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -1011,17 +1126,31 @@ const Dashboard = () => {
   // Load sellers when approvals tab is active
   React.useEffect(() => {
     const loadSellers = async () => {
-      if (activeTab !== 'approvals') return;
-      setSellerTabData(s => ({ ...s, loading: true, error: null }));
+      if (activeTab !== "approvals") return;
+      setSellerTabData((s) => ({ ...s, loading: true, error: null }));
       try {
         const list = await getSellerTempleList();
-        const rawArr = (Array.isArray(list) ? list : list?.results || list?.data || []);
+        const rawArr = Array.isArray(list)
+          ? list
+          : list?.results || list?.data || [];
         // Filter by current templeId
-        const scoped = rawArr.filter(item => String(item.temple_id) === String(templeId));
+        const scoped = rawArr.filter(
+          (item) => String(item.temple_id) === String(templeId)
+        );
         const rows = scoped.map((r, idx) => {
-          const docs = [r.document_file_1, r.document_file_2, r.document_file_3].filter(Boolean);
-          const approved = typeof r.is_approved === 'boolean' ? r.is_approved : String(r.is_approved).toLowerCase() === 'true';
-          const active = typeof r.is_active === 'boolean' ? r.is_active : String(r.is_active).toLowerCase() === 'true';
+          const docs = [
+            r.document_file_1,
+            r.document_file_2,
+            r.document_file_3,
+          ].filter(Boolean);
+          const approved =
+            typeof r.is_approved === "boolean"
+              ? r.is_approved
+              : String(r.is_approved).toLowerCase() === "true";
+          const active =
+            typeof r.is_active === "boolean"
+              ? r.is_active
+              : String(r.is_active).toLowerCase() === "true";
           return {
             id: r.seller_ref_code || `S-${idx + 1}`,
             seller_ref_code: r.seller_ref_code || "",
@@ -1036,7 +1165,11 @@ const Dashboard = () => {
         });
         setSellerTabData({ loading: false, rows, error: null });
       } catch (e) {
-        setSellerTabData({ loading: false, rows: [], error: e?.message || 'Failed to load' });
+        setSellerTabData({
+          loading: false,
+          rows: [],
+          error: e?.message || "Failed to load",
+        });
       }
     };
     loadSellers();
@@ -1046,11 +1179,12 @@ const Dashboard = () => {
     const q = sellerSearch.trim().toLowerCase();
     let base = sellerTabData.rows;
     if (q) {
-      base = base.filter(r =>
-        r.seller_name.toLowerCase().includes(q) ||
-        r.seller_ref_code.toLowerCase().includes(q) ||
-        (r.seller_email && r.seller_email.toLowerCase().includes(q)) ||
-        (r.seller_phone && r.seller_phone.toLowerCase().includes(q))
+      base = base.filter(
+        (r) =>
+          r.seller_name.toLowerCase().includes(q) ||
+          r.seller_ref_code.toLowerCase().includes(q) ||
+          (r.seller_email && r.seller_email.toLowerCase().includes(q)) ||
+          (r.seller_phone && r.seller_phone.toLowerCase().includes(q))
       );
     }
     return base;
@@ -1058,45 +1192,54 @@ const Dashboard = () => {
 
   const sellerIndexLast = sellerPage * sellerPerPage;
   const sellerIndexFirst = sellerIndexLast - sellerPerPage;
-  const sellerCurrent = filteredSellers.slice(sellerIndexFirst, sellerIndexLast);
-  const sellerTotalPages = Math.ceil(filteredSellers.length / sellerPerPage) || 1;
+  const sellerCurrent = filteredSellers.slice(
+    sellerIndexFirst,
+    sellerIndexLast
+  );
+  const sellerTotalPages =
+    Math.ceil(filteredSellers.length / sellerPerPage) || 1;
 
   const [processingAction, setProcessingAction] = React.useState(null);
 
   const handleSellerAction = async (row, action) => {
     setProcessingAction(`${row.seller_ref_code}-${action}`);
-    
-    const currentTemple = templeId || row.raw?.temple_id || row.raw?.templeId || row.temple_id;
+
+    const currentTemple =
+      templeId || row.raw?.temple_id || row.raw?.templeId || row.temple_id;
     let call_mode;
-    
-    if (action === 'approve') {
-      call_mode = 'APPROVE';
-    } else if (action === 'reject') {
-      call_mode = 'INACTIVE';
-    } else if (action === 'activate') {
-      call_mode = 'APPROVE';
-    } else if (action === 'deactivate') {
-      call_mode = 'INACTIVE';
+
+    if (action === "approve") {
+      call_mode = "APPROVE";
+    } else if (action === "reject") {
+      call_mode = "INACTIVE";
+    } else if (action === "activate") {
+      call_mode = "APPROVE";
+    } else if (action === "deactivate") {
+      call_mode = "INACTIVE";
     }
-    
+
     try {
-      await updateSellerStatus({ temple_id: currentTemple, call_mode, seller_ref_code: row.seller_ref_code });
-      
+      await updateSellerStatus({
+        temple_id: currentTemple,
+        call_mode,
+        seller_ref_code: row.seller_ref_code,
+      });
+
       // Optimistic UI update to immediately reflect new status
-      setSellerTabData(prev => {
-        const rows = (prev.rows || []).map(item => {
+      setSellerTabData((prev) => {
+        const rows = (prev.rows || []).map((item) => {
           if (item.seller_ref_code !== row.seller_ref_code) return item;
           const updated = { ...item };
-          if (action === 'approve') {
+          if (action === "approve") {
             updated.is_approved = true;
             updated.is_active = true; // treat approve as active
-          } else if (action === 'reject') {
+          } else if (action === "reject") {
             updated.is_approved = false; // flip to unapproved
             updated.is_active = false; // rejected = inactive
-          } else if (action === 'activate') {
+          } else if (action === "activate") {
             updated.is_approved = true;
             updated.is_active = true;
-          } else if (action === 'deactivate') {
+          } else if (action === "deactivate") {
             updated.is_approved = true; // stays approved
             updated.is_active = false;
           }
@@ -1112,15 +1255,15 @@ const Dashboard = () => {
   };
 
   const getSellerStatus = (seller) => {
-    if (seller.is_approved) return 'approved';
-    if (!seller.is_approved && seller.is_active) return 'pending';
-    return 'rejected';
+    if (seller.is_approved) return "approved";
+    if (!seller.is_approved && seller.is_active) return "pending";
+    return "rejected";
   };
 
   const getSellerStatusText = (seller) => {
-    if (seller.is_approved) return 'Approved';
-    if (!seller.is_approved && seller.is_active) return 'Pending';
-    return 'Rejected';
+    if (seller.is_approved) return "Approved";
+    if (!seller.is_approved && seller.is_active) return "Pending";
+    return "Rejected";
   };
 
   return (
@@ -1132,8 +1275,8 @@ const Dashboard = () => {
           </FullscreenLoader>
         )}
         {/* Stats Grid */}
-      <StatsGrid>
-        {stats.map((stat, index) => (
+        <StatsGrid>
+          {stats.map((stat, index) => (
             <StatCard key={index}>
               <StatGradient gradient={stat.bgGradient} />
               <StatContent>
@@ -1142,30 +1285,46 @@ const Dashboard = () => {
                     {React.cloneElement(stat.icon, { size: 24 })}
                   </StatIcon>
                 </StatHeader>
-                
+
                 <StatNumber>{stat.number}</StatNumber>
-                
+
                 <StatLabel>{stat.label}</StatLabel>
-                
+
                 <StatChange>
                   <ChangeText type={stat.changeType}>
-                    {stat.changeType === 'increase' ? <FiArrowUp size={14} /> : stat.changeType === 'decrease' ? <FiArrowDown size={14} /> : null}
+                    {stat.changeType === "increase" ? (
+                      <FiArrowUp size={14} />
+                    ) : stat.changeType === "decrease" ? (
+                      <FiArrowDown size={14} />
+                    ) : null}
                     {stat.change}
                   </ChangeText>
                   <PeriodText>{stat.period}</PeriodText>
                 </StatChange>
               </StatContent>
-          </StatCard>
-        ))}
-      </StatsGrid>
+            </StatCard>
+          ))}
+        </StatsGrid>
 
         {/* Tabs */}
         <TabsContainer>
           {[
-            { key: 'total', label: 'Total Bookings', icon: <FiTrendingUp size={18} /> },
-            { key: 'today', label: "Today's Bookings", icon: <FiCalendar size={18} /> },
-            { key: 'approvals', label: 'Seller Approvals', icon: <FiHome size={18} /> },
-          ].map(tab => (
+            {
+              key: "total",
+              label: "Total Bookings",
+              icon: <FiTrendingUp size={18} />,
+            },
+            {
+              key: "today",
+              label: "Today's Bookings",
+              icon: <FiCalendar size={18} />,
+            },
+            {
+              key: "approvals",
+              label: "Seller Approvals",
+              icon: <FiHome size={18} />,
+            },
+          ].map((tab) => (
             <TabButton
               key={tab.key}
               active={activeTab === tab.key}
@@ -1178,27 +1337,27 @@ const Dashboard = () => {
         </TabsContainer>
 
         {/* Controls */}
-        {activeTab !== 'approvals' ? (
-        <ControlsContainer>
-          <SearchContainer>
-            <FiSearch size={20} color="#64748b" />
-            <SearchInput
-              type="text"
-              placeholder="Search bookings, devotees, services..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </SearchContainer>
-          
-          <SelectFilter
-            value={serviceFilter}
-            onChange={(e) => setServiceFilter(e.target.value)}
-          >
-            <option value="All">All Services</option>
-            <option value="Hall">Halls</option>
-            <option value="Puja">Puja Services</option>
-          </SelectFilter>
-        </ControlsContainer>
+        {activeTab !== "approvals" ? (
+          <ControlsContainer>
+            <SearchContainer>
+              <FiSearch size={20} color="#64748b" />
+              <SearchInput
+                type="text"
+                placeholder="Search bookings, devotees, services..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </SearchContainer>
+
+            <SelectFilter
+              value={serviceFilter}
+              onChange={(e) => setServiceFilter(e.target.value)}
+            >
+              <option value="All">All Services</option>
+              <option value="Hall">Halls</option>
+              <option value="Puja">Puja Services</option>
+            </SelectFilter>
+          </ControlsContainer>
         ) : (
           <ControlsContainer>
             <SearchContainer>
@@ -1213,351 +1372,502 @@ const Dashboard = () => {
           </ControlsContainer>
         )}
 
-         {/* Main Table Area */}
+        {/* Main Table Area */}
         <TableWrapper>
           <TableContainer>
             {/* Table Header */}
-             {activeTab !== 'approvals' ? (
-            <TableHeader>
-              <HeaderRow>
-                <HeaderCell>Service</HeaderCell>
-                <HeaderCell>Booking ID</HeaderCell>
-                <HeaderCell>Devotee</HeaderCell>
-                <HeaderCell>Date & Time</HeaderCell>
-                <HeaderCell>Actions</HeaderCell>
-              </HeaderRow>
-            </TableHeader>
-             ) : (
-               <TableHeader>
-                 <HeaderRow>
-                   <HeaderCell>Seller Ref Code</HeaderCell>
-                   <HeaderCell>Seller Name</HeaderCell>
-                   <HeaderCell>Status</HeaderCell>
-                   <HeaderCell>Documents</HeaderCell>
-                   <HeaderCell>Actions</HeaderCell>
-                 </HeaderRow>
-               </TableHeader>
-             )}
+            {activeTab !== "approvals" ? (
+              <TableHeader>
+                <HeaderRow>
+                  <HeaderCell>Service</HeaderCell>
+                  <HeaderCell>Booking ID</HeaderCell>
+                  <HeaderCell>Devotee</HeaderCell>
+                  <HeaderCell>Date & Time</HeaderCell>
+                  <HeaderCell>Actions</HeaderCell>
+                </HeaderRow>
+              </TableHeader>
+            ) : (
+              <TableHeader>
+                <HeaderRow>
+                  <HeaderCell>Seller Ref Code</HeaderCell>
+                  <HeaderCell>Seller Name</HeaderCell>
+                  <HeaderCell>Status</HeaderCell>
+                  <HeaderCell>Documents</HeaderCell>
+                  <HeaderCell>Actions</HeaderCell>
+                </HeaderRow>
+              </TableHeader>
+            )}
 
             {/* Table Body */}
             <TableBody>
-               {activeTab !== 'approvals' ? (
-                 bookingsLoading ? (
-                   <TableRow>
-                     <TableCell colSpan={8} style={{ textAlign: 'center', padding: '3rem' }}>
-                       <LoaderWrap>
-                         <Spinner />
-                         <span style={{ fontSize: '1rem', fontWeight: 600 }}>Loading bookings...</span>
-                       </LoaderWrap>
-                     </TableCell>
-                   </TableRow>
-                 ) : currentItems.map((booking, index) => (
-                <TableRow key={booking.id} last={index === currentItems.length - 1}>
-                  <TableCell>
-                    <ServiceBadge service={booking.service}>
-                      {booking.service}
-                    </ServiceBadge>
-                  </TableCell>
-                  
-                  <TableCell style={{
-                    fontSize: '0.95rem',
-                    fontWeight: '700',
-                    color: '#334155'
-                  }}>
-                    {booking.id}
-                  </TableCell>
-                  
-                  <TableCell>
-                    <div style={{
-                      fontSize: '0.95rem',
-                      fontWeight: '700',
-                      color: '#1e293b',
-                      marginBottom: '0.3rem'
-                    }}>
-                      {booking.devotee}
-                    </div>
-                    <div style={{
-                      fontSize: '0.8rem',
-                      color: '#64748b'
-                    }}>
-                      {booking.contact}
-                    </div>
-                  </TableCell>
-                  
-                  <TableCell>
-                    <div style={{
-                      fontSize: '0.95rem',
-                      fontWeight: '600',
-                      color: '#1e293b',
-                      marginBottom: '0.3rem'
-                    }}>
-                      {formatDate(booking.dateTime)}
-                    </div>
-                    <div style={{
-                      fontSize: '0.8rem',
-                      color: '#64748b'
-                    }}>
-                      {new Date(booking.dateTime.replace(' ', 'T')).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
-                    </div>
-                  </TableCell>
-                  
-                  <TableCell>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.6rem'
-                    }}>
-                      <ActionButton onClick={() => setViewItem(booking)}>
-                        <FiEye size={16} />
-                      </ActionButton>
+              {activeTab !== "approvals" ? (
+                bookingsLoading ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={8}
+                      style={{ textAlign: "center", padding: "3rem" }}
+                    >
+                      <LoaderWrap>
+                        <Spinner />
+                        <span style={{ fontSize: "1rem", fontWeight: 600 }}>
+                          Loading bookings...
+                        </span>
+                      </LoaderWrap>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  currentItems.map((booking, index) => (
+                    <TableRow
+                      key={booking.id}
+                      last={index === currentItems.length - 1}
+                    >
+                      <TableCell>
+                        <ServiceBadge service={booking.service}>
+                          {booking.service}
+                        </ServiceBadge>
+                      </TableCell>
+
+                      <TableCell
+                        style={{
+                          fontSize: "0.95rem",
+                          fontWeight: "700",
+                          color: "#334155",
+                        }}
+                      >
+                        {booking.id}
+                      </TableCell>
+
+                      <TableCell>
+                        <div
+                          style={{
+                            fontSize: "0.95rem",
+                            fontWeight: "700",
+                            color: "#1e293b",
+                            marginBottom: "0.3rem",
+                          }}
+                        >
+                          {booking.devotee}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "#64748b",
+                          }}
+                        >
+                          {booking.contact}
+                        </div>
+                      </TableCell>
+
+                      <TableCell>
+                        <div
+                          style={{
+                            fontSize: "0.95rem",
+                            fontWeight: "600",
+                            color: "#1e293b",
+                            marginBottom: "0.3rem",
+                          }}
+                        >
+                          {formatDate(booking.dateTime)}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "#64748b",
+                          }}
+                        >
+                          {new Date(
+                            booking.dateTime.replace(" ", "T")
+                          ).toLocaleTimeString("en-IN", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </div>
+                      </TableCell>
+
+                      <TableCell>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.6rem",
+                          }}
+                        >
+                          <ActionButton onClick={() => setViewItem(booking)}>
+                            <FiEye size={16} />
+                          </ActionButton>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )
+              ) : sellerTabData.loading ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={5}
+                    style={{ textAlign: "center", padding: "3rem" }}
+                  >
+                    <LoadingSpinner />
+                    <div
+                      style={{
+                        marginTop: "1rem",
+                        fontSize: "1rem",
+                        fontWeight: "600",
+                        color: "#64748b",
+                      }}
+                    >
+                      Loading seller applications...
                     </div>
                   </TableCell>
                 </TableRow>
-                 ))
-               ) : (
-                 sellerTabData.loading ? (
-                   <TableRow>
-                     <TableCell colSpan={5} style={{ textAlign: 'center', padding: '3rem' }}>
-                       <LoadingSpinner />
-                       <div style={{ marginTop: '1rem', fontSize: '1rem', fontWeight: '600', color: '#64748b' }}>
-                         Loading seller applications...
-                       </div>
-                     </TableCell>
-                   </TableRow>
-                 ) : sellerCurrent.length > 0 ? (
-                   sellerCurrent.map((seller, index) => (
-                     <TableRow key={seller.id} last={index === sellerCurrent.length - 1}>
-                       <TableCell>
-                         <div style={{
-                           fontSize: '0.85rem',
-                           fontWeight: '700',
-                           color: '#1e293b',
-                           fontFamily: 'monospace',
-                           letterSpacing: '0.5px'
-                         }}>
-                           {seller.seller_ref_code}
-                         </div>
-                       </TableCell>
-                       
-                       <TableCell>
-                         <div style={{
-                           fontSize: '1rem',
-                           fontWeight: '700',
-                           color: '#1e293b',
-                           marginBottom: '0.25rem'
-                         }}>
-                           {seller.seller_name}
-                         </div>
-                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                           {seller.seller_email && (
-                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: '#64748b' }}>
-                               <FiMail size={12} />
-                               <span>{seller.seller_email}</span>
-                             </div>
-                           )}
-                           {seller.seller_phone && (
-                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: '#64748b' }}>
-                               <FiPhone size={12} />
-                               <span>{seller.seller_phone}</span>
-                             </div>
-                           )}
-                         </div>
-                       </TableCell>
-                       
-                       <TableCell>
-                         <StatusIndicator status={getSellerStatus(seller)}>
-                           {getSellerStatusText(seller)}
-                         </StatusIndicator>
-                       </TableCell>
-                       
-                       <TableCell>
-                         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                           {seller.documents.length > 0 ? (
-                             seller.documents.map((doc, docIndex) => (
-                               <a 
-                                 key={docIndex} 
-                                 href={doc} 
-                                 target="_blank" 
-                                 rel="noopener noreferrer"
-                                 style={{
-                                   display: 'inline-block',
-                                   borderRadius: '8px',
-                                   overflow: 'hidden',
-                                   border: '2px solid #e2e8f0',
-                                   transition: 'none',
-                                   textDecoration: 'none'
-                                 }}
-                               >
-                                 <img 
-                                   src={doc} 
-                                   alt={`Document ${docIndex + 1}`} 
-                                   style={{ 
-                                     width: '60px', 
-                                     height: '40px', 
-                                     objectFit: 'cover',
-                                     display: 'block'
-                                   }} 
-                                 />
-                               </a>
-                             ))
-                           ) : (
-                             <div style={{
-                               color: '#9ca3af',
-                               fontSize: '0.85rem',
-                               fontStyle: 'italic',
-                               display: 'flex',
-                               alignItems: 'center',
-                               gap: '0.25rem'
-                             }}>
-                               <FiFile size={14} />
-                               No documents
-                             </div>
-                           )}
-                         </div>
-                       </TableCell>
-                       
-                       <TableCell>
-                         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                           {!seller.is_approved ? (
-                             <PremiumButton
-                               variant="approve"
-                               onClick={() => handleSellerAction(seller, 'approve')}
-                               disabled={processingAction === `${seller.seller_ref_code}-approve`}
-                               style={{ fontSize: '0.8rem', padding: '0.5rem 1rem' }}
-                             >
-                               {processingAction === `${seller.seller_ref_code}-approve` ? (
-                                 <LoadingSpinner />
-                               ) : (
-                                 <FiCheckCircle size={16} />
-                               )}
-                               Approve
-                             </PremiumButton>
-                           ) : (
-                             <PremiumButton
-                               variant="reject"
-                               onClick={() => handleSellerAction(seller, 'reject')}
-                               disabled={processingAction === `${seller.seller_ref_code}-reject`}
-                               style={{ fontSize: '0.8rem', padding: '0.5rem 1rem' }}
-                             >
-                               {processingAction === `${seller.seller_ref_code}-reject` ? (
-                                 <LoadingSpinner />
-                               ) : (
-                                 <FiXCircle size={16} />
-                               )}
-                               Reject
-                             </PremiumButton>
-                           )}
-                         </div>
-                       </TableCell>
-                     </TableRow>
-                   ))
-                 ) : (
-                   <TableRow>
-                     <TableCell colSpan={5} style={{ textAlign: 'center', padding: '3rem' }}>
-                       <EmptyIcon>🧾</EmptyIcon>
-                       <EmptyTitle>No seller applications found</EmptyTitle>
-                       <div style={{ fontSize: '0.95rem', color: '#64748b' }}>
-                         {sellerSearch ? 'Try adjusting your search query' : 'All seller applications have been processed'}
-                       </div>
-                     </TableCell>
-                   </TableRow>
-                 )
-               )}
+              ) : sellerCurrent.length > 0 ? (
+                sellerCurrent.map((seller, index) => (
+                  <TableRow
+                    key={seller.id}
+                    last={index === sellerCurrent.length - 1}
+                  >
+                    <TableCell>
+                      <div
+                        style={{
+                          fontSize: "0.85rem",
+                          fontWeight: "700",
+                          color: "#1e293b",
+                          fontFamily: "monospace",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        {seller.seller_ref_code}
+                      </div>
+                    </TableCell>
+
+                    <TableCell>
+                      <div
+                        style={{
+                          fontSize: "1rem",
+                          fontWeight: "700",
+                          color: "#1e293b",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
+                        {seller.seller_name}
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.25rem",
+                        }}
+                      >
+                        {seller.seller_email && (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.5rem",
+                              fontSize: "0.8rem",
+                              color: "#64748b",
+                            }}
+                          >
+                            <FiMail size={12} />
+                            <span>{seller.seller_email}</span>
+                          </div>
+                        )}
+                        {seller.seller_phone && (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.5rem",
+                              fontSize: "0.8rem",
+                              color: "#64748b",
+                            }}
+                          >
+                            <FiPhone size={12} />
+                            <span>{seller.seller_phone}</span>
+                          </div>
+                        )}
+                      </div>
+                    </TableCell>
+
+                    <TableCell>
+                      <StatusIndicator status={getSellerStatus(seller)}>
+                        {getSellerStatusText(seller)}
+                      </StatusIndicator>
+                    </TableCell>
+
+                    <TableCell>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "0.5rem",
+                          flexWrap: "wrap",
+                        }}
+                      >
+                        {seller.documents.length > 0 ? (
+                          seller.documents.map((doc, docIndex) => (
+                            <a
+                              key={docIndex}
+                              href={doc}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                display: "inline-block",
+                                borderRadius: "8px",
+                                overflow: "hidden",
+                                border: "2px solid #e2e8f0",
+                                transition: "none",
+                                textDecoration: "none",
+                              }}
+                            >
+                              <img
+                                src={doc}
+                                alt={`Document ${docIndex + 1}`}
+                                style={{
+                                  width: "60px",
+                                  height: "40px",
+                                  objectFit: "cover",
+                                  display: "block",
+                                }}
+                              />
+                            </a>
+                          ))
+                        ) : (
+                          <div
+                            style={{
+                              color: "#9ca3af",
+                              fontSize: "0.85rem",
+                              fontStyle: "italic",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.25rem",
+                            }}
+                          >
+                            <FiFile size={14} />
+                            No documents
+                          </div>
+                        )}
+                      </div>
+                    </TableCell>
+
+                    <TableCell>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "0.5rem",
+                          flexWrap: "wrap",
+                        }}
+                      >
+                        {!seller.is_approved ? (
+                          <PremiumButton
+                            variant="approve"
+                            onClick={() =>
+                              handleSellerAction(seller, "approve")
+                            }
+                            disabled={
+                              processingAction ===
+                              `${seller.seller_ref_code}-approve`
+                            }
+                            style={{
+                              fontSize: "0.8rem",
+                              padding: "0.5rem 1rem",
+                            }}
+                          >
+                            {processingAction ===
+                            `${seller.seller_ref_code}-approve` ? (
+                              <LoadingSpinner />
+                            ) : (
+                              <FiCheckCircle size={16} />
+                            )}
+                            Approve
+                          </PremiumButton>
+                        ) : (
+                          <PremiumButton
+                            variant="reject"
+                            onClick={() => handleSellerAction(seller, "reject")}
+                            disabled={
+                              processingAction ===
+                              `${seller.seller_ref_code}-reject`
+                            }
+                            style={{
+                              fontSize: "0.8rem",
+                              padding: "0.5rem 1rem",
+                            }}
+                          >
+                            {processingAction ===
+                            `${seller.seller_ref_code}-reject` ? (
+                              <LoadingSpinner />
+                            ) : (
+                              <FiXCircle size={16} />
+                            )}
+                            Reject
+                          </PremiumButton>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={5}
+                    style={{ textAlign: "center", padding: "3rem" }}
+                  >
+                    <EmptyIcon>🧾</EmptyIcon>
+                    <EmptyTitle>No seller applications found</EmptyTitle>
+                    <div style={{ fontSize: "0.95rem", color: "#64748b" }}>
+                      {sellerSearch
+                        ? "Try adjusting your search query"
+                        : "All seller applications have been processed"}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </TableContainer>
-          
-           {activeTab !== 'approvals' ? (
-             filteredBookings.length === 0 && (
-            <EmptyState>
-              <EmptyIcon>📋</EmptyIcon>
-              <EmptyTitle>No bookings found</EmptyTitle>
-              <div style={{ fontSize: '0.95rem' }}>
-                Try adjusting your search or filters
-              </div>
-            </EmptyState>
-             )
-           ) : null}
+
+          {activeTab !== "approvals"
+            ? filteredBookings.length === 0 && (
+                <EmptyState>
+                  <EmptyIcon>📋</EmptyIcon>
+                  <EmptyTitle>No bookings found</EmptyTitle>
+                  <div style={{ fontSize: "0.95rem" }}>
+                    Try adjusting your search or filters
+                  </div>
+                </EmptyState>
+              )
+            : null}
         </TableWrapper>
 
         {/* Pagination */}
-        {activeTab !== 'approvals' ? (
-          filteredBookings.length > 0 && (
-          <PaginationContainer>
-            <PaginationText>
-              Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredBookings.length)} of {filteredBookings.length} results
-            </PaginationText>
-            
-            <PaginationButtons>
-              <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-                <FiChevronLeft size={16} />
-              </PaginationButton>
-              
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
-                <PaginationButton 
-                  key={number} 
-                  onClick={() => paginate(number)}
-                  active={currentPage === number}
-                >
-                  {number}
-                </PaginationButton>
-              ))}
-              
-              <PaginationButton onClick={nextPage} disabled={currentPage === totalPages}>
-                <FiChevronRight size={16} />
-              </PaginationButton>
-            </PaginationButtons>
-          </PaginationContainer>
-          )
-        ) : (
-          filteredSellers.length > 0 && (
-            <PaginationContainer>
-              <PaginationText>
-                Showing {sellerIndexFirst + 1} to {Math.min(sellerIndexLast, filteredSellers.length)} of {filteredSellers.length} results
-              </PaginationText>
-              <PaginationButtons>
-                <PaginationButton 
-                  onClick={() => setSellerPage(Math.max(1, sellerPage - 1))} 
-                  disabled={sellerPage === 1}
-                >
-                  <FiChevronLeft size={16} />
-                </PaginationButton>
-                {Array.from({ length: sellerTotalPages }, (_, i) => i + 1).map(number => (
-                  <PaginationButton 
-                    key={number} 
-                    onClick={() => setSellerPage(number)} 
-                    active={sellerPage === number}
+        {activeTab !== "approvals"
+          ? filteredBookings.length > 0 && (
+              <PaginationContainer>
+                <PaginationText>
+                  Showing {indexOfFirstItem + 1} to{" "}
+                  {Math.min(indexOfLastItem, filteredBookings.length)} of{" "}
+                  {filteredBookings.length} results
+                </PaginationText>
+
+                <PaginationButtons>
+                  <PaginationButton
+                    onClick={prevPage}
+                    disabled={currentPage === 1}
                   >
-                    {number}
+                    <FiChevronLeft size={16} />
                   </PaginationButton>
-                ))}
-                <PaginationButton 
-                  onClick={() => setSellerPage(Math.min(sellerTotalPages, sellerPage + 1))} 
-                  disabled={sellerPage === sellerTotalPages}
-                >
-                  <FiChevronRight size={16} />
-                </PaginationButton>
-              </PaginationButtons>
-            </PaginationContainer>
-          )
-        )}
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (number) => (
+                      <PaginationButton
+                        key={number}
+                        onClick={() => paginate(number)}
+                        active={currentPage === number}
+                      >
+                        {number}
+                      </PaginationButton>
+                    )
+                  )}
+
+                  <PaginationButton
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                  >
+                    <FiChevronRight size={16} />
+                  </PaginationButton>
+                </PaginationButtons>
+              </PaginationContainer>
+            )
+          : filteredSellers.length > 0 && (
+              <PaginationContainer>
+                <PaginationText>
+                  Showing {sellerIndexFirst + 1} to{" "}
+                  {Math.min(sellerIndexLast, filteredSellers.length)} of{" "}
+                  {filteredSellers.length} results
+                </PaginationText>
+                <PaginationButtons>
+                  <PaginationButton
+                    onClick={() => setSellerPage(Math.max(1, sellerPage - 1))}
+                    disabled={sellerPage === 1}
+                  >
+                    <FiChevronLeft size={16} />
+                  </PaginationButton>
+                  {Array.from(
+                    { length: sellerTotalPages },
+                    (_, i) => i + 1
+                  ).map((number) => (
+                    <PaginationButton
+                      key={number}
+                      onClick={() => setSellerPage(number)}
+                      active={sellerPage === number}
+                    >
+                      {number}
+                    </PaginationButton>
+                  ))}
+                  <PaginationButton
+                    onClick={() =>
+                      setSellerPage(Math.min(sellerTotalPages, sellerPage + 1))
+                    }
+                    disabled={sellerPage === sellerTotalPages}
+                  >
+                    <FiChevronRight size={16} />
+                  </PaginationButton>
+                </PaginationButtons>
+              </PaginationContainer>
+            )}
       </MainContent>
       {viewItem && (
         <ViewOverlay onClick={() => setViewItem(null)}>
-          <ViewCard onClick={(e)=>e.stopPropagation()}>
+          <ViewCard onClick={(e) => e.stopPropagation()}>
             <ViewHeader>
               <div>Booking Details – {viewItem.id}</div>
               <CloseX onClick={() => setViewItem(null)}>×</CloseX>
             </ViewHeader>
             <ViewBody>
-              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-                <div><strong>Service</strong><div>{viewItem.service}</div></div>
-                <div><strong>Devotee</strong><div>{viewItem.devotee}</div></div>
-                <div><strong>Contact</strong><div>{viewItem.contact}</div></div>
-                <div><strong>Service Name</strong><div>{viewItem.title}</div></div>
-                <div><strong>Date</strong><div>{formatDate(viewItem.dateTime)}</div></div>
-                <div><strong>Time</strong><div>{new Date(viewItem.dateTime.replace(' ','T')).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</div></div>
-                <div><strong>Status</strong><div>{viewItem.status}</div></div>
-                <div><strong>Amount</strong><div>{viewItem.amount}</div></div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 12,
+                }}
+              >
+                <div>
+                  <strong>Service</strong>
+                  <div>{viewItem.service}</div>
+                </div>
+                <div>
+                  <strong>Devotee</strong>
+                  <div>{viewItem.devotee}</div>
+                </div>
+                <div>
+                  <strong>Contact</strong>
+                  <div>{viewItem.contact}</div>
+                </div>
+                <div>
+                  <strong>Service Name</strong>
+                  <div>{viewItem.title}</div>
+                </div>
+                <div>
+                  <strong>Date</strong>
+                  <div>{formatDate(viewItem.dateTime)}</div>
+                </div>
+                <div>
+                  <strong>Time</strong>
+                  <div>
+                    {new Date(
+                      viewItem.dateTime.replace(" ", "T")
+                    ).toLocaleTimeString("en-IN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <strong>Status</strong>
+                  <div>{viewItem.status}</div>
+                </div>
+                <div>
+                  <strong>Amount</strong>
+                  <div>{viewItem.amount}</div>
+                </div>
               </div>
             </ViewBody>
           </ViewCard>

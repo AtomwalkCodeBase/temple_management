@@ -37,6 +37,9 @@ import CustomerDashboard from "./pages/Customer/CustomerDashboard";
 import { useEffect } from "react";
 import SellerRegistartion from "./pages/seller/SellerRegistartion";
 import { ToastContainer } from "react-toastify";
+import MyServices from "./pages/Customer/Payment/MyServices";
+import ServiceDetails from "./pages/Customer/Payment/ServiceDetails";
+import CustomerProfile from "./pages/Customer/CustomerProfile";
 
 function AppContent() {
   const location = useLocation();
@@ -60,6 +63,8 @@ function AppContent() {
     "/customer-dashboard",
     "/halls-management",
     "/seller-Application",
+    "/customer-services",
+    "/customer-profile",
   ].some((route) => location.pathname.startsWith(route));
 
   const hideNavAndFooter = isAdminRoute || isCustomerRoute;
@@ -88,6 +93,12 @@ function AppContent() {
         <Route path="/customer-bookings" element={<CustomerBookings />} />
         <Route path="/customer-dashboard" element={<CustomerDashboard />} />
         <Route path="/seller-Application" element={<SellerRegistartion />} />
+        <Route path="/customer-services" element={<MyServices />} />
+        <Route path="/customer-profile" element={<CustomerProfile />} />
+        <Route
+          path="/customer-services/:serviceId"
+          element={<ServiceDetails />}
+        />
 
         {/* Admin nested router */}
         <Route path="/templeadmin/*" element={<AdminRouter />} />

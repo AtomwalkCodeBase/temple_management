@@ -16,17 +16,7 @@ import {
   getServiceBookings,
   processBooking,
 } from "../../services/customerServices";
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem;
-`;
-const BookSevaContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-`;
+import { toast } from "react-toastify";
 
 const HeaderSection = styled(motion.div)`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -150,7 +140,7 @@ function serviceMatchesCategory(service, code) {
 }
 
 // Convert YYYY-MM-DD to DD-MMM-YYYY for API, e.g., 2025-08-28 -> 28-AUG-2025
-function toAPIDate(dateKey) {
+export function toAPIDate(dateKey) {
   const [y, m, d] = dateKey.split("-").map((v) => Number.parseInt(v, 10));
   const dt = new Date(y, m - 1, d);
   const months = [
@@ -186,7 +176,7 @@ export default function BookSeva() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [chosenService, setChosenService] = useState(null);
   const [chosenVariation, setChosenVariation] = useState(null);
-  console.log(chosenService, "chosenService");
+  console.log(chosenVariation, "chosenService");
   // Modals
   const [variationOpen, setVariationOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -253,8 +243,7 @@ export default function BookSeva() {
     const starttime = variationOrNull?.start_time;
     const endtime = variationOrNull?.end_time;
     try {
-      const bookings = await getServiceBookings(serviceId);
-      console.log(bookings, "bookings");
+      const bookings = await getServiceBookings(1, "user");
       const filteredServices = bookings.filter(
         (service) =>
           !serviceId || service?.service_data?.service_id === serviceId
@@ -291,7 +280,7 @@ export default function BookSeva() {
           start_time: chosenVariation?.start_time || "",
           end_time: chosenVariation?.end_time || "",
           notes: "",
-          quantity: 1,
+          quantity: chosenVariation?.max_participant || 1,
           duration: Number.parseInt(
             chosenService.duration_minutes || chosenService.duration || 60,
             10
@@ -316,99 +305,94 @@ export default function BookSeva() {
         },
       });
     } catch (err) {
-      console.error(err);
-      setError(err?.message || "Failed to confirm booking. Please try again.");
+      toast.error(
+        err?.message || "Failed to confirm booking. Please try again."
+      );
     }
   };
 
   return (
     <CustomerLayout>
-      <Container>
-        <BackLink onClick={handleBack}>← Back to Temples</BackLink>
+      <BackLink onClick={handleBack}>← Back to Temples</BackLink>
 
-        <HeaderSection
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+      <HeaderSection
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <div className="title">
+          Book Seva {temple?.name ? `— ${temple.name}` : ""}
+        </div>
+        <div className="sub">Follow the steps to complete your booking</div>
+      </HeaderSection>
+
+      {error && (
+        <div
+          style={{
+            background: "linear-gradient(135deg, #fee2e2, #fecaca)",
+            color: "#dc2626",
+            padding: "0.9rem 1rem",
+            borderRadius: "0.75rem",
+            border: "1px solid #fca5a5",
+            marginBottom: "1rem",
+            fontWeight: 700,
+          }}
         >
-          <div className="title">
-            Book Seva {temple?.name ? `— ${temple.name}` : ""}
-          </div>
-          <div className="sub">Follow the steps to complete your booking</div>
-        </HeaderSection>
+          {error}
+        </div>
+      )}
 
-        {error && (
-          <div
-            style={{
-              background: "linear-gradient(135deg, #fee2e2, #fecaca)",
-              color: "#dc2626",
-              padding: "0.9rem 1rem",
-              borderRadius: "0.75rem",
-              border: "1px solid #fca5a5",
-              marginBottom: "1rem",
-              fontWeight: 700,
-            }}
-          >
-            {error}
-          </div>
-        )}
-
-        <StepCard>
-          {!selectedCategory ? (
-            <SevaCategories
-              allServices={allServices}
-              categories={categories}
-              onSelect={onSelectCategory}
-            />
-          ) : (
-            <div style={{ display: "grid", gap: "1rem" }}>
-              <div
+      <StepCard>
+        {!selectedCategory ? (
+          <SevaCategories
+            allServices={allServices}
+            categories={categories}
+            onSelect={onSelectCategory}
+          />
+        ) : (
+          <div style={{ display: "grid", gap: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ fontWeight: 800, color: "#111827" }}>
+                Services —{" "}
+                {categories.find((c) => c.code === selectedCategory)?.label}
+              </div>
+              <button
+                onClick={() => setSelectedCategory(null)}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  background: "#f3f4f6",
+                  border: "1px solid #e5e7eb",
+                  color: "#374151",
+                  padding: "0.5rem 0.8rem",
+                  borderRadius: "0.6rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
                 }}
               >
-                <div style={{ fontWeight: 800, color: "#111827" }}>
-                  Services —{" "}
-                  {categories.find((c) => c.code === selectedCategory)?.label}
-                </div>
-                <button
-                  onClick={() => setSelectedCategory(null)}
-                  style={{
-                    background: "#f3f4f6",
-                    border: "1px solid #e5e7eb",
-                    color: "#374151",
-                    padding: "0.5rem 0.8rem",
-                    borderRadius: "0.6rem",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
-                >
-                  Change Category
-                </button>
-              </div>
-
-              {loading ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                    color: "#6b7280",
-                    padding: "2rem",
-                  }}
-                >
-                  Loading services...
-                </div>
-              ) : (
-                <ServiceList
-                  services={filteredServices}
-                  onBook={onBookService}
-                />
-              )}
+                Change Category
+              </button>
             </div>
-          )}
-        </StepCard>
-      </Container>
 
+            {loading ? (
+              <div
+                style={{
+                  textAlign: "center",
+                  color: "#6b7280",
+                  padding: "2rem",
+                }}
+              >
+                Loading services...
+              </div>
+            ) : (
+              <ServiceList services={filteredServices} onBook={onBookService} />
+            )}
+          </div>
+        )}
+      </StepCard>
       <VariationModal
         open={variationOpen}
         service={chosenService}

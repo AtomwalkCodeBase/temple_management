@@ -31,8 +31,18 @@ export const loginCustomer = async (credentials) => {
 
 // Set New PIN
 export const setNewPin = async (pinData) => {
+  const token = localStorage.getItem("customerToken");
+  const data = {
+    u_id: pinData.u_id,
+    o_pin: pinData.o_pin,
+    n_pin: pinData.n_pin,
+  };
   try {
-    const response = await axios.post(`${BASE_URL}/set_pin/`, pinData);
+    const response = await axios.post(`${BASE_URL}/customer_reset_pin/`, data, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
@@ -90,15 +100,22 @@ export const getBookingList = async () => {
 };
 
 // Fetch Bookings by Service ID
-export const getServiceBookings = async (serviceId) => {
-  const token = localStorage.getItem("userToken") || localStorage.getItem("customerToken");
+export const getServiceBookings = async (id, name) => {
+  // console.log(serviceId, "serviceId");
+  const token =
+    localStorage.getItem("userToken") || localStorage.getItem("customerToken");
   try {
-    const url = `${BASE_URL}/get_booking_list/`;
+    const urladmin = `${BASE_URL}/get_booking_list/?temple_id=${id}`;
+    const urlcustomer = `${BASE_URL}/get_booking_list/?cust_ref_code=${id}`;
+    const urluser = `${BASE_URL}/get_booking_list/`;
     const config = {};
     if (token) {
       config.headers = { Authorization: `Token ${token}` };
     }
-    const response = await axios.get(url, config);
+    const response = await axios.get(
+      name == "admin" ? urladmin : name == "user" ? urluser : urlcustomer,
+      config
+    );
     return response.data;
   } catch (error) {
     console.log(
@@ -111,7 +128,8 @@ export const getServiceBookings = async (serviceId) => {
 
 // Seller Temple List (for approvals)
 export const getSellerTempleList = async () => {
-  const token = localStorage.getItem("userToken") || localStorage.getItem("customerToken");
+  const token =
+    localStorage.getItem("userToken") || localStorage.getItem("customerToken");
   try {
     const url = `${BASE_URL}/get_seller_temple_list/`;
     const config = {};
@@ -126,8 +144,13 @@ export const getSellerTempleList = async () => {
 };
 
 // Update seller status (APPROVE | INACTIVE)
-export const updateSellerStatus = async ({ temple_id, call_mode, seller_ref_code }) => {
-  const token = localStorage.getItem("userToken") || localStorage.getItem("customerToken");
+export const updateSellerStatus = async ({
+  temple_id,
+  call_mode,
+  seller_ref_code,
+}) => {
+  const token =
+    localStorage.getItem("userToken") || localStorage.getItem("customerToken");
   try {
     const url = `${BASE_URL}/seller_update/`;
     // Use FormData to mirror Postman form-data/x-www-form-urlencoded behavior
@@ -284,6 +307,24 @@ export const processSellerApplication = async (bookingData) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/seller_update/`,
+      bookingData,
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+export const processpayment = async (bookingData) => {
+  const token = localStorage.getItem("customerToken");
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/process_booking_payment/`,
       bookingData,
       {
         headers: {

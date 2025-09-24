@@ -8,7 +8,7 @@ import {
   getmyApplication,
   processSellerApplication,
 } from "../../services/customerServices";
-
+import { FaUpload, FaFileAlt } from "react-icons/fa";
 // Styled components
 const HeaderSection = styled(motion.div)`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -169,37 +169,69 @@ const TempleLocation = styled.p`
 `;
 
 const DocumentList = styled.div`
+  display: grid;
+  gap: 1.5rem;
   margin-bottom: 2rem;
 `;
 
 const DocumentItem = styled.div`
-  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #d0d0d0;
+  }
 `;
 
 const DocumentLabel = styled.label`
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
 `;
 
 const MandatoryStar = styled.span`
   color: #e53935;
+  margin-left: 4px;
 `;
 
-const FileInput = styled.input`
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+const HiddenFileInput = styled.input`
+  display: none;
 `;
 
-const FileName = styled.span`
-  display: block;
-  margin-top: 0.5rem;
+const UploadButton = styled.label`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: #1976d2;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 0.9rem;
-  color: #4caf50;
+  font-weight: 500;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #1565c0;
+  }
+`;
+
+const FileName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #388e3c;
+  font-weight: 500;
 `;
 
 const ButtonContainer = styled.div`
@@ -329,10 +361,10 @@ const SellerRegistration = () => {
     // Don't allow selection if already applied
     if (hasAppliedToTemple(temple.temple_id)) return;
 
-    setSelectedTemple(temple);
     // Initialize documents state
     let docs = {};
     if (temple.additional_field_list.supplier_document_name_list) {
+      setSelectedTemple(temple);
       temple.additional_field_list.supplier_document_name_list.forEach(
         (doc, index) => {
           docs[`document_file_${index + 1}`] = null;
@@ -537,13 +569,20 @@ const SellerRegistration = () => {
                       <MandatoryStar>*</MandatoryStar>
                     )}
                   </DocumentLabel>
-                  <FileInput
+
+                  {/* Upload button (styled label linked to hidden input) */}
+                  <UploadButton htmlFor={`file-upload-${index}`}>
+                    <FaUpload /> Upload File
+                  </UploadButton>
+                  <HiddenFileInput
+                    id={`file-upload-${index}`}
                     type="file"
                     onChange={(e) => handleFileChange(e, index)}
                     required={doc.is_mandatory === "True"}
                   />
                   {documents[`document_file_${index + 1}`] && (
                     <FileName>
+                      <FaFileAlt />{" "}
                       {documents[`document_file_${index + 1}`].name}
                     </FileName>
                   )}
